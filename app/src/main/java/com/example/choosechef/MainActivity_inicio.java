@@ -19,7 +19,6 @@ public class MainActivity_inicio extends AppCompatActivity {
             Intent intent = new Intent(MainActivity_inicio.this, MainActivity_login.class);
             startActivity(intent);
         });
-        
 
         ImageButton btnRegistro = findViewById(R.id.ibtn_registro);
         btnRegistro.setOnClickListener(view -> {
