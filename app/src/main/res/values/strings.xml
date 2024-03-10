@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">CHOOSECHEF</string>
+    <string name="entra">Entra</string>
+    <string name="registrate">Regístrate</string>
+    <string name="boton_entrar">boton entrar</string>
+    <string name="boton_registro">boton registro</string>
+    <string name="boton_confirmar">boton confirmar</string>
+    <string name="logo">logo</string>
+    <string name="usuario">Usuario</string>
+    <string name="contraseña">Contraseña</string>
+    <string name="has_olvidado_la_contraseña">¿Has olvidado la contraseña?</string>
+    <string name="usuario_registro">Introduce el usuario</string>
+    <string name="contraseña_registro">Introduce la contraseña</string>
+    <string name="contraseña2_registro">Repite la contraseña</string>
+    <string name="contraseña_anterior">Introduce la contraseña anterior</string>
+    <string name="contraseña_nueva">Introduce la nueva contraseña </string>
+    <string name="contraseña2_nueva">Repite la nueva contraseña</string>
+    <string name="eres_chef">¿Eres Chef?</string>
+    <string name="usuario_nombre">Introduce tu nombre</string>
+    <string name="usuario_direccion">Introduce tu dirección</string>
+    <string name="usuario_telefono">Introduce tu teléfono</string>
+    <string name="quieres_cambiar_la_contraseña">¿Quieres cambiar la contraseña?</string>
+    <string name="modificacion_perfil">Modificación del perfil</string>
+</resources>

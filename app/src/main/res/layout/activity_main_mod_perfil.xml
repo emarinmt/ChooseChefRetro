@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fondo1"
+    tools:context=".MainActivity_inicio" >
+
+    <TextView
+        android:id="@+id/txt_modificacion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:text="@string/modificacion_perfil"
+        android:textColor="@color/titulo"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toTopOf="@+id/edt_nombre_mod_perfil"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.192"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.024" />
+
+    <EditText
+        android:id="@+id/edt_nombre_mod_perfil"
+        android:layout_width="284dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="10dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:hint="@string/usuario_nombre"
+        android:inputType="text"
+        android:textColorHint="@color/hint"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/edt_direccion_mod_perfil"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.50"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ibtn_confirmar_mod_perfil" />
+
+    <EditText
+        android:id="@+id/edt_direccion_mod_perfil"
+        android:layout_width="284dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:hint="@string/usuario_direccion"
+        android:inputType="text"
+        android:textColorHint="@color/hint"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/edt_telefono_mod_perfil"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.50"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edt_nombre_mod_perfil" />
+
+    <EditText
+        android:id="@+id/edt_telefono_mod_perfil"
+        android:layout_width="284dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:hint="@string/usuario_telefono"
+        android:inputType="phone"
+        android:textColorHint="@color/hint"
+        app:layout_constraintBottom_toTopOf="@+id/switch_cambio_contraseña"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.50"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edt_direccion_mod_perfil" />
+
+    <Switch
+        android:id="@+id/switch_cambio_contraseña"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:enabled="true"
+        android:minHeight="48dp"
+        android:text="@string/quieres_cambiar_la_contraseña"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/edt_contraseña_anterior_mod_perfil"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.50"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edt_telefono_mod_perfil"
+        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+
+    <EditText
+        android:id="@+id/edt_contraseña_anterior_mod_perfil"
+        android:layout_width="284dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:enabled="true"
+        android:hint="@string/contraseña_anterior"
+        android:inputType="textPassword"
+        android:textColorHint="@color/hint"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/edt_contraseña_nueva_mod_perfil"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.50"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/switch_cambio_contraseña"
+        tools:visibility="visible" />
+
+
+    <EditText
+        android:id="@+id/edt_contraseña_nueva_mod_perfil"
+        android:layout_width="284dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:enabled="true"
+        android:hint="@string/contraseña_nueva"
+        android:inputType="textPassword"
+        android:textColorHint="@color/hint"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/edt_contraseña2_nueva_mod_perfil"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.50"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edt_contraseña_anterior_mod_perfil"
+        app:layout_constraintVertical_bias="0.102"
+        tools:visibility="visible" />
+
+    <EditText
+        android:id="@+id/edt_contraseña2_nueva_mod_perfil"
+        android:layout_width="284dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="50dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:enabled="true"
+        android:hint="@string/contraseña2_nueva"
+        android:inputType="textPassword"
+        android:textColorHint="@color/hint"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/ibtn_confirmar_mod_perfil"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.50"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edt_contraseña_nueva_mod_perfil"
+        tools:visibility="visible" />
+
+    <ImageButton
+        android:id="@+id/ibtn_confirmar_mod_perfil"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
+        android:background="@drawable/fondo_boton"
+        android:contentDescription="@string/boton_confirmar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.50"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edt_contraseña2_nueva_mod_perfil"
+        app:srcCompat="@drawable/boton_confirmar" />
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
