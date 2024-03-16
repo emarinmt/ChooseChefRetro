@@ -20,7 +20,7 @@ public class UserLoader extends AsyncTaskLoader<String> {
     @Nullable
     @Override
     public String loadInBackground() {
-        return NetworkUtils.getCharacterInfo(mUserString, mPasswordString); //CAMBIAR
+        return NetworkUtils.getUserInfo(mUserString, mPasswordString);
     }
 
     @Override

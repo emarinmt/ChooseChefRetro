@@ -11,49 +11,44 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class NetworkUtils {
-    //LOG_TAG variable with the name of the class
+
+    //Constante LOG_TAG con el nombre de la clase
     private static final String LOG_TAG =
             NetworkUtils.class.getSimpleName();
 
-    // Constants for the various components of the Books API request.
+    // Constants for the various components of the API request.
 
-    // Base endpoint URL for the Books API.
-    private static final String RICK_URL = "https://rickandmortyapi.com/api/character";
-    // Parameter for the search string.
-    private static final String QUERY_PARAM = "name";
-    // Parameter to filter by alive
+    // Base endpoint URL for the API.
+    private static final String API_URL = "https://choose-chef.vercel.app/login";
 
-    private static final String STATUS = "alive";
+    //Correspondientes a los parametros requeridos y las restricciones que queramos establecer
+    // Parámetro para la cadena de búsqueda
+    private static final String QUERY_PARAM = "nombre";
+    // Parámetro para la cadena de búsqueda
+    private static final String QUERY_PARAM_PASS = "password";
 
 
     /**
-     * Static method to make the actual query to the rickandmorty API.
+     * Static method para realizar la consulta a la API.
      *
-     * @param queryString the query string.
-     * @param aliveString the filter status.
+     * @param queryUserString the query string.
+     * @param queryPasswordString the filter status.
      * @return the JSON response string from the query.
      */
-    //takes the search term as a String parameter and returns the JSON String response from the API
+    //toma el término de búsqueda como parámetro de cadena y devuelve la respuesta JSON String de la API
 
-    static String getCharacterInfo(String queryString, String aliveString){
-        //variables for connecting to the internet, reading the incoming data, and holding the response string
+    static String getUserInfo(String queryUserString, String queryPasswordString){
+        //Variables para conectarse a Internet, leer los datos de entrada y mantener la respuesta en un string
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
-        String characterJSONString = null;
+        String userJSONString = null;
 
         try {
             Uri builtURI;
-            if (aliveString != null){
-                // checkbox alive clicked
-                builtURI= Uri.parse(RICK_URL).buildUpon()
-                        .appendQueryParameter(QUERY_PARAM, queryString)
-                        .appendQueryParameter(STATUS, aliveString)
-                        .build();
-            } else {
-                builtURI = Uri.parse(RICK_URL).buildUpon()
-                        .appendQueryParameter(QUERY_PARAM, queryString)
-                        .build();
-            }
+            builtURI= Uri.parse(API_URL).buildUpon()
+                    .appendQueryParameter(QUERY_PARAM, queryUserString)
+                    .appendQueryParameter(QUERY_PARAM_PASS, queryPasswordString)
+                    .build();
 
             // Convert the URI to a URL,
             URL requestURL = new URL(builtURI.toString());
@@ -88,10 +83,8 @@ public class NetworkUtils {
                 return null;
             }
 
-            //Convert the StringBuilder object to a String and store it in the bookJSONString variable
-            characterJSONString = builder.toString();
-
-
+            //Convert the StringBuilder object to a String and store it in the userJSONString variable
+            userJSONString = builder.toString();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -111,8 +104,8 @@ public class NetworkUtils {
 
 
         // Write the final JSON response to the log
-        Log.d(LOG_TAG, characterJSONString);
+        Log.d(LOG_TAG, userJSONString);
 
-        return characterJSONString;
+        return userJSONString;
     }
 }
