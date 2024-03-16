@@ -98,7 +98,7 @@ public class MainActivity_login extends AppCompatActivity
                 queryBundle.putString("queryPasswordString", queryPasswordString);
                 LoaderManager.getInstance(this).restartLoader(0, queryBundle, this);
                 mResultText.setText("");
-                mResultPassText.setText("loading..");
+                mResultPassText.setText("loading...");
             }
         }
         // Otherwise update the TextView to tell the user there is no
@@ -140,7 +140,7 @@ public class MainActivity_login extends AppCompatActivity
             // Convert the response into a JSON object
             JSONObject jsonObject = new JSONObject(data);
             // Get the JSONArray of character.
-            JSONArray itemsArray = jsonObject.getJSONArray("nombre");
+            JSONArray itemsArray = jsonObject.getJSONArray("ususario");
 
             //Initialize the variables used for the parsing loop
             int i = 0;
