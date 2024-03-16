@@ -2,6 +2,7 @@ package com.example.choosechef;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +19,8 @@ public class MainActivity_inicio extends AppCompatActivity {
 
             Intent intent = new Intent(MainActivity_inicio.this, MainActivity_login.class);
             startActivity(intent);
+
+            //Utils.gotoActivity(this, MainActivity_login.class); (USAR ESTE??)
         });
 
         ImageButton btnRegistro = findViewById(R.id.ibtn_registro);
@@ -25,6 +28,10 @@ public class MainActivity_inicio extends AppCompatActivity {
 
             Intent intent = new Intent(MainActivity_inicio.this, MainActivity_registro.class);
             startActivity(intent);
+
+            //Utils.gotoActivity(this, MainActivity_registro.class); (USAR ESTE??)
         });
     }
+
+
 }
