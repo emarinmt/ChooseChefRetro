@@ -1,18 +1,12 @@
 package com.example.choosechef;
 
-import android.util.Log;
-
-import androidx.annotation.NonNull;
-
-import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 //se encarga de crear y configurar una instancia de Retrofit.
-public class fastClient {
+public class FastClient {
     private static Retrofit retrofit;
     //es la URL base de la API a la que realizaremos las solicitudes.
     private static final String BASE_URL = "https://choose-chef.vercel.app/";
@@ -24,6 +18,10 @@ public class fastClient {
      */
     public static Retrofit getClient() {
         if (retrofit == null) {
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+            httpClient.addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY));
+            httpClient.addInterceptor(new AuthInterceptor()); // Agregar interceptor de autenticación
+
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
@@ -31,7 +29,4 @@ public class fastClient {
         }
         return retrofit;
     }
-
-
-
 }

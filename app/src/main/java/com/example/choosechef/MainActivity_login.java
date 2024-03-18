@@ -4,52 +4,46 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.loader.app.LoaderManager;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.loader.content.Loader;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
 
 /**
  * Consulta la API en busca de usuarios basados en los datos introducidos.
  * Utiliza un AsyncTaskLoader para ejecutar la tarea de búsqueda en segundo plano.
  */
 public class MainActivity_login extends AppCompatActivity {
-    private String TAG = MainActivity_login.class.getSimpleName();
+    private final String TAG = MainActivity_login.class.getSimpleName();
 
     // Variables para el campo de entrada de búsqueda y TextViews de resultados
     private EditText mUserInput;
     private EditText mPassInput;
-    private TextView mResultText; //*BORRAR
-
-    fastMethods mfastMethods;
+    FastMethods mfastMethods;
+    Retrofit retro;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_login);
 
         //Inicializamos variables
-        mUserInput = (EditText)findViewById(R.id.edt_usuario_login);
-        mPassInput = (EditText)findViewById(R.id.edt_contraseña_login);
-        mResultText = (TextView)findViewById(R.id.txt_login_result); //*BORRAR
+        mUserInput = findViewById(R.id.edt_usuario_login);
+        mPassInput = findViewById(R.id.edt_contra_login);
+
+        retro=FastClient.getClient();
+        mfastMethods = retro.create(FastMethods.class);
+
     }
 
     /**
@@ -78,7 +72,7 @@ public class MainActivity_login extends AppCompatActivity {
         if (connMgr != null) {
             networkInfo = connMgr.getActiveNetworkInfo();
         } else {
-           // Utils.showToast(this,"No connection");
+           displayToast("No connection");
         }
 
         //Comprueba si el campo de ususario está vacio
@@ -95,21 +89,45 @@ public class MainActivity_login extends AppCompatActivity {
         // no estan vacíos
         if ((networkInfo != null) && (queryUserString.length() != 0) && (queryPasswordString.length() != 0)) {
             //call HTTP client's login method
-            mfastMethods.login(queryUserString,queryPasswordString).enqueue(new Callback<LoginResponse>() {
+            Call<Boolean> call = mfastMethods.login(queryUserString,queryPasswordString);
+
+            // Ejecutar la llamada de manera asíncrona
+            call.enqueue(new Callback<Boolean>() {
                 @Override
-                public void onResponse(@NonNull Call<LoginResponse> call, @NonNull Response<LoginResponse> response) {
-                    //Response was successfull
-                    Log.i(TAG, "Response: " + response.body());
-                    Intent intent = new Intent(MainActivity_login.this, MainActivity_contenido.class);
-                    startActivity(intent);
+                public void onResponse(@NonNull Call<Boolean> call, @NonNull Response<Boolean> response) {
+                    if (response.isSuccessful()) {
+                        Boolean loginSuccess = response.body();
+                        if (loginSuccess != null && loginSuccess) {
+                            // Inicio de sesión exitoso
+                            // Realizar acciones necesarias después del inicio de sesión exitoso
+                            Intent intent = new Intent(MainActivity_login.this, MainActivity_contenido.class);
+                            startActivity(intent);
+                        } else {
+                            // Inicio de sesión fallido
+                            // Realizar acciones necesarias después del inicio de sesión fallido
+                            displayToast("login_erroneo");
+                        }
+                    } else {
+                        // La llamada no fue exitosa
+                        // Manejar el error según sea necesario
+                        displayToast("conexion erronea");
+                    }
                 }
+
                 @Override
-                public void onFailure(@NonNull Call<LoginResponse> call, @NonNull Throwable t) {
+                public void onFailure(@NonNull Call<Boolean> call, @NonNull Throwable t) {
+                    // Error en la llamada
+                    // Manejar el error según sea necesario
                     t.printStackTrace();
-                    //Response failed
                     Log.e(TAG, "Response: " + t.getMessage());
                 }
             });
+
         }
+    }
+
+    public void displayToast(String message) {
+        Toast.makeText(getApplicationContext(), message,
+                Toast.LENGTH_SHORT).show();
     }
 }

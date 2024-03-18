@@ -5,18 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/fondo1"
-    tools:context=".MainActivity_inicio" >
-
-    <TextView
-        android:id="@+id/txt_login_result"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        android:background="@color/white"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+    tools:context=".MainActivity_login" >
 
     <ImageView
         android:id="@+id/img_logo"
@@ -48,7 +37,7 @@
         app:layout_constraintTop_toBottomOf="@+id/img_logo" />
 
     <EditText
-        android:id="@+id/edt_contraseña_login"
+        android:id="@+id/edt_contra_login"
         android:layout_width="284dp"
         android:layout_height="48dp"
         android:layout_marginTop="19dp"
@@ -75,7 +64,7 @@
         app:layout_constraintBottom_toTopOf="@+id/ibtn_entrar_login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/edt_contraseña_login" />
+        app:layout_constraintTop_toTopOf="@+id/edt_contra_login" />
 
     <ImageButton
         android:id="@+id/ibtn_entrar_login"
