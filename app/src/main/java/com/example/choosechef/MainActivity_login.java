@@ -36,8 +36,8 @@ public class MainActivity_login extends AppCompatActivity
     // Variables para el campo de entrada de búsqueda y TextViews de resultados (PROVISIONAL)
     private EditText mUserInput;
     private EditText mPassInput;
-    private TextView mResultText;
-    private TextView mResultPassText;
+    private TextView mResultText; //*BORRAR
+    private TextView mResultPassText; //*BORRAR
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +47,11 @@ public class MainActivity_login extends AppCompatActivity
         //Inicializamos variables
         mUserInput = (EditText)findViewById(R.id.edt_usuario_login);
         mPassInput = (EditText)findViewById(R.id.edt_contraseña_login);
-        mResultText = (TextView)findViewById(R.id.txt_login_result);
-        mResultPassText = (TextView)findViewById(R.id.txt_pass_result);
+        mResultText = (TextView)findViewById(R.id.txt_login_result); //*BORRAR
+        mResultPassText = (TextView)findViewById(R.id.txt_pass_result); //*BORRAR
 
-        //Para volver a conectarse al loader, si el loader ya existe (girar la pantalla)
+        //Para volver a conectarse al loader, si el loader ya existe (al girar la pantalla por ejemplo)
+        //*PASAR A UTILS?
         if(LoaderManager.getInstance(this).getLoader(0)!=null){
             LoaderManager.getInstance(this).initLoader(0, null, this);
         }
@@ -83,36 +84,36 @@ public class MainActivity_login extends AppCompatActivity
             networkInfo = connMgr.getActiveNetworkInfo();
         }
 
-
         // Si la red está disponible, conectada, y el campo de búsqueda
         // no está vacío, inicia una UserLoader AsyncTask.
 
-        if (networkInfo != null && queryUserString.length() != 0) {
+        if (networkInfo != null) {
+            if (queryUserString.length() != 0) {
             //Pasamos esta variable en el objeto bundle que creamos
             // y si la contraseña no está vacía la añadimos tambien
             // procedemos a llamar al restartLoader() para iniciar una UserLoader AsyncTask.
             Bundle queryBundle = new Bundle();
             queryBundle.putString("queryUserString", queryUserString);
-
-            if (queryPasswordString.length() != 0) {
-                queryBundle.putString("queryPasswordString", queryPasswordString);
-                LoaderManager.getInstance(this).restartLoader(0, queryBundle, this);
+                if (queryPasswordString.length() != 0) {
+                    queryBundle.putString("queryPasswordString", queryPasswordString);
+                    LoaderManager.getInstance(this).restartLoader(0, queryBundle, this);
+                    mResultText.setText("");
+                    mResultPassText.setText("loading..");
+                }  else {
+                    mResultText.setText("");
+                    mResultPassText.setText("no_pass_term"); //PASAR A STRING
+                }
+            } else {  //no search term
                 mResultText.setText("");
-                mResultPassText.setText("loading...");
+                mResultPassText.setText("no_user_term");//PASAR A STRING
             }
         }
         // Otherwise update the TextView to tell the user there is no
         // connection, or no search term.
         else {
-            if ((queryUserString.length() == 0) || (queryPasswordString.length() == 0)) {
-                mResultText.setText("");
-                mResultPassText.setText("no_search_term");//PASAR A STRING
-            } else {
-                mResultText.setText("");
-                mResultPassText.setText("no_network"); //PASAR A STRING
-            }
+            mResultText.setText("");
+            mResultPassText.setText("no_network"); //PASAR A STRING
         }
-
     }
 
 
@@ -131,6 +132,7 @@ public class MainActivity_login extends AppCompatActivity
         return new UserLoader(this, queryUserString, queryPasswordString);
     }
 
+
     // Mètodo requerido por la interfaz
     // Es llamado cuando la tarea finaliza, es donde implementamos el codigo para actualizar la interfaz con los resultados.
     // Para implementar este códifo es necesario conocer la documentación de la API,
@@ -139,8 +141,23 @@ public class MainActivity_login extends AppCompatActivity
         try {
             // Convert the response into a JSON object
             JSONObject jsonObject = new JSONObject(data);
+
+            String result = jsonObject.getString("detail");
+            if (result.equalsIgnoreCase("true")){
+                mResultText.setText("verdadero");
+                mResultPassText.setText("");
+            } else {
+                mResultText.setText("falso");
+                mResultPassText.setText("");
+            }
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /*
             // Get the JSONArray of character.
-            JSONArray itemsArray = jsonObject.getJSONArray("ususario");
+            JSONArray itemsArray = jsonObject.getJSONArray("login");
 
             //Initialize the variables used for the parsing loop
             int i = 0;
@@ -181,9 +198,10 @@ public class MainActivity_login extends AppCompatActivity
             mResultPassText.setText("");
             e.printStackTrace();
         }
-    }
+        */
 
-    // Mètodo requerido por la interfaz
+
+        // Mètodo requerido por la interfaz
     @Override
     public void onLoaderReset(@NonNull Loader<String> loader) {
 
