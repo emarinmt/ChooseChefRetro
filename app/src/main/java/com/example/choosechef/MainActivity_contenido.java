@@ -1,4 +1,14 @@
 package com.example.choosechef;
 
-public class MainActivity_contenido {
+import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity_contenido extends AppCompatActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_content);
+    }
 }
+
