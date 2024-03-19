@@ -163,6 +163,7 @@
         android:layout_marginBottom="50dp"
         android:background="@drawable/fondo_boton"
         android:contentDescription="@string/boton_confirmar"
+        android:onClick="confirmaCambios"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.50"

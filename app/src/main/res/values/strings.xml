@@ -16,10 +16,11 @@
     <string name="contraseña_nueva">Introduce la nueva contraseña </string>
     <string name="contraseña2_nueva">Repite la nueva contraseña</string>
     <string name="eres_chef">¿Eres Chef?</string>
-    <string name="usuario_nombre">Introduce tu nombre</string>
-    <string name="usuario_direccion">Introduce tu dirección</string>
-    <string name="usuario_telefono">Introduce tu teléfono</string>
+    <string name="usuario_nombre">Modifica tu nombre</string>
+    <string name="usuario_direccion">Modifica tu dirección</string>
+    <string name="usuario_telefono">Modifica tu teléfono</string>
     <string name="quieres_cambiar_la_contraseña">¿Quieres cambiar la contraseña?</string>
     <string name="modificacion_perfil">Modificación del perfil</string>
     <string name="conseguido">CONSEGUIDO</string>
+    <string name="boton_modperfil">boton_modPerfil</string>
 </resources>

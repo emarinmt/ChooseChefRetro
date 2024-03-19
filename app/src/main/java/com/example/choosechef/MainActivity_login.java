@@ -65,12 +65,12 @@ public class MainActivity_login extends AppCompatActivity {
             Utils.showToast(MainActivity_login.this,"No hay conexión");
         }
 
-        //Comprueba si el campo de ususario está vacio
+        // Comprueba si el campo de ususario está vacio
         if (queryUserString.length() == 0) {
             mUserInput.setError("¡No se ha proporcionado un usuario!");
         }
 
-        //Comprueba si el campo contraseña está vacio
+        // Comprueba si el campo contraseña está vacio
         if (queryPasswordString.length() == 0) {
             mPassInput.setError("¡No se ha proporcionado una contraseña!");
         }
