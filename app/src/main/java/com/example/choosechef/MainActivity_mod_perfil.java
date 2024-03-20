@@ -27,6 +27,7 @@ public class MainActivity_mod_perfil extends AppCompatActivity {
     private EditText mNewPassInput;
     private EditText mNewPassConfInput;
     private Switch mChangePass;
+    private String username;
     FastMethods mfastMethods;
     Retrofit retro;
     @Override
@@ -34,7 +35,6 @@ public class MainActivity_mod_perfil extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         // Establece el diseño de la actividad.
         setContentView(R.layout.activity_main_mod_perfil);
-
         //Inicialización de variables
         mNameInput = findViewById(R.id.edt_nombre_mod_perfil);
         mAdressInput = findViewById(R.id.edt_direccion_mod_perfil);
@@ -77,7 +77,8 @@ public class MainActivity_mod_perfil extends AppCompatActivity {
             // Ejecutar la llamada de manera asíncrona
             //Onresponse + onfailure
             //Utils.gotoActivity(MainActivity_mod_perfil.this, MainActivity_contenido.class);
-            //
+            //Call<ProfileResponse> call = mfastMethods.login(queryPhoneString);
+
         }
 
         // Comprueba si el campo dirección tiene texto
