@@ -12,7 +12,7 @@ public interface FastMethods {
     * La anotación @Query se utiliza para agregar parámetros a la solicitud
     * En este caso, se pasan el nombre de usuario y la contraseña como parámetros de consulta
     */
-    @GET("/usuario/login/respuesta/")
+    @GET("usuario/login/respuesta")
     Call<Boolean> login(@Query("usuario") String usuario, @Query("password") String password);
     //Call<Boolean> login(String nombre,String password);
     //@POST("usuario/modificar/")
