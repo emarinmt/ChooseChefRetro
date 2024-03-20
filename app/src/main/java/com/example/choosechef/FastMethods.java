@@ -2,6 +2,7 @@ package com.example.choosechef;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
@@ -12,8 +13,8 @@ public interface FastMethods {
     * La anotación @Query se utiliza para agregar parámetros a la solicitud
     * En este caso, se pasan el nombre de usuario y la contraseña como parámetros de consulta
     */
-    @GET("usuario/login/respuesta")
-    Call<Boolean> login(@Query("usuario") String usuario, @Query("password") String password);
+    @GET("usuario/login/respuesta/{usuario}/{password}")
+    Call<Boolean> login(@Path("usuario") String usuario, @Path("password") String password);
     //Call<Boolean> login(String nombre,String password);
     //@POST("usuario/modificar/")
     //Call<ProfileResponse> login(@Query("phone") String phone);  // enviamos usuario y nos devuelve datos
