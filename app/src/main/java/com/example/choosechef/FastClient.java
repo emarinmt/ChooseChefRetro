@@ -5,11 +5,15 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-// Se encarga de crear y configurar una instancia de Retrofit.
+/**
+ * Clase desarrollada por ELENA
+ * Se encarga de crear y configurar una instancia de Retrofit.
+ */
+
 public class FastClient {
     private static Retrofit retrofit;
     // URL base de la API a la que realizaremos las solicitudes.
-    private static final String BASE_URL = "https://choose-chef.vercel.app/"; // *PENDIENTE
+    private static final String BASE_URL = "https://choose-chef.vercel.app/";
 
     /**
      * Devuelve una instancia de Retrofit.

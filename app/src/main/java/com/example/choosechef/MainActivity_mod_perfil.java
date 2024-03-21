@@ -10,16 +10,17 @@ import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.Switch;
-
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-// Representa la actividad para modificar el perfil del usuario.
+/**
+ * Clase desarrollada por EVA
+ * para gestionar la actividad modificar perfil de usuario
+ */
+
 public class MainActivity_mod_perfil extends AppCompatActivity {
     private final String TAG = MainActivity_mod_perfil.class.getSimpleName();
     // Variables para los campos de entrada
@@ -29,40 +30,54 @@ public class MainActivity_mod_perfil extends AppCompatActivity {
     private EditText mPassInput;
     private EditText mNewPassInput;
     private EditText mNewPassConfInput;
-    //private Switch mChangePass;
+    //private Switch mChangePass; (todavia no implementado)
     FastMethods mfastMethods;
     Retrofit retro;
     ProfileResponse ProfileResponse;
+    //variables para recibir usuario y contraseña de otra clase
     String usuario;
     String pass;
+
+    /**
+     * método onCreate para la configuración incial de la actividad
+     * @param savedInstanceState estado de la instancia guardada, un objeto Bundle que contiene el estado previamente guardado de la actividad
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Establece el diseño de la actividad.
         setContentView(R.layout.activity_main_mod_perfil);
+
         //Inicialización de variables
         mNameInput = findViewById(R.id.edt_nombre_mod_perfil);
         mAdressInput = findViewById(R.id.edt_direccion_mod_perfil);
         mPhoneInput = findViewById(R.id.edt_telefono_mod_perfil);
-
-
         mPassInput = findViewById(R.id.edt_contraseña_anterior_mod_perfil);
         mNewPassInput = findViewById(R.id.edt_contraseña_nueva_mod_perfil);
         mNewPassConfInput = findViewById(R.id.edt_contraseña2_nueva_mod_perfil);
-        //mChangePass = findViewById(R.id.switch_cambio_contraseña);
+        //mChangePass = findViewById(R.id.switch_cambio_contraseña); ( todavia no implementado)
 
         retro=FastClient.getClient();
         mfastMethods = retro.create(FastMethods.class);
-
         ProfileResponse = new ProfileResponse(); // Inicializamos profileResponse
+
+        //Recibir usuario y contraseña de la actividad anterior ( contenido)
         usuario = getIntent().getStringExtra("usuario");
         pass = getIntent().getStringExtra("pass");
+
+        //Guardar usuario y contraseña del usuario en clase ProfileResponse para su futura utilización
         ProfileResponse.setUser(usuario);
         ProfileResponse.setPassword(pass);
 
+        //llamar al método recuperarDatos
         recuperarDatos();
 
     }
+
+    /**
+     * método recuperarDatos
+     * Hace la primera consulta al servidor, para recuperar los datos del usuario y mostrarlos en pantalla
+     */
     public void recuperarDatos(){
         //Comprueba el estado de la conexión de red.
         ConnectivityManager connMgr = (ConnectivityManager)
@@ -75,13 +90,19 @@ public class MainActivity_mod_perfil extends AppCompatActivity {
         }
 
         if (networkInfo != null) {
-            //call HTTP client recuperar datos
+            //call HTTP client para recuperar la información del usuario
             Call<List<String>> call = mfastMethods.recuperar_info(ProfileResponse.getUser());
 
             //Ejecutar la llamada de manera asíncrona
             call.enqueue(new Callback<List<String>>() {
+                /**
+                 *Método invocado cuando se recibe una respuesta de la solicitud HTTP
+                 * @param call llamada que generó la respuesta
+                 * @param response la respuesta recibida del servidor
+                 */
                 public void onResponse(@NonNull Call<List<String>> call, @NonNull Response<List<String>> response) {
                     if (response.isSuccessful()) {
+                        //Recibe los datos del usuario en una lista
                         List obtenerDatos = response.body();
                         if (obtenerDatos != null) {
                             //Mostrar datos en pantalla
@@ -90,7 +111,7 @@ public class MainActivity_mod_perfil extends AppCompatActivity {
                             mPhoneInput.setText(obtenerDatos.get(1).toString());
 
                         } else {
-                            // Inicio de sesión fallido, muestra un mensaje de error
+                            // Obtención de datos incorrecta, muestra un mensaje de error
                             Utils.showToast(MainActivity_mod_perfil.this, "Obtención de datos incorrecta");
                         }
                     } else {
@@ -98,11 +119,17 @@ public class MainActivity_mod_perfil extends AppCompatActivity {
                         Utils.showToast(MainActivity_mod_perfil.this, "Error de conexión");
                     }
                 }
+                /**
+                 *Método invocado cuando ocurre un error durante la ejecución de la llamada HTTP
+                 * @param call la llamada que generó el error
+                 * @param t la excepción que ocurrió
+                 */
                 @Override
                 public void onFailure(@NonNull Call<List<String>> call, @NonNull Throwable t) {
                     // Error en la llamada, muestra el mensaje de error y registra la excepción
                     t.printStackTrace();
                     Log.e(TAG, "Error en la llamada:" + t.getMessage());
+                    Utils.showToast(MainActivity_mod_perfil.this, "Error en la llamada: " + t.getMessage());
                 }
             });
         }
@@ -117,6 +144,14 @@ public class MainActivity_mod_perfil extends AppCompatActivity {
      * @param view La vista (Button) que se hizo clic.
      */
     public void confirmaCambios(View view) {
+        // Oculta el teclado cuando el usuario toca el botón
+        InputMethodManager inputManager = (InputMethodManager)
+                getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (inputManager != null ) {
+            inputManager.hideSoftInputFromWindow(view.getWindowToken(),
+                    InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+        //Recupera los datos introducidos por el usuario
         String queryNameString = mNameInput.getText().toString();
         String queryAdressString = mAdressInput.getText().toString();
         String queryPhoneString = mPhoneInput.getText().toString();
@@ -124,29 +159,31 @@ public class MainActivity_mod_perfil extends AppCompatActivity {
         String queryNewPassString = mNewPassInput.getText().toString();
         String queryNewPassConfString = mNewPassConfInput.getText().toString();
 
-
-
         //construir el objeto ModificarUsuarioRequest con los datos ingresados
         ModificarUsuarioRequest request = new ModificarUsuarioRequest();
         request.setNombre(queryNameString);
         request.setUbicacion(queryAdressString);
         request.setTelefono(queryPhoneString);
+        //el id, lo obtenemos de la respuesta, ya que no se puede modificar
         request.setId(request.getId());
+        //estos campos no se piden al usuario y no se pueden modificar todavía, pero el método los necesita aunque esten vacíos
         request.setDescripcion(" ");
         request.setEmail(" ");
-
-        request.setUsuario(ProfileResponse.getUser());
         request.setTipo(" ");
+        //recupera el usuario (recibido del login y almacenado en clase ProfileResponse), que tampoco se puede modificar
+        request.setUsuario(ProfileResponse.getUser());
+
+        //Comprobación de contraseña para poder modificarla
         if(queryPassString.equals(ProfileResponse.getPassword()) ){
             if (queryNewPassString.equals(queryNewPassConfString)){
                 request.setPassword(queryNewPassString);
             }else{
-                Utils.showToast(MainActivity_mod_perfil.this,"La contraseña nueva no coincide");
                 request.setPassword(ProfileResponse.getPassword());
+                Utils.showToast(MainActivity_mod_perfil.this,"La contraseña nueva no coincide");
             }
         }else{
-            Utils.showToast(MainActivity_mod_perfil.this,"La contraseña anterior no es correcta");
             request.setPassword(ProfileResponse.getPassword());
+            Utils.showToast(MainActivity_mod_perfil.this,"La contraseña anterior no es correcta");
         }
 
         //Comprueba el estado de la conexión de red.
@@ -159,28 +196,38 @@ public class MainActivity_mod_perfil extends AppCompatActivity {
             Utils.showToast(MainActivity_mod_perfil.this,"No hay conexión");
         }
 
-        // Comprueba si el campo nombre tiene texto
+        // Si hay conexión hace la llamada para modificar los datos
         if (networkInfo != null) {
-            // call HTTP client's modify method
+            // call HTTP client para modificar los datos de usuario
             Call<String> call = mfastMethods.modificarUsuario(request);
             // Ejecutar la llamada de manera asíncrona
             call.enqueue(new Callback<String>() {
+                /**
+                 *Método invocado cuando se recibe una respuesta de la solicitud HTTP
+                 * @param call llamada que generó la respuesta
+                 * @param response la respuesta recibida del servidor
+                 */
                 @Override
-                public void onResponse(Call<String> call, Response<String> response) {
+                public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
                     if (response.isSuccessful()) {
-                        String responseBody = response.body();
-
-                       // Utils.gotoActivity(MainActivity_mod_perfil.this, MainActivity_contenido.class);
-                        Utils.showToast(MainActivity_mod_perfil.this, responseBody);
+                        //String responseBody = response.body();
+                        Utils.showToast(MainActivity_mod_perfil.this, "Modificación correcta!");
+                        Utils.gotoActivity(MainActivity_mod_perfil.this, MainActivity_contenido.class);
                     } else {
                         Utils.showToast(MainActivity_mod_perfil.this, "Error al modificar usuario");
                     }
                 }
 
+                /**
+                 *Método invocado cuando ocurre un error durante la ejecución de la llamada HTTP
+                 * @param call la llamada que generó el error
+                 * @param t la excepción que ocurrió
+                 */
                 @Override
-                public void onFailure(Call<String> call, Throwable t) {
+                public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
+                    // Error en la llamada, muestra el mensaje de error y registra la excepción
                     t.printStackTrace();
-                    Log.e(TAG, "Error en la llamada: " + t.getMessage());
+                    Log.e(TAG, "Error en la llamada:" + t.getMessage());
                     Utils.showToast(MainActivity_mod_perfil.this, "Error en la llamada: " + t.getMessage());
                 }
             });
@@ -188,25 +235,15 @@ public class MainActivity_mod_perfil extends AppCompatActivity {
             Utils.showToast(MainActivity_mod_perfil.this, "No hay conexión a internet");
         }
 
-            //Onresponse + onfailure
-            //Utils.gotoActivity(MainActivity_mod_perfil.this, MainActivity_contenido.class);
-            //Call<ProfileResponse> call = mfastMethods.login(queryPhoneString);
-
-
-
+        //Preparado para futura utilización, de momento no se comprueba que venga texto porque el método acepta el valor vacío
         // Comprueba si el campo dirección tiene texto
         /*if ((networkInfo != null) && (queryAdressString.length() != 0)) {
-
         }
-
         // Comprueba si el campo teléfono tiene texto
         if ((networkInfo != null) && (queryPhoneString.length() != 0)) {
-
         }
-
         // Comprueba si el check está activo
        // if ((networkInfo != null) && (mChangePass.isChecked())) {
-
         //}*/
     }
 }

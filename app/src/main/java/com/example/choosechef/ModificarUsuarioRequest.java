@@ -1,5 +1,10 @@
 package com.example.choosechef;
 
+/**
+ * Clase desarrollada por EVA
+ * contiene la estructura de los datos del usuario en base de datos
+ * Se utiliza para enviar y recibir los datos en una modificación de datos de usuario
+ */
 public class ModificarUsuarioRequest {
     private int id;
     private String usuario;

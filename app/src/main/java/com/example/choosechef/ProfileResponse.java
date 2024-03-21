@@ -1,6 +1,10 @@
 package com.example.choosechef;
-
+/**
+ * Clase desarrollada por ELENA
+ * para gestionar la información del usuario
+ */
 public class  ProfileResponse{
+    //Eva añado usuario y contraseña, necesarios para la actividad de modificación de perfil
     String user;
     String password;
     String name;

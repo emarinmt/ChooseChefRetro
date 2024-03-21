@@ -1,6 +1,6 @@
 package com.example.choosechef;
 
-import android.content.Intent;
+
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
@@ -15,8 +15,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+/**
+ * Clase desarrollada por ELENA
+ * para gestionar la actividad para manejar el proceso de inicio de sesión de usuario.
+ */
 
-// Actividad para manejar el proceso de inicio de sesión de usuario.
 public class MainActivity_login extends AppCompatActivity {
     private final String TAG = MainActivity_login.class.getSimpleName();
 
@@ -26,6 +29,10 @@ public class MainActivity_login extends AppCompatActivity {
     FastMethods mfastMethods;
     Retrofit retro;
     ProfileResponse ProfileResponse;
+    /**
+     * método onCreate para la configuración incial de la actividad
+     * @param savedInstanceState estado de la instancia guardada, un objeto Bundle que contiene el estado previamente guardado de la actividad
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +91,11 @@ public class MainActivity_login extends AppCompatActivity {
 
             // Ejecutar la llamada de manera asíncrona
             call.enqueue(new Callback<Boolean>() {
+                /**
+                 *Método invocado cuando se recibe una respuesta de la solicitud HTTP
+                 * @param call llamada que generó la respuesta
+                 * @param response la respuesta recibida del servidor
+                 */
                 @Override
                 public void onResponse(@NonNull Call<Boolean> call, @NonNull Response<Boolean> response) {
                     if (response.isSuccessful()) {
@@ -93,11 +105,10 @@ public class MainActivity_login extends AppCompatActivity {
                             ProfileResponse.setUser(queryUserString);
                             // Inicio de sesión exitoso, redirige al usuario a la pantalla de contenido
                            //Utils.gotoActivity(MainActivity_login.this, MainActivity_contenido.class);
-                            Intent i = new Intent(MainActivity_login.this, MainActivity_contenido.class);
-                            i.putExtra("usuario",queryUserString);
-                            i.putExtra("pass",queryPasswordString);
-                            startActivity(i);
-                            finish();
+
+                            //Modificado por EVA para enviar el usuario y contraseña a la siguiente actividad (contenido)
+                            Utils.gotoActivityMessage(MainActivity_login.this, MainActivity_contenido.class, "usuario",queryUserString , "pass", queryPasswordString, true);
+
                         } else {
                             // Inicio de sesión fallido, muestra un mensaje de error
                             Utils.showToast(MainActivity_login.this, "Inicio de sesión incorrecto");
@@ -107,7 +118,11 @@ public class MainActivity_login extends AppCompatActivity {
                         Utils.showToast(MainActivity_login.this, "Error de conexión");
                     }
                 }
-
+                /**
+                 *Método invocado cuando ocurre un error durante la ejecución de la llamada HTTP
+                 * @param call la llamada que generó el error
+                 * @param t la excepción que ocurrió
+                 */
                 @Override
                 public void onFailure(@NonNull Call<Boolean> call, @NonNull Throwable t) {
                     // Error en la llamada, muestra el mensaje de error y registra la excepción
