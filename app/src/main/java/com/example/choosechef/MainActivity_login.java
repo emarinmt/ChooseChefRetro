@@ -1,5 +1,6 @@
 package com.example.choosechef;
 
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
@@ -24,6 +25,7 @@ public class MainActivity_login extends AppCompatActivity {
     private EditText mPassInput;
     FastMethods mfastMethods;
     Retrofit retro;
+    ProfileResponse ProfileResponse;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +34,7 @@ public class MainActivity_login extends AppCompatActivity {
         //Inicialización de variables
         mUserInput = findViewById(R.id.edt_usuario_login);
         mPassInput = findViewById(R.id.edt_contra_login);
+        ProfileResponse = new ProfileResponse(); // Inicializamos profileResponse
 
         retro=FastClient.getClient();
         mfastMethods = retro.create(FastMethods.class);
@@ -86,8 +89,14 @@ public class MainActivity_login extends AppCompatActivity {
                     if (response.isSuccessful()) {
                         Boolean loginSuccess = response.body();
                         if (loginSuccess != null && loginSuccess) {
+                            //guardamos el usuario para utilizarlo después en otra consulta
+                            ProfileResponse.setUser(queryUserString);
                             // Inicio de sesión exitoso, redirige al usuario a la pantalla de contenido
-                            Utils.gotoActivity(MainActivity_login.this, MainActivity_contenido.class);
+                           //Utils.gotoActivity(MainActivity_login.this, MainActivity_contenido.class);
+                            Intent i = new Intent(MainActivity_login.this, MainActivity_contenido.class);
+                            i.putExtra("usuario",queryUserString);
+                            startActivity(i);
+                            finish();
                         } else {
                             // Inicio de sesión fallido, muestra un mensaje de error
                             Utils.showToast(MainActivity_login.this, "Inicio de sesión incorrecto");
@@ -108,4 +117,5 @@ public class MainActivity_login extends AppCompatActivity {
 
         }
     }
+
 }

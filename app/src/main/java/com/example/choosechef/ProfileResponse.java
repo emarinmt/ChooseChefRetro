@@ -1,15 +1,26 @@
 package com.example.choosechef;
 
-public class ProfileResponse {
+public class  ProfileResponse{
+    String user;
     String name;
     String adress;
     String phone;
 
+    public ProfileResponse() {
+    }
 
-    public ProfileResponse(String name, String adress, String phone) {
+    public ProfileResponse(String user, String name, String adress, String phone) {
+        this.user = user;
         this.name = name;
         this.adress = adress;
         this.phone = phone;
+    }
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
     }
 
     public String getName() {
