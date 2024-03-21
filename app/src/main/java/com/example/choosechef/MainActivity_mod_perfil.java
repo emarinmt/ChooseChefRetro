@@ -84,9 +84,8 @@ public class MainActivity_mod_perfil extends AppCompatActivity {
                         if (obtenerDatos != null) {
                             //Mostrar datos en pantalla
                             mNameInput.setText(obtenerDatos.get(0).toString());
-                            mAdressInput.setText(obtenerDatos.get(1).toString());
-                            mPhoneInput.setText(obtenerDatos.get(2).toString());
-
+                            mAdressInput.setText(obtenerDatos.get(2).toString());
+                            mPhoneInput.setText(obtenerDatos.get(1).toString());
 
                         } else {
                             // Inicio de sesión fallido, muestra un mensaje de error
@@ -97,17 +96,13 @@ public class MainActivity_mod_perfil extends AppCompatActivity {
                         Utils.showToast(MainActivity_mod_perfil.this, "Error de conexión");
                     }
                 }
-
                 @Override
                 public void onFailure(@NonNull Call<List<String>> call, @NonNull Throwable t) {
                     // Error en la llamada, muestra el mensaje de error y registra la excepción
                     t.printStackTrace();
                     Log.e(TAG, "Error en la llamada:" + t.getMessage());
                 }
-
             });
-
-
         }
 
 
@@ -123,8 +118,18 @@ public class MainActivity_mod_perfil extends AppCompatActivity {
         String queryNameString = mNameInput.getText().toString();
         String queryAdressString = mAdressInput.getText().toString();
         String queryPhoneString = mPhoneInput.getText().toString();
-        // String querynewPassString = mNewPassConfInput.getText().toString();
-        //int option = 0;
+
+        //construir el objeto ModificarUsuarioRequest con los datos ingresados
+        ModificarUsuarioRequest request = new ModificarUsuarioRequest();
+        request.setNombre(queryNameString);
+        request.setUbicacion(queryAdressString);
+        request.setTelefono(queryPhoneString);
+        request.setId(request.getId());
+        request.setDescripcion(" ");
+        request.setEmail(" ");
+        request.setPassword("1234");
+        request.setUsuario(ProfileResponse.getUser());
+        request.setTipo(" ");
 
         //Comprueba el estado de la conexión de red.
         ConnectivityManager connMgr = (ConnectivityManager)
@@ -137,17 +142,42 @@ public class MainActivity_mod_perfil extends AppCompatActivity {
         }
 
         // Comprueba si el campo nombre tiene texto
-        if ((networkInfo != null) && (queryNameString.length() != 0)) {
+        if (networkInfo != null) {
             // call HTTP client's modify method
+            Call<String> call = mfastMethods.modificarUsuario(request);
             // Ejecutar la llamada de manera asíncrona
+            call.enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    if (response.isSuccessful()) {
+                        String responseBody = response.body();
+                        // Procesa la respuesta como desees
+                       // Utils.gotoActivity(MainActivity_mod_perfil.this, MainActivity_contenido.class);
+                        Utils.showToast(MainActivity_mod_perfil.this, responseBody);
+                    } else {
+                        Utils.showToast(MainActivity_mod_perfil.this, "Error al modificar usuario");
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+                    t.printStackTrace();
+                    Log.e(TAG, "Error en la llamada: " + t.getMessage());
+                    Utils.showToast(MainActivity_mod_perfil.this, "Error en la llamada: " + t.getMessage());
+                }
+            });
+        } else {
+            Utils.showToast(MainActivity_mod_perfil.this, "No hay conexión a internet");
+        }
+
             //Onresponse + onfailure
             //Utils.gotoActivity(MainActivity_mod_perfil.this, MainActivity_contenido.class);
             //Call<ProfileResponse> call = mfastMethods.login(queryPhoneString);
 
-        }
+
 
         // Comprueba si el campo dirección tiene texto
-        if ((networkInfo != null) && (queryAdressString.length() != 0)) {
+        /*if ((networkInfo != null) && (queryAdressString.length() != 0)) {
 
         }
 
@@ -159,6 +189,6 @@ public class MainActivity_mod_perfil extends AppCompatActivity {
         // Comprueba si el check está activo
        // if ((networkInfo != null) && (mChangePass.isChecked())) {
 
-        //}
+        //}*/
     }
 }

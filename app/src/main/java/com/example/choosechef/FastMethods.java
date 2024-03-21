@@ -3,8 +3,10 @@ package com.example.choosechef;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
+import retrofit2.http.POST;
 
 // Interfaz que define los métodos para realizar llamadas a la API
 public interface FastMethods {
@@ -17,8 +19,9 @@ public interface FastMethods {
     Call<Boolean> login(@Path("usuario") String usuario, @Path("password") String password);
     @GET("usuario/mostrar/porusuario/{usuario}")
     Call<List<String>> recuperar_info(@Path("usuario") String usuario);
-    //@POST("usuario/modificar/porusuario")
-    //Call<ProfileResponse> login(@Query("phone") String phone);  // enviamos usuario y nos devuelve datos
+
+    @POST("usuario/modificar/porusuario")
+    Call<String> modificarUsuario(@Body ModificarUsuarioRequest request);
 
     //@POST("usuario/modificar/")
     //Call<Boolean> login(@Query("phone") String phone);  // envio datos modificados, devuelvo boleano
