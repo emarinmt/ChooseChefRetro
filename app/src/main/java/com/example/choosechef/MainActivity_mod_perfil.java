@@ -26,14 +26,15 @@ public class MainActivity_mod_perfil extends AppCompatActivity {
     private EditText mNameInput;
     private EditText mAdressInput;
     private EditText mPhoneInput;
-    //private EditText mPassInput;
-    //private EditText mNewPassInput;
-    //private EditText mNewPassConfInput;
+    private EditText mPassInput;
+    private EditText mNewPassInput;
+    private EditText mNewPassConfInput;
     //private Switch mChangePass;
     FastMethods mfastMethods;
     Retrofit retro;
     ProfileResponse ProfileResponse;
     String usuario;
+    String pass;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,10 +46,9 @@ public class MainActivity_mod_perfil extends AppCompatActivity {
         mPhoneInput = findViewById(R.id.edt_telefono_mod_perfil);
 
 
-        //todavia no se utilizan
-        //mPassInput = findViewById(R.id.edt_contraseña_anterior_mod_perfil);
-        //mNewPassInput = findViewById(R.id.edt_contraseña_nueva_mod_perfil);
-        //mNewPassConfInput = findViewById(R.id.edt_contraseña2_nueva_mod_perfil);
+        mPassInput = findViewById(R.id.edt_contraseña_anterior_mod_perfil);
+        mNewPassInput = findViewById(R.id.edt_contraseña_nueva_mod_perfil);
+        mNewPassConfInput = findViewById(R.id.edt_contraseña2_nueva_mod_perfil);
         //mChangePass = findViewById(R.id.switch_cambio_contraseña);
 
         retro=FastClient.getClient();
@@ -56,7 +56,9 @@ public class MainActivity_mod_perfil extends AppCompatActivity {
 
         ProfileResponse = new ProfileResponse(); // Inicializamos profileResponse
         usuario = getIntent().getStringExtra("usuario");
+        pass = getIntent().getStringExtra("pass");
         ProfileResponse.setUser(usuario);
+        ProfileResponse.setPassword(pass);
 
         recuperarDatos();
 
@@ -118,6 +120,11 @@ public class MainActivity_mod_perfil extends AppCompatActivity {
         String queryNameString = mNameInput.getText().toString();
         String queryAdressString = mAdressInput.getText().toString();
         String queryPhoneString = mPhoneInput.getText().toString();
+        String queryPassString = mPassInput.getText().toString();
+        String queryNewPassString = mNewPassInput.getText().toString();
+        String queryNewPassConfString = mNewPassConfInput.getText().toString();
+
+
 
         //construir el objeto ModificarUsuarioRequest con los datos ingresados
         ModificarUsuarioRequest request = new ModificarUsuarioRequest();
@@ -127,9 +134,20 @@ public class MainActivity_mod_perfil extends AppCompatActivity {
         request.setId(request.getId());
         request.setDescripcion(" ");
         request.setEmail(" ");
-        request.setPassword("1234");
+
         request.setUsuario(ProfileResponse.getUser());
         request.setTipo(" ");
+        if(queryPassString.equals(ProfileResponse.getPassword()) ){
+            if (queryNewPassString.equals(queryNewPassConfString)){
+                request.setPassword(queryNewPassString);
+            }else{
+                Utils.showToast(MainActivity_mod_perfil.this,"La contraseña nueva no coincide");
+                request.setPassword(ProfileResponse.getPassword());
+            }
+        }else{
+            Utils.showToast(MainActivity_mod_perfil.this,"La contraseña anterior no es correcta");
+            request.setPassword(ProfileResponse.getPassword());
+        }
 
         //Comprueba el estado de la conexión de red.
         ConnectivityManager connMgr = (ConnectivityManager)
@@ -151,7 +169,7 @@ public class MainActivity_mod_perfil extends AppCompatActivity {
                 public void onResponse(Call<String> call, Response<String> response) {
                     if (response.isSuccessful()) {
                         String responseBody = response.body();
-                        // Procesa la respuesta como desees
+
                        // Utils.gotoActivity(MainActivity_mod_perfil.this, MainActivity_contenido.class);
                         Utils.showToast(MainActivity_mod_perfil.this, responseBody);
                     } else {

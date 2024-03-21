@@ -95,6 +95,7 @@ public class MainActivity_login extends AppCompatActivity {
                            //Utils.gotoActivity(MainActivity_login.this, MainActivity_contenido.class);
                             Intent i = new Intent(MainActivity_login.this, MainActivity_contenido.class);
                             i.putExtra("usuario",queryUserString);
+                            i.putExtra("pass",queryPasswordString);
                             startActivity(i);
                             finish();
                         } else {
