@@ -1,5 +1,8 @@
 package com.example.choosechef;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -15,6 +18,18 @@ public class FastClient {
     // URL base de la API a la que realizaremos las solicitudes.
     private static final String BASE_URL = "https://choose-chef.vercel.app/";
 
+    /*
+    PARA TOKEN
+
+    // Agrega una referencia al contexto para poder acceder a SharedPreferences
+    private static Context mContext; //NUEVO
+
+    // Método para establecer el contexto, llamado desde tu aplicación al inicializar
+    public static void initialize(Context context) { //NUEVO
+        mContext = context.getApplicationContext();
+    }
+     */
+
     /**
      * Devuelve una instancia de Retrofit.
      * Si la instancia aún no se ha creado, crea una nueva utilizando `Retrofit.Builder`
@@ -27,7 +42,17 @@ public class FastClient {
             // Configuración de OkHttpClient con interceptor de log y interceptor de autenticación
             OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
             httpClient.addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY));
-            httpClient.addInterceptor(new AuthInterceptor()); // Agregar interceptor de autenticación
+            // Agregar interceptor de autenticación
+            httpClient.addInterceptor(new AuthInterceptor());  // *BORRAR PARA TOKEN
+            /*
+            PARA TOKEN
+            // Obtener el token de SharedPreferences  //NUEVO
+            SharedPreferences sharedPreferences = mContext.getSharedPreferences("MiPreferencia", Context.MODE_PRIVATE);
+            String token = sharedPreferences.getString("token", "");
+
+            httpClient.addInterceptor(new AuthInterceptor(token)); // Agregar interceptor de autenticación *PENDIENTE
+            // token es el token de acceso que hemos almacenado localmente)
+            */
 
             // Construcción de la instancia de Retrofit
             retrofit = new Retrofit.Builder()

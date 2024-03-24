@@ -1,6 +1,7 @@
 package com.example.choosechef;
 
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
@@ -15,6 +16,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import android.content.SharedPreferences;
 /**
  * Clase desarrollada por ELENA
  * para gestionar la actividad para manejar el proceso de inicio de sesión de usuario.
@@ -29,6 +31,9 @@ public class MainActivity_login extends AppCompatActivity {
     FastMethods mfastMethods;
     Retrofit retro;
     ProfileResponse ProfileResponse;
+
+    // PARA TOKEN
+    // private SharedPreferences sharedPreferences;
     /**
      * método onCreate para la configuración incial de la actividad
      * @param savedInstanceState estado de la instancia guardada, un objeto Bundle que contiene el estado previamente guardado de la actividad
@@ -45,6 +50,13 @@ public class MainActivity_login extends AppCompatActivity {
 
         retro=FastClient.getClient();
         mfastMethods = retro.create(FastMethods.class);
+
+        /*
+        PARA TOKEN
+
+        //Inicialización de SharePreferences para recoger el token del servidor
+        sharedPreferences = getSharedPreferences("MiPreferencia", Context.MODE_PRIVATE);
+         */
     }
 
     /**
@@ -87,18 +99,41 @@ public class MainActivity_login extends AppCompatActivity {
 
         if ((networkInfo != null) && (queryUserString.length() != 0) && (queryPasswordString.length() != 0)) {
             //call HTTP client's login method
-            Call<Boolean> call = mfastMethods.login(queryUserString,queryPasswordString);
+            Call<Boolean> call = mfastMethods.login(queryUserString,queryPasswordString); // PARA TOKEN CANVIAR BOOLEAN POR TokenResponse
 
             // Ejecutar la llamada de manera asíncrona
-            call.enqueue(new Callback<Boolean>() {
+            call.enqueue(new Callback<Boolean>() { // PARA TOKEN CANVIAR BOOLEAN POR TokenResponse
                 /**
                  *Método invocado cuando se recibe una respuesta de la solicitud HTTP
                  * @param call llamada que generó la respuesta
                  * @param response la respuesta recibida del servidor
                  */
                 @Override
+                // PARA TOKEN CANVIAR LOS DOS BOOLEAN POR TokenResponse
                 public void onResponse(@NonNull Call<Boolean> call, @NonNull Response<Boolean> response) {
-                    if (response.isSuccessful()) {
+                    if (response.isSuccessful()) { // PARA TOKEN AÑADIR && response.body() != null)
+
+                        /*
+                            PARA TOKEN
+
+                            TokenResponse tokenResponse = response.body();
+                            String token = tokenResponse.getToken();
+
+                            // Guardar el token de acceso en SharedPreferences
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString("token", token);
+                            editor.apply();
+
+                            // Inicio de sesión exitoso, redirige al usuario a la pantalla de contenido
+                           //Utils.gotoActivity(MainActivity_login.this, MainActivity_contenido.class);
+
+                    } else {
+                            // Inicio de sesión fallido, muestra un mensaje de error
+                            Utils.showToast(MainActivity_login.this, "Inicio de sesión incorrecto");
+                        }
+                         */
+
+                        //BORRAR PARA TOKEN
                         Boolean loginSuccess = response.body();
                         if (loginSuccess != null && loginSuccess) {
                             //guardamos el usuario para utilizarlo después en otra consulta
@@ -113,6 +148,8 @@ public class MainActivity_login extends AppCompatActivity {
                             // Inicio de sesión fallido, muestra un mensaje de error
                             Utils.showToast(MainActivity_login.this, "Inicio de sesión incorrecto");
                         }
+
+                        //
                     } else {
                         // La llamada no fue exitosa, muestra un mensaje de error
                         Utils.showToast(MainActivity_login.this, "Error de conexión");

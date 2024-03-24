@@ -57,11 +57,18 @@ public class MainActivity_mod_perfil extends AppCompatActivity {
         mNewPassConfInput = findViewById(R.id.edt_contraseña2_nueva_mod_perfil);
         //mChangePass = findViewById(R.id.switch_cambio_contraseña); ( todavia no implementado)
 
+        /*
+        PARA TOKEN
+        // Llamada al método initialize() de FastClient pasando el contexto adecuado (this)
+        FastClient.initialize(this);
+
+         */
+
         retro=FastClient.getClient();
         mfastMethods = retro.create(FastMethods.class);
         ProfileResponse = new ProfileResponse(); // Inicializamos profileResponse
 
-        //Recibir usuario y contraseña de la actividad anterior ( contenido)
+        //Recibir usuario y contraseña de la actividad anterior ( contenido)  //BORRAR
         usuario = getIntent().getStringExtra("usuario");
         pass = getIntent().getStringExtra("pass");
 

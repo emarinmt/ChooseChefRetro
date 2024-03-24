@@ -24,7 +24,15 @@ public interface FastMethods {
      * @return true o false, si las credenciales son correctas o no y se le permite el login
      */
     @GET("usuario/login/respuesta/{usuario}/{password}")
-    Call<Boolean> login(@Path("usuario") String usuario, @Path("password") String password);
+    Call<Boolean> login(@Path("usuario") String usuario, @Path("password") String password); // *BORRAR PARA TOKEN
+
+    /*
+    PARA TOKEN
+
+    @FormUrlEncoded
+    @POST("usuario/login/respuesta/{usuario}/{password}")
+    Call<TokenResponse> login(@Field("usuario") String usuario, @Field("password") String password);
+    */
 
     /**
      * Método dessarrollado por EVA
