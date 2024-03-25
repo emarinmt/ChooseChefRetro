@@ -2,7 +2,10 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="gris">#575555</color>
     <color name="hint">#9FFFFFFF</color>
     <color name="titulo">#62A2D5</color>
+    <color name="azul">#71B1E4</color>
+    <color name="lila">#6E31DA</color>
 
 </resources>
