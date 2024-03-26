@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * para gestionar la actividad contenido
  */
 
-public class MainActivity_contenido extends AppCompatActivity {
+public class Activity_contenido extends AppCompatActivity {
     //Añadido por EVA para recibir el usuario en esta actividad y enviarlo a la siguiente( modificaicón perfil)
     String usuario;
     String pass;
@@ -62,21 +62,20 @@ public class MainActivity_contenido extends AppCompatActivity {
         // Redirige al usuario a la pantalla de modificación de perfil
         //Utils.gotoActivity(MainActivity_contenido.this, MainActivity_mod_perfil.class);
         //Cambiado por EVA para poder recibir el usuario y la contraseña de la actividad anterior(login) y enviarlo a la siguiente actividad (modificación perfil)
-        Utils.gotoActivityMessage(MainActivity_contenido.this, MainActivity_mod_perfil.class, "usuario",usuario , "pass", pass, false);
+        Utils.gotoActivityMessage(Activity_contenido.this, Activity_mod_perfil.class, "usuario",usuario , "pass", pass, false);
 
 
     }
     public void search(View view) {
-        //cambiar cuando cree la siguiente pantalla
-        // Redirige al usuario a la pantalla de
-        Utils.gotoActivityMessage(MainActivity_contenido.this, MainActivity_mod_perfil.class, "usuario",usuario , "pass", pass, false);
+        // Redirige al usuario a la pantalla de busqueda
+        Utils.gotoActivity(Activity_contenido.this, Activity_busqueda.class);
 
 
     }
     public void gorro (View view) {
         //cambiar cuando cree la siguiente pantalla
         // Redirige al usuario a la pantalla de
-        Utils.gotoActivityMessage(MainActivity_contenido.this, MainActivity_mod_perfil.class, "usuario",usuario , "pass", pass, false);
+        Utils.gotoActivityMessage(Activity_contenido.this, Activity_mod_perfil.class, "usuario",usuario , "pass", pass, false);
 
 
     }

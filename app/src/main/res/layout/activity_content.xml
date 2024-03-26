@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/fondo2"
-    tools:context=".MainActivity_contenido" >
+    tools:context=".Activity_contenido" >
 
     <ImageButton
         android:id="@+id/btn_mod_perfil"
         android:layout_width="68dp"
         android:layout_height="56dp"
         android:layout_marginBottom="4dp"
-        android:background="@drawable/boton_redondo"
+        android:background="@drawable/fondo_boton_redondo"
         android:contentDescription="@string/boton_modperfil"
         android:onClick="changeProfile"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -26,7 +26,7 @@
         android:id="@+id/btn_lupa"
         android:layout_width="68dp"
         android:layout_height="56dp"
-        android:background="@drawable/boton_redondo"
+        android:background="@drawable/fondo_boton_redondo"
         android:contentDescription="@string/boton_modperfil"
         android:onClick="search"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -44,7 +44,7 @@
         android:layout_height="56dp"
         android:layout_marginBottom="4dp"
         android:adjustViewBounds="true"
-        android:background="@drawable/boton_redondo"
+        android:background="@drawable/fondo_boton_redondo"
         android:contentDescription="@string/boton_modperfil"
         android:onClick="gorro"
         android:scaleType="centerInside"

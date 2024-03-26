@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fondo2">
+
+    <TextView
+        android:id="@+id/txt_provincia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="@string/selecciona_provincia"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/spinner_provincias"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="TextContrastCheck" />
+
+    <Spinner
+        android:id="@+id/spinner_provincias"
+        android:layout_width="350dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="60dp"
+        android:background="@drawable/fondo_spinner"
+        android:dropDownSelector="@drawable/fondo_spinner"
+        android:minHeight="48dp"
+        android:popupBackground="@drawable/fondo_spinner"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/txt_tipo_comida"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/txt_tipo_comida"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="@string/selecciona_comida"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/spinner_tipo_comida"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="TextContrastCheck" />
+
+    <Spinner
+        android:id="@+id/spinner_tipo_comida"
+        android:layout_width="350dp"
+        android:layout_height="52dp"
+        android:layout_marginBottom="60dp"
+        android:background="@drawable/fondo_spinner"
+        android:dropDownSelector="@drawable/fondo_spinner"
+        android:minHeight="48dp"
+        android:popupBackground="@drawable/fondo_spinner"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/txt_servicio"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/txt_servicio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="@string/selecciona_servicio"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/spinner_servicios"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="TextContrastCheck" />
+
+    <Spinner
+        android:id="@+id/spinner_servicios"
+        android:layout_width="350dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/fondo_spinner"
+        android:dropDownSelector="@drawable/fondo_spinner"
+        android:minHeight="48dp"
+        android:popupBackground="@drawable/fondo_spinner"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_servicio"
+     />
+
+    <ImageButton
+        android:id="@+id/ibtn_confirmar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/fondo_boton"
+        android:contentDescription="@string/boton_confirmar"
+        android:onClick="confirmarBusqueda"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.50"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_servicios"
+        app:srcCompat="@drawable/boton_confirmar" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

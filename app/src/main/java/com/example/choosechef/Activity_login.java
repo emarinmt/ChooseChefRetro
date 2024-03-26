@@ -1,7 +1,6 @@
 package com.example.choosechef;
 
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
@@ -16,14 +15,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import android.content.SharedPreferences;
+
 /**
  * Clase desarrollada por ELENA
  * para gestionar la actividad para manejar el proceso de inicio de sesión de usuario.
  */
 
-public class MainActivity_login extends AppCompatActivity {
-    private final String TAG = MainActivity_login.class.getSimpleName();
+public class Activity_login extends AppCompatActivity {
+    private final String TAG = Activity_login.class.getSimpleName();
 
     // Variables para los campos de entrada de usuario y contraseña.
     private EditText mUserInput;
@@ -41,7 +40,7 @@ public class MainActivity_login extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_login);
+        setContentView(R.layout.activity_login);
 
         //Inicialización de variables
         mUserInput = findViewById(R.id.edt_usuario_login);
@@ -84,7 +83,7 @@ public class MainActivity_login extends AppCompatActivity {
         if (connMgr != null) {
             networkInfo = connMgr.getActiveNetworkInfo();
         } else {
-            Utils.showToast(MainActivity_login.this,"No hay conexión");
+            Utils.showToast(Activity_login.this,"No hay conexión");
         }
 
         // Comprueba si el campo de ususario está vacio
@@ -142,17 +141,17 @@ public class MainActivity_login extends AppCompatActivity {
                            //Utils.gotoActivity(MainActivity_login.this, MainActivity_contenido.class);
 
                             //Modificado por EVA para enviar el usuario y contraseña a la siguiente actividad (contenido)
-                            Utils.gotoActivityMessage(MainActivity_login.this, MainActivity_contenido.class, "usuario",queryUserString , "pass", queryPasswordString, true);
+                            Utils.gotoActivityMessage(Activity_login.this, Activity_contenido.class, "usuario",queryUserString , "pass", queryPasswordString, true);
 
                         } else {
                             // Inicio de sesión fallido, muestra un mensaje de error
-                            Utils.showToast(MainActivity_login.this, "Inicio de sesión incorrecto");
+                            Utils.showToast(Activity_login.this, "Inicio de sesión incorrecto");
                         }
 
                         //
                     } else {
                         // La llamada no fue exitosa, muestra un mensaje de error
-                        Utils.showToast(MainActivity_login.this, "Error de conexión");
+                        Utils.showToast(Activity_login.this, "Error de conexión");
                     }
                 }
                 /**
