@@ -24,14 +24,14 @@ public class MainActivity_inicio extends AppCompatActivity {
         ImageButton btnEntrar = findViewById(R.id.ibtn_entrar);
         btnEntrar.setOnClickListener(view -> {
             // Al hacer clic en el botón de entrada, se inicia la actividad de inicio de sesión
-            Utils.gotoActivity(MainActivity_inicio.this, MainActivity_login.class);
+            Utils.gotoActivity(MainActivity_inicio.this, Activity_login.class);
         });
 
         // Configuración del botón de registro
         ImageButton btnRegistro = findViewById(R.id.ibtn_registro);
         btnRegistro.setOnClickListener(view -> {
             // Al hacer clic en el botón de registro, se inicia la actividad de registro
-            Utils.gotoActivity(MainActivity_inicio.this, MainActivity_registro.class);
+            Utils.gotoActivity(MainActivity_inicio.this, Activity_registro.class);
         });
     }
 }

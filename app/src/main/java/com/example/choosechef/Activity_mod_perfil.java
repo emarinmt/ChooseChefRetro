@@ -21,8 +21,8 @@ import retrofit2.Retrofit;
  * para gestionar la actividad modificar perfil de usuario
  */
 
-public class MainActivity_mod_perfil extends AppCompatActivity {
-    private final String TAG = MainActivity_mod_perfil.class.getSimpleName();
+public class Activity_mod_perfil extends AppCompatActivity {
+    private final String TAG = Activity_mod_perfil.class.getSimpleName();
     // Variables para los campos de entrada
     private EditText mNameInput;
     private EditText mAdressInput;
@@ -46,7 +46,7 @@ public class MainActivity_mod_perfil extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Establece el diseño de la actividad.
-        setContentView(R.layout.activity_main_mod_perfil);
+        setContentView(R.layout.activity_mod_perfil);
 
         //Inicialización de variables
         mNameInput = findViewById(R.id.edt_nombre_mod_perfil);
@@ -93,7 +93,7 @@ public class MainActivity_mod_perfil extends AppCompatActivity {
         if (connMgr != null) {
             networkInfo = connMgr.getActiveNetworkInfo();
         } else {
-            Utils.showToast(MainActivity_mod_perfil.this,"No hay conexión");
+            Utils.showToast(Activity_mod_perfil.this,"No hay conexión");
         }
 
         if (networkInfo != null) {
@@ -119,11 +119,11 @@ public class MainActivity_mod_perfil extends AppCompatActivity {
 
                         } else {
                             // Obtención de datos incorrecta, muestra un mensaje de error
-                            Utils.showToast(MainActivity_mod_perfil.this, "Obtención de datos incorrecta");
+                            Utils.showToast(Activity_mod_perfil.this, "Obtención de datos incorrecta");
                         }
                     } else {
                         // La llamada no fue exitosa, muestra un mensaje de error
-                        Utils.showToast(MainActivity_mod_perfil.this, "Error de conexión");
+                        Utils.showToast(Activity_mod_perfil.this, "Error de conexión");
                     }
                 }
                 /**
@@ -136,7 +136,7 @@ public class MainActivity_mod_perfil extends AppCompatActivity {
                     // Error en la llamada, muestra el mensaje de error y registra la excepción
                     t.printStackTrace();
                     Log.e(TAG, "Error en la llamada:" + t.getMessage());
-                    Utils.showToast(MainActivity_mod_perfil.this, "Error en la llamada: " + t.getMessage());
+                    Utils.showToast(Activity_mod_perfil.this, "Error en la llamada: " + t.getMessage());
                 }
             });
         }
@@ -186,11 +186,11 @@ public class MainActivity_mod_perfil extends AppCompatActivity {
                 request.setPassword(queryNewPassString);
             }else{
                 request.setPassword(ProfileResponse.getPassword());
-                Utils.showToast(MainActivity_mod_perfil.this,"La contraseña nueva no coincide");
+                Utils.showToast(Activity_mod_perfil.this,"La contraseña nueva no coincide");
             }
         }else{
             request.setPassword(ProfileResponse.getPassword());
-            Utils.showToast(MainActivity_mod_perfil.this,"La contraseña anterior no es correcta");
+            Utils.showToast(Activity_mod_perfil.this,"La contraseña anterior no es correcta");
         }
 
         //Comprueba el estado de la conexión de red.
@@ -200,7 +200,7 @@ public class MainActivity_mod_perfil extends AppCompatActivity {
         if (connMgr != null) {
             networkInfo = connMgr.getActiveNetworkInfo();
         } else {
-            Utils.showToast(MainActivity_mod_perfil.this,"No hay conexión");
+            Utils.showToast(Activity_mod_perfil.this,"No hay conexión");
         }
 
         // Si hay conexión hace la llamada para modificar los datos
@@ -218,10 +218,10 @@ public class MainActivity_mod_perfil extends AppCompatActivity {
                 public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
                     if (response.isSuccessful()) {
                         //String responseBody = response.body();
-                        Utils.showToast(MainActivity_mod_perfil.this, "Modificación correcta!");
-                        Utils.gotoActivity(MainActivity_mod_perfil.this, MainActivity_contenido.class);
+                        Utils.showToast(Activity_mod_perfil.this, "Modificación correcta!");
+                        Utils.gotoActivity(Activity_mod_perfil.this, Activity_contenido.class);
                     } else {
-                        Utils.showToast(MainActivity_mod_perfil.this, "Error al modificar usuario");
+                        Utils.showToast(Activity_mod_perfil.this, "Error al modificar usuario");
                     }
                 }
 
@@ -235,11 +235,11 @@ public class MainActivity_mod_perfil extends AppCompatActivity {
                     // Error en la llamada, muestra el mensaje de error y registra la excepción
                     t.printStackTrace();
                     Log.e(TAG, "Error en la llamada:" + t.getMessage());
-                    Utils.showToast(MainActivity_mod_perfil.this, "Error en la llamada: " + t.getMessage());
+                    Utils.showToast(Activity_mod_perfil.this, "Error en la llamada: " + t.getMessage());
                 }
             });
         } else {
-            Utils.showToast(MainActivity_mod_perfil.this, "No hay conexión a internet");
+            Utils.showToast(Activity_mod_perfil.this, "No hay conexión a internet");
         }
 
         //Preparado para futura utilización, de momento no se comprueba que venga texto porque el método acepta el valor vacío
