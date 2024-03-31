@@ -20,6 +20,7 @@ public class MainActivity_inicio extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_inicio);
 
+        // Llama al método de la clase FastClient para establecer el contexto (Elena)
         FastClient.initialize(getApplicationContext());
 
         // Configuración del botón de entrada

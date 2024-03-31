@@ -20,10 +20,10 @@ public interface FastMethods {
      * Método desarrollado por ELENA
      * Para realizar el inicio de sesión en la API
      * La anotación @GET indica que esta solicitud se realiza con el método GET HTTP
-     * La anotación @Query se utiliza para agregar parámetros a la solicitud
+     * La anotación @Path se utiliza para agregar parámetros a la solicitud
      * @param usuario nombre de usuario
      * @param password contraseña
-     * @return true o false, si las credenciales son correctas o no y se le permite el login
+     * @return token
      */
 
     @GET("usuario/login/token/{usuario}/{password}")
@@ -51,11 +51,15 @@ public interface FastMethods {
     Call<String> modificarUsuario(@Body ModificarUsuarioRequest request);
 
     /**
-     * Método desarrollado por Elena
-     * Para realizar el registro
-     * @param request objeto con los datos del usuario ( clase RegistroUsuarioRequest )
-     * @return devuelve un String con los datos modificados
+     * Método desarrollado por ELENA
+     * Para realizar el registro de usuario
+     * La anotación @GET indica que esta solicitud se realiza con el método GET HTTP
+     * La anotación @Path se utiliza para agregar parámetros a la solicitud
+     * @param usuario nombre de usuario
+     * @param password contraseña
+     * @param tipo tipo de usuariuo
+     * @return string si es correcto o no
      */
     @POST("usuario/modificar/porusuario")
-    Call<String> registrarUsuario(@Body RegistroUsuarioRequest request);
+    Call<String> registrarUsuario(@Path("usuario") String usuario, @Path("password") String password, @Path("tipo") String tipo);
 }

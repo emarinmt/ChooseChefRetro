@@ -2,6 +2,10 @@ package com.example.choosechef;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -53,16 +57,33 @@ public class Utils extends AppCompatActivity{
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
 
-    /*
+    /**
      * Método desarrollado por ELENA
-     * Muestra un toast con un mensaje en el hilo secundario.
-     * @param activity Actividad que mostrará el toast.
-     * @param context Contexto del toast.
-     * @param message Mensaje del toast.
-    public static void showToast(Activity activity, Context context, String message){
-        activity.runOnUiThread(() -> Toast.makeText(context, message, Toast.LENGTH_SHORT).show());
+     * Compruebe el estado de la conexión de red.
+     * Devuelve true si hay conexión o false si no la hay
+     * @param context Contexto de la clase
+     */
+    public static boolean isNetworkAvailable(Context context) {
+        ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = null;
+        if (connMgr != null) {
+            networkInfo = connMgr.getActiveNetworkInfo();
+            return true;
+        } else {
+            return false;
+        }
     }
-    */
 
-
+    /**
+     * Método desarrollado por ELENA
+     * Oculta el teclado cuando el usuario toca el botón
+     * @param context Contexto de la clase
+     * @param view La vista (Button) que se hizo clic.
+     */
+    public static void hideKeyboard(Context context, View view) {
+        InputMethodManager inputManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (inputManager != null) {
+            inputManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+    }
 }
