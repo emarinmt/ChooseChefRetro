@@ -1,6 +1,7 @@
 package com.example.choosechef;
 
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
@@ -32,7 +33,7 @@ public class Activity_login extends AppCompatActivity {
     ProfileResponse ProfileResponse;
 
     // PARA TOKEN
-    // private SharedPreferences sharedPreferences;
+    private SharedPreferences sharedPreferences;
     /**
      * método onCreate para la configuración incial de la actividad
      * @param savedInstanceState estado de la instancia guardada, un objeto Bundle que contiene el estado previamente guardado de la actividad
@@ -50,12 +51,12 @@ public class Activity_login extends AppCompatActivity {
         retro=FastClient.getClient();
         mfastMethods = retro.create(FastMethods.class);
 
-        /*
-        PARA TOKEN
+
+        //PARA TOKEN
 
         //Inicialización de SharePreferences para recoger el token del servidor
         sharedPreferences = getSharedPreferences("MiPreferencia", Context.MODE_PRIVATE);
-         */
+
     }
 
     /**
@@ -98,25 +99,21 @@ public class Activity_login extends AppCompatActivity {
 
         if ((networkInfo != null) && (queryUserString.length() != 0) && (queryPasswordString.length() != 0)) {
             //call HTTP client's login method
-            Call<Boolean> call = mfastMethods.login(queryUserString,queryPasswordString); // PARA TOKEN CANVIAR BOOLEAN POR TokenResponse
+            Call<String> call = mfastMethods.login(queryUserString,queryPasswordString); // PARA TOKEN CANVIAR BOOLEAN POR TokenResponse
 
             // Ejecutar la llamada de manera asíncrona
-            call.enqueue(new Callback<Boolean>() { // PARA TOKEN CANVIAR BOOLEAN POR TokenResponse
+            call.enqueue(new Callback<String>() { // PARA TOKEN CANVIAR BOOLEAN POR TokenResponse
                 /**
                  *Método invocado cuando se recibe una respuesta de la solicitud HTTP
                  * @param call llamada que generó la respuesta
                  * @param response la respuesta recibida del servidor
                  */
                 @Override
-                // PARA TOKEN CANVIAR LOS DOS BOOLEAN POR TokenResponse
-                public void onResponse(@NonNull Call<Boolean> call, @NonNull Response<Boolean> response) {
-                    if (response.isSuccessful()) { // PARA TOKEN AÑADIR && response.body() != null)
+                public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
+                    if ((response.isSuccessful()) && (response.body() != null)) {
 
-                        /*
-                            PARA TOKEN
-
-                            TokenResponse tokenResponse = response.body();
-                            String token = tokenResponse.getToken();
+                            //PARA TOKEN
+                            String token = response.body();
 
                             // Guardar el token de acceso en SharedPreferences
                             SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -124,43 +121,22 @@ public class Activity_login extends AppCompatActivity {
                             editor.apply();
 
                             // Inicio de sesión exitoso, redirige al usuario a la pantalla de contenido
-                           //Utils.gotoActivity(MainActivity_login.this, MainActivity_contenido.class);
+                           Utils.gotoActivity(Activity_login.this, Activity_contenido.class);
 
                     } else {
-                            // Inicio de sesión fallido, muestra un mensaje de error
-                            Utils.showToast(MainActivity_login.this, "Inicio de sesión incorrecto");
-                        }
-                         */
-
-                        //BORRAR PARA TOKEN
-                        Boolean loginSuccess = response.body();
-                        if (loginSuccess != null && loginSuccess) {
-                            //guardamos el usuario para utilizarlo después en otra consulta
-                            ProfileResponse.setUser(queryUserString);
-                            // Inicio de sesión exitoso, redirige al usuario a la pantalla de contenido
-                           //Utils.gotoActivity(MainActivity_login.this, MainActivity_contenido.class);
-
-                            //Modificado por EVA para enviar el usuario y contraseña a la siguiente actividad (contenido)
-                            Utils.gotoActivityMessage(Activity_login.this, Activity_contenido.class, "usuario",queryUserString , "pass", queryPasswordString, true);
-
-                        } else {
                             // Inicio de sesión fallido, muestra un mensaje de error
                             Utils.showToast(Activity_login.this, "Inicio de sesión incorrecto");
-                        }
-
-                        //
-                    } else {
-                        // La llamada no fue exitosa, muestra un mensaje de error
-                        Utils.showToast(Activity_login.this, "Error de conexión");
                     }
+
                 }
+
                 /**
                  *Método invocado cuando ocurre un error durante la ejecución de la llamada HTTP
                  * @param call la llamada que generó el error
                  * @param t la excepción que ocurrió
                  */
                 @Override
-                public void onFailure(@NonNull Call<Boolean> call, @NonNull Throwable t) {
+                public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
                     // Error en la llamada, muestra el mensaje de error y registra la excepción
                     t.printStackTrace();
                     Log.e(TAG, "Error en la llamada:" + t.getMessage());

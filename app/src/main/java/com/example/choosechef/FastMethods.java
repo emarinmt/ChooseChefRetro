@@ -9,7 +9,7 @@ import retrofit2.http.Path;
 import retrofit2.http.POST;
 
 /**
- * Interfaz desarrollada por ELENA, ( EVA añade metodos)
+ * Interfaz desarrollada por ELENA, (EVA añade metodos)
  * Interfaz que define los métodos para realizar llamadas a la API
  */
 public interface FastMethods {
@@ -23,16 +23,13 @@ public interface FastMethods {
      * @param password contraseña
      * @return true o false, si las credenciales son correctas o no y se le permite el login
      */
-    @GET("usuario/login/respuesta/{usuario}/{password}")
-    Call<Boolean> login(@Path("usuario") String usuario, @Path("password") String password); // *BORRAR PARA TOKEN
+    //@GET("usuario/login/respuesta/{usuario}/{password}")
+    //Call<Boolean> login(@Path("usuario") String usuario, @Path("password") String password); // *BORRAR PARA TOKEN
 
-    /*
-    PARA TOKEN
+    //@FormUrlEncoded
+    @GET("usuario/login/token/{usuario}/{password}")
+    Call<String> login(@Path("usuario") String usuario, @Path("password") String password);
 
-    @FormUrlEncoded
-    @POST("usuario/login/respuesta/{usuario}/{password}")
-    Call<TokenResponse> login(@Field("usuario") String usuario, @Field("password") String password);
-    */
 
     /**
      * Método dessarrollado por EVA

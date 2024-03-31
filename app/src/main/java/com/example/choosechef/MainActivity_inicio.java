@@ -20,6 +20,8 @@ public class MainActivity_inicio extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_inicio);
 
+        FastClient.initialize(getApplicationContext());
+
         // Configuración del botón de entrada
         ImageButton btnEntrar = findViewById(R.id.ibtn_entrar);
         btnEntrar.setOnClickListener(view -> {

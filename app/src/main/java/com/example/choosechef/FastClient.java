@@ -17,10 +17,6 @@ public class FastClient {
     private static Retrofit retrofit;
     // URL base de la API a la que realizaremos las solicitudes.
     private static final String BASE_URL = "https://choose-chef.vercel.app/";
-
-    /*
-    PARA TOKEN
-
     // Agrega una referencia al contexto para poder acceder a SharedPreferences
     private static Context mContext; //NUEVO
 
@@ -28,7 +24,7 @@ public class FastClient {
     public static void initialize(Context context) { //NUEVO
         mContext = context.getApplicationContext();
     }
-     */
+
 
     /**
      * Devuelve una instancia de Retrofit.
@@ -43,16 +39,15 @@ public class FastClient {
             OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
             httpClient.addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY));
             // Agregar interceptor de autenticación
-            httpClient.addInterceptor(new AuthInterceptor());  // *BORRAR PARA TOKEN
-            /*
-            PARA TOKEN
-            // Obtener el token de SharedPreferences  //NUEVO
+            //httpClient.addInterceptor(new AuthInterceptor());  // *BORRAR PARA TOKEN
+
+            //PARA TOKEN
+            // Obtener el token de SharedPreferences
             SharedPreferences sharedPreferences = mContext.getSharedPreferences("MiPreferencia", Context.MODE_PRIVATE);
             String token = sharedPreferences.getString("token", "");
 
-            httpClient.addInterceptor(new AuthInterceptor(token)); // Agregar interceptor de autenticación *PENDIENTE
+            httpClient.addInterceptor(new AuthInterceptor(token)); // Agregar interceptor de autenticación
             // token es el token de acceso que hemos almacenado localmente)
-            */
 
             // Construcción de la instancia de Retrofit
             retrofit = new Retrofit.Builder()

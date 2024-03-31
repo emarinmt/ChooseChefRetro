@@ -1,8 +1,5 @@
 package com.example.choosechef;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-
 import java.io.IOException;
 import okhttp3.Interceptor;
 import okhttp3.Request;
@@ -14,16 +11,13 @@ import okhttp3.Response;
  */
 public class AuthInterceptor implements Interceptor {
 
-    /*
-    PARA TOKEN
-
     private String token;
 
     // Constructor que recibe el token como parámetro
     public AuthInterceptor(String token) {
-        this.token = token;  //NUEVO
+        this.token = token;
     }
-    */
+
 
     /**
      * Método para interceptar y modificar la solicitud saliente
@@ -34,8 +28,6 @@ public class AuthInterceptor implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request originalRequest = chain.request(); // Obtener la solicitud original
-
-        String token = "your_access_token"; // *BORRAR PARA TOKEN
 
         // Crear una nueva solicitud y le añade el token de acceso al encabezado
         Request newRequest = originalRequest.newBuilder()
