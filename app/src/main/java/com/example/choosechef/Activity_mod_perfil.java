@@ -1,5 +1,6 @@
 package com.example.choosechef;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
@@ -37,6 +38,7 @@ public class Activity_mod_perfil extends AppCompatActivity {
     //variables para recibir usuario y contraseña de otra clase
     String usuario;
     String pass;
+    String token;
 
     /**
      * método onCreate para la configuración incial de la actividad
@@ -57,12 +59,9 @@ public class Activity_mod_perfil extends AppCompatActivity {
         mNewPassConfInput = findViewById(R.id.edt_contraseña2_nueva_mod_perfil);
         //mChangePass = findViewById(R.id.switch_cambio_contraseña); ( todavia no implementado)
 
-        /*
-        PARA TOKEN
-        // Llamada al método initialize() de FastClient pasando el contexto adecuado (this)
-        FastClient.initialize(this);
-
-         */
+        // Obtener el token de SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences("MiPreferencia", Context.MODE_PRIVATE);
+        token = sharedPreferences.getString("token", "");
 
         retro=FastClient.getClient();
         mfastMethods = retro.create(FastMethods.class);
@@ -98,7 +97,7 @@ public class Activity_mod_perfil extends AppCompatActivity {
 
         if (networkInfo != null) {
             //call HTTP client para recuperar la información del usuario
-            Call<List<String>> call = mfastMethods.recuperar_info(ProfileResponse.getUser());
+            Call<List<String>> call = mfastMethods.recuperar_info("Bearer " + token, ProfileResponse.getUser()); //MODIFICAR
 
             //Ejecutar la llamada de manera asíncrona
             call.enqueue(new Callback<List<String>>() {

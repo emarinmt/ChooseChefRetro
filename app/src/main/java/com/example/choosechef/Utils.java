@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
  * Clase desarrollada por ELENA
  * Clase de utilidades que proporciona métodos útiles para la navegación entre actividades y mostrar tostadas.
  */
-public class Utils {
+public class Utils extends AppCompatActivity{
 
     /**
      * Método desarrollado por ELENA
@@ -63,4 +63,6 @@ public class Utils {
         activity.runOnUiThread(() -> Toast.makeText(context, message, Toast.LENGTH_SHORT).show());
     }
     */
+
+
 }

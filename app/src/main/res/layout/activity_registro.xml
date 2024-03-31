@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/fondo1"
-    tools:context=".MainActivity_inicio" >
+    tools:context=".Activity_registro" >
 
     <Switch
         android:id="@+id/switch_chef_registro"
@@ -83,6 +83,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/fondo_boton"
         android:contentDescription="@string/boton_registro"
+        android:onClick="doRegister"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.531"
