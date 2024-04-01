@@ -27,8 +27,8 @@ public class Activity_login extends AppCompatActivity {
     private EditText mUserInput;
     private EditText mPassInput;
     FastMethods mfastMethods;
+    // Variables para conecatr con la API
     Retrofit retro;
-    ProfileResponse ProfileResponse;
     private SharedPreferences sharedPreferences; // Para almacenar el token
     /**
      * Método onCreate para la configuración incial de la actividad
@@ -37,12 +37,11 @@ public class Activity_login extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_login); // Establece el diseño de la actividad.
 
         //Inicialización de variables
         mUserInput = findViewById(R.id.edt_usuario_login);
         mPassInput = findViewById(R.id.edt_contra_login);
-        ProfileResponse = new ProfileResponse(); // Inicializamos profileResponse
 
         retro=FastClient.getClient();
         mfastMethods = retro.create(FastMethods.class);

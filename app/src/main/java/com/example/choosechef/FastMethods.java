@@ -33,21 +33,21 @@ public interface FastMethods {
     /**
      * Método dessarrollado por EVA
      * Para realizar una consulta al servidor y recuperar los datos de usuario
-     * @param usuario nombre de usuario
      * @return devuelve una lista con el nombre del usuario, el teléfono y la dirección
      */
 
-    @GET("usuario/mostrar/porusuario/{usuario}")
-    Call<List<String>> recuperar_info(@Header("Authorization") String token, @Path("usuario") String usuario);
+    //CAMBIAR POR MOSTRAR POR TOKEN
+    @GET("usuario/mostrar")
+    Call<List<String>> recuperar_info(@Header("Authorization") String token);
 
     /**
      * Método desarrollado por EVA
      * Para realizar una modificación de los datos de usuario en la base de datos
-     * @param request objeto con los datos del usuario ( clase ModificarUsuarioRequest ) para modificar los datos en base de datos
+     * @param user objeto con los datos del usuario ( clase ModificarUsuarioRequest ) para modificar los datos en base de datos
      * @return devuelve un String con los datos modificados
      */
     @POST("usuario/modificar/porusuario")
-    Call<String> modificarUsuario(@Body ModificarUsuarioRequest request);
+    Call<String> modificarUsuario(@Header("Authorization") String token, @Body User user);
 
     // MODIFICAR COMENTARIO
     // PENDIENTE MÉTODO

@@ -11,14 +11,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 /**
- * Clase desarrollada por ELENA (falta desarrollar la parte gràfica)
+ * Clase desarrollada por ELENA
  * para gestionar la actividad contenido
  */
 
 public class Activity_contenido extends AppCompatActivity {
-    //Añadido por EVA para recibir el usuario en esta actividad y enviarlo a la siguiente( modificaicón perfil)
-    String usuario;
-    String pass;
+    // Añadido por EVA para recibir el usuario en esta actividad y enviarlo a la siguiente( modificaicón perfil)
+    //String usuario;
+    //String pass;
+    // Borrado por ELENA para usar token
+
     //Para mostrar los chefs
     RecyclerView recyclerView;
     Adapter adapter;
@@ -26,7 +28,7 @@ public class Activity_contenido extends AppCompatActivity {
 
 
     /**
-     * método onCreate para la configuración incial de la actividad
+     * Método onCreate para la configuración incial de la actividad
      * @param savedInstanceState estado de la instancia guardada, un objeto Bundle que contiene el estado previamente guardado de la actividad
      */
     @Override
@@ -35,8 +37,9 @@ public class Activity_contenido extends AppCompatActivity {
         // Establece el diseño de la actividad.
         setContentView(R.layout.activity_content);
         //Añadido por EVA para recibir el usuario y contraseña de la actividad anterior (login)
-        usuario = getIntent().getStringExtra("usuario");
-        pass = getIntent().getStringExtra("pass");
+        //usuario = getIntent().getStringExtra("usuario");
+        //pass = getIntent().getStringExtra("pass");
+        // Borrado por ELENA para usar token
 
         //Aquí habrá que llamar a base de datos y recuperar lista de chefs
         items = new ArrayList<>();
@@ -44,7 +47,6 @@ public class Activity_contenido extends AppCompatActivity {
         items.add("Segundo chef");
         items.add("Tercer chef");
         items.add("Cuarto chef");
-
 
         recyclerView = findViewById(R.id.rv_chefs);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -62,9 +64,10 @@ public class Activity_contenido extends AppCompatActivity {
         // Redirige al usuario a la pantalla de modificación de perfil
         //Utils.gotoActivity(MainActivity_contenido.this, MainActivity_mod_perfil.class);
         //Cambiado por EVA para poder recibir el usuario y la contraseña de la actividad anterior(login) y enviarlo a la siguiente actividad (modificación perfil)
-        Utils.gotoActivityMessage(Activity_contenido.this, Activity_mod_perfil.class, "usuario",usuario , "pass", pass, false);
-
-
+        //Utils.gotoActivityMessage(Activity_contenido.this, Activity_mod_perfil.class, "usuario",usuario , "pass", pass, false);
+        // Modificado por ELENA para usar el token
+        // Redirige al usuario a la pantalla de modificación de perfil
+        Utils.gotoActivity(Activity_contenido.this, Activity_mod_perfil.class);
     }
     public void search(View view) {
         // Redirige al usuario a la pantalla de busqueda
@@ -75,7 +78,7 @@ public class Activity_contenido extends AppCompatActivity {
     public void gorro (View view) {
         //cambiar cuando cree la siguiente pantalla
         // Redirige al usuario a la pantalla de
-        Utils.gotoActivityMessage(Activity_contenido.this, Activity_mod_perfil.class, "usuario",usuario , "pass", pass, false);
+        //Utils.gotoActivityMessage(Activity_contenido.this, Activity_mod_perfil.class, "usuario",usuario , "pass", pass, false);
 
 
     }

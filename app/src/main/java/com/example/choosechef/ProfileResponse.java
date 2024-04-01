@@ -5,6 +5,7 @@ package com.example.choosechef;
  */
 public class  ProfileResponse{
     //Eva añado usuario y contraseña, necesarios para la actividad de modificación de perfil
+    private int id; // Elena
     String user;
     String password;
     String name;
@@ -14,14 +15,21 @@ public class  ProfileResponse{
     public ProfileResponse() {
     }
 
-    public ProfileResponse(String user, String name, String adress, String phone,String password) {
+    public ProfileResponse(int id, String user, String name, String adress, String phone,String password) {
+        this.id = id;
         this.user = user;
         this.name = name;
         this.adress = adress;
         this.phone = phone;
         this.password = password;
     }
+    public int getId() {
+        return id;
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
     public String getPassword() {
         return password;
     }
