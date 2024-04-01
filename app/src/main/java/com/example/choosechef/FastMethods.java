@@ -4,7 +4,6 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Path;
@@ -26,8 +25,8 @@ public interface FastMethods {
      * @return token
      */
 
-    @GET("usuario/login/token/{usuario}/{password}")
-    Call<String> login(@Path("usuario") String usuario, @Path("password") String password);
+    @GET("usuario/login/token2/{usuario}/{password}")
+    Call<TokenResponse> login(@Path("usuario") String usuario, @Path("password") String password);
 
 
     /**
@@ -55,11 +54,12 @@ public interface FastMethods {
      * Para realizar el registro de usuario
      * La anotación @GET indica que esta solicitud se realiza con el método GET HTTP
      * La anotación @Path se utiliza para agregar parámetros a la solicitud
-     * @param usuario nombre de usuario
-     * @param password contraseña
-     * @param tipo tipo de usuariuo
+     * //@param usuario nombre de usuario
+     * //@param password contraseña
+     * //@param tipo tipo de usuariuo
      * @return string si es correcto o no
      */
-    @POST("usuario/modificar/porusuario")
-    Call<String> registrarUsuario(@Path("usuario") String usuario, @Path("password") String password, @Path("tipo") String tipo);
+    @POST("usuario/crear")
+    Call<String> crearUsuario(@Body ModificarUsuarioRequest request);
+    //@Path("password") String password, @Path("tipo") String tipo);
 }

@@ -2,6 +2,8 @@ package com.example.choosechef;
 
 
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
@@ -65,18 +67,28 @@ public class Activity_login extends AppCompatActivity {
         Utils.hideKeyboard(this, view);
 
         //Compruebe el estado de la conexión de red.
-        if (!Utils.isNetworkAvailable(this)) {
-            Utils.showToast(Activity_login.this, "No hay conexión a Internet");
-            return;
+        //if (!Utils.isNetworkAvailable(this)) {
+            //Utils.showToast(Activity_login.this, "No hay conexión a Internet");
+           // return;
+       // }
+        //Comprueba el estado de la conexión de red.
+        ConnectivityManager connMgr = (ConnectivityManager)
+                getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = null;
+        if (connMgr != null) {
+            networkInfo = connMgr.getActiveNetworkInfo();
+        } else {
+            Utils.showToast(Activity_login.this,"No hay conexión");
         }
 
         // Comprueba si los campos estan vacios
         if (!validateFields(queryUserString,queryPasswordString)) {
             return;
         }
-
-        //Enviar los datos del usuario al servidor
-        loginUsuario(queryUserString,queryPasswordString);
+        if (networkInfo != null) {
+            //Enviar los datos del usuario al servidor
+            loginUsuario(queryUserString,queryPasswordString);
+        }
     }
 
     private boolean validateFields(String username, String password) {
@@ -91,19 +103,19 @@ public class Activity_login extends AppCompatActivity {
         return true;
     }
 
-
     private void loginUsuario(String username, String password) {
-        Call<String> call = mfastMethods.login(username,password);
-        call.enqueue(new Callback<String>() { // Ejecutar la llamada de manera asíncrona
+        Call<TokenResponse> call = mfastMethods.login(username,password);
+        call.enqueue(new Callback<TokenResponse>() { // Ejecutar la llamada de manera asíncrona
             /**
              *Método invocado cuando se recibe una respuesta de la solicitud HTTP
              * @param call llamada que generó la respuesta
              * @param response la respuesta recibida del servidor
              */
             @Override
-            public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
+            public void onResponse(@NonNull Call<TokenResponse> call, @NonNull Response<TokenResponse> response) {
                 if ((response.isSuccessful()) && (response.body() != null)) {
-                    String token = response.body();
+                    TokenResponse tokenResponse = response.body();
+                    String token = tokenResponse.getToken();
 
                     // Guardar el token de acceso en SharedPreferences
                     SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -125,7 +137,7 @@ public class Activity_login extends AppCompatActivity {
              * @param t la excepción que ocurrió
              */
             @Override
-            public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<TokenResponse> call, @NonNull Throwable t) {
                 // Error en la llamada, muestra el mensaje de error y registra la excepción
                 t.printStackTrace();
                 Log.e(TAG, "Error en la llamada:" + t.getMessage());

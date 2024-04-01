@@ -1,24 +1,25 @@
 package com.example.choosechef;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Switch;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
 /**
- * Clase desarrollada por Elena
+ * Clase desarrollada por ELENA
  * Representa la actividad de registro de la aplicación
- * A ella se llega a través del boton "Registro" de la actividad principal inicio
+ * Se llega a través del boton "Registro" de la actividad principal inicio
  */
 public class Activity_registro extends AppCompatActivity {
     private final String TAG = Activity_mod_perfil.class.getSimpleName();
@@ -27,10 +28,12 @@ public class Activity_registro extends AppCompatActivity {
     private EditText mPassInput;
     private EditText mConfirmPassInput;
     private Switch mChef;
+
+    // Variables para conecatr con la API
     FastMethods mfastMethods;
     Retrofit retro;
     /**
-     * método onCreate para la configuración incial de la actividad
+     * Método onCreate para la configuración incial de la actividad
      * @param savedInstanceState estado de la instancia guardada, un objeto Bundle que contiene el estado previamente guardado de la actividad
      */
     @Override
@@ -38,7 +41,7 @@ public class Activity_registro extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro); // Establece el diseño de la actividad.
 
-        //Inicialización de variables
+        // Inicialización de variables
         mUserInput = findViewById(R.id.edt_usuario_registro);
         mPassInput = findViewById(R.id.edt_contraseña_registro);
         mConfirmPassInput = findViewById(R.id.edt_contraseña2_registro);
@@ -47,22 +50,34 @@ public class Activity_registro extends AppCompatActivity {
         retro=FastClient.getClient();
         mfastMethods = retro.create(FastMethods.class);
     }
+
     /**
      * Método para manejar el clic del botón de registro.
-     * Hace el loginregistr y dirige al usuario a la pantalla login,
+     * Hace el registro y dirige al usuario a la pantalla login,
      * muestra un mensaje de error si falla.
-     * @param view La vista (Button) que se hizo clic.
+     * @param view La vista (Button) a la que se hizo clic.
      */
+
     public void doRegister(View view) {
+        // Obtención de los datos de entrada
         String queryUserString = mUserInput.getText().toString();
         String queryPasswordString = mPassInput.getText().toString();
         String queryConfirmPassString = mConfirmPassInput.getText().toString();
         String queryTipo = mChef.isChecked() ? "chef" : "client";
 
-        //Compruebe el estado de la conexión de red.
-        if (!Utils.isNetworkAvailable(this)) {
-            Utils.showToast(Activity_registro.this, "No hay conexión a Internet");
-            return;
+        //Comprueba el estado de la conexión de red.
+        //if (!Utils.isNetworkAvailable(this)) {
+          //  Utils.showToast(Activity_registro.this, "No hay conexión a Internet");
+           // return;
+       // }
+        //Comprueba el estado de la conexión de red.
+        ConnectivityManager connMgr = (ConnectivityManager)
+                getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = null;
+        if (connMgr != null) {
+            networkInfo = connMgr.getActiveNetworkInfo();
+        } else {
+            Utils.showToast(Activity_registro.this,"No hay conexión");
         }
 
         // Comprueba si los campos estan vacios
@@ -70,11 +85,34 @@ public class Activity_registro extends AppCompatActivity {
             return;
         }
 
-        //Enviar los datos del usuario al servidor
-        registrarUsuario(queryUserString,queryPasswordString,queryTipo);
+        //construir el objeto ModificarUsuarioRequest con los datos ingresados
+        ModificarUsuarioRequest request = new ModificarUsuarioRequest();
+        request.setUsuario(queryUserString);
+        request.setPassword(queryPasswordString);
+        request.setTipo(queryTipo);
+        request.setNombre("");
+        request.setUbicacion("");
+        request.setTelefono("");
+        //estos campos no se piden al usuario y no se pueden modificar todavía, pero el método los necesita aunque esten vacíos
+        request.setDescripcion("");
+        request.setEmail("");
+
+        if (networkInfo != null) {
+            // Envia los datos del usuario al servidor
+            // crearUsuario(queryUserString, queryPasswordString, queryTipo);
+            crearUsuario(request);
+        }
+
 
     }
 
+    /**
+     * Método para validar los campos
+     * @param username nombre de usuario introducido
+     * @param password contraseña introducida
+     * @param confirmPassword confirmación de contraseña introducida
+     * @return booleano true si los campos estan rellenados o false si alguno está vacio
+     */
     private boolean validateFields(String username, String password, String confirmPassword) {
         if (TextUtils.isEmpty(username)) {  // Comprueba si el campo de ususario está vacio
             mUserInput.setError("¡Debe ingresar un nombre de usuario!");
@@ -98,8 +136,17 @@ public class Activity_registro extends AppCompatActivity {
 
         return true;
     }
-    private void registrarUsuario(String username, String password, String userType) {
-        Call<String> call = mfastMethods.registrarUsuario(username,password,userType);
+
+    /**
+     * Método para realizar el registro
+     * //@param username nombre de usuario introducido
+     * //@param password contraseña introducida
+     * //@param userType respuesta al check (chef o cliente)
+     */
+    private void crearUsuario(ModificarUsuarioRequest request) {
+        //String username, String password, String userType
+        Call<String> call = mfastMethods.crearUsuario(request);
+        //password,userType
         call.enqueue(new Callback<String>() { // Ejecutar la llamada de manera asíncrona
             /**
              *Método invocado cuando se recibe una respuesta de la solicitud HTTP
@@ -117,7 +164,7 @@ public class Activity_registro extends AppCompatActivity {
             }
 
             /**
-             *Método invocado cuando ocurre un error durante la ejecución de la llamada HTTP
+             * Método invocado cuando ocurre un error durante la ejecución de la llamada HTTP
              * @param call la llamada que generó el error
              * @param t la excepción que ocurrió
              */
