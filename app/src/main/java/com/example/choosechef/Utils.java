@@ -27,6 +27,7 @@ public class Utils extends AppCompatActivity{
         parent.finish();
     }
 
+    // QUITAR PARA TOKEN
     /**
      * Método añadido por EVA para abrir actividad y enviar mensaje, elige si se finaliza la actividad
      * @param parent Actividad padre
@@ -60,8 +61,8 @@ public class Utils extends AppCompatActivity{
     /**
      * Método desarrollado por ELENA
      * Compruebe el estado de la conexión de red.
-     * Devuelve true si hay conexión o false si no la hay
      * @param context Contexto de la clase
+     * @return true si hay conexión o false si no la hay
      */
     public static boolean isNetworkAvailable(Context context) {
         ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);

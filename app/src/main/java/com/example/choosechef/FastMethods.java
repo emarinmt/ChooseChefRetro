@@ -8,6 +8,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Path;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 /**
  * Interfaz desarrollada por ELENA, (EVA añade metodos)
@@ -22,7 +23,7 @@ public interface FastMethods {
      * La anotación @Path se utiliza para agregar parámetros a la solicitud
      * @param usuario nombre de usuario
      * @param password contraseña
-     * @return token
+     * @return token de sesión
      */
 
     @GET("usuario/login/token2/{usuario}/{password}")
@@ -45,10 +46,11 @@ public interface FastMethods {
      * @param request objeto con los datos del usuario ( clase ModificarUsuarioRequest ) para modificar los datos en base de datos
      * @return devuelve un String con los datos modificados
      */
-
     @POST("usuario/modificar/porusuario")
     Call<String> modificarUsuario(@Body ModificarUsuarioRequest request);
 
+    // MODIFICAR COMENTARIO
+    // PENDIENTE MÉTODO
     /**
      * Método desarrollado por ELENA
      * Para realizar el registro de usuario
@@ -60,6 +62,5 @@ public interface FastMethods {
      * @return string si es correcto o no
      */
     @POST("usuario/crear")
-    Call<String> crearUsuario(@Body ModificarUsuarioRequest request);
-    //@Path("password") String password, @Path("tipo") String tipo);
+    Call<String> crearUsuario(@Query("nombre") String nombre, @Query("email") String email, @Query("password") String password, @Query("tipo") String tipo);
 }

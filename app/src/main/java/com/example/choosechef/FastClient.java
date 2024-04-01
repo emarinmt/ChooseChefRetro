@@ -18,7 +18,7 @@ public class FastClient {
     // URL base de la API a la que realizaremos las solicitudes.
     private static final String BASE_URL = "https://choose-chef.vercel.app/";
     // Agrega una referencia al contexto para poder acceder a SharedPreferences
-    private static Context mContext; //NUEVO
+    private static Context mContext;
 
     // Método para establecer el contexto, llamado desde tu aplicación al inicializar
     public static void initialize(Context context) { //NUEVO
@@ -38,10 +38,7 @@ public class FastClient {
             // Configuración de OkHttpClient con interceptor de log y interceptor de autenticación
             OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
             httpClient.addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY));
-            // Agregar interceptor de autenticación
-            //httpClient.addInterceptor(new AuthInterceptor());  // *BORRAR PARA TOKEN
 
-            //PARA TOKEN
             // Obtener el token de SharedPreferences
             SharedPreferences sharedPreferences = mContext.getSharedPreferences("MiPreferencia", Context.MODE_PRIVATE);
             String token = sharedPreferences.getString("token", "");

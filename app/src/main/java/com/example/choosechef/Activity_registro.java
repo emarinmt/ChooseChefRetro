@@ -1,8 +1,5 @@
 package com.example.choosechef;
 
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -66,18 +63,9 @@ public class Activity_registro extends AppCompatActivity {
         String queryTipo = mChef.isChecked() ? "chef" : "client";
 
         //Comprueba el estado de la conexión de red.
-        //if (!Utils.isNetworkAvailable(this)) {
-          //  Utils.showToast(Activity_registro.this, "No hay conexión a Internet");
-           // return;
-       // }
-        //Comprueba el estado de la conexión de red.
-        ConnectivityManager connMgr = (ConnectivityManager)
-                getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = null;
-        if (connMgr != null) {
-            networkInfo = connMgr.getActiveNetworkInfo();
-        } else {
-            Utils.showToast(Activity_registro.this,"No hay conexión");
+        if (!Utils.isNetworkAvailable(this)) {
+            Utils.showToast(Activity_registro.this, "No hay conexión a Internet");
+            return;
         }
 
         // Comprueba si los campos estan vacios
@@ -85,27 +73,14 @@ public class Activity_registro extends AppCompatActivity {
             return;
         }
 
-        //construir el objeto ModificarUsuarioRequest con los datos ingresados
-        ModificarUsuarioRequest request = new ModificarUsuarioRequest();
-        request.setUsuario(queryUserString);
-        request.setPassword(queryPasswordString);
-        request.setTipo(queryTipo);
-        request.setNombre("");
-        request.setUbicacion("");
-        request.setTelefono("");
-        //estos campos no se piden al usuario y no se pueden modificar todavía, pero el método los necesita aunque esten vacíos
-        request.setDescripcion("");
-        request.setEmail("");
+        String email = "a@gmail.com";  // PEDIR EN PANTALLA
 
-        if (networkInfo != null) {
-            // Envia los datos del usuario al servidor
-            // crearUsuario(queryUserString, queryPasswordString, queryTipo);
-            crearUsuario(request);
-        }
-
-
+        // Envia los datos del usuario al servidor
+        crearUsuario(queryUserString,email,queryPasswordString,queryTipo);
     }
 
+
+    // AÑADIR EMAIL AL COMENTARIO Y AL METODO
     /**
      * Método para validar los campos
      * @param username nombre de usuario introducido
@@ -136,17 +111,15 @@ public class Activity_registro extends AppCompatActivity {
 
         return true;
     }
-
+    // AÑADIR EMAIL AL COMENTARIO
     /**
      * Método para realizar el registro
-     * //@param username nombre de usuario introducido
-     * //@param password contraseña introducida
-     * //@param userType respuesta al check (chef o cliente)
+     * @param username nombre de usuario introducido
+     * @param password contraseña introducida
+     * @param userType respuesta al check (chef o cliente)
      */
-    private void crearUsuario(ModificarUsuarioRequest request) {
-        //String username, String password, String userType
-        Call<String> call = mfastMethods.crearUsuario(request);
-        //password,userType
+    private void crearUsuario(String username, String email, String password, String userType) {
+        Call<String> call = mfastMethods.crearUsuario(username, email, password, userType);
         call.enqueue(new Callback<String>() { // Ejecutar la llamada de manera asíncrona
             /**
              *Método invocado cuando se recibe una respuesta de la solicitud HTTP

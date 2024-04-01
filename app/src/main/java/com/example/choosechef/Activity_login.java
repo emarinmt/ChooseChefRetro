@@ -2,8 +2,6 @@ package com.example.choosechef;
 
 
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
@@ -67,30 +65,25 @@ public class Activity_login extends AppCompatActivity {
         Utils.hideKeyboard(this, view);
 
         //Compruebe el estado de la conexión de red.
-        //if (!Utils.isNetworkAvailable(this)) {
-            //Utils.showToast(Activity_login.this, "No hay conexión a Internet");
-           // return;
-       // }
-        //Comprueba el estado de la conexión de red.
-        ConnectivityManager connMgr = (ConnectivityManager)
-                getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = null;
-        if (connMgr != null) {
-            networkInfo = connMgr.getActiveNetworkInfo();
-        } else {
-            Utils.showToast(Activity_login.this,"No hay conexión");
+        if (!Utils.isNetworkAvailable(this)) {
+            Utils.showToast(Activity_login.this, "No hay conexión a Internet");
+            return;
         }
 
         // Comprueba si los campos estan vacios
         if (!validateFields(queryUserString,queryPasswordString)) {
             return;
         }
-        if (networkInfo != null) {
-            //Enviar los datos del usuario al servidor
-            loginUsuario(queryUserString,queryPasswordString);
-        }
-    }
 
+        //Enviar los datos del usuario al servidor
+        loginUsuario(queryUserString,queryPasswordString);
+    }
+    /**
+     * Método para validar los campos
+     * @param username nombre de usuario introducido
+     * @param password contraseña introducida
+     * @return booleano true si los campos estan rellenados o false si alguno está vacio
+     */
     private boolean validateFields(String username, String password) {
         if (TextUtils.isEmpty(username)) {  // Comprueba si el campo de ususario está vacio
             mUserInput.setError("¡Debe ingresar un nombre de usuario!");
@@ -103,11 +96,16 @@ public class Activity_login extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Método para realizar el login
+     * @param username nombre de usuario introducido
+     * @param password contraseña introducida
+     */
     private void loginUsuario(String username, String password) {
         Call<TokenResponse> call = mfastMethods.login(username,password);
         call.enqueue(new Callback<TokenResponse>() { // Ejecutar la llamada de manera asíncrona
             /**
-             *Método invocado cuando se recibe una respuesta de la solicitud HTTP
+             * Método invocado cuando se recibe una respuesta de la solicitud HTTP
              * @param call llamada que generó la respuesta
              * @param response la respuesta recibida del servidor
              */
@@ -132,7 +130,7 @@ public class Activity_login extends AppCompatActivity {
             }
 
             /**
-             *Método invocado cuando ocurre un error durante la ejecución de la llamada HTTP
+             * Método invocado cuando ocurre un error durante la ejecución de la llamada HTTP
              * @param call la llamada que generó el error
              * @param t la excepción que ocurrió
              */
