@@ -25,7 +25,6 @@ public interface FastMethods {
      * @param password contraseña
      * @return token de sesión
      */
-
     @GET("usuario/login/token2/{usuario}/{password}")
     Call<TokenResponse> login(@Path("usuario") String usuario, @Path("password") String password);
 
@@ -35,9 +34,7 @@ public interface FastMethods {
      * Para realizar una consulta al servidor y recuperar los datos de usuario
      * @return devuelve una lista con el nombre del usuario, el teléfono y la dirección
      */
-
-    //CAMBIAR POR MOSTRAR POR TOKEN
-    @GET("usuario/mostrar")
+    @GET("usuario/perfil")
     Call<List<String>> recuperar_info(@Header("Authorization") String token);
 
     /**
@@ -50,7 +47,6 @@ public interface FastMethods {
     Call<String> modificarUsuario(@Header("Authorization") String token, @Body User user);
 
     // MODIFICAR COMENTARIO
-    // PENDIENTE MÉTODO
     /**
      * Método desarrollado por ELENA
      * Para realizar el registro de usuario

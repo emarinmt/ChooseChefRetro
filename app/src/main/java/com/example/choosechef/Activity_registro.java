@@ -25,7 +25,6 @@ public class Activity_registro extends AppCompatActivity {
     private EditText mUserInput;
     private EditText mPassInput;
     private EditText mConfirmPassInput;
-
     private Switch mChef;
 
     // Variables para conecatr con la API
@@ -46,7 +45,6 @@ public class Activity_registro extends AppCompatActivity {
         mPassInput = findViewById(R.id.edt_contraseña_registro);
         mConfirmPassInput = findViewById(R.id.edt_contraseña2_registro);
         mChef = findViewById(R.id.switch_chef_registro);
-        //mEmail = findViewById(R.id.switch_chef_registro);
 
         retro=FastClient.getClient();
         mfastMethods = retro.create(FastMethods.class);
@@ -65,7 +63,12 @@ public class Activity_registro extends AppCompatActivity {
         String queryUserString = mUserInput.getText().toString();
         String queryPasswordString = mPassInput.getText().toString();
         String queryConfirmPassString = mConfirmPassInput.getText().toString();
-        String queryTipo = mChef.isChecked() ? "chef" : "client"; // REVISAR!!
+        String queryTipo;
+        if (mChef.isChecked()) {
+            queryTipo = "chef";
+        } else {
+            queryTipo = "client";
+        }
 
         //Comprueba el estado de la conexión de red.
         if (!Utils.isNetworkAvailable(this)) {
@@ -78,7 +81,6 @@ public class Activity_registro extends AppCompatActivity {
             return;
         }
 
-
         // Envia los datos del usuario al servidor
         // Actualizamos los datos del usuario con los nuevos valores
         user.setId(0);
@@ -89,7 +91,7 @@ public class Activity_registro extends AppCompatActivity {
         user.setUbicacion(" ");
         user.setEmail(" ");
         user.setTelefono(" ");
-        user.setTipo(" ");
+        user.setTipo(queryTipo);
 
         //crearUsuario(queryUserString,queryEmail,queryPasswordString,queryTipo);
         crearUsuario(user);
@@ -128,7 +130,7 @@ public class Activity_registro extends AppCompatActivity {
 
         return true;
     }
-    // AÑADIR EMAIL AL COMENTARIO
+
     /**
      * Método para realizar el registro
      */
