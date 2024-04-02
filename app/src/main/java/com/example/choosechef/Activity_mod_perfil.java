@@ -117,10 +117,10 @@ public class Activity_mod_perfil extends AppCompatActivity {
                         mNameInput.setText(obtenerDatos.get(0).toString());
                         mAdressInput.setText(obtenerDatos.get(2).toString());
                         mPhoneInput.setText(obtenerDatos.get(1).toString());
-                        /* Si usamos el Profile Response
-                         *  mNameInput.setText(usuario.getNombre());
-                         * mAdressInput.setText(usuario.getUbicacion());
-                         * mPhoneInput.setText(usuario.getTelefono());
+                        /* Si no usamos el Profile Response
+                         * mNameInput.setText(user.getNombre());
+                         * mAdressInput.setText(user.getUbicacion());
+                         * mPhoneInput.setText(user.getTelefono());
                          */
                     } else {
                         // Obtención de datos incorrecta, muestra un mensaje de error

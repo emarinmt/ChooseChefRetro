@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.Switch;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -24,11 +25,13 @@ public class Activity_registro extends AppCompatActivity {
     private EditText mUserInput;
     private EditText mPassInput;
     private EditText mConfirmPassInput;
+
     private Switch mChef;
 
     // Variables para conecatr con la API
     FastMethods mfastMethods;
     Retrofit retro;
+    private User user;
     /**
      * Método onCreate para la configuración incial de la actividad
      * @param savedInstanceState estado de la instancia guardada, un objeto Bundle que contiene el estado previamente guardado de la actividad
@@ -43,9 +46,11 @@ public class Activity_registro extends AppCompatActivity {
         mPassInput = findViewById(R.id.edt_contraseña_registro);
         mConfirmPassInput = findViewById(R.id.edt_contraseña2_registro);
         mChef = findViewById(R.id.switch_chef_registro);
+        //mEmail = findViewById(R.id.switch_chef_registro);
 
         retro=FastClient.getClient();
         mfastMethods = retro.create(FastMethods.class);
+        user = new User();
     }
 
     /**
@@ -60,7 +65,7 @@ public class Activity_registro extends AppCompatActivity {
         String queryUserString = mUserInput.getText().toString();
         String queryPasswordString = mPassInput.getText().toString();
         String queryConfirmPassString = mConfirmPassInput.getText().toString();
-        String queryTipo = mChef.isChecked() ? "chef" : "client";
+        String queryTipo = mChef.isChecked() ? "chef" : "client"; // REVISAR!!
 
         //Comprueba el estado de la conexión de red.
         if (!Utils.isNetworkAvailable(this)) {
@@ -73,10 +78,22 @@ public class Activity_registro extends AppCompatActivity {
             return;
         }
 
-        String email = "a@gmail.com";  // PEDIR EN PANTALLA
 
         // Envia los datos del usuario al servidor
-        crearUsuario(queryUserString,email,queryPasswordString,queryTipo);
+        // Actualizamos los datos del usuario con los nuevos valores
+        user.setId(0);
+        user.setUsuario(queryUserString);
+        user.setNombre(" ");
+        user.setPassword(queryPasswordString);
+        user.setDescripcion(" ");
+        user.setUbicacion(" ");
+        user.setEmail(" ");
+        user.setTelefono(" ");
+        user.setTipo(" ");
+
+        //crearUsuario(queryUserString,queryEmail,queryPasswordString,queryTipo);
+        crearUsuario(user);
+
     }
 
 
@@ -114,12 +131,9 @@ public class Activity_registro extends AppCompatActivity {
     // AÑADIR EMAIL AL COMENTARIO
     /**
      * Método para realizar el registro
-     * @param username nombre de usuario introducido
-     * @param password contraseña introducida
-     * @param userType respuesta al check (chef o cliente)
      */
-    private void crearUsuario(String username, String email, String password, String userType) {
-        Call<String> call = mfastMethods.crearUsuario(username, email, password, userType);
+    private void crearUsuario(User user) { //User user
+        Call<String> call = mfastMethods.crear(user); //user
         call.enqueue(new Callback<String>() { // Ejecutar la llamada de manera asíncrona
             /**
              *Método invocado cuando se recibe una respuesta de la solicitud HTTP

@@ -2,13 +2,13 @@ package com.example.choosechef;
 
 import java.util.List;
 
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Path;
 import retrofit2.http.POST;
-import retrofit2.http.Query;
 
 /**
  * Interfaz desarrollada por ELENA, (EVA añade metodos)
@@ -61,6 +61,6 @@ public interface FastMethods {
      * //@param tipo tipo de usuariuo
      * @return string si es correcto o no
      */
-    @POST("usuario/crear")
-    Call<String> crearUsuario(@Query("nombre") String nombre, @Query("email") String email, @Query("password") String password, @Query("tipo") String tipo);
+    @POST("usuario/crear1")
+    Call<String> crear(@Body User user);
 }
