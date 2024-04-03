@@ -20,7 +20,7 @@ import retrofit2.Retrofit;
  * Maneja el proceso de inicio de sesión de los usuarios.
  */
 public class Activity_login extends AppCompatActivity {
-    // FUNCIONANDO Y REVISADA CON COMENTARIOS
+// FUNCIONANDO Y REVISADA CON COMENTARIOS
     private final String TAG = Activity_login.class.getSimpleName();
 
     // Variables para los campos de entrada de usuario y contraseña

@@ -14,6 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class FastClient {
+// FUNCIONANDO Y REVISADA CON COMENTARIOS
     private static Retrofit retrofit;
     // URL base de la API a la que realizaremos las solicitudes.
     private static final String BASE_URL = "https://choose-chef.vercel.app/";
@@ -44,7 +45,7 @@ public class FastClient {
             String token = sharedPreferences.getString("token", "");
 
             httpClient.addInterceptor(new AuthInterceptor(token)); // Agregar interceptor de autenticación
-            // token es el token de acceso que hemos almacenado localmente)
+            // "token" es el token de acceso que hemos almacenado localmente)
 
             // Construcción de la instancia de Retrofit
             retrofit = new Retrofit.Builder()

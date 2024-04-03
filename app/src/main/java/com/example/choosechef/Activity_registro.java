@@ -132,7 +132,7 @@ public class Activity_registro extends AppCompatActivity {
 
     /**
      * Método para realizar el registro
-     * @param user objeto con los datos del neuvo usuario
+     * @param user objeto con los datos del nuevo usuario
      */
     private void crearUsuario(User user) {
         Call<String> call = mfastMethods.crear(user);

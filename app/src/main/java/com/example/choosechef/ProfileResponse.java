@@ -4,6 +4,7 @@ package com.example.choosechef;
  * para gestionar la información del usuario
  */
 public class  ProfileResponse{
+// ELIMINAR?
     //Eva añado usuario y contraseña, necesarios para la actividad de modificación de perfil
     private int id; // Elena
     String user;

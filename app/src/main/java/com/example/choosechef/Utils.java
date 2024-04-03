@@ -11,10 +11,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Clase desarrollada por ELENA
- * Clase de utilidades que proporciona métodos útiles para la navegación entre actividades y mostrar tostadas.
+ * Contiene métodos reutilizables por otras clases con funcionalidades comunes.
  */
 public class Utils extends AppCompatActivity{
-
+// QUITAR EL MÉTODO QUE PASA INFO ENTRE ACTIVIDADES SI NO LO USAMOS?
+// COMPROBAR SI EL DE OCULTAR EL BOTÓN ESTÁ FUNCIONANDO BIEN O ES EL EMULADOR
     /**
      * Método desarrollado por ELENA
      * Abre una actividad y finaliza la actividad padre.

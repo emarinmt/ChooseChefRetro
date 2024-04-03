@@ -15,6 +15,7 @@ import retrofit2.http.POST;
  * Interfaz que define los métodos para realizar llamadas a la API
  */
 public interface FastMethods {
+    //PENDIENTE MODIFICAR MÉTODOS OBTENER USUARIO Y MODIFICAR PERFIL
 
     /**
      * Método desarrollado por ELENA
@@ -28,15 +29,16 @@ public interface FastMethods {
     @GET("usuario/login/token2/{usuario}/{password}")
     Call<TokenResponse> login(@Path("usuario") String usuario, @Path("password") String password);
 
-
+    //COMPROBAR Y MODIFICAR RESPUESTA POR USER
     /**
-     * Método dessarrollado por EVA
+     * Método dessarrollado por EVA, modificado por ELENA para usar el token y recibir usuario
      * Para realizar una consulta al servidor y recuperar los datos de usuario
      * @return devuelve una lista con el nombre del usuario, el teléfono y la dirección
      */
     @GET("usuario/perfil")
     Call<List<String>> recuperar_info(@Header("Authorization") String token);
 
+    //PENDIENTE DE MODIFICACIÓN POR PARTE DE LAURA
     /**
      * Método desarrollado por EVA
      * Para realizar una modificación de los datos de usuario en la base de datos
@@ -46,16 +48,11 @@ public interface FastMethods {
     @POST("usuario/modificar/porusuario")
     Call<String> modificarUsuario(@Header("Authorization") String token, @Body User user);
 
-    // MODIFICAR COMENTARIO
     /**
      * Método desarrollado por ELENA
      * Para realizar el registro de usuario
-     * La anotación @GET indica que esta solicitud se realiza con el método GET HTTP
-     * La anotación @Path se utiliza para agregar parámetros a la solicitud
-     * //@param usuario nombre de usuario
-     * //@param password contraseña
-     * //@param tipo tipo de usuariuo
-     * @return string si es correcto o no
+     * @param user objeto con los datos del nuevo usuario
+     * @return string si el registro es correcto o no
      */
     @POST("usuario/crear1")
     Call<String> crear(@Body User user);

@@ -5,13 +5,11 @@ package com.example.choosechef;
  * para gestionar la información del usuario y unificar las respuestas del servidor y los datos de envios
  */
 public class User {
+// PROBAR SI FUNCIONA Setter para el campo id que no es público
     private int id;
     private String usuario;
-
     private String nombre;
-
     private String password;
-
     private String descripcion;
     private String ubicacion;
     private String email;
@@ -36,7 +34,6 @@ public class User {
         return id;
     }
 
-    // Setter para el campo id que no es público
     public void setId(int id) {
         this.id = id;
     }

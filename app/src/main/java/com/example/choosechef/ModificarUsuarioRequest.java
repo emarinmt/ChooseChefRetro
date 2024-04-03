@@ -6,6 +6,7 @@ package com.example.choosechef;
  * Se utiliza para enviar y recibir los datos en una modificación de datos de usuario
  */
 public class ModificarUsuarioRequest {
+// ELIMINAR?
     private int id;
     private String usuario;
     private String nombre;

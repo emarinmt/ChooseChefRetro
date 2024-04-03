@@ -11,8 +11,9 @@ import androidx.appcompat.app.AppCompatActivity;
  */
 
 public class MainActivity_inicio extends AppCompatActivity {
+// FUNCIONANDO Y REVISADA CON COMENTARIOS
     /**
-     * método onCreate para la configuración incial de la actividad
+     * Método onCreate para la configuración incial de la actividad
      * @param savedInstanceState estado de la instancia guardada, un objeto Bundle que contiene el estado previamente guardado de la actividad
      */
     @Override
