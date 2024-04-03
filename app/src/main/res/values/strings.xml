@@ -30,5 +30,6 @@
     <string name="selecciona_provincia">Selecciona una provincia</string>
     <string name="selecciona_comida">Selecciona un tipo de comida</string>
     <string name="selecciona_servicio">Selecciona un servicio</string>
+    <string name="boton_anadirservicio">boton añadir servicio</string>
 
 </resources>
