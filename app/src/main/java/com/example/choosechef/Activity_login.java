@@ -17,17 +17,17 @@ import retrofit2.Retrofit;
 
 /**
  * Clase desarrollada por ELENA
- * para gestionar la actividad para manejar el proceso de inicio de sesión de usuario.
+ * Maneja el proceso de inicio de sesión de los usuarios.
  */
-
 public class Activity_login extends AppCompatActivity {
+    // FUNCIONANDO Y REVISADA CON COMENTARIOS
     private final String TAG = Activity_login.class.getSimpleName();
 
-    // Variables para los campos de entrada de usuario y contraseña.
+    // Variables para los campos de entrada de usuario y contraseña
     private EditText mUserInput;
     private EditText mPassInput;
     FastMethods mfastMethods;
-    // Variables para conecatr con la API
+    // Variables para conectar con la API
     Retrofit retro;
     private SharedPreferences sharedPreferences; // Para almacenar el token
     /**
@@ -37,16 +37,16 @@ public class Activity_login extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login); // Establece el diseño de la actividad.
+        setContentView(R.layout.activity_login); // Establece el diseño de la actividad
 
-        //Inicialización de variables
+        // Inicialización de variables
         mUserInput = findViewById(R.id.edt_usuario_login);
         mPassInput = findViewById(R.id.edt_contra_login);
 
         retro=FastClient.getClient();
         mfastMethods = retro.create(FastMethods.class);
 
-        //Inicialización de SharePreferences para recoger el token del servidor
+        // Inicialización de SharePreferences para recoger el token del servidor
         sharedPreferences = getSharedPreferences("MiPreferencia", Context.MODE_PRIVATE);
     }
 
@@ -57,13 +57,14 @@ public class Activity_login extends AppCompatActivity {
      * @param view La vista (Button) que se hizo clic.
      */
     public void doLogin(View view) {
+        // Obtención de los datos de entrada
         String queryUserString = mUserInput.getText().toString();
         String queryPasswordString = mPassInput.getText().toString();
 
         // Oculta el teclado cuando el usuario toca el botón
         Utils.hideKeyboard(this, view);
 
-        //Compruebe el estado de la conexión de red.
+        // Compruebe el estado de la conexión de red
         if (!Utils.isNetworkAvailable(this)) {
             Utils.showToast(Activity_login.this, "No hay conexión a Internet");
             return;
@@ -74,7 +75,7 @@ public class Activity_login extends AppCompatActivity {
             return;
         }
 
-        //Enviar los datos del usuario al servidor
+        // Llamamos al método que ejecuta la llamada al servidor enviando los datos
         loginUsuario(queryUserString,queryPasswordString);
     }
     /**

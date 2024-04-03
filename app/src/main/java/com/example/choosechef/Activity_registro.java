@@ -20,14 +20,17 @@ import retrofit2.Retrofit;
  * Se llega a través del boton "Registro" de la actividad principal inicio
  */
 public class Activity_registro extends AppCompatActivity {
-    private final String TAG = Activity_mod_perfil.class.getSimpleName();
+    // FUNCIONA SI EL USUARIO EXISTE Y SI EL MAIL NO! REVISAR MÉTODO API. (lo está creando?)
+    // COMENTARIOS REVISADOS
+    // CAMBIAR EMAIL
+    private final String TAG = Activity_registro.class.getSimpleName();
     // Variables para los campos de entrada
     private EditText mUserInput;
     private EditText mPassInput;
     private EditText mConfirmPassInput;
     private Switch mChef;
 
-    // Variables para conecatr con la API
+    // Variables para conectar con la API
     FastMethods mfastMethods;
     Retrofit retro;
     private User user;
@@ -63,49 +66,45 @@ public class Activity_registro extends AppCompatActivity {
         String queryUserString = mUserInput.getText().toString();
         String queryPasswordString = mPassInput.getText().toString();
         String queryConfirmPassString = mConfirmPassInput.getText().toString();
-        String queryTipo;
-        if (mChef.isChecked()) {
-            queryTipo = "chef";
-        } else {
-            queryTipo = "client";
-        }
+        String queryTipo = mChef.isChecked() ? "chef" : "client";
 
-        //Comprueba el estado de la conexión de red.
+        // Oculta el teclado cuando el usuario toca el botón
+        Utils.hideKeyboard(this, view);
+
+        // Comprueba el estado de la conexión de red
         if (!Utils.isNetworkAvailable(this)) {
             Utils.showToast(Activity_registro.this, "No hay conexión a Internet");
             return;
         }
 
-        // Comprueba si los campos estan vacios
+        // Comprueba si los campos de entrada son correctos
         if (!validateFields(queryUserString,queryPasswordString, queryConfirmPassString)) {
             return;
         }
 
-        // Envia los datos del usuario al servidor
-        // Actualizamos los datos del usuario con los nuevos valores
+        // Actualizamos los datos del usuario con los valores recogidos para enviarlos al servidor
         user.setId(0);
         user.setUsuario(queryUserString);
         user.setNombre(" ");
         user.setPassword(queryPasswordString);
         user.setDescripcion(" ");
         user.setUbicacion(" ");
-        user.setEmail(" ");
+        user.setEmail("tururu"); // CAMBIAR
         user.setTelefono(" ");
         user.setTipo(queryTipo);
 
-        //crearUsuario(queryUserString,queryEmail,queryPasswordString,queryTipo);
+        // Llamamos al método que ejecuta la llamada al servidor enviando los datos
         crearUsuario(user);
 
     }
 
 
-    // AÑADIR EMAIL AL COMENTARIO Y AL METODO
     /**
-     * Método para validar los campos
+     * Método para validar los campos de entrada
      * @param username nombre de usuario introducido
      * @param password contraseña introducida
      * @param confirmPassword confirmación de contraseña introducida
-     * @return booleano true si los campos estan rellenados o false si alguno está vacio
+     * @return true si los campos estan rellenados y las contraseñas coinciden o false en caso contrario
      */
     private boolean validateFields(String username, String password, String confirmPassword) {
         if (TextUtils.isEmpty(username)) {  // Comprueba si el campo de ususario está vacio
@@ -133,9 +132,10 @@ public class Activity_registro extends AppCompatActivity {
 
     /**
      * Método para realizar el registro
+     * @param user objeto con los datos del neuvo usuario
      */
-    private void crearUsuario(User user) { //User user
-        Call<String> call = mfastMethods.crear(user); //user
+    private void crearUsuario(User user) {
+        Call<String> call = mfastMethods.crear(user);
         call.enqueue(new Callback<String>() { // Ejecutar la llamada de manera asíncrona
             /**
              *Método invocado cuando se recibe una respuesta de la solicitud HTTP
@@ -145,6 +145,7 @@ public class Activity_registro extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
                 if (response.isSuccessful()) {
+                    // Registro exitoso, redirige al usuario a la pantalla de login
                     Utils.showToast(Activity_registro.this, "Registro exitoso");
                     Utils.gotoActivity(Activity_registro.this, Activity_login.class);
                 } else {
