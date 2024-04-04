@@ -5,10 +5,12 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import java.util.List;
+import android.widget.Switch;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -17,10 +19,12 @@ import retrofit2.Retrofit;
 /**
  * Clase desarrollada por EVA
  * para gestionar la actividad modificar perfil de usuario
- * Modificada por ELENA para utilizar el token y para usar la clase User como obtención de datos y para modificar y enviar al servidor
+ * Modificada por ELENA para utilizar el token y
+ * la clase User como obtención de datos para modificar y enviar al servidor
  */
 
 public class Activity_mod_perfil extends AppCompatActivity {
+// REVISADA, FALTA COMPROBAR SI FUNCIONA
     private final String TAG = Activity_mod_perfil.class.getSimpleName();
     // Variables para los campos de entrada
     private EditText mNameInput;
@@ -29,13 +33,13 @@ public class Activity_mod_perfil extends AppCompatActivity {
     private EditText mPassInput;
     private EditText mNewPassInput;
     private EditText mNewPassConfInput;
-    //private Switch mChangePass; (todavia no implementado)
+    private Switch mChangePass;
 
-    // Variables para conecatr con la API
+    // Variables para conectar con la API
     FastMethods mfastMethods;
     Retrofit retro;
     private User user; // ELENA
-    //ProfileResponse profileResponse;
+    //ProfileResponse profileResponse; // Borrado por ELENA para usar el token
     String token;
     /*
     //variables para recibir usuario y contraseña de otra clase
@@ -53,18 +57,18 @@ public class Activity_mod_perfil extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mod_perfil); // Establece el diseño de la actividad.
 
-        //Inicialización de variables
+        // Inicialización de variables
         mNameInput = findViewById(R.id.edt_nombre_mod_perfil);
         mAdressInput = findViewById(R.id.edt_direccion_mod_perfil);
         mPhoneInput = findViewById(R.id.edt_telefono_mod_perfil);
         mPassInput = findViewById(R.id.edt_contraseña_anterior_mod_perfil);
         mNewPassInput = findViewById(R.id.edt_contraseña_nueva_mod_perfil);
         mNewPassConfInput = findViewById(R.id.edt_contraseña2_nueva_mod_perfil);
-        //mChangePass = findViewById(R.id.switch_cambio_contraseña); ( todavia no implementado)
+        mChangePass = findViewById(R.id.switch_cambio_contraseña);
 
         retro=FastClient.getClient();
         mfastMethods = retro.create(FastMethods.class);
-        //profileResponse = new ProfileResponse();
+        //profileResponse = new ProfileResponse(); // Borrado por ELENA para usar User
         user = new User();  // ELENA
 
         // Obtener el token de SharedPreferences
@@ -72,7 +76,7 @@ public class Activity_mod_perfil extends AppCompatActivity {
         token = sharedPreferences.getString("token", "");
 
         /*
-        //!!!!BORRAR
+        //!!!!BORRAR Borrado por ELENA para usar User
         //Recibir usuario y contraseña de la actividad anterior ( contenido)
         usuario = getIntent().getStringExtra("usuario");
         pass = getIntent().getStringExtra("pass");
@@ -92,36 +96,35 @@ public class Activity_mod_perfil extends AppCompatActivity {
      * Hace la primera consulta al servidor, para recuperar los datos del usuario y mostrarlos en pantalla
      */
     public void recuperarDatos(){
-        //Compruebe el estado de la conexión de red.
+        // Compruebe el estado de la conexión de red
         if (!Utils.isNetworkAvailable(this)) {
             Utils.showToast(Activity_mod_perfil.this, "No hay conexión a Internet");
             return;
         }
-        //MODIDFICAR POR MÉTODO MOSTRAR POR TOKEN CUANDO ESTÉ, QUITAR USUARIO
-        //MODIFICAR PARA OBTENER USER
-        //call HTTP client para recuperar la información del usuario
-        Call<List<String>> call = mfastMethods.recuperar_info("Bearer " + token);
+        // Call HTTP client para recuperar la información del usuario
+        Call<User> call = mfastMethods.recuperar_info("Bearer " + token);
         //ProfileResponse.getUser() Borrado por ELENA para usar el token
-        call.enqueue(new Callback<List<String>>() { //Ejecutar la llamada de manera asíncrona
+        call.enqueue(new Callback<User>() { // Ejecutar la llamada de manera asíncrona
             /**
-             *Método invocado cuando se recibe una respuesta de la solicitud HTTP
+             * Método invocado cuando se recibe una respuesta de la solicitud HTTP
              * @param call llamada que generó la respuesta
              * @param response la respuesta recibida del servidor
              */
-            public void onResponse(@NonNull Call<List<String>> call, @NonNull Response<List<String>> response) {
+            public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
                 if (response.isSuccessful()) {
-                    //Recibe los datos del usuario en una lista
-                    List obtenerDatos = response.body();
-                    if (obtenerDatos != null) {
-                        //Mostrar datos en pantalla
-                        mNameInput.setText(obtenerDatos.get(0).toString());
-                        mAdressInput.setText(obtenerDatos.get(2).toString());
+                    user = response.body(); // Recibe los datos del usuario
+                    if (user != null) {
+                        /*
+                        mNameInput.setText(userServidor.get(0).toString());
+                        mAdressInput.setText(userServidor.get(2).toString());
                         mPhoneInput.setText(obtenerDatos.get(1).toString());
-                        /* Si no usamos el Profile Response
-                         * mNameInput.setText(user.getNombre());
-                         * mAdressInput.setText(user.getUbicacion());
-                         * mPhoneInput.setText(user.getTelefono());
-                         */
+                        */
+                        // Mostrar datos en pantalla
+                        //Si no usamos el Profile Response
+                        mNameInput.setText(user.getNombre());
+                        mAdressInput.setText(user.getUbicacion());
+                        mPhoneInput.setText(user.getTelefono());
+
                     } else {
                         // Obtención de datos incorrecta, muestra un mensaje de error
                         Utils.showToast(Activity_mod_perfil.this, "Obtención de datos incorrecta");
@@ -134,7 +137,7 @@ public class Activity_mod_perfil extends AppCompatActivity {
              * @param t la excepción que ocurrió
              */
             @Override
-            public void onFailure(@NonNull Call<List<String>> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
                 // Error en la llamada, muestra el mensaje de error y registra la excepción
                 t.printStackTrace();
                 Log.e(TAG, "Error en la llamada:" + t.getMessage());
@@ -154,21 +157,43 @@ public class Activity_mod_perfil extends AppCompatActivity {
         // Oculta el teclado cuando el usuario toca el botón
         Utils.hideKeyboard(this, view);
 
-        //Recupera los datos introducidos por el usuario
+        // Recupera los datos introducidos por el usuario
         String queryNameString = mNameInput.getText().toString();
         String queryAdressString = mAdressInput.getText().toString();
         String queryPhoneString = mPhoneInput.getText().toString();
         String queryPassString = mPassInput.getText().toString();
         String queryNewPassString = mNewPassInput.getText().toString();
         String queryNewPassConfString = mNewPassConfInput.getText().toString();
+        boolean queryOptionPass = mChangePass.isChecked();
 
-        // MODIFICADO POR ELENA
+        // Comprueba el estado de la conexión de red
+        if (!Utils.isNetworkAvailable(this)) {
+            Utils.showToast(Activity_mod_perfil.this, "No hay conexión a Internet");
+            return;
+        }
+
+        // Condicional según la opción del switch de cambio de contraseña
+        if (queryOptionPass) {
+            mPassInput.setEnabled(true);
+            mNewPassInput.setEnabled(true);
+            mNewPassConfInput.setEnabled(true);
+            // Comprueba si los campos de entrada son correctos
+            if (!validateFields(queryPassString, queryNewPassString, queryNewPassConfString)) {
+                return;
+            }
+            user.setPassword(queryNewPassString); // Cambio de contraseña
+        } else { // Se mantiene la contraseña enviada por el servidor
+            mPassInput.setEnabled(false);
+            mNewPassInput.setEnabled(false);
+            mNewPassConfInput.setEnabled(false);
+        }
+
         // Actualizamos los datos del usuario con los nuevos valores
         user.setNombre(queryNameString);
         user.setUbicacion(queryAdressString);
         user.setTelefono(queryPhoneString);
-
         /*
+        !!!!BORRAR Borrado por ELENA para usar User
         //construir el objeto ModificarUsuarioRequest con los datos ingresados
         ModificarUsuarioRequest request = new ModificarUsuarioRequest();
         request.setNombre(queryNameString);
@@ -183,39 +208,69 @@ public class Activity_mod_perfil extends AppCompatActivity {
         request.setEmail(" ");
         request.setTipo(" ");
         */
-        //Comprobación de contraseña para poder modificarla
-        if(queryPassString.equals(user.getPassword()) ){
-            if (queryNewPassString.equals(queryNewPassConfString)){
-                user.setPassword(queryNewPassString);
-            }else{
-                user.setPassword(user.getPassword());
-                Utils.showToast(Activity_mod_perfil.this,"La contraseña nueva no coincide");
-            }
-        }else{
-            user.setPassword(user.getPassword());
-            Utils.showToast(Activity_mod_perfil.this,"La contraseña anterior no es correcta");
+
+        // Llamamos al método que ejecuta la llamada al servidor enviando los datos
+        modificacion(user);
+    }
+
+    /**
+     * Método para validar los campos de entrada
+     * @param oldPass contraseña actual introducido
+     * @param newPass contraseña nuevaintroducida
+     * @param confirmPassword confirmación de contraseña introducida
+     * @return true si los campos estan rellenados y las contraseñas coinciden o false en caso contrario
+     */
+    private boolean validateFields(String oldPass, String newPass, String confirmPassword) {
+        if (TextUtils.isEmpty(oldPass)) { // Comprueba si el campo contraseña actual está vacio
+            mPassInput.setError("¡Debe ingresar una contraseña!");
+            return false;
         }
-
-        //Compruebe el estado de la conexión de red.
-        if (!Utils.isNetworkAvailable(this)) {
-            Utils.showToast(Activity_mod_perfil.this, "No hay conexión a Internet");
-            return;
+        if (TextUtils.isEmpty(newPass)) { // Comprueba si el campo contraseña nueva está vacio
+            mNewPassInput.setError("¡Debe ingresar una contraseña nueva!");
+            return false;
         }
+        if (TextUtils.isEmpty(confirmPassword)) { // Comprueba si el campo contraseña nueva confirmación está vacio
+            mNewPassConfInput.setError("¡Debe confirmar la contraseña!");
+            return false;
+        }
+        if (!newPass.equals(confirmPassword)) { // Comprobueba si las contraseñas coinciden
+            Utils.showToast(this, "Las contraseñas no coinciden");
+            return false;
+        }
+        return true;
 
-        // Si hay conexión hace la llamada para modificar los datos
+        /*
+        * CREO QUE NO ES NECESARIO
+        * Preparado para futura utilización, de momento no se comprueba que venga texto
+        * Comprueba si el campo dirección tiene texto
+        * if ((networkInfo != null) && (queryAdressString.length() != 0)) {
+        * }
+        * Comprueba si el campo teléfono tiene texto
+        * if ((networkInfo != null) && (queryPhoneString.length() != 0)) {
+        * }
+        * Comprueba si el check está activo
+        * if ((networkInfo != null) && (mChangePass.isChecked())) {
+        *}
+        */
+    }
 
+    /**
+     * Método para realizar el registro
+     * @param user objeto con los datos del nuevo usuario
+     */
+    private void modificacion(User user) {
         // call HTTP client para modificar los datos de usuario
         Call<String> call = mfastMethods.modificarUsuario("Bearer " + token, user);
         call.enqueue(new Callback<String>() { // Ejecutar la llamada de manera asíncrona
             /**
-             *Método invocado cuando se recibe una respuesta de la solicitud HTTP
+             * Método invocado cuando se recibe una respuesta de la solicitud HTTP
              * @param call llamada que generó la respuesta
              * @param response la respuesta recibida del servidor
              */
             @Override
             public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
                 if (response.isSuccessful()) {
-                    //String responseBody = response.body();
+                    // String responseBody = response.body();
                     Utils.showToast(Activity_mod_perfil.this, "Modificación correcta!");
                     Utils.gotoActivity(Activity_mod_perfil.this, Activity_contenido.class);
                 } else {
@@ -224,7 +279,7 @@ public class Activity_mod_perfil extends AppCompatActivity {
             }
 
             /**
-             *Método invocado cuando ocurre un error durante la ejecución de la llamada HTTP
+             * Método invocado cuando ocurre un error durante la ejecución de la llamada HTTP
              * @param call la llamada que generó el error
              * @param t la excepción que ocurrió
              */
@@ -237,15 +292,4 @@ public class Activity_mod_perfil extends AppCompatActivity {
             }
         });
     }
-    //Preparado para futura utilización, de momento no se comprueba que venga texto porque el método acepta el valor vacío
-    // Comprueba si el campo dirección tiene texto
-    /*if ((networkInfo != null) && (queryAdressString.length() != 0)) {
-    }
-    // Comprueba si el campo teléfono tiene texto
-    if ((networkInfo != null) && (queryPhoneString.length() != 0)) {
-    }
-    // Comprueba si el check está activo
-   // if ((networkInfo != null) && (mChangePass.isChecked())) {
-    //}*/
-
 }

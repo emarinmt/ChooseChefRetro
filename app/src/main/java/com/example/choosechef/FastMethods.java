@@ -1,8 +1,5 @@
 package com.example.choosechef;
 
-import java.util.List;
-
-
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -36,7 +33,7 @@ public interface FastMethods {
      * @return devuelve una lista con el nombre del usuario, el teléfono y la dirección
      */
     @GET("usuario/perfil")
-    Call<List<String>> recuperar_info(@Header("Authorization") String token);
+    Call<User>recuperar_info(@Header("Authorization") String token);
 
     //PENDIENTE DE MODIFICACIÓN POR PARTE DE LAURA
     /**

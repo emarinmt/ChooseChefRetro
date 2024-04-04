@@ -62,14 +62,14 @@ public class Activity_registro extends AppCompatActivity {
      */
 
     public void doRegister(View view) {
+        // Oculta el teclado cuando el usuario toca el botón
+        Utils.hideKeyboard(this, view);
+
         // Obtención de los datos de entrada
         String queryUserString = mUserInput.getText().toString();
         String queryPasswordString = mPassInput.getText().toString();
         String queryConfirmPassString = mConfirmPassInput.getText().toString();
         String queryTipo = mChef.isChecked() ? "chef" : "client";
-
-        // Oculta el teclado cuando el usuario toca el botón
-        Utils.hideKeyboard(this, view);
 
         // Comprueba el estado de la conexión de red
         if (!Utils.isNetworkAvailable(this)) {
@@ -145,6 +145,7 @@ public class Activity_registro extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
                 if (response.isSuccessful()) {
+                    // String responseBody = response.body();
                     // Registro exitoso, redirige al usuario a la pantalla de login
                     Utils.showToast(Activity_registro.this, "Registro exitoso");
                     Utils.gotoActivity(Activity_registro.this, Activity_login.class);
