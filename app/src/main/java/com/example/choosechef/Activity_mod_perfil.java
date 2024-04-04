@@ -102,7 +102,7 @@ public class Activity_mod_perfil extends AppCompatActivity {
             return;
         }
         // Call HTTP client para recuperar la información del usuario
-        Call<User> call = mfastMethods.recuperar_info("Bearer " + token);
+        Call<User> call = mfastMethods.recuperar_info(token);
         //ProfileResponse.getUser() Borrado por ELENA para usar el token
         call.enqueue(new Callback<User>() { // Ejecutar la llamada de manera asíncrona
             /**
@@ -260,7 +260,7 @@ public class Activity_mod_perfil extends AppCompatActivity {
      */
     private void modificacion(User user) {
         // call HTTP client para modificar los datos de usuario
-        Call<String> call = mfastMethods.modificarUsuario("Bearer " + token, user);
+        Call<String> call = mfastMethods.modificarUsuario(token, user);
         call.enqueue(new Callback<String>() { // Ejecutar la llamada de manera asíncrona
             /**
              * Método invocado cuando se recibe una respuesta de la solicitud HTTP

@@ -20,7 +20,7 @@ import retrofit2.Retrofit;
  * Se llega a través del boton "Registro" de la actividad principal inicio
  */
 public class Activity_registro extends AppCompatActivity {
-    // FUNCIONA SI EL USUARIO EXISTE Y SI EL MAIL NO! REVISAR MÉTODO API. (lo está creando?)
+    // NO FUNCIONA
     // COMENTARIOS REVISADOS
     // CAMBIAR EMAIL
     private final String TAG = Activity_registro.class.getSimpleName();
@@ -89,7 +89,7 @@ public class Activity_registro extends AppCompatActivity {
         user.setPassword(queryPasswordString);
         user.setDescripcion(" ");
         user.setUbicacion(" ");
-        user.setEmail("tururu"); // CAMBIAR
+        user.setEmail(" ");
         user.setTelefono(" ");
         user.setTipo(queryTipo);
 

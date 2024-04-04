@@ -3,16 +3,15 @@ package com.example.choosechef;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
-import retrofit2.http.Header;
 import retrofit2.http.Path;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 /**
  * Interfaz desarrollada por ELENA, (EVA añade metodos)
  * Interfaz que define los métodos para realizar llamadas a la API
  */
 public interface FastMethods {
-    //PENDIENTE MODIFICAR MÉTODOS OBTENER USUARIO Y MODIFICAR PERFIL
 
     /**
      * Método desarrollado por ELENA
@@ -23,7 +22,7 @@ public interface FastMethods {
      * @param password contraseña
      * @return token de sesión
      */
-    @GET("usuario/login/token2/{usuario}/{password}")
+    @GET("usuario/login/token/{usuario}/{password}")
     Call<TokenResponse> login(@Path("usuario") String usuario, @Path("password") String password);
 
     //COMPROBAR Y MODIFICAR RESPUESTA POR USER
@@ -32,18 +31,17 @@ public interface FastMethods {
      * Para realizar una consulta al servidor y recuperar los datos de usuario
      * @return devuelve una lista con el nombre del usuario, el teléfono y la dirección
      */
-    @GET("usuario/perfil")
-    Call<User>recuperar_info(@Header("Authorization") String token);
+    @GET("usuario/perfil/")
+    Call<User>recuperar_info(@Query("token") String token);
 
-    //PENDIENTE DE MODIFICACIÓN POR PARTE DE LAURA
     /**
      * Método desarrollado por EVA
      * Para realizar una modificación de los datos de usuario en la base de datos
      * @param user objeto con los datos del usuario ( clase ModificarUsuarioRequest ) para modificar los datos en base de datos
      * @return devuelve un String con los datos modificados
      */
-    @POST("usuario/modificar/porusuario")
-    Call<String> modificarUsuario(@Header("Authorization") String token, @Body User user);
+    @POST("usuario/modificar/")
+    Call<String> modificarUsuario(@Query("token") String token, @Body User user);
 
     /**
      * Método desarrollado por ELENA
@@ -51,6 +49,6 @@ public interface FastMethods {
      * @param user objeto con los datos del nuevo usuario
      * @return string si el registro es correcto o no
      */
-    @POST("usuario/crear1")
+    @POST("usuario/crear/")
     Call<String> crear(@Body User user);
 }
