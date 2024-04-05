@@ -8,6 +8,7 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
 
@@ -24,7 +25,7 @@ import retrofit2.Retrofit;
  */
 
 public class Activity_mod_perfil extends AppCompatActivity {
-// REVISADA, FALTA COMPROBAR SI FUNCIONA
+// FUNCIONANDO Y REVISADA CON COMENTARIOS
     private final String TAG = Activity_mod_perfil.class.getSimpleName();
     // Variables para los campos de entrada
     private EditText mNameInput;
@@ -86,9 +87,19 @@ public class Activity_mod_perfil extends AppCompatActivity {
         ProfileResponse.setPassword(pass);
         */
 
-        //llamar al método recuperarDatos
-        recuperarDatos();
+        // Habilitem els camps de contrasenya si el check està clicat
+        mChangePass.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            mPassInput.setEnabled(isChecked);
+            mNewPassInput.setEnabled(isChecked);
+            mNewPassConfInput.setEnabled(isChecked);
+        });
+        // Per defecte mostrem els camps de contrasenyes inhabilitats fins que es cliqui el switch
+        mPassInput.setEnabled(false);
+        mNewPassInput.setEnabled(false);
+        mNewPassConfInput.setEnabled(false);
 
+        // Llamar al método recuperarDatos
+        recuperarDatos();
     }
 
     /**
@@ -174,19 +185,13 @@ public class Activity_mod_perfil extends AppCompatActivity {
 
         // Condicional según la opción del switch de cambio de contraseña
         if (queryOptionPass) {
-            mPassInput.setEnabled(true);
-            mNewPassInput.setEnabled(true);
-            mNewPassConfInput.setEnabled(true);
             // Comprueba si los campos de entrada son correctos
             if (!validateFields(queryPassString, queryNewPassString, queryNewPassConfString)) {
                 return;
             }
             user.setPassword(queryNewPassString); // Cambio de contraseña
-        } else { // Se mantiene la contraseña enviada por el servidor
-            mPassInput.setEnabled(false);
-            mNewPassInput.setEnabled(false);
-            mNewPassConfInput.setEnabled(false);
-        }
+        }  // Se mantiene la contraseña enviada por el servidor
+
 
         // Actualizamos los datos del usuario con los nuevos valores
         user.setNombre(queryNameString);

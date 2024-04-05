@@ -20,9 +20,7 @@ import retrofit2.Retrofit;
  * Se llega a través del boton "Registro" de la actividad principal inicio
  */
 public class Activity_registro extends AppCompatActivity {
-    // NO FUNCIONA
-    // COMENTARIOS REVISADOS
-    // CAMBIAR EMAIL
+// FUNCIONANDO Y REVISADA CON COMENTARIOS
     private final String TAG = Activity_registro.class.getSimpleName();
     // Variables para los campos de entrada
     private EditText mUserInput;
