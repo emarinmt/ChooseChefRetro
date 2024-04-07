@@ -28,6 +28,19 @@ public class Utils extends AppCompatActivity{
         parent.finish();
     }
 
+    /**
+     * Método desarrollado por ELENA
+     * Abre una actividad y finaliza la actividad padre.
+     * @param context  Context desde donde se llama
+     * @param user  Usuario
+     * @param destination Actividad de destino.
+     */
+    public static void gotoActivityWithUser(Context context, Class destination, User user) {
+        Intent intent = new Intent(context, destination);
+        intent.putExtra("user", user);
+        context.startActivity(intent);
+    }
+
     // QUITAR PARA TOKEN
     /**
      * Método añadido por EVA para abrir actividad y enviar mensaje, elige si se finaliza la actividad

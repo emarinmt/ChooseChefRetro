@@ -1,10 +1,12 @@
 package com.example.choosechef;
 
+import java.io.Serializable;
+
 /**
  * Clase desarrollada por ELENA
  * para gestionar la información del usuario y unificar las respuestas del servidor y los datos de envios
  */
-public class User {
+public class User implements Serializable {
 // PROBAR SI FUNCIONA Setter para el campo id que no es público
     private int id;
     private String usuario;

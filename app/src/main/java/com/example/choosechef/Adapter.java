@@ -16,6 +16,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     private final LayoutInflater layoutInflater;
     private final List<User> data;
     //private final List<String> data;
+
     Adapter(Context context, List<User> data){
         //Adapter(Context context, List<String> data){
         this.layoutInflater = LayoutInflater.from(context);
@@ -48,6 +49,17 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         viewHolder.provincia.setText(provinc);
         //falta imagen
 */
+        // Manjear que al clicar un chef se muestre este ampliado
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Obtener el chef actual que fue clicado
+                User currentChef = data.get(viewHolder.getAdapterPosition());
+
+                // Utilizar el método gotoActivityWithUser para abrir la DetailActivity y pasar el objeto User
+                Utils.gotoActivityWithUser(viewHolder.itemView.getContext(), Activity_chef_ampliado.class, currentChef);
+            }
+        });
 
     }
 
@@ -56,7 +68,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         return data.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView nombre_chef, tipo_comida, provincia;
 
         public ViewHolder(@NonNull View itemView){
@@ -64,7 +76,9 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
             nombre_chef = itemView.findViewById(R.id.nombre_chef);
             tipo_comida = itemView.findViewById(R.id.tipo_comida);
             provincia = itemView.findViewById(R.id.provincia);
+
         }
 
     }
+
 }
