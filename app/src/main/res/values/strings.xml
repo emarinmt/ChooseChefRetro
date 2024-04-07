@@ -31,5 +31,12 @@
     <string name="selecciona_comida">Selecciona un tipo de comida</string>
     <string name="selecciona_servicio">Selecciona un servicio</string>
     <string name="boton_anadirservicio">boton añadir servicio</string>
+    <string name="descripcion">descripción</string>
+    <string name="boton_reservar">reservar</string>
+    <string name="boton_contacto">boton contacto</string>
+    <string name="introduce_servicio">Personaliza tu servicio</string>
+    <string name="introduce_descr_servicio">Introduce la descripcion del servicio</string>
+    <string name="titulo_pantalla_admin">Opciones administrador</string>
+    <string name="titulo_pantalla_user">Administra tus opciones de usuario</string>
 
 </resources>

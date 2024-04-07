@@ -75,10 +75,12 @@ public class Activity_contenido extends AppCompatActivity {
 
 
     }
-    public void gorro (View view) {
-        //cambiar cuando cree la siguiente pantalla
-        // Redirige al usuario a la pantalla de
-        //Utils.gotoActivityMessage(Activity_contenido.this, Activity_mod_perfil.class, "usuario",usuario , "pass", pass, false);
+    public void ajustes (View view) {
+        //cambiar cuando cree la siguiente pantalla ( falta añadir si es usuario admin, chef o usuario normal, de momento pongo ir a la clase chef para probarla.
+        // Redirige segun el usuario a la pantalla de configuracion de chef, admin o usuario
+        Utils.gotoActivity(Activity_contenido.this, Activity_chef.class);
+       // Utils.gotoActivity(Activity_contenido.this, Activity_admin.class);
+       // Utils.gotoActivity(Activity_contenido.this, Activity_user.class);
 
 
     }
