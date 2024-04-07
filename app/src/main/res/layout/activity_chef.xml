@@ -6,22 +6,174 @@
     android:layout_height="match_parent"
     android:background="@drawable/fondo1">
 
-    <ImageButton
-        android:id="@+id/btn_añadir_servicio"
-        android:layout_width="68dp"
-        android:layout_height="56dp"
-        android:background="@drawable/fondo_boton_redondo"
-        android:contentDescription="@string/boton_anadirservicio"
-        android:onClick="anadirservicio"
-        android:tint="@color/design_default_color_surface"
-        app:layout_constraintBottom_toBottomOf="parent"
+
+    <TextView
+        android:id="@+id/txt_titulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/introduce_servicio"
+        android:textColor="@color/titulo"
+        android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.897"
+        app:layout_constraintHorizontal_bias="0.2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.065"
-        app:srcCompat="@android:drawable/ic_input_add"
-        tools:ignore="DuplicateSpeakableTextCheck,ImageContrastCheck,UseAppTint" />
+        app:layout_constraintVertical_bias="0.52"
+        app:layout_constraintBottom_toTopOf="@+id/txt_provincia"/>
 
+    <TextView
+        android:id="@+id/txt_provincia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="@string/selecciona_provincia"
+        android:textColor="@color/titulo"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_titulo"
+        app:layout_constraintBottom_toTopOf="@+id/spinner_provincias"
+        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.50"
+        tools:ignore="TextContrastCheck" />
+
+    <Spinner
+        android:id="@+id/spinner_provincias"
+        android:layout_width="350dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/fondo_spinner"
+        android:dropDownSelector="@drawable/fondo_spinner"
+        android:minHeight="48dp"
+        android:popupBackground="@drawable/fondo_spinner"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.50"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_provincia"
+        app:layout_constraintBottom_toTopOf="@+id/txt_tipo_comida"/>
+
+    <TextView
+        android:id="@+id/txt_tipo_comida"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="@string/selecciona_comida"
+        android:textColor="@color/titulo"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.50"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_provincias"
+        app:layout_constraintBottom_toTopOf="@+id/spinner_tipo_comida"
+        tools:ignore="TextContrastCheck" />
+
+    <Spinner
+        android:id="@+id/spinner_tipo_comida"
+        android:layout_width="350dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/fondo_spinner"
+        android:dropDownSelector="@drawable/fondo_spinner"
+        android:minHeight="48dp"
+        android:popupBackground="@drawable/fondo_spinner"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.50"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_tipo_comida"
+        app:layout_constraintBottom_toTopOf="@+id/txt_servicio"/>
+
+    <TextView
+        android:id="@+id/txt_servicio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="@string/selecciona_servicio"
+        android:textColor="@color/titulo"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.50"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_tipo_comida"
+        app:layout_constraintBottom_toTopOf="@+id/spinner_servicios"
+        tools:ignore="TextContrastCheck" />
+
+    <Spinner
+        android:id="@+id/spinner_servicios"
+        android:layout_width="350dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/fondo_spinner"
+        android:dropDownSelector="@drawable/fondo_spinner"
+        android:minHeight="48dp"
+        android:popupBackground="@drawable/fondo_spinner"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.50"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_servicio"
+        app:layout_constraintBottom_toTopOf="@+id/txt_descripcion"/>
+
+    <TextView
+        android:id="@+id/txt_descripcion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="@string/introduce_descr_servicio"
+        android:textColor="@color/titulo"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.50"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_servicios"
+        app:layout_constraintBottom_toTopOf="@+id/edt_descripcion_servicio"
+        tools:ignore="TextContrastCheck" />
+
+    <EditText
+        android:id="@+id/edt_descripcion_servicio"
+        android:layout_width="347dp"
+        android:layout_height="118dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:editable="true"
+        android:ems="10"
+        android:enabled="true"
+        android:gravity="start|top"
+        android:hint="@string/descripcion"
+        android:inputType="textMultiLine"
+        android:textColor="@color/white"
+        android:textColorHint="@color/hint"
+        app:layout_constraintBottom_toTopOf="@+id/ibtn_confirmar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_descripcion"
+        android:autofillHints=""
+        tools:ignore="Deprecated" />
+
+    <ImageButton
+        android:id="@+id/ibtn_confirmar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/fondo_boton"
+        android:contentDescription="@string/boton_confirmar"
+        android:onClick="confirmarServicio"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edt_descripcion_servicio"
+        app:layout_constraintVertical_bias="0.508"
+        app:srcCompat="@drawable/boton_confirmar"
+        tools:ignore="ImageContrastCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
