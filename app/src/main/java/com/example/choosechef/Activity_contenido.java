@@ -2,13 +2,21 @@ package com.example.choosechef;
 
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 /**
  * Clase desarrollada por ELENA
@@ -16,16 +24,24 @@ import java.util.ArrayList;
  */
 
 public class Activity_contenido extends AppCompatActivity {
+    private final String TAG = Activity_mod_perfil.class.getSimpleName();
+
     // Añadido por EVA para recibir el usuario en esta actividad y enviarlo a la siguiente( modificaicón perfil)
     //String usuario;
     //String pass;
     // Borrado por ELENA para usar token
 
-    //Para mostrar los chefs
+    // Variables para mostrar los chefs
     RecyclerView recyclerView;
     Adapter adapter;
-    ArrayList<String> items;
+    List<User> userList = new ArrayList<>(); // Lista para almacenar los chefs
 
+    //ArrayList<String> items;
+
+    // Variables para conectar con la API
+    FastMethods mfastMethods;
+    Retrofit retro;
+    private User user; // ELENA
 
     /**
      * Método onCreate para la configuración incial de la actividad
@@ -41,19 +57,73 @@ public class Activity_contenido extends AppCompatActivity {
         //pass = getIntent().getStringExtra("pass");
         // Borrado por ELENA para usar token
 
+        retro=FastClient.getClient();
+        mfastMethods = retro.create(FastMethods.class);
+
+        /*
         //Aquí habrá que llamar a base de datos y recuperar lista de chefs
         items = new ArrayList<>();
         items.add("Primer chef");
         items.add("Segundo chef");
         items.add("Tercer chef");
         items.add("Cuarto chef");
+*/
 
+        // Configurar RecyclerView
         recyclerView = findViewById(R.id.rv_chefs);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new Adapter(this,items);
+        adapter = new Adapter(this, userList);
+        //adapter = new Adapter(this,items);
         recyclerView.setAdapter(adapter);
 
+        // Llamar al método recuperarDatos
+        recuperarDatos();
+
     }
+
+    /**
+     * Método para recuperar la lista de chefs del servidor
+     */
+    public void recuperarDatos(){
+        // Compruebe el estado de la conexión de red
+        if (!Utils.isNetworkAvailable(this)) {
+            Utils.showToast(Activity_contenido.this, "No hay conexión a Internet");
+            return;
+        }
+        // Call HTTP client para recuperar la información del usuario
+        Call<List<User>> call = mfastMethods.recuperar_chefs(); //CAMBIAR
+        call.enqueue(new Callback<List<User>>() { // Ejecutar la llamada de manera asíncrona
+            /**
+             * Método invocado cuando se recibe una respuesta de la solicitud HTTP
+             * @param call llamada que generó la respuesta
+             * @param response la respuesta recibida del servidor
+             */
+            public void onResponse(@NonNull Call<List<User>> call, @NonNull Response<List<User>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    userList.clear(); // Limpiar la lista actual
+                    userList.addAll(response.body()); // Agregar todos los usuarios recuperados
+
+                    // Notificar al adaptador que los datos han cambiado
+                    adapter.notifyDataSetChanged();
+                } else {
+                    Utils.showToast(Activity_contenido.this, "No se encontraron chefs");
+                }
+            }
+            /**
+             *Método invocado cuando ocurre un error durante la ejecución de la llamada HTTP
+             * @param call la llamada que generó el error
+             * @param t la excepción que ocurrió
+             */
+            @Override
+            public void onFailure(@NonNull Call<List<User>> call, @NonNull Throwable t) {
+                // Error en la llamada, muestra el mensaje de error y registra la excepción
+                t.printStackTrace();
+                Log.e(TAG, "Error en la llamada:" + t.getMessage());
+                Utils.showToast(Activity_contenido.this, "Error en la llamada: " + t.getMessage());
+            }
+        });
+    }
+
 
     /**
      * Método para manejar el clic del botón de modificación de perfil.
@@ -81,7 +151,6 @@ public class Activity_contenido extends AppCompatActivity {
         Utils.gotoActivity(Activity_contenido.this, Activity_chef.class);
        // Utils.gotoActivity(Activity_contenido.this, Activity_admin.class);
        // Utils.gotoActivity(Activity_contenido.this, Activity_user.class);
-
 
     }
 }

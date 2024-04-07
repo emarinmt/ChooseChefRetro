@@ -14,9 +14,10 @@ import java.util.List;
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     private final LayoutInflater layoutInflater;
-    private final List<String> data;
-
-    Adapter(Context context, List<String> data){
+    private final List<User> data;
+    //private final List<String> data;
+    Adapter(Context context, List<User> data){
+        //Adapter(Context context, List<String> data){
         this.layoutInflater = LayoutInflater.from(context);
         this.data = data;
     }
@@ -30,6 +31,15 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+        User user = data.get(i); //NUEVO
+        // Establece los datos del chef en las vistas del ViewHolder
+        viewHolder.nombre_chef.setText(user.getNombre());
+        //viewHolder.tipo_comida.setText(user.getTipoComida());
+        viewHolder.tipo_comida.setText("italiana");//De momento para que no de error
+        //viewHolder.provincia.setText(user.getProvincia());
+        viewHolder.provincia.setText("Barcelona"); //De momento para que no de error
+
+        /*
         String nombre = data.get(i);
         viewHolder.nombre_chef.setText(nombre);
         String comida = data.get(i);
@@ -37,7 +47,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         String provinc = data.get(i);
         viewHolder.provincia.setText(provinc);
         //falta imagen
-
+*/
 
     }
 

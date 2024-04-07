@@ -1,5 +1,7 @@
 package com.example.choosechef;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -25,7 +27,6 @@ public interface FastMethods {
     @GET("usuario/login/token/{usuario}/{password}")
     Call<TokenResponse> login(@Path("usuario") String usuario, @Path("password") String password);
 
-    //COMPROBAR Y MODIFICAR RESPUESTA POR USER
     /**
      * Método dessarrollado por EVA, modificado por ELENA para usar el token y recibir usuario
      * Para realizar una consulta al servidor y recuperar los datos de usuario
@@ -35,7 +36,7 @@ public interface FastMethods {
     Call<User>recuperar_info(@Query("token") String token);
 
     /**
-     * Método desarrollado por EVA
+     * Método desarrollado por EVA, modificado por ELENA
      * Para realizar una modificación de los datos de usuario en la base de datos
      * @param user objeto con los datos del usuario ( clase ModificarUsuarioRequest ) para modificar los datos en base de datos
      * @return devuelve un String con los datos modificados
@@ -51,4 +52,13 @@ public interface FastMethods {
      */
     @POST("usuario/crear/")
     Call<String> crear(@Body User user);
+
+    //COMPROBAR Y MODIFICAR
+    /**
+     * Método dessarrollado por ELENA, modificado por ELENA para usar el token y recibir usuario
+     * Para realizar una consulta al servidor y recuperar los datos de usuario
+     * @return devuelve una lista con el nombre del usuario, el teléfono y la dirección
+     */
+    @GET("usuario/perfil/")
+    Call<List<User>>recuperar_chefs();
 }
