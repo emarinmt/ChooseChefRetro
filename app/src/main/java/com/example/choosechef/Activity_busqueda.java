@@ -1,30 +1,83 @@
 package com.example.choosechef;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class Activity_busqueda extends AppCompatActivity {
+    private final String TAG = Activity_busqueda.class.getSimpleName();
+    //variables campos de entrada
     Spinner spinner_prov;
     Spinner spinner_comida;
     Spinner spinner_servicio;
+    List<String> provinciasList = new ArrayList<>(); // Lista para almacenar las provincias
+    // Variables para conectar con la API
+    FastMethods mfastMethods;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Establece el diseño de la actividad.
         setContentView(R.layout.activity_busqueda);
 
-
+        recuperarProvincias();
         seleccionarProvincia();
         seleccionarComida();
         seleccionarServicio();
+    }
+    public void recuperarProvincias(){
+        // Compruebe el estado de la conexión de red
+        if (!Utils.isNetworkAvailable(this)) {
+            Utils.showToast(Activity_busqueda.this, "No hay conexión a Internet");
+            return;
+        }
+        // Call HTTP client para recuperar la información del usuario
+        Call<List<String>> call = mfastMethods.recuperar_provincias();
+        call.enqueue(new Callback<List<String>>() { // Ejecutar la llamada de manera asíncrona
+            /**
+             * Método invocado cuando se recibe una respuesta de la solicitud HTTP
+             * @param call llamada que generó la respuesta
+             * @param response la respuesta recibida del servidor
+             */
+            public void onResponse(@NonNull Call<List<String>> call, @NonNull Response<List<String>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    provinciasList.clear(); // Limpiar la lista actual
+                    provinciasList.addAll(response.body()); // Agregar todas las provincias recuperadas
+                    Log.e(TAG, provinciasList.toString());
+                    // Notificar al adaptador que los datos han cambiado
+                    //adapter1.notifyDataSetChanged();
+                    //seleccionarProvincia();
+                } else {
+                    Utils.showToast(Activity_busqueda.this, "No se encontraron provincias con chefs");
+                }
+            }
+            /**
+             *Método invocado cuando ocurre un error durante la ejecución de la llamada HTTP
+             * @param call la llamada que generó el error
+             * @param t la excepción que ocurrió
+             */
+            @Override
+            public void onFailure(@NonNull Call<List<String>> call, @NonNull Throwable t) {
+                // Error en la llamada, muestra el mensaje de error y registra la excepción
+                t.printStackTrace();
+                Log.e(TAG, "Error en la llamada:" + t.getMessage());
+                Utils.showToast(Activity_busqueda.this, "Error en la llamada: " + t.getMessage());
+            }
+        });
     }
     private void seleccionarProvincia() {
         spinner_prov = findViewById(R.id.spinner_provincias);
@@ -34,7 +87,8 @@ public class Activity_busqueda extends AppCompatActivity {
         provincias.add("LLeida");
         provincias.add("Madrid");
         provincias.add("Mallorca");
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, provincias);
+
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, provinciasList);
         spinner_prov.setAdapter(adapter1);
 
         spinner_prov.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -59,6 +113,9 @@ public class Activity_busqueda extends AppCompatActivity {
         comida.add("Tailandesa");
         comida.add("Japonesa");
         comida.add("Mediterranea");
+        comida.add("Asiática");
+        comida.add("Africana");
+        comida.add("Coreana");
 
         ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, comida);
         spinner_comida.setAdapter(adapter2);

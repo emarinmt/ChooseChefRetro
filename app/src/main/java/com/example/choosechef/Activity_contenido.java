@@ -24,7 +24,7 @@ import retrofit2.Retrofit;
  */
 
 public class Activity_contenido extends AppCompatActivity {
-    private final String TAG = Activity_mod_perfil.class.getSimpleName();
+    private final String TAG = Activity_contenido.class.getSimpleName();
 
     // Añadido por EVA para recibir el usuario en esta actividad y enviarlo a la siguiente( modificaicón perfil)
     //String usuario;
@@ -52,22 +52,9 @@ public class Activity_contenido extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         // Establece el diseño de la actividad.
         setContentView(R.layout.activity_content);
-        //Añadido por EVA para recibir el usuario y contraseña de la actividad anterior (login)
-        //usuario = getIntent().getStringExtra("usuario");
-        //pass = getIntent().getStringExtra("pass");
-        // Borrado por ELENA para usar token
 
         retro=FastClient.getClient();
         mfastMethods = retro.create(FastMethods.class);
-
-        /*
-        //Aquí habrá que llamar a base de datos y recuperar lista de chefs
-        items = new ArrayList<>();
-        items.add("Primer chef");
-        items.add("Segundo chef");
-        items.add("Tercer chef");
-        items.add("Cuarto chef");
-*/
 
         // Configurar RecyclerView
         recyclerView = findViewById(R.id.rv_chefs);

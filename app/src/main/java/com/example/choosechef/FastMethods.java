@@ -56,9 +56,19 @@ public interface FastMethods {
     //COMPROBAR Y MODIFICAR
     /**
      * Método dessarrollado por ELENA, modificado por ELENA para usar el token y recibir usuario
-     * Para realizar una consulta al servidor y recuperar los datos de usuario
-     * @return devuelve una lista con el nombre del usuario, el teléfono y la dirección
+     * Para realizar una consulta al servidor y recuperar los datos de los usuarios chefs
+     * @return devuelve una lista con los usuarios que son chefs
      */
-    @GET("usuario/perfil/")
+    @GET("chef/listar/")
     Call<List<User>>recuperar_chefs();
+
+    /**
+     * Método desarrollado por EVA,
+     * Para realizar una consulta al servidor y recuperar las provincias donde hay chefs
+     * Se utiliza para mostrar la lista de provincias disponibles en la búsqueda
+     * @return devuelve una lista de provincias en las cuales hay chefs
+     */
+    @GET("provincias/conChef/")
+    Call<List<String>>recuperar_provincias();
+
 }
