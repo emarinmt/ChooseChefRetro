@@ -11,13 +11,13 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
+public class Adapter_chef extends RecyclerView.Adapter<Adapter_chef.ViewHolder> {
 
     private final LayoutInflater layoutInflater;
     private final List<User> data;
     //private final List<String> data;
 
-    Adapter(Context context, List<User> data){
+    Adapter_chef(Context context, List<User> data){
         //Adapter(Context context, List<String> data){
         this.layoutInflater = LayoutInflater.from(context);
         this.data = data;
@@ -26,7 +26,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = layoutInflater.inflate(R.layout.custom_view,viewGroup,false);
+        View view = layoutInflater.inflate(R.layout.custom_view_card_chefs,viewGroup,false);
         return new ViewHolder(view);
     }
 
@@ -35,10 +35,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         User user = data.get(i); //NUEVO
         // Establece los datos del chef en las vistas del ViewHolder
         viewHolder.nombre_chef.setText(user.getNombre());
-        //viewHolder.tipo_comida.setText(user.getTipoComida());
-        viewHolder.tipo_comida.setText("italiana");//De momento para que no de error
-        //viewHolder.provincia.setText(user.getProvincia());
-        viewHolder.provincia.setText("Barcelona"); //De momento para que no de error
+        viewHolder.tipo_comida.setText(user.getComida());
+        viewHolder.provincia.setText(user.getUbicacion());
 
         /*
         String nombre = data.get(i);
@@ -76,6 +74,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
             nombre_chef = itemView.findViewById(R.id.nombre_chef);
             tipo_comida = itemView.findViewById(R.id.tipo_comida);
             provincia = itemView.findViewById(R.id.provincia);
+            //falta añadir puntuación
 
         }
 

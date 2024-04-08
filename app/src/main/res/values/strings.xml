@@ -38,5 +38,7 @@
     <string name="introduce_descr_servicio">Introduce la descripcion del servicio</string>
     <string name="titulo_pantalla_admin">Opciones administrador</string>
     <string name="titulo_pantalla_user">Administra tus opciones de usuario</string>
+    <string name="nombre_del_usuario">Nombre del usuario</string>
+    <string name="boton_editar">Boton editar usuario</string>
 
 </resources>

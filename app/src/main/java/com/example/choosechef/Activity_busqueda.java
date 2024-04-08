@@ -16,6 +16,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
 
 
 public class Activity_busqueda extends AppCompatActivity {
@@ -24,15 +25,19 @@ public class Activity_busqueda extends AppCompatActivity {
     Spinner spinner_prov;
     Spinner spinner_comida;
     Spinner spinner_servicio;
-    List<String> provinciasList = new ArrayList<>(); // Lista para almacenar las provincias
+    ArrayList<String> provinciasList = new ArrayList<>(); // Lista para almacenar las provincias
     // Variables para conectar con la API
     FastMethods mfastMethods;
+    Retrofit retro;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Establece el diseño de la actividad.
         setContentView(R.layout.activity_busqueda);
+
+        retro=FastClient.getClient();
+        mfastMethods = retro.create(FastMethods.class);
 
         recuperarProvincias();
         seleccionarProvincia();
@@ -82,13 +87,15 @@ public class Activity_busqueda extends AppCompatActivity {
     private void seleccionarProvincia() {
         spinner_prov = findViewById(R.id.spinner_provincias);
         //Aquí hay que decidir si hace falta hacer una clase de provincias, o directamente llamar al servidor y recuperar la lista de provincias
-        ArrayList<String> provincias = new ArrayList<>();
+        ArrayList<String> provincias = provinciasList;
+        /*
         provincias.add("Barcelona");
         provincias.add("LLeida");
         provincias.add("Madrid");
         provincias.add("Mallorca");
+         */
 
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, provinciasList);
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, provincias);
         spinner_prov.setAdapter(adapter1);
 
         spinner_prov.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

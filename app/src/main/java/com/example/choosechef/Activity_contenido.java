@@ -33,7 +33,7 @@ public class Activity_contenido extends AppCompatActivity {
 
     // Variables para mostrar los chefs
     RecyclerView recyclerView;
-    Adapter adapter;
+    Adapter_chef adapter;
     List<User> userList = new ArrayList<>(); // Lista para almacenar los chefs
 
     //ArrayList<String> items;
@@ -59,7 +59,7 @@ public class Activity_contenido extends AppCompatActivity {
         // Configurar RecyclerView
         recyclerView = findViewById(R.id.rv_chefs);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new Adapter(this, userList);
+        adapter = new Adapter_chef(this, userList);
         //adapter = new Adapter(this,items);
         recyclerView.setAdapter(adapter);
 
@@ -135,8 +135,8 @@ public class Activity_contenido extends AppCompatActivity {
     public void ajustes (View view) {
         //cambiar cuando cree la siguiente pantalla ( falta añadir si es usuario admin, chef o usuario normal, de momento pongo ir a la clase chef para probarla.
         // Redirige segun el usuario a la pantalla de configuracion de chef, admin o usuario
-        Utils.gotoActivity(Activity_contenido.this, Activity_chef.class);
-       // Utils.gotoActivity(Activity_contenido.this, Activity_admin.class);
+        //Utils.gotoActivity(Activity_contenido.this, Activity_chef.class);
+        Utils.gotoActivity(Activity_contenido.this, Activity_admin.class);
        // Utils.gotoActivity(Activity_contenido.this, Activity_user.class);
 
     }
