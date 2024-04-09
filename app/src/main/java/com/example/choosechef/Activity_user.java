@@ -4,6 +4,11 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * Actividad desarrollada por
+ * para gestionar la pantalla de las opciones del usuario
+ */
+
 public class Activity_user extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
