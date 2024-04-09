@@ -19,10 +19,12 @@ public class User implements Serializable {
     private String tipo;
     private String comida;
     private String servicio;
+    private int valoracion;
 
     public User() {
     }
-    public User(int id, String usuario, String nombre, String password, String descripcion, String ubicacion, String email, String telefono, String tipo, String comida, String servicio) {
+    public User(int id, String usuario, String nombre, String password, String descripcion, String ubicacion, String email,
+                String telefono, String tipo, String comida, String servicio, int valoracion) {
         this.id = id;
         this.usuario = usuario;
         this.nombre = nombre;
@@ -34,6 +36,7 @@ public class User implements Serializable {
         this.tipo = tipo;
         this.comida = comida;
         this.servicio = servicio;
+        this.valoracion = valoracion;
     }
 
     public int getId() {
@@ -123,4 +126,12 @@ public class User implements Serializable {
     public void setServicio(String servicio) {
         this.servicio = servicio;
     }
+
+    public int getValoracion() {
+        return valoracion;
+    }
+    public void setValoracion(int valoracion) {
+        this.valoracion = valoracion;
+    }
+
 }

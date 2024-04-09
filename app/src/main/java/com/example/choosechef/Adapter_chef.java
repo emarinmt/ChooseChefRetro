@@ -37,6 +37,7 @@ public class Adapter_chef extends RecyclerView.Adapter<Adapter_chef.ViewHolder> 
         viewHolder.nombre_chef.setText(user.getNombre());
         viewHolder.tipo_comida.setText(user.getComida());
         viewHolder.provincia.setText(user.getUbicacion());
+        viewHolder.valoracion.setText(user.getValoracion());
 
         /*
         String nombre = data.get(i);
@@ -67,13 +68,14 @@ public class Adapter_chef extends RecyclerView.Adapter<Adapter_chef.ViewHolder> 
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView nombre_chef, tipo_comida, provincia;
+        TextView nombre_chef, tipo_comida, provincia, valoracion;
 
         public ViewHolder(@NonNull View itemView){
             super(itemView);
             nombre_chef = itemView.findViewById(R.id.nombre_chef);
             tipo_comida = itemView.findViewById(R.id.tipo_comida);
             provincia = itemView.findViewById(R.id.provincia);
+            valoracion = itemView.findViewById(R.id.ratingBar);
             //falta añadir puntuación
 
         }
