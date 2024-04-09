@@ -19,7 +19,7 @@ public class User implements Serializable {
     private String tipo;
     private String comida;
     private String servicio;
-    private int valoracion;
+    private float valoracion;
 
     public User() {
     }
@@ -127,10 +127,10 @@ public class User implements Serializable {
         this.servicio = servicio;
     }
 
-    public int getValoracion() {
+    public float getValoracion() {
         return valoracion;
     }
-    public void setValoracion(int valoracion) {
+    public void setValoracion(float valoracion) {
         this.valoracion = valoracion;
     }
 
