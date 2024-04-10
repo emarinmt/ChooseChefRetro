@@ -6,6 +6,22 @@
     android:layout_height="match_parent"
     android:background="@drawable/fondo1">
 
+    <TextView
+        android:id="@+id/edt_telefono_chef"
+        android:layout_width="183dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="70dp"
+        android:layout_marginBottom="206dp"
+        android:text="@string/telefono_chef"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ibtn_contacto" />
+
     <ImageView
         android:id="@+id/foto_chef_ampliado"
         android:layout_width="150dp"
@@ -92,7 +108,7 @@
         android:id="@+id/ibtn_reservar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="112dp"
+        android:layout_marginTop="100dp"
         android:background="@drawable/boton_reservar"
         android:contentDescription="@string/boton_reservar"
         android:onClick="reservar"
@@ -101,7 +117,7 @@
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/descripcion_ampliado"
-        app:layout_constraintVertical_bias="0.815"
+        app:layout_constraintVertical_bias="0.55"
         app:srcCompat="@drawable/boton_reservar"
         tools:ignore="ImageContrastCheck" />
 
@@ -109,14 +125,16 @@
         android:id="@+id/ibtn_contacto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="60dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="46dp"
         android:background="@drawable/boton_contactar"
         android:contentDescription="@string/boton_contacto"
         android:onClick="contactar"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/edt_telefono_chef"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ibtn_reservar"
         app:srcCompat="@drawable/boton_contactar"
         tools:ignore="ImageContrastCheck" />
 
