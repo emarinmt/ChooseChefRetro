@@ -66,8 +66,8 @@ public class Test_Modperfil {
         onView(withId(R.id.edt_nombre_mod_perfil)).check(matches(isDisplayed()));
 
         // Simulamos la entrada de datos en los campos
-        onView(withId(R.id.edt_nombre_mod_perfil)).perform(replaceText("probandoNombre"));
-        onView(withId(R.id.edt_direccion_mod_perfil)).perform(replaceText("probandoDire"));
+        onView(withId(R.id.edt_nombre_mod_perfil)).perform(replaceText("probaNombre"));
+        onView(withId(R.id.edt_direccion_mod_perfil)).perform(replaceText("probaDire"));
         onView(withId(R.id.edt_telefono_mod_perfil)).perform(replaceText("222"));
 
         // Realizamos el clic en el botón de confirmar
@@ -190,7 +190,7 @@ public class Test_Modperfil {
     public void espera() {
         // Esperar un tiempo suficiente para que se complete la operación asíncrona
         try {
-            Thread.sleep(5000); // Espera 5 segundos
+            Thread.sleep(10000); // Espera 5 segundos
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

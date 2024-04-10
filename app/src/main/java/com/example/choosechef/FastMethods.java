@@ -74,11 +74,10 @@ public interface FastMethods {
     //@GET("usuario/perfil/")
     //Call<User>recuperar_info_admin(@Query("token") String token);
 
-
     //@POST("usuario/modificar/")
     //Call<String> modificarUsuario_admin(@Query("token") String token, @Body User user);
 
-   // @POST("usuario/crear/")
-    //Call<String> crear(@Body Reserva reserva);
+    @POST("usuario/crear/")
+    Call<String> crear(@Body Reserva reserva);
 
 }
