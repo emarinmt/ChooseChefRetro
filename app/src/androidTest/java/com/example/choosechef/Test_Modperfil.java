@@ -29,7 +29,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Collection;
-import java.util.Random;
 
 /**
  * Clase desarrollada por ELENA
@@ -69,7 +68,7 @@ public class Test_Modperfil {
         // Simulamos la entrada de datos en los campos
         onView(withId(R.id.edt_nombre_mod_perfil)).perform(replaceText("probandoNombre"));
         onView(withId(R.id.edt_direccion_mod_perfil)).perform(replaceText("probandoDire"));
-        onView(withId(R.id.edt_telefono_mod_perfil)).perform(replaceText("probandoTelf"));
+        onView(withId(R.id.edt_telefono_mod_perfil)).perform(replaceText("222"));
 
         // Realizamos el clic en el botón de confirmar
         onView(withId(R.id.ibtn_confirmar_mod_perfil)).perform(click());

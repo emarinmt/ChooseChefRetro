@@ -132,6 +132,7 @@ public class Activity_contenido extends AppCompatActivity {
 
 
     }
+    //DE MOMENTO SOLO MUESTSRA CHEFS
     public void ajustes (View view) {
         //cambiar cuando cree la siguiente pantalla ( falta añadir si es usuario admin, chef o usuario normal, de momento pongo ir a la clase chef para probarla.
         // Redirige segun el usuario a la pantalla de configuracion de chef, admin o usuario

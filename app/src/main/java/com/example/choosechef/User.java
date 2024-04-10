@@ -24,7 +24,7 @@ public class User implements Serializable {
     public User() {
     }
     public User(int id, String usuario, String nombre, String password, String descripcion, String ubicacion, String email,
-                String telefono, String tipo, String comida, String servicio, int valoracion) {
+                String telefono, String tipo, String comida, String servicio, float valoracion) {
         this.id = id;
         this.usuario = usuario;
         this.nombre = nombre;

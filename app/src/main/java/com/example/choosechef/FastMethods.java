@@ -71,4 +71,14 @@ public interface FastMethods {
     @GET("provincias/conChef/")
     Call<List<String>>recuperar_provincias();
 
+    //@GET("usuario/perfil/")
+    //Call<User>recuperar_info_admin(@Query("token") String token);
+
+
+    //@POST("usuario/modificar/")
+    //Call<String> modificarUsuario_admin(@Query("token") String token, @Body User user);
+
+   // @POST("usuario/crear/")
+    //Call<String> crear(@Body Reserva reserva);
+
 }

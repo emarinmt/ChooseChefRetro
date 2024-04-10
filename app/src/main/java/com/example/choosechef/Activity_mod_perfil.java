@@ -197,6 +197,9 @@ public class Activity_mod_perfil extends AppCompatActivity {
         user.setNombre(queryNameString);
         user.setUbicacion(queryAdressString);
         user.setTelefono(queryPhoneString);
+        user.setValoracion(user.getValoracion());
+        user.setComida(user.getComida());
+        user.setServicio(user.getServicio());
         /*
         !!!!BORRAR Borrado por ELENA para usar User
         //construir el objeto ModificarUsuarioRequest con los datos ingresados
