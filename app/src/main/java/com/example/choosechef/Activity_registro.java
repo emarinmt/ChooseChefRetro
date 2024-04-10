@@ -21,6 +21,7 @@ import retrofit2.Retrofit;
  */
 public class Activity_registro extends AppCompatActivity {
 // FUNCIONANDO Y REVISADA CON COMENTARIOS
+    private boolean registrationSuccessful = false; // Variable para rastrear el estado del registro
     private final String TAG = Activity_registro.class.getSimpleName();
     // Variables para los campos de entrada
     private EditText mUserInput;
@@ -50,6 +51,7 @@ public class Activity_registro extends AppCompatActivity {
         retro=FastClient.getClient();
         mfastMethods = retro.create(FastMethods.class);
         user = new User();
+
     }
 
     /**
@@ -90,6 +92,9 @@ public class Activity_registro extends AppCompatActivity {
         user.setEmail(" ");
         user.setTelefono(" ");
         user.setTipo(queryTipo);
+        user.setComida(" ");
+        user.setServicio(" ");
+        user.setValoracion(0);
 
         // Llamamos al método que ejecuta la llamada al servidor enviando los datos
         crearUsuario(user);
@@ -104,7 +109,7 @@ public class Activity_registro extends AppCompatActivity {
      * @param confirmPassword confirmación de contraseña introducida
      * @return true si los campos estan rellenados y las contraseñas coinciden o false en caso contrario
      */
-    private boolean validateFields(String username, String password, String confirmPassword) {
+    public boolean validateFields(String username, String password, String confirmPassword) {
         if (TextUtils.isEmpty(username)) {  // Comprueba si el campo de ususario está vacio
             mUserInput.setError("¡Debe ingresar un nombre de usuario!");
             return false;
@@ -132,7 +137,7 @@ public class Activity_registro extends AppCompatActivity {
      * Método para realizar el registro
      * @param user objeto con los datos del nuevo usuario
      */
-    private void crearUsuario(User user) {
+    public void crearUsuario(User user) {
         Call<String> call = mfastMethods.crear(user);
         call.enqueue(new Callback<String>() { // Ejecutar la llamada de manera asíncrona
             /**
@@ -143,6 +148,7 @@ public class Activity_registro extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
                 if (response.isSuccessful()) {
+                    registrationSuccessful = true;
                     // String responseBody = response.body();
                     // Registro exitoso, redirige al usuario a la pantalla de login
                     Utils.showToast(Activity_registro.this, "Registro exitoso");
@@ -166,6 +172,8 @@ public class Activity_registro extends AppCompatActivity {
             }
         });
     }
-
+    public boolean isRegistrationSuccessful() {
+        return registrationSuccessful;
+    }
 }
 

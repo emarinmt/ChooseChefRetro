@@ -2,6 +2,7 @@ package com.example.choosechef;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -26,7 +27,6 @@ public class FastClient {
         mContext = context.getApplicationContext();
     }
 
-
     /**
      * Devuelve una instancia de Retrofit.
      * Si la instancia aún no se ha creado, crea una nueva utilizando `Retrofit.Builder`
@@ -41,10 +41,20 @@ public class FastClient {
             httpClient.addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY));
 
             // Obtener el token de SharedPreferences
-            SharedPreferences sharedPreferences = mContext.getSharedPreferences("MiPreferencia", Context.MODE_PRIVATE);
-            String token = sharedPreferences.getString("token", "");
+            if (mContext != null) {
+                // Accede a SharedPreferences aquí
+                SharedPreferences sharedPreferences = mContext.getSharedPreferences("MiPreferencia", Context.MODE_PRIVATE);
+                String token = sharedPreferences.getString("token", "");
+                httpClient.addInterceptor(new AuthInterceptor(token));
+                // Resto del código
+            } else {
+                // Manejar el caso cuando mContext es null
+                Log.e("FastClient", "Context is null");
+            }
+            //SharedPreferences sharedPreferences = mContext.getSharedPreferences("MiPreferencia", Context.MODE_PRIVATE);
+            //String token = sharedPreferences.getString("token", "");
 
-            httpClient.addInterceptor(new AuthInterceptor(token)); // Agregar interceptor de autenticación
+            //httpClient.addInterceptor(new AuthInterceptor(token)); // Agregar interceptor de autenticación
             // "token" es el token de acceso que hemos almacenado localmente)
 
             // Construcción de la instancia de Retrofit

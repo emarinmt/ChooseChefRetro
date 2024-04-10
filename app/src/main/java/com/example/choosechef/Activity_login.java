@@ -21,6 +21,7 @@ import retrofit2.Retrofit;
  */
 public class Activity_login extends AppCompatActivity {
 // FUNCIONANDO Y REVISADA CON COMENTARIOS
+    private boolean loginSuccessful = false; // Variable para rastrear el estado del login
     private final String TAG = Activity_login.class.getSimpleName();
 
     // Variables para los campos de entrada de usuario y contraseña
@@ -112,6 +113,7 @@ public class Activity_login extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<TokenResponse> call, @NonNull Response<TokenResponse> response) {
                 if ((response.isSuccessful()) && (response.body() != null)) {
+                    loginSuccessful = true;
                     TokenResponse tokenResponse = response.body();
                     String token = tokenResponse.getToken();
 
@@ -143,5 +145,8 @@ public class Activity_login extends AppCompatActivity {
             }
         });
 
+    }
+    public boolean isLoginSuccessful() {
+        return loginSuccessful;
     }
 }

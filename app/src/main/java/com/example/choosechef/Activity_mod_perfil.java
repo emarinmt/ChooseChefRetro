@@ -8,7 +8,6 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
 
@@ -26,6 +25,7 @@ import retrofit2.Retrofit;
 
 public class Activity_mod_perfil extends AppCompatActivity {
 // FUNCIONANDO Y REVISADA CON COMENTARIOS
+    private boolean modifySuccessful = false; // Variable para rastrear el estado de la modificación
     private final String TAG = Activity_mod_perfil.class.getSimpleName();
     // Variables para los campos de entrada
     private EditText mNameInput;
@@ -263,7 +263,7 @@ public class Activity_mod_perfil extends AppCompatActivity {
      * Método para realizar el registro
      * @param user objeto con los datos del nuevo usuario
      */
-    private void modificacion(User user) {
+    public void modificacion(User user) {
         // call HTTP client para modificar los datos de usuario
         Call<String> call = mfastMethods.modificarUsuario(token, user);
         call.enqueue(new Callback<String>() { // Ejecutar la llamada de manera asíncrona
@@ -275,6 +275,7 @@ public class Activity_mod_perfil extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
                 if (response.isSuccessful()) {
+                    modifySuccessful = true;
                     // String responseBody = response.body();
                     Utils.showToast(Activity_mod_perfil.this, "Modificación correcta!");
                     Utils.gotoActivity(Activity_mod_perfil.this, Activity_contenido.class);
@@ -296,5 +297,8 @@ public class Activity_mod_perfil extends AppCompatActivity {
                 Utils.showToast(Activity_mod_perfil.this, "Error en la llamada: " + t.getMessage());
             }
         });
+    }
+    public boolean isModifySuccessful() {
+        return modifySuccessful;
     }
 }
