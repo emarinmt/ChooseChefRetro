@@ -76,17 +76,6 @@ public class Activity_mod_perfil extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("MiPreferencia", Context.MODE_PRIVATE);
         token = sharedPreferences.getString("token", "");
 
-        /*
-        //!!!!BORRAR Borrado por ELENA para usar User
-        //Recibir usuario y contraseña de la actividad anterior ( contenido)
-        usuario = getIntent().getStringExtra("usuario");
-        pass = getIntent().getStringExtra("pass");
-
-        //Guardar usuario y contraseña del usuario en clase ProfileResponse para su futura utilización
-        ProfileResponse.setUser(usuario);
-        ProfileResponse.setPassword(pass);
-        */
-
         // Habilitem els camps de contrasenya si el check està clicat
         mChangePass.setOnCheckedChangeListener((buttonView, isChecked) -> {
             mPassInput.setEnabled(isChecked);
@@ -125,13 +114,9 @@ public class Activity_mod_perfil extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     user = response.body(); // Recibe los datos del usuario
                     if (user != null) {
-                        /*
-                        mNameInput.setText(userServidor.get(0).toString());
-                        mAdressInput.setText(userServidor.get(2).toString());
-                        mPhoneInput.setText(obtenerDatos.get(1).toString());
-                        */
+
                         // Mostrar datos en pantalla
-                        //Si no usamos el Profile Response
+
                         mNameInput.setText(user.getNombre());
                         mAdressInput.setText(user.getUbicacion());
                         mPhoneInput.setText(user.getTelefono());
@@ -190,32 +175,19 @@ public class Activity_mod_perfil extends AppCompatActivity {
                 return;
             }
             user.setPassword(queryNewPassString); // Cambio de contraseña
-        }  // Se mantiene la contraseña enviada por el servidor
+        }  else {
+            // Se mantiene la contraseña enviada por el servidor
+            //user.setPassword(user.getPassword());
+        }
 
-
+        //EL FALLO ESTÁ CUANDO EN LA BD EL CAMPO ES NULL
         // Actualizamos los datos del usuario con los nuevos valores
         user.setNombre(queryNameString);
         user.setUbicacion(queryAdressString);
         user.setTelefono(queryPhoneString);
-        user.setValoracion(user.getValoracion());
-        user.setComida(user.getComida());
-        user.setServicio(user.getServicio());
-        /*
-        !!!!BORRAR Borrado por ELENA para usar User
-        //construir el objeto ModificarUsuarioRequest con los datos ingresados
-        ModificarUsuarioRequest request = new ModificarUsuarioRequest();
-        request.setNombre(queryNameString);
-        request.setUbicacion(queryAdressString);
-        request.setTelefono(queryPhoneString);
-
-        //el id, lo obtenemos de la respuesta, ya que no se puede modificar
-        //request.setId(request.getId());
-
-        //estos campos no se piden al usuario y no se pueden modificar todavía, pero el método los necesita aunque esten vacíos
-        request.setDescripcion(" ");
-        request.setEmail(" ");
-        request.setTipo(" ");
-        */
+        //user.setComida(user.getComida());
+        //user.setServicio(user.getServicio());
+        //user.setValoracion(user.getValoracion());
 
         // Llamamos al método que ejecuta la llamada al servidor enviando los datos
         modificacion(user);

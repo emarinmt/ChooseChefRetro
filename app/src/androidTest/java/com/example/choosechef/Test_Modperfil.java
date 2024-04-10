@@ -39,20 +39,16 @@ public class Test_Modperfil {
 
     @Rule
     public IntentsTestRule<Activity_login> activityRule = new IntentsTestRule<>(Activity_login.class);
+
     private Activity_mod_perfil modperfil;
     private Context context;
     @Before
     public void setUp() {
         FastClient.initialize(ApplicationProvider.getApplicationContext());
         context = ApplicationProvider.getApplicationContext();
-    }
-
-    // Modificación de datos correcta (sin contraseña)
-    @Test
-    public void testValidData() {
         // Iniciar sesión como usuario de prueba
-        onView(withId(R.id.edt_usuario_login)).perform(typeText("1"));
-        onView(withId(R.id.edt_contra_login)).perform(typeText("2"), closeSoftKeyboard());
+        onView(withId(R.id.edt_usuario_login)).perform(typeText("4"));
+        onView(withId(R.id.edt_contra_login)).perform(typeText("4"), closeSoftKeyboard());
         onView(withId(R.id.ibtn_entrar_login)).perform(click());
 
         espera();
@@ -65,18 +61,22 @@ public class Test_Modperfil {
         // Asegurarnos de que la actividad se ha cargado completamente
         onView(withId(R.id.edt_nombre_mod_perfil)).check(matches(isDisplayed()));
 
+        // Obtener la instancia de Activity_mod_perfil
+        modperfil = ((Activity_mod_perfil) getActivityInstance(Activity_mod_perfil.class));
+    }
+
+    // Modificación de datos correcta (sin contraseña)
+    @Test
+    public void testValidData() {
         // Simulamos la entrada de datos en los campos
-        onView(withId(R.id.edt_nombre_mod_perfil)).perform(replaceText("probaNombre"));
-        onView(withId(R.id.edt_direccion_mod_perfil)).perform(replaceText("probaDire"));
-        onView(withId(R.id.edt_telefono_mod_perfil)).perform(replaceText("222"));
+        onView(withId(R.id.edt_nombre_mod_perfil)).perform(replaceText("5"));
+        onView(withId(R.id.edt_direccion_mod_perfil)).perform(replaceText("5"));
+        onView(withId(R.id.edt_telefono_mod_perfil)).perform(replaceText("5"));
 
         // Realizamos el clic en el botón de confirmar
         onView(withId(R.id.ibtn_confirmar_mod_perfil)).perform(click());
 
         espera();
-
-        // Obtener la instancia de Activity_mod_perfil
-        Activity_mod_perfil modperfil = ((Activity_mod_perfil) getActivityInstance(Activity_mod_perfil.class));
 
         // Verificar si la modificación fue exitosa
         assertTrue(modperfil.isModifySuccessful());
@@ -85,38 +85,35 @@ public class Test_Modperfil {
     // Modificación de datos correcta (con contraseña)
     @Test
     public void testValidDataPass() {
-
         // Simulamos la entrada de datos en los campos
-        onView(withId(R.id.edt_nombre_mod_perfil)).perform(replaceText("probando2"));
-        onView(withId(R.id.edt_direccion_mod_perfil)).perform(replaceText("probando2"));
-        onView(withId(R.id.edt_telefono_mod_perfil)).perform(replaceText("probando2"));
+        onView(withId(R.id.edt_nombre_mod_perfil)).perform(replaceText("5"));
+        onView(withId(R.id.edt_direccion_mod_perfil)).perform(replaceText("5"));
+        onView(withId(R.id.edt_telefono_mod_perfil)).perform(replaceText("5"));
         onView(withId(R.id.switch_cambio_contraseña)).perform(click());
-        onView(withId(R.id.edt_contraseña_anterior_mod_perfil)).perform(replaceText("2"));
+        onView(withId(R.id.edt_contraseña_anterior_mod_perfil)).perform(replaceText("4"));
         onView(withId(R.id.edt_contraseña_nueva_mod_perfil)).perform(replaceText("newPass"));
         onView(withId(R.id.edt_contraseña2_nueva_mod_perfil)).perform(replaceText("newPass"));
 
         // Realizamos el clic en el botón de confirmar
         onView(withId(R.id.ibtn_confirmar_mod_perfil)).perform(click());
+        espera();
 
+        // Restaurar la contraseña original
+        onView(withId(R.id.edt_contraseña_anterior_mod_perfil)).perform(replaceText("newPass"));
+        onView(withId(R.id.edt_contraseña_nueva_mod_perfil)).perform(replaceText("4"));
+        onView(withId(R.id.edt_contraseña2_nueva_mod_perfil)).perform(replaceText("4"));
+
+        // Realizamos el clic en el botón de confirmar
+        onView(withId(R.id.ibtn_confirmar_mod_perfil)).perform(click());
         espera();
 
         // Aseguramos que la modificación sea exitosa
         assertTrue(modperfil.isModifySuccessful());
-
-        // Después de la prueba, restaurar la contraseña original
-        onView(withId(R.id.edt_contraseña_anterior_mod_perfil)).perform(replaceText("newPass"));
-        onView(withId(R.id.edt_contraseña_nueva_mod_perfil)).perform(replaceText("2"));
-        onView(withId(R.id.edt_contraseña2_nueva_mod_perfil)).perform(replaceText("2"));
-
-        // Realizamos el clic en el botón de confirmar
-        onView(withId(R.id.ibtn_confirmar_mod_perfil)).perform(click());
-
     }
 
     // Modificación de datos incorrecta (contraseña anterior no coincide)
     @Test
     public void testInvalidPass() {
-
         // Simulamos la entrada de datos en los campos
         onView(withId(R.id.edt_nombre_mod_perfil)).perform(replaceText("probando2"));
         onView(withId(R.id.edt_direccion_mod_perfil)).perform(replaceText("probando2"));
@@ -132,6 +129,7 @@ public class Test_Modperfil {
         // Aseguramos que el registro sea fallido debido al nombre de usuario inválido
         assertFalse(modperfil.isModifySuccessful());
     }
+
     // Modificación de datos incorrecta (contraseñas nuevas no coincide)
     @Test
     public void testInvalidNewPass() {
@@ -141,7 +139,7 @@ public class Test_Modperfil {
         onView(withId(R.id.edt_direccion_mod_perfil)).perform(replaceText("probando2"));
         onView(withId(R.id.edt_telefono_mod_perfil)).perform(replaceText("probando2"));
         onView(withId(R.id.switch_cambio_contraseña)).perform(click());
-        onView(withId(R.id.edt_contraseña_anterior_mod_perfil)).perform(replaceText("2"));
+        onView(withId(R.id.edt_contraseña_anterior_mod_perfil)).perform(replaceText("4"));
         onView(withId(R.id.edt_contraseña_nueva_mod_perfil)).perform(replaceText("newPass"));
         onView(withId(R.id.edt_contraseña2_nueva_mod_perfil)).perform(replaceText("newPasswrong"));
 
@@ -195,5 +193,7 @@ public class Test_Modperfil {
             e.printStackTrace();
         }
     }
+
+
 
 }
