@@ -40,5 +40,17 @@
     <string name="titulo_pantalla_user">Administra tus opciones de usuario</string>
     <string name="nombre_del_usuario">Nombre del usuario</string>
     <string name="boton_editar">Boton editar usuario</string>
+    <string name="contraseña_usuario">Contraseña del usuario</string>
+    <string name="descripcion_usuario">Descripcion del usuario</string>
+    <string name="provincia_usuario">provincia del usuario</string>
+    <string name="mail_usuario">mail del usuario</string>
+    <string name="telefono_usuario">telefono del usuario</string>
+    <string name="tipo_usuario">tipo de usuario</string>
+    <string name="comida_usuario">tipo comida usuario</string>
+    <string name="servicio_usuario">tipo servicio usuario</string>
+    <string name="valoracion_usuario">valoración usuario</string>
+    <string name="boton_borrar">Boton borrar</string>
+    <string name="boton_lupa">Boton para buscar</string>
+    <string name="titulo_lista_usuarios">Lista de usuarios</string>
 
 </resources>

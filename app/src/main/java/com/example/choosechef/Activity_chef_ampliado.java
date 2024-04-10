@@ -3,6 +3,7 @@ package com.example.choosechef;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
  * para mostrar toda la información de un chef
  */
 public class Activity_chef_ampliado extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,7 +29,7 @@ public class Activity_chef_ampliado extends AppCompatActivity {
             // Usar el objeto User en esta actividad
             if (user != null) {
                 // Por ejemplo, mostrar el nombre del chef en un TextView
-                //TextView textViewNombre = findViewById(R.id.textViewNombre);
+                //TextView textViewNombre = findViewById(R.id.nombre_chef_ampliado);
                 //textViewNombre.setText(user.getNombre());
             }
         }
@@ -35,6 +37,7 @@ public class Activity_chef_ampliado extends AppCompatActivity {
     public void reservar(View view){
         //mirare la posibilidad de añadir el calendario en el hueco que queda en esta pantalla, cuando se clique al botón aparecerá el calendario.
         //buscaré info bien, si es muy dificil lo mandaré a otra pantalla donde aparecerá el calendario.
+        Utils.gotoActivity(Activity_chef_ampliado.this, Activity_reservar.class);
 
     }
     public void contactar(View view){
