@@ -1,5 +1,6 @@
 package com.example.choosechef;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,11 +13,16 @@ import androidx.appcompat.app.AppCompatActivity;
  * para mostrar toda la información de un chef
  */
 public class Activity_chef_ampliado extends AppCompatActivity {
+    private TextView telefonochef;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chef_ampliado);
+
+        telefonochef = findViewById(R.id.edt_telefono_chef);
+        telefonochef.setVisibility(View.INVISIBLE);
 
         // Obtener el Intent que inició esta actividad
         Intent intent = getIntent();
@@ -35,14 +41,13 @@ public class Activity_chef_ampliado extends AppCompatActivity {
         }
     }
     public void reservar(View view){
-        //mirare la posibilidad de añadir el calendario en el hueco que queda en esta pantalla, cuando se clique al botón aparecerá el calendario.
-        //buscaré info bien, si es muy dificil lo mandaré a otra pantalla donde aparecerá el calendario.
+        //va a la siguiente pantalla donde vemos calendarios y crearemos la reserva
         Utils.gotoActivity(Activity_chef_ampliado.this, Activity_reservar.class);
 
     }
     public void contactar(View view){
-        //irá a otra pantalla donde aparecera el chat o el telefono/mail..
-        //Utils.gotoActivity(Activity_chef_ampliado.this, Activity_chat.class);
-
+        //muestra el telefono del chef
+        //recuperar telefono del chef------------FALTA
+        telefonochef.setVisibility(View.VISIBLE);
     }
 }

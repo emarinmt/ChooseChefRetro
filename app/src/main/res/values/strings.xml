@@ -37,7 +37,7 @@
     <string name="introduce_servicio">Personaliza tu servicio</string>
     <string name="introduce_descr_servicio">Introduce la descripcion del servicio</string>
     <string name="titulo_pantalla_admin">Opciones administrador</string>
-    <string name="titulo_pantalla_user">Administra tus opciones de usuario</string>
+    <string name="titulo_pantalla_user">Gestiona tus reservas</string>
     <string name="nombre_del_usuario">Nombre del usuario</string>
     <string name="boton_editar">Boton editar usuario</string>
     <string name="contraseña_usuario">Contraseña del usuario</string>
@@ -52,5 +52,8 @@
     <string name="boton_borrar">Boton borrar</string>
     <string name="boton_lupa">Boton para buscar</string>
     <string name="titulo_lista_usuarios">Lista de usuarios</string>
+    <string name="boton_ajustes">Boton ajustes</string>
+    <string name="telefono_chef">Teléfono chef</string>
+    <string name="boton_logout">Boton logout</string>
 
 </resources>

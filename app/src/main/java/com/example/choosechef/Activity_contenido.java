@@ -140,5 +140,8 @@ public class Activity_contenido extends AppCompatActivity {
        // Utils.gotoActivity(Activity_contenido.this, Activity_user.class);
 
     }
+    public void logout(View view){
+        Utils.gotoActivity(Activity_contenido.this, MainActivity_inicio.class);
+    }
 }
 
