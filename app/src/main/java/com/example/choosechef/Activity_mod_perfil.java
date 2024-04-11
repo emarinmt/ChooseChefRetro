@@ -180,14 +180,10 @@ public class Activity_mod_perfil extends AppCompatActivity {
             //user.setPassword(user.getPassword());
         }
 
-        //EL FALLO ESTÁ CUANDO EN LA BD EL CAMPO ES NULL
         // Actualizamos los datos del usuario con los nuevos valores
         user.setNombre(queryNameString);
         user.setUbicacion(queryAdressString);
         user.setTelefono(queryPhoneString);
-        //user.setComida(user.getComida());
-        //user.setServicio(user.getServicio());
-        //user.setValoracion(user.getValoracion());
 
         // Llamamos al método que ejecuta la llamada al servidor enviando los datos
         modificacion(user);
@@ -203,6 +199,10 @@ public class Activity_mod_perfil extends AppCompatActivity {
     private boolean validateFields(String oldPass, String newPass, String confirmPassword) {
         if (TextUtils.isEmpty(oldPass)) { // Comprueba si el campo contraseña actual está vacio
             mPassInput.setError("¡Debe ingresar una contraseña!");
+            return false;
+        }
+        if (!oldPass.equals(user.getPassword())) { // Comprueba si la contraseña actual ingresada no coincide con la del usuario
+            mPassInput.setError("¡La contraseña actual es incorrecta!");
             return false;
         }
         if (TextUtils.isEmpty(newPass)) { // Comprueba si el campo contraseña nueva está vacio

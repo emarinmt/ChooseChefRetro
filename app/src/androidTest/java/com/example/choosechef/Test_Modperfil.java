@@ -99,9 +99,12 @@ public class Test_Modperfil {
         espera();
 
         // Restaurar la contraseña original
+        onView(withId(R.id.btn_mod_perfil)).perform(click());
+        onView(withId(R.id.switch_cambio_contraseña)).perform(click());
         onView(withId(R.id.edt_contraseña_anterior_mod_perfil)).perform(replaceText("newPass"));
         onView(withId(R.id.edt_contraseña_nueva_mod_perfil)).perform(replaceText("4"));
         onView(withId(R.id.edt_contraseña2_nueva_mod_perfil)).perform(replaceText("4"));
+        espera();
 
         // Realizamos el clic en el botón de confirmar
         onView(withId(R.id.ibtn_confirmar_mod_perfil)).perform(click());
@@ -166,6 +169,7 @@ public class Test_Modperfil {
 
         // Realizamos el clic en el botón de confirmar
         onView(withId(R.id.ibtn_confirmar_mod_perfil)).perform(click());
+        espera();
 
         // Aseguramos que el registro sea fallido debido al nombre de usuario inválido
         assertFalse(modperfil.isModifySuccessful());
@@ -188,7 +192,7 @@ public class Test_Modperfil {
     public void espera() {
         // Esperar un tiempo suficiente para que se complete la operación asíncrona
         try {
-            Thread.sleep(10000); // Espera 5 segundos
+            Thread.sleep(15000); // Espera 5 segundos
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
