@@ -31,4 +31,7 @@ public class Activity_reservar extends AppCompatActivity {
         Utils.gotoActivity(Activity_reservar.this, Activity_chef_ampliado.class);
 
     }
+    public void logout(View view){
+        Utils.gotoActivity(Activity_reservar.this, MainActivity_inicio.class);
+    }
 }

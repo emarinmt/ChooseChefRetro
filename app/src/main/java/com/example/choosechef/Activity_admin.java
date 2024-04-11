@@ -100,5 +100,8 @@ public class Activity_admin extends AppCompatActivity {
         Utils.gotoActivity(Activity_admin.this, Activity_user_ampliado.class);
 
     }
+    public void logout(View view){
+        Utils.gotoActivity(Activity_admin.this, MainActivity_inicio.class);
+    }
 }
 

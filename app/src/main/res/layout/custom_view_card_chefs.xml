@@ -90,6 +90,7 @@
                 android:layout_marginTop="13dp"
                 android:layout_marginEnd="31dp"
                 android:clickable="false"
+                android:progressTint="#FFE500"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/foto_chef"

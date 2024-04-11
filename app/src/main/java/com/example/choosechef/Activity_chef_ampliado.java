@@ -62,4 +62,7 @@ public class Activity_chef_ampliado extends AppCompatActivity {
         //recuperar telefono del chef------------FALTA
         telefonoChefamp.setVisibility(View.VISIBLE);
     }
+    public void logout(View view){
+        Utils.gotoActivity(Activity_chef_ampliado.this, MainActivity_inicio.class);
+    }
 }

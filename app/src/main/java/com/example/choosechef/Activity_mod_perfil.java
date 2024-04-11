@@ -276,4 +276,7 @@ public class Activity_mod_perfil extends AppCompatActivity {
     public boolean isModifySuccessful() {
         return modifySuccessful;
     }
+    public void logout(View view){
+        Utils.gotoActivity(Activity_mod_perfil.this, MainActivity_inicio.class);
+    }
 }

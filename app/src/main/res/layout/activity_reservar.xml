@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/fondo1">
@@ -22,13 +23,31 @@
         android:layout_marginTop="200dp"
         android:layout_marginBottom="50dp"
         android:background="@drawable/fondo_boton"
+        android:contentDescription="@string/boton_confirmar"
         android:onClick="reservar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.846"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/calendarView"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/boton_confirmar"
-        android:contentDescription="@string/boton_confirmar" />
+        app:srcCompat="@drawable/boton_confirmar" />
+
+    <ImageButton
+        android:id="@+id/btn_logout_user"
+        tools:ignore="ImageContrastCheck"
+        android:layout_width="68dp"
+        android:layout_height="56dp"
+        android:layout_marginBottom="76dp"
+        android:background="@drawable/fondo_boton_redondo_logout"
+        android:contentDescription="@string/boton_modperfil"
+        android:onClick="logout"
+        android:tintMode="src_in"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.046"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@android:drawable/ic_lock_power_off"
+        app:tint="@color/white" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

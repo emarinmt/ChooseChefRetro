@@ -109,4 +109,7 @@ public class Activity_chef extends AppCompatActivity {
         Utils.gotoActivity(Activity_chef.this, Activity_contenido.class);
 
     }
+    public void logout(View view){
+        Utils.gotoActivity(Activity_chef.this, MainActivity_inicio.class);
+    }
 }

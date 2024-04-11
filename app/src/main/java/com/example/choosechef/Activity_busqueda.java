@@ -184,6 +184,9 @@ public class Activity_busqueda extends AppCompatActivity {
         extras.putString("servicio", servicio_seleccionada);
         Utils.sendActivityResult(Activity_busqueda.this, extras, Activity.RESULT_OK);
     }
+    public void logout(View view){
+        Utils.gotoActivity(Activity_busqueda.this, MainActivity_inicio.class);
+    }
        /* //Spinner spinner_prov = findViewById(R.id.lista_provincias);
         //List<String> spinnerProvincias = List.of("Barcelona", "Tarragona","Lleida", "Madrid", "Mallorca");
         //ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, spinnerProvincias);

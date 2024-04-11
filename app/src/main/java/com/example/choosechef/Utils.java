@@ -140,4 +140,5 @@ public class Utils extends AppCompatActivity{
             inputManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         }
     }
+
 }
