@@ -1,6 +1,7 @@
 package com.example.choosechef;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -46,6 +47,9 @@ public class Activity_contenido extends AppCompatActivity {
     private User user_logeado; // ELENA
     String token;
     String mTipoLogeado;
+    String prov_seleccionada;
+    String comida_seleccionada;
+    String servicio_seleccionada;
     /**
      * Método onCreate para la configuración incial de la actividad
      * @param savedInstanceState estado de la instancia guardada, un objeto Bundle que contiene el estado previamente guardado de la actividad
@@ -179,25 +183,55 @@ public class Activity_contenido extends AppCompatActivity {
     }
     public void search(View view) {
         // Redirige al usuario a la pantalla de busqueda
-        /*
+
         Utils.gotoActivityWithResult(Activity_contenido.this, Activity_busqueda.class, REQUEST_CODE);
 
-        if (requestCode == REQUEST_CODE_ACTIVITY_B && resultCode == Activity.RESULT_OK && data != null) {
-            // Obtener datos devueltos por ActivityB usando Utils
-            Bundle extras = data.getExtras();
-            if (extras != null) {
-                String value1 = extras.getString("key_value_1");
-                String value2 = extras.getString("key_value_2");
-                String value3 = extras.getString("key_value_3");
-
-                // Usar los datos recibidos como desees
-                // por ejemplo, mostrar en un TextView
-                // textView.setText("Valor 1: " + value1 + "\nValor 2: " + value2 + "\nValor 3: " + value3);
-            }
-        }
-         */
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                if (data != null) {
+                    // Obtener datos devueltos por ActivityB
+                    prov_seleccionada = data.getStringExtra("provincia");
+                    comida_seleccionada = data.getStringExtra("comida");
+                    servicio_seleccionada = data.getStringExtra("servicio");
+
+                    // Filtrar userList localmente con los filtros seleccionados
+                    List<User> filteredList = filterUsers(userList, prov_seleccionada, comida_seleccionada, servicio_seleccionada);
+
+                    // Actualizar userList con la lista filtrada
+                    userList.clear();
+                    userList.addAll(filteredList);
+
+                    // Mostrar la lista filtrada en el RecyclerView
+                    adapter.notifyDataSetChanged();
+
+                }
+            }
+        }
+
+    }
+
+    private List<User> filterUsers(List<User> userList, String provincia, String comida, String servicio) {
+        List<User> filteredList = new ArrayList<>();
+        for (User user : userList) {
+            // Aplicar el filtro basado en los criterios seleccionados
+            if (matchesFilter(user, provincia, comida, servicio)) {
+                filteredList.add(user);
+            }
+        }
+        return filteredList;
+    }
+    private boolean matchesFilter(User user, String provincia, String comida, String servicio) {
+        // Verificar si el usuario cumple con los criterios de filtro
+        boolean matchesProvincia = provincia == null || provincia.isEmpty() || user.getUbicacion().equalsIgnoreCase(provincia);
+        boolean matchesComida = comida == null || comida.isEmpty() || user.getComida().equalsIgnoreCase(comida);
+        boolean matchesServicio = servicio == null || servicio.isEmpty() || user.getServicio().equalsIgnoreCase(servicio);
+        return matchesProvincia && matchesComida && matchesServicio;
+    }
     public void ajustes (View view) {
         // Obtenemos tipo de usuario del usuario logeado
         recuperarDatos();

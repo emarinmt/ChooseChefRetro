@@ -20,6 +20,7 @@ public class Utils extends AppCompatActivity{
     /**
      * Método desarrollado por ELENA
      * Abre una actividad y finaliza la actividad padre.
+     * ACTIVAR SECOND ACTIVITY SIN FEEDBACK
      * @param parent  Actividad padre.
      * @param destination Actividad de destino.
      */
@@ -31,30 +32,51 @@ public class Utils extends AppCompatActivity{
 
     /**
      * Método desarrollado por ELENA
-     * Abre una actividad y finaliza la actividad padre.
+     * Abre una actividad en adapter y envia usuario
+     * ACTIVAR SECOND ACTIVITY Y PASAR USER SIN FEEDBACK (SOLO PARA ADAPTER)
      * @param context  Context desde donde se llama
      * @param user  Usuario
      * @param destination Actividad de destino.
      */
     public static void gotoActivityWithUser(Context context, Class destination, User user) {
-        Intent intent = new Intent(context, destination);
-        intent.putExtra("user", user);
-        context.startActivity(intent);
+        Intent i = new Intent(context, destination);
+        i.putExtra("user", user);
+        context.startActivity(i);
     }
 
-    // Abrir una nueva actividad y recibir datos
-    public static void gotoActivityWithResult(AppCompatActivity parent, Class destination, int requestCode) {
-        Intent intent = new Intent( parent, destination);
-        parent.startActivityForResult(intent, requestCode);
+    /**
+     * Método desarrollado por ELENA
+     * Abre una actividad y envia información
+     * ACTIVAR SECOND ACTIVITY Y PASAR INFO SIN FEEDBACK
+     * @param parent  Actividad padre.
+     * @param destination Actividad de destino.
+     * @param extras info a enviar
+     */
+    public static void gotoActivityWithExtras(AppCompatActivity parent, Class destination, Bundle extras) {
+        Intent i = new Intent(parent, destination);
+        i.putExtras(extras);
+        parent.startActivity(i);
+    }
+
+    /**
+     * Método desarrollado por ELENA
+     * Abre una actividad y espera info
+     * ACTIVAR SECOND ACTIVITY CON FEEDBACK
+     * @param parent  Actividad padre.
+     * @param destination Actividad de destino.
+     */
+    public static void gotoActivityWithResult(AppCompatActivity parent, Class destination, int requestcode){
+        Intent i = new Intent(parent, destination);
+        parent.startActivityForResult(i, requestcode);
     }
 
     // Enviar datos de vuelta a la actividad anterior
     public static void sendActivityResult(AppCompatActivity parent, Bundle extras, int resultCode) {
-        Intent intent = new Intent();
+        Intent i = new Intent();
         if (extras != null) {
-            intent.putExtras(extras);
+            i.putExtras(extras);
         }
-        parent.setResult(resultCode, intent);
+        parent.setResult(resultCode, i);
         parent.finish();
     }
 

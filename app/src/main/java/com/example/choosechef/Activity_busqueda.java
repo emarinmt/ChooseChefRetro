@@ -22,10 +22,14 @@ import retrofit2.Retrofit;
 
 public class Activity_busqueda extends AppCompatActivity {
     private final String TAG = Activity_busqueda.class.getSimpleName();
+
     //variables campos de entrada
     Spinner spinner_prov;
     Spinner spinner_comida;
     Spinner spinner_servicio;
+    String prov_seleccionada;
+    String comida_seleccionada;
+    String servicio_seleccionada;
     ArrayList<String> provinciasList = new ArrayList<>(); // Lista para almacenar las provincias
     // Variables para conectar con la API
     FastMethods mfastMethods;
@@ -41,9 +45,9 @@ public class Activity_busqueda extends AppCompatActivity {
         mfastMethods = retro.create(FastMethods.class);
 
         recuperarProvincias();
-        seleccionarProvincia();
-        seleccionarComida();
-        seleccionarServicio();
+        prov_seleccionada=seleccionarProvincia();
+        comida_seleccionada=seleccionarComida();
+        servicio_seleccionada=seleccionarServicio();
     }
     public void recuperarProvincias(){
         // Compruebe el estado de la conexión de red
@@ -85,7 +89,7 @@ public class Activity_busqueda extends AppCompatActivity {
             }
         });
     }
-    private void seleccionarProvincia() {
+    private String seleccionarProvincia() {
         spinner_prov = findViewById(R.id.spinner_provincias);
         //Aquí hay que decidir si hace falta hacer una clase de provincias, o directamente llamar al servidor y recuperar la lista de provincias
         ArrayList<String> provincias = provinciasList;
@@ -102,9 +106,10 @@ public class Activity_busqueda extends AppCompatActivity {
         spinner_prov.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String prov_seleccionada = (String) spinner_prov.getSelectedItem();
+                prov_seleccionada = (String) spinner_prov.getSelectedItem();
                 String mensaje_prov = "Ha seleccionado la provincia " + prov_seleccionada;
                 Utils.showToast(Activity_busqueda.this, mensaje_prov);
+
             }
 
             @Override
@@ -112,8 +117,9 @@ public class Activity_busqueda extends AppCompatActivity {
 
             }
         });
+        return prov_seleccionada;
     }
-    private void seleccionarComida() {
+    private String seleccionarComida() {
         spinner_comida = findViewById(R.id.spinner_tipo_comida);
         //Aquí hay que decidir si hace falta hacer una clase de provincias, o directamente llamar al servidor y recuperar la lista de provincias
         ArrayList<String> comida = new ArrayList<>();
@@ -131,7 +137,7 @@ public class Activity_busqueda extends AppCompatActivity {
         spinner_comida.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String comida_seleccionada = (String) spinner_comida.getSelectedItem();
+                comida_seleccionada = (String) spinner_comida.getSelectedItem();
                 String mensaje_comida = "Ha seleccionado el tipo de comida " + comida_seleccionada;
                 Utils.showToast(Activity_busqueda.this, mensaje_comida);
             }
@@ -141,8 +147,9 @@ public class Activity_busqueda extends AppCompatActivity {
 
             }
         });
+        return comida_seleccionada;
     }
-    private void seleccionarServicio() {
+    private String seleccionarServicio() {
         spinner_servicio = findViewById(R.id.spinner_servicios);
         //Aquí hay que decidir si hace falta hacer una clase de provincias, o directamente llamar al servidor y recuperar la lista de provincias
         ArrayList<String> servicio = new ArrayList<>();
@@ -156,7 +163,7 @@ public class Activity_busqueda extends AppCompatActivity {
         spinner_comida.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String servicio_seleccionada = (String) spinner_comida.getSelectedItem();
+                servicio_seleccionada = (String) spinner_comida.getSelectedItem();
                 String mensaje_servicio = "Ha seleccionado el servicio " + servicio_seleccionada;
                 Utils.showToast(Activity_busqueda.this, mensaje_servicio);
             }
@@ -166,15 +173,16 @@ public class Activity_busqueda extends AppCompatActivity {
 
             }
         });
+        return servicio_seleccionada;
     }
     public void confirmarBusqueda(View view) {
         Utils.showToast(Activity_busqueda.this, "Busqueda correcta!");
-        Utils.gotoActivity(Activity_busqueda.this, Activity_contenido.class);
+        //Utils.gotoActivity(Activity_busqueda.this, Activity_contenido.class);
         Bundle extras = new Bundle();
+        extras.putString("provincia", prov_seleccionada);
+        extras.putString("comida", comida_seleccionada);
+        extras.putString("servicio", servicio_seleccionada);
         Utils.sendActivityResult(Activity_busqueda.this, extras, Activity.RESULT_OK);
-        extras.putString("key_value_1", "valor1");
-        extras.putString("key_value_2", "valor2");
-        extras.putString("key_value_3", "valor3");
     }
        /* //Spinner spinner_prov = findViewById(R.id.lista_provincias);
         //List<String> spinnerProvincias = List.of("Barcelona", "Tarragona","Lleida", "Madrid", "Mallorca");
