@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
@@ -39,6 +40,22 @@ public class Utils extends AppCompatActivity{
         Intent intent = new Intent(context, destination);
         intent.putExtra("user", user);
         context.startActivity(intent);
+    }
+
+    // Abrir una nueva actividad y recibir datos
+    public static void gotoActivityWithResult(AppCompatActivity parent, Class destination, int requestCode) {
+        Intent intent = new Intent( parent, destination);
+        parent.startActivityForResult(intent, requestCode);
+    }
+
+    // Enviar datos de vuelta a la actividad anterior
+    public static void sendActivityResult(AppCompatActivity parent, Bundle extras, int resultCode) {
+        Intent intent = new Intent();
+        if (extras != null) {
+            intent.putExtras(extras);
+        }
+        parent.setResult(resultCode, intent);
+        parent.finish();
     }
 
     // QUITAR PARA TOKEN

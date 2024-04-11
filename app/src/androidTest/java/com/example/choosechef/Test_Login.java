@@ -42,8 +42,8 @@ public class Test_Login {
     public void testValidCredentials() {
 
         // Simulamos la entrada de datos en los campos de login
-        onView(withId(R.id.edt_usuario_login)).perform(replaceText("1"));
-        onView(withId(R.id.edt_contra_login)).perform(replaceText("2"));
+        onView(withId(R.id.edt_usuario_login)).perform(replaceText("4"));
+        onView(withId(R.id.edt_contra_login)).perform(replaceText("4"));
 
         // Realizamos el clic en el botón de entrar
         onView(withId(R.id.ibtn_entrar_login)).perform(click());

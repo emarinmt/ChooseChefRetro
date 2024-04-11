@@ -113,8 +113,23 @@ public class Activity_login extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<TokenResponse> call, @NonNull Response<TokenResponse> response) {
                 if ((response.isSuccessful()) && (response.body() != null)) {
-                    loginSuccessful = true;
                     TokenResponse tokenResponse = response.body();
+                    // Ahora Verificamos si el inicio de sesión fue exitoso basado en la respuesta del servidor
+                    if (tokenResponse.getToken() != null && !tokenResponse.getToken().isEmpty()) {
+                        String token = tokenResponse.getToken();
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("token", token);
+                        editor.apply();
+
+                        // Inicio de sesión exitoso, redirige al usuario a la pantalla de contenido
+                        loginSuccessful = true;
+                        Utils.gotoActivity(Activity_login.this, Activity_contenido.class);
+
+                    } else {
+                        // Inicio de sesión fallido, muestra un mensaje de error
+                        Utils.showToast(Activity_login.this, "Inicio de sesión incorrecto");
+                    }
+                    /*
                     String token = tokenResponse.getToken();
 
                     // Guardar el token de acceso en SharedPreferences
@@ -123,8 +138,8 @@ public class Activity_login extends AppCompatActivity {
                     editor.apply();
 
                     // Inicio de sesión exitoso, redirige al usuario a la pantalla de contenido
-                    Utils.gotoActivity(Activity_login.this, Activity_contenido.class);
-
+                    //Utils.gotoActivity(Activity_login.this, Activity_contenido.class);
+                    */
                 } else {
                     // Inicio de sesión fallido, muestra un mensaje de error
                     Utils.showToast(Activity_login.this, "Inicio de sesión incorrecto");

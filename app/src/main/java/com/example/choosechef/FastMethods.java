@@ -53,9 +53,9 @@ public interface FastMethods {
     @POST("usuario/crear/")
     Call<String> crear(@Body User user);
 
-    //COMPROBAR Y MODIFICAR
+
     /**
-     * Método dessarrollado por ELENA, modificado por ELENA para usar el token y recibir usuario
+     * Método dessarrollado por ELENA, modificado por ELENA
      * Para realizar una consulta al servidor y recuperar los datos de los usuarios chefs
      * @return devuelve una lista con los usuarios que son chefs
      */

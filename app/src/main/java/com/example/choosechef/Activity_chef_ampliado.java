@@ -13,16 +13,24 @@ import androidx.appcompat.app.AppCompatActivity;
  * para mostrar toda la información de un chef
  */
 public class Activity_chef_ampliado extends AppCompatActivity {
-    private TextView telefonochef;
-
+    private TextView nombreChefamp;
+    private TextView tipoChefamp;
+    private TextView provChefamp;
+    private TextView descChefamp;
+    private TextView telefonoChefamp;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chef_ampliado);
 
-        telefonochef = findViewById(R.id.edt_telefono_chef);
-        telefonochef.setVisibility(View.INVISIBLE);
+        // Inicialización de variables
+        nombreChefamp = findViewById(R.id.nombre_chef_ampliado);
+        tipoChefamp = findViewById(R.id.tipo_comida_ampliado);
+        provChefamp = findViewById(R.id.provincia_ampliado);
+        descChefamp = findViewById(R.id.descripcion_ampliado);
+
+        telefonoChefamp = findViewById(R.id.edt_telefono_chef);
 
         // Obtener el Intent que inició esta actividad
         Intent intent = getIntent();
@@ -34,9 +42,13 @@ public class Activity_chef_ampliado extends AppCompatActivity {
 
             // Usar el objeto User en esta actividad
             if (user != null) {
-                // Por ejemplo, mostrar el nombre del chef en un TextView
-                //TextView textViewNombre = findViewById(R.id.nombre_chef_ampliado);
-                //textViewNombre.setText(user.getNombre());
+                nombreChefamp.setText(user.getNombre());
+                tipoChefamp.setText(user.getComida());
+                provChefamp.setText(user.getUbicacion());
+                descChefamp.setText(user.getDescripcion());
+                telefonoChefamp.setText(user.getTelefono());
+
+                telefonoChefamp.setVisibility(View.INVISIBLE);
             }
         }
     }
@@ -48,6 +60,6 @@ public class Activity_chef_ampliado extends AppCompatActivity {
     public void contactar(View view){
         //muestra el telefono del chef
         //recuperar telefono del chef------------FALTA
-        telefonochef.setVisibility(View.VISIBLE);
+        telefonoChefamp.setVisibility(View.VISIBLE);
     }
 }

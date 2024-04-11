@@ -1,5 +1,6 @@
 package com.example.choosechef;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -169,7 +170,11 @@ public class Activity_busqueda extends AppCompatActivity {
     public void confirmarBusqueda(View view) {
         Utils.showToast(Activity_busqueda.this, "Busqueda correcta!");
         Utils.gotoActivity(Activity_busqueda.this, Activity_contenido.class);
-
+        Bundle extras = new Bundle();
+        Utils.sendActivityResult(Activity_busqueda.this, extras, Activity.RESULT_OK);
+        extras.putString("key_value_1", "valor1");
+        extras.putString("key_value_2", "valor2");
+        extras.putString("key_value_3", "valor3");
     }
        /* //Spinner spinner_prov = findViewById(R.id.lista_provincias);
         //List<String> spinnerProvincias = List.of("Barcelona", "Tarragona","Lleida", "Madrid", "Mallorca");

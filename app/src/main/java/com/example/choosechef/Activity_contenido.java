@@ -1,6 +1,7 @@
 package com.example.choosechef;
 
-
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -25,7 +26,7 @@ import retrofit2.Retrofit;
 
 public class Activity_contenido extends AppCompatActivity {
     private final String TAG = Activity_contenido.class.getSimpleName();
-
+    private static final int REQUEST_CODE = 1;
     // Añadido por EVA para recibir el usuario en esta actividad y enviarlo a la siguiente( modificaicón perfil)
     //String usuario;
     //String pass;
@@ -42,7 +43,9 @@ public class Activity_contenido extends AppCompatActivity {
     FastMethods mfastMethods;
     Retrofit retro;
     private User user; // ELENA
-
+    private User user_logeado; // ELENA
+    String token;
+    String mTipoLogeado;
     /**
      * Método onCreate para la configuración incial de la actividad
      * @param savedInstanceState estado de la instancia guardada, un objeto Bundle que contiene el estado previamente guardado de la actividad
@@ -63,15 +66,19 @@ public class Activity_contenido extends AppCompatActivity {
         //adapter = new Adapter(this,items);
         recyclerView.setAdapter(adapter);
 
+        // Obtener el token de SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences("MiPreferencia", Context.MODE_PRIVATE);
+        token = sharedPreferences.getString("token", "");
+
         // Llamar al método recuperarDatos
-        recuperarDatos();
+        recuperarChefs();
 
     }
 
     /**
      * Método para recuperar la lista de chefs del servidor
      */
-    public void recuperarDatos(){
+    public void recuperarChefs(){
         // Compruebe el estado de la conexión de red
         if (!Utils.isNetworkAvailable(this)) {
             Utils.showToast(Activity_contenido.this, "No hay conexión a Internet");
@@ -111,6 +118,50 @@ public class Activity_contenido extends AppCompatActivity {
         });
     }
 
+    /**
+     * Método recuperarDatos
+     * Para recuperar los datos del usuario logeado
+     */
+    public void recuperarDatos(){
+        // Compruebe el estado de la conexión de red
+        if (!Utils.isNetworkAvailable(this)) {
+            Utils.showToast(Activity_contenido.this, "No hay conexión a Internet");
+            return;
+        }
+        // Call HTTP client para recuperar la información del usuario
+        Call<User> call = mfastMethods.recuperar_info(token);
+        call.enqueue(new Callback<User>() { // Ejecutar la llamada de manera asíncrona
+            /**
+             * Método invocado cuando se recibe una respuesta de la solicitud HTTP
+             * @param call llamada que generó la respuesta
+             * @param response la respuesta recibida del servidor
+             */
+            public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
+                if (response.isSuccessful()) {
+                    user_logeado = response.body(); // Recibe los datos del usuario
+                    if (user_logeado != null) {
+                        mTipoLogeado=user_logeado.getTipo();
+                    } else {
+                        // Obtención de datos incorrecta, muestra un mensaje de error
+                        Utils.showToast(Activity_contenido.this, "Obtención de datos incorrecta");
+                    }
+                }
+            }
+            /**
+             *Método invocado cuando ocurre un error durante la ejecución de la llamada HTTP
+             * @param call la llamada que generó el error
+             * @param t la excepción que ocurrió
+             */
+            @Override
+            public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
+                // Error en la llamada, muestra el mensaje de error y registra la excepción
+                t.printStackTrace();
+                Log.e(TAG, "Error en la llamada:" + t.getMessage());
+                Utils.showToast(Activity_contenido.this, "Error en la llamada: " + t.getMessage());
+            }
+        });
+    }
+
 
     /**
      * Método para manejar el clic del botón de modificación de perfil.
@@ -128,18 +179,42 @@ public class Activity_contenido extends AppCompatActivity {
     }
     public void search(View view) {
         // Redirige al usuario a la pantalla de busqueda
-        Utils.gotoActivity(Activity_contenido.this, Activity_busqueda.class);
+        /*
+        Utils.gotoActivityWithResult(Activity_contenido.this, Activity_busqueda.class, REQUEST_CODE);
 
+        if (requestCode == REQUEST_CODE_ACTIVITY_B && resultCode == Activity.RESULT_OK && data != null) {
+            // Obtener datos devueltos por ActivityB usando Utils
+            Bundle extras = data.getExtras();
+            if (extras != null) {
+                String value1 = extras.getString("key_value_1");
+                String value2 = extras.getString("key_value_2");
+                String value3 = extras.getString("key_value_3");
 
+                // Usar los datos recibidos como desees
+                // por ejemplo, mostrar en un TextView
+                // textView.setText("Valor 1: " + value1 + "\nValor 2: " + value2 + "\nValor 3: " + value3);
+            }
+        }
+         */
     }
-    //DE MOMENTO SOLO MUESTSRA CHEFS
-    public void ajustes (View view) {
-        //cambiar cuando cree la siguiente pantalla ( falta añadir si es usuario admin, chef o usuario normal, de momento pongo ir a la clase chef para probarla.
-        // Redirige segun el usuario a la pantalla de configuracion de chef, admin o usuario
-        //Utils.gotoActivity(Activity_contenido.this, Activity_chef.class);
-        Utils.gotoActivity(Activity_contenido.this, Activity_admin.class);
-       // Utils.gotoActivity(Activity_contenido.this, Activity_user.class);
 
+    public void ajustes (View view) {
+        // Obtenemos tipo de usuario del usuario logeado
+        recuperarDatos();
+        if (mTipoLogeado != null && !mTipoLogeado.isEmpty()) {
+            // Redirige segun el usuario a la pantalla de configuracion de chef, admin o usuario
+            if (mTipoLogeado.equalsIgnoreCase("chef")){
+                Utils.gotoActivity(Activity_contenido.this, Activity_chef.class);
+            } else if (mTipoLogeado.equalsIgnoreCase("client")) {
+                Utils.gotoActivity(Activity_contenido.this, Activity_user.class);
+            }else if (mTipoLogeado.equalsIgnoreCase("admin")) {   //DE MOMENTO SOLO MUESTSRA CHEFS
+                Utils.gotoActivity(Activity_contenido.this, Activity_admin.class);
+            } else {
+                Utils.showToast(Activity_contenido.this, "Tipo de usuario incorrecto");
+            }
+        } else {
+            Utils.showToast(Activity_contenido.this, "Error opteniendo el tipo de usuario");
+        }
     }
     public void logout(View view){
         Utils.gotoActivity(Activity_contenido.this, MainActivity_inicio.class);
