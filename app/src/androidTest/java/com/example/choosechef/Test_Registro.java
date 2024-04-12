@@ -25,10 +25,8 @@ import java.util.Random;
  */
 @RunWith(AndroidJUnit4.class)
 public class Test_Registro {
-
     @Rule
     public IntentsTestRule<Activity_registro> activityRule = new IntentsTestRule<>(Activity_registro.class);
-
     private Activity_registro registro;
     private Context context;
 
