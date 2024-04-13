@@ -37,4 +37,15 @@
         app:srcCompat="@android:drawable/ic_lock_power_off"
         app:tint="@color/white" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_reservas"
+        android:layout_width="409dp"
+        android:layout_height="612dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_logout_user"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_titulo_user" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -30,7 +30,7 @@ public interface FastMethods {
     /**
      * Método dessarrollado por EVA, modificado por ELENA para usar el token y recibir usuario
      * Para realizar una consulta al servidor y recuperar los datos de usuario
-     * @return devuelve una lista con el nombre del usuario, el teléfono y la dirección
+     * @return devuelve un usuario completo
      */
     @GET("usuario/perfil/")
     Call<User>recuperar_info(@Query("token") String token);
@@ -71,13 +71,43 @@ public interface FastMethods {
     @GET("provincias/conChef/")
     Call<List<String>>recuperar_provincias();
 
-    //@GET("usuario/perfil/")
-    //Call<User>recuperar_info_admin(@Query("token") String token);
+    /**
+     * Método desarrolado por EVA,
+     * Para realizar una consulta al servidor y recuperar los chefs que cumplen los siguientes filtros (ubicación, comida y servicio)
+     * Para mostrarlos en la busqueda filtrada
+     * @param ubicacion ubicación donde hay chefs
+     * @param comida tipo de comida que ofrecen los chefs
+     * @param servicio tipo de servicio que ofrecen los chefs
+     * @return devuelve una lista de chefs que cumplen los filtros seleccionados
+     */
+    @GET("chef/listar/por/{ubicacion}/{comida}/{servicio}")
+    Call<List<User>>recuperar_chefs_filtrados(@Path("ubicacion")String ubicacion, @Path("comida")String comida, @Path("servicio")String servicio);
 
-    //@POST("usuario/modificar/")
-    //Call<String> modificarUsuario_admin(@Query("token") String token, @Body User user);
+    /**
+     * Método desarrollado por EVA,
+     * Para realizar una consulta al servidor y recuperar todos los usuarios de la base de datos
+     * @return devuelve una lista de todos los usuarios
+     */
+    @GET("admin/listar/")
+    Call<List<User>>recuperar_todos_usuarios();
 
+    /**
+     * Método desarrollado por EVA,
+     * Para realizar una consulta al servidor y modificar todos los datos de un usuario
+     * @param usuario envía un usuario al cual le modificará los datos
+     * @param user envía el objeto usuario con los datos modificados
+     * @return devuelve un string si la modificación es correcta o no
+     */
+    @POST("admin/modificar/{usuario}")
+    Call<String> modificarUsuario_admin(@Path("usuario") String usuario, @Body User user);
+
+    //PREPARADO ELENA. PENDIENTE MODIFICAR CUANDO ESTE HECHO EN EL SERVIDOR
     @POST("usuario/crear/")
     Call<String> crear(@Body Reserva reserva);
+
+
+    //PREPARADO. PENDIENTE MODIFICAR CUANDO ESTE HECHO EN EL SERVIDOR
+    @GET("reservas/listar/")
+    Call<List<Reserva>>recuperar_reservas();
 
 }

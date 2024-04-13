@@ -29,17 +29,11 @@ public class Activity_contenido extends AppCompatActivity {
     private boolean contentSuccessful = false; // Variable para rastrear el estado de la muestra del listado
     private final String TAG = Activity_contenido.class.getSimpleName();
     private static final int REQUEST_CODE = 1;
-    // Añadido por EVA para recibir el usuario en esta actividad y enviarlo a la siguiente( modificaicón perfil)
-    //String usuario;
-    //String pass;
-    // Borrado por ELENA para usar token
 
     // Variables para mostrar los chefs
     RecyclerView recyclerView;
     Adapter_chef adapter;
     List<User> userList = new ArrayList<>(); // Lista para almacenar los chefs
-
-    //ArrayList<String> items;
 
     // Variables para conectar con la API
     FastMethods mfastMethods;
@@ -68,7 +62,6 @@ public class Activity_contenido extends AppCompatActivity {
         recyclerView = findViewById(R.id.rv_chefs);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new Adapter_chef(this, userList);
-        //adapter = new Adapter(this,items);
         recyclerView.setAdapter(adapter);
 
         // Obtener el token de SharedPreferences
@@ -77,7 +70,6 @@ public class Activity_contenido extends AppCompatActivity {
 
         // Llamar al método recuperarDatos
         recuperarChefs();
-
     }
 
     /**
@@ -94,7 +86,7 @@ public class Activity_contenido extends AppCompatActivity {
             return;
         }
         // Call HTTP client para recuperar la información del usuario
-        Call<List<User>> call = mfastMethods.recuperar_chefs(); //CAMBIAR
+        Call<List<User>> call = mfastMethods.recuperar_chefs();  //CAMBIAR
         call.enqueue(new Callback<List<User>>() { // Ejecutar la llamada de manera asíncrona
             /**
              * Método invocado cuando se recibe una respuesta de la solicitud HTTP
@@ -151,7 +143,7 @@ public class Activity_contenido extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     user_logeado = response.body(); // Recibe los datos del usuario
                     if (user_logeado != null) {
-                        mTipoLogeado=user_logeado.getTipo();
+                        mTipoLogeado = user_logeado.getTipo();
                     } else {
                         // Obtención de datos incorrecta, muestra un mensaje de error
                         Utils.showToast(Activity_contenido.this, "Obtención de datos incorrecta");
@@ -176,23 +168,16 @@ public class Activity_contenido extends AppCompatActivity {
 
     /**
      * Método para manejar el clic del botón de modificación de perfil.
-     * Dirige al usuario a la pantalla de modificacoón
+     * Dirige al usuario a la pantalla de modificación
      * @param view La vista (Button) que se hizo clic.
      */
     public void changeProfile (View view) {
-        // Redirige al usuario a la pantalla de modificación de perfil
-        //Utils.gotoActivity(MainActivity_contenido.this, MainActivity_mod_perfil.class);
-        //Cambiado por EVA para poder recibir el usuario y la contraseña de la actividad anterior(login) y enviarlo a la siguiente actividad (modificación perfil)
-        //Utils.gotoActivityMessage(Activity_contenido.this, Activity_mod_perfil.class, "usuario",usuario , "pass", pass, false);
-        // Modificado por ELENA para usar el token
         // Redirige al usuario a la pantalla de modificación de perfil
         Utils.gotoActivity(Activity_contenido.this, Activity_mod_perfil.class);
     }
     public void search(View view) {
         // Redirige al usuario a la pantalla de busqueda
-
         Utils.gotoActivityWithResult(Activity_contenido.this, Activity_busqueda.class, REQUEST_CODE);
-
     }
 
     @Override
@@ -219,7 +204,6 @@ public class Activity_contenido extends AppCompatActivity {
                 }
             }
         }
-
     }
 
     private List<User> filterUsers(List<User> userList, String provincia, String comida, String servicio) {
@@ -240,6 +224,8 @@ public class Activity_contenido extends AppCompatActivity {
         return matchesProvincia && matchesComida && matchesServicio;
     }
     public void ajustes (View view) {
+       // Utils.gotoActivity(Activity_contenido.this, Activity_admin.class);
+        //COMENTO PORQUE ME DA PROBLEMAS CON EL USUARIO ADMIN, SOLO QUIERO COMPROBAR QUE ESA CLASE FUNCIONA
         // Obtenemos tipo de usuario del usuario logeado
         recuperarDatos();
         if (mTipoLogeado != null && !mTipoLogeado.isEmpty()) {
@@ -248,14 +234,15 @@ public class Activity_contenido extends AppCompatActivity {
                 Utils.gotoActivity(Activity_contenido.this, Activity_chef.class);
             } else if (mTipoLogeado.equalsIgnoreCase("client")) {
                 Utils.gotoActivity(Activity_contenido.this, Activity_user.class);
-            }else if (mTipoLogeado.equalsIgnoreCase("admin")) {   //DE MOMENTO SOLO MUESTSRA CHEFS
+            } else if (mTipoLogeado.equalsIgnoreCase("admin")) {   //DE MOMENTO SOLO MUESTSRA CHEFS
                 Utils.gotoActivity(Activity_contenido.this, Activity_admin.class);
             } else {
                 Utils.showToast(Activity_contenido.this, "Tipo de usuario incorrecto");
             }
         } else {
-            Utils.showToast(Activity_contenido.this, "Error opteniendo el tipo de usuario");
+            Utils.showToast(Activity_contenido.this, "Error obteniendo el tipo de usuario");
         }
+
     }
     public void logout(View view){
         Utils.gotoActivity(Activity_contenido.this, MainActivity_inicio.class);

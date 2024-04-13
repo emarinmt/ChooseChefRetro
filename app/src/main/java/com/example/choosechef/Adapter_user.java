@@ -11,14 +11,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+/**
+ * Clase adaptador user.
+ * Para gestionar el recycler view de usuarios (pantalla administrador)
+ */
+
 public class Adapter_user extends RecyclerView.Adapter<Adapter_user.ViewHolder> {
 
     private final LayoutInflater layoutInflater;
     private final List<User> data;
-    //private final List<String> data;
 
     Adapter_user(Context context, List<User> data){
-        //Adapter(Context context, List<String> data){
         this.layoutInflater = LayoutInflater.from(context);
         this.data = data;
     }
@@ -36,15 +39,6 @@ public class Adapter_user extends RecyclerView.Adapter<Adapter_user.ViewHolder> 
         // Establece los datos del chef en las vistas del ViewHolder
         viewHolder.nombre_user.setText(user.getNombre());
 
-        /*
-        String nombre = data.get(i);
-        viewHolder.nombre_chef.setText(nombre);
-        String comida = data.get(i);
-        viewHolder.tipo_comida.setText(comida);
-        String provinc = data.get(i);
-        viewHolder.provincia.setText(provinc);
-        //falta imagen
-*/
         // Manjear que al clicar un usuario se muestre este ampliado
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,11 +47,9 @@ public class Adapter_user extends RecyclerView.Adapter<Adapter_user.ViewHolder> 
                 User currentUser = data.get(viewHolder.getAdapterPosition());
 
                 // Utilizar el método gotoActivityWithUser para abrir la DetailActivity y pasar el objeto User
-                //CAMBIAR A CLASE USUARIO AMPLIADO CUANDO ESTE HECHA PARA MOSTRAR TODOS LOS DATOS DEL USUARIO Y Q EL ADMIN PUEDA VER, MODIFICAR O ELIMINAR
                 Utils.gotoActivityWithUser(viewHolder.itemView.getContext(), Activity_user_ampliado.class, currentUser);
             }
         });
-
     }
 
     @Override
@@ -72,7 +64,5 @@ public class Adapter_user extends RecyclerView.Adapter<Adapter_user.ViewHolder> 
             super(itemView);
             nombre_user = itemView.findViewById(R.id.nombre_usuario);
         }
-
     }
-
 }

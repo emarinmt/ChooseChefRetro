@@ -166,14 +166,14 @@
         android:id="@+id/ibtn_confirmar_mod_perfil"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         android:layout_marginBottom="50dp"
         android:background="@drawable/fondo_boton"
         android:contentDescription="@string/boton_confirmar"
         android:onClick="confirmaCambios"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.846"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btn_logout_user"
         app:layout_constraintTop_toBottomOf="@+id/edt_contraseña2_nueva_mod_perfil"
         app:srcCompat="@drawable/boton_confirmar" />
 

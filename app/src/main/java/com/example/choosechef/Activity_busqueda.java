@@ -91,16 +91,10 @@ public class Activity_busqueda extends AppCompatActivity {
     }
     private String seleccionarProvincia() {
         spinner_prov = findViewById(R.id.spinner_provincias);
-        //Aquí hay que decidir si hace falta hacer una clase de provincias, o directamente llamar al servidor y recuperar la lista de provincias
-        ArrayList<String> provincias = provinciasList;
-        /*
-        provincias.add("Barcelona");
-        provincias.add("LLeida");
-        provincias.add("Madrid");
-        provincias.add("Mallorca");
-         */
+        //
+        //ArrayList<String> provincias = provinciasList;
 
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, provincias);
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, provinciasList);
         spinner_prov.setAdapter(adapter1);
 
         spinner_prov.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -109,12 +103,10 @@ public class Activity_busqueda extends AppCompatActivity {
                 prov_seleccionada = (String) spinner_prov.getSelectedItem();
                 String mensaje_prov = "Ha seleccionado la provincia " + prov_seleccionada;
                 Utils.showToast(Activity_busqueda.this, mensaje_prov);
-
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
         return prov_seleccionada;
@@ -144,7 +136,6 @@ public class Activity_busqueda extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
         return comida_seleccionada;
@@ -170,7 +161,6 @@ public class Activity_busqueda extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
         return servicio_seleccionada;

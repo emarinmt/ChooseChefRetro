@@ -46,6 +46,12 @@ private static boolean isNetworkAvailable = true; // Estado predeterminado de la
         i.putExtra("user", user);
         context.startActivity(i);
     }
+    //REVISAR EVA
+    public static void gotoActivityWithReserva(Context context, Class destination, Reserva reserva) {
+        Intent i = new Intent(context, destination);
+        i.putExtra("reserva", reserva.toString());
+        context.startActivity(i);
+    }
 
     /**
      * Método desarrollado por ELENA

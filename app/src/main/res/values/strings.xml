@@ -55,5 +55,8 @@
     <string name="boton_ajustes">Boton ajustes</string>
     <string name="telefono_chef">Teléfono chef</string>
     <string name="boton_logout">Boton logout</string>
+    <string name="fecha_reserva">fecha reserva</string>
+    <string name="comentario">Comentario</string>
+    <string name="introduce_tu_comentario">Introduce tu reseña</string>
 
 </resources>

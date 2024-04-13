@@ -2,24 +2,25 @@ package com.example.choosechef;
 
 import android.content.Context;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RatingBar;
 import android.widget.TextView;
-
 import java.util.List;
 
+/**
+ * Clase adaptador chef.
+ * Para gestionar el recycler view de chefs (pantalla contenido)
+ */
 public class Adapter_chef extends RecyclerView.Adapter<Adapter_chef.ViewHolder> {
 
     private final LayoutInflater layoutInflater;
     private final List<User> data;
-    //private final List<String> data;
+
 
     Adapter_chef(Context context, List<User> data){
-        //Adapter(Context context, List<String> data){
         this.layoutInflater = LayoutInflater.from(context);
         this.data = data;
     }
@@ -40,15 +41,8 @@ public class Adapter_chef extends RecyclerView.Adapter<Adapter_chef.ViewHolder> 
         viewHolder.provincia.setText(user.getUbicacion());
         viewHolder.valoracion.setRating(user.getValoracion());
 
-        /*
-        String nombre = data.get(i);
-        viewHolder.nombre_chef.setText(nombre);
-        String comida = data.get(i);
-        viewHolder.tipo_comida.setText(comida);
-        String provinc = data.get(i);
-        viewHolder.provincia.setText(provinc);
         //falta imagen
-*/
+
         // Manjear que al clicar un chef se muestre este ampliado
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,7 +54,6 @@ public class Adapter_chef extends RecyclerView.Adapter<Adapter_chef.ViewHolder> 
                 Utils.gotoActivityWithUser(viewHolder.itemView.getContext(), Activity_chef_ampliado.class, currentChef);
             }
         });
-
     }
 
     @Override
@@ -78,9 +71,6 @@ public class Adapter_chef extends RecyclerView.Adapter<Adapter_chef.ViewHolder> 
             tipo_comida = itemView.findViewById(R.id.tipo_comida);
             provincia = itemView.findViewById(R.id.provincia);
             valoracion = itemView.findViewById(R.id.ratingBar);
-
         }
-
     }
-
 }
