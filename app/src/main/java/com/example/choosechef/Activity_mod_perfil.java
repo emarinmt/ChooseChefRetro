@@ -40,7 +40,6 @@ public class Activity_mod_perfil extends AppCompatActivity {
     FastMethods mfastMethods;
     Retrofit retro;
     private User user; // ELENA
-    //ProfileResponse profileResponse; // Borrado por ELENA para usar el token
     String token;
     /*
     //variables para recibir usuario y contraseña de otra clase
@@ -69,7 +68,6 @@ public class Activity_mod_perfil extends AppCompatActivity {
 
         retro=FastClient.getClient();
         mfastMethods = retro.create(FastMethods.class);
-        //profileResponse = new ProfileResponse(); // Borrado por ELENA para usar User
         user = new User();  // ELENA
 
         // Obtener el token de SharedPreferences
@@ -103,7 +101,6 @@ public class Activity_mod_perfil extends AppCompatActivity {
         }
         // Call HTTP client para recuperar la información del usuario
         Call<User> call = mfastMethods.recuperar_info(token);
-        //ProfileResponse.getUser() Borrado por ELENA para usar el token
         call.enqueue(new Callback<User>() { // Ejecutar la llamada de manera asíncrona
             /**
              * Método invocado cuando se recibe una respuesta de la solicitud HTTP

@@ -1,5 +1,6 @@
 package com.example.choosechef;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -17,6 +18,8 @@ import androidx.appcompat.app.AppCompatActivity;
 public class Utils extends AppCompatActivity{
 // QUITAR EL MÉTODO QUE PASA INFO ENTRE ACTIVIDADES SI NO LO USAMOS?
 // COMPROBAR SI EL DE OCULTAR EL BOTÓN ESTÁ FUNCIONANDO BIEN O ES EL EMULADOR
+private static boolean isNetworkAvailable = true; // Estado predeterminado de la conexión
+
     /**
      * Método desarrollado por ELENA
      * Abre una actividad y finaliza la actividad padre.
@@ -110,7 +113,19 @@ public class Utils extends AppCompatActivity{
     public static void showToast(Context context, String message){
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
-
+    /**
+     * Muestra un toast en un hilo secundario utilizando la actividad proporcionada.
+     * @param activity Actividad en la que se mostrará el toast.
+     * @param context Contexto para el toast.
+     * @param message Mensaje del toast.
+     */
+    public static void showToastSecond(Activity activity, Context context, String message) {
+        activity.runOnUiThread(new Runnable() {
+            public void run() {
+                Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
     /**
      * Método desarrollado por ELENA
      * Compruebe el estado de la conexión de red.
@@ -118,14 +133,20 @@ public class Utils extends AppCompatActivity{
      * @return true si hay conexión o false si no la hay
      */
     public static boolean isNetworkAvailable(Context context) {
-        ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = null;
-        if (connMgr != null) {
-            networkInfo = connMgr.getActiveNetworkInfo();
-            return true;
-        } else {
-            return false;
+        if (isNetworkAvailable) {
+            // Verificar la disponibilidad de la red utilizando ConnectivityManager
+            ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            if (connMgr != null) {
+                NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+                return networkInfo != null && networkInfo.isConnected();
+            }
         }
+        return false;
+    }
+
+    public static void setNetworkAvailable(boolean available) {
+        // Método para establecer el estado de la conexión de red
+        isNetworkAvailable = available;
     }
 
     /**

@@ -39,6 +39,7 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-intents:3.5.1")
     androidTestImplementation("androidx.test:rules:1.5.0")
     androidTestImplementation("androidx.test.ext:junit-ktx:1.1.5")
+    androidTestImplementation ("org.mockito:mockito-core:3.12.4")
 //Retrofit & OkHttp for HTTP Calls implementation ("com.squareup.retrofit2:retrofit:2.3.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.3.0")
     implementation ("com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0")

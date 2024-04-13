@@ -109,7 +109,7 @@ public class Test_Registro {
     private String generateRandomUsername() {
         Random random = new Random();
         int randomNumber = random.nextInt(1000); // Genera un número aleatorio entre 0 y 999
-        return "user" + randomNumber; // Devuelve un nombre de usuario único cada vez que se llama
+        return "test" + randomNumber; // Devuelve un nombre de usuario único cada vez que se llama
     }
     public void espera() {
         // Esperar un tiempo suficiente para que se complete la operación asíncrona

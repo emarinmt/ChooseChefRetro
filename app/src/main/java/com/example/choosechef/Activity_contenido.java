@@ -26,6 +26,7 @@ import retrofit2.Retrofit;
  */
 
 public class Activity_contenido extends AppCompatActivity {
+    private boolean contentSuccessful = false; // Variable para rastrear el estado del login
     private final String TAG = Activity_contenido.class.getSimpleName();
     private static final int REQUEST_CODE = 1;
     // Añadido por EVA para recibir el usuario en esta actividad y enviarlo a la siguiente( modificaicón perfil)
@@ -83,9 +84,13 @@ public class Activity_contenido extends AppCompatActivity {
      * Método para recuperar la lista de chefs del servidor
      */
     public void recuperarChefs(){
+        userList.clear(); // Limpiar la lista actual
+        // Obtener el contexto de la actividad (this)
+        Context context = this;
         // Compruebe el estado de la conexión de red
         if (!Utils.isNetworkAvailable(this)) {
-            Utils.showToast(Activity_contenido.this, "No hay conexión a Internet");
+            Utils.showToastSecond(Activity_contenido.this, context,"No hay conexión a Internet");
+            contentSuccessful = false;
             return;
         }
         // Call HTTP client para recuperar la información del usuario
@@ -98,13 +103,14 @@ public class Activity_contenido extends AppCompatActivity {
              */
             public void onResponse(@NonNull Call<List<User>> call, @NonNull Response<List<User>> response) {
                 if (response.isSuccessful() && response.body() != null) {
+                    contentSuccessful = true;
                     userList.clear(); // Limpiar la lista actual
                     userList.addAll(response.body()); // Agregar todos los usuarios recuperados
 
                     // Notificar al adaptador que los datos han cambiado
                     adapter.notifyDataSetChanged();
                 } else {
-                    Utils.showToast(Activity_contenido.this, "No se encontraron chefs");
+                    Utils.showToastSecond(Activity_contenido.this, context,"No se encontraron chefs");
                 }
             }
             /**
@@ -115,9 +121,10 @@ public class Activity_contenido extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<List<User>> call, @NonNull Throwable t) {
                 // Error en la llamada, muestra el mensaje de error y registra la excepción
+                contentSuccessful = false;
                 t.printStackTrace();
                 Log.e(TAG, "Error en la llamada:" + t.getMessage());
-                Utils.showToast(Activity_contenido.this, "Error en la llamada: " + t.getMessage());
+                Utils.showToastSecond(Activity_contenido.this, context,"Error en la llamada: " + t.getMessage());
             }
         });
     }
@@ -253,5 +260,14 @@ public class Activity_contenido extends AppCompatActivity {
     public void logout(View view){
         Utils.gotoActivity(Activity_contenido.this, MainActivity_inicio.class);
     }
+
+    public boolean isContentSuccessful() {
+        return contentSuccessful;
+    }
+
+    public List<User> getUserList() {
+        return userList;
+    }
+
 }
 

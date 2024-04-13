@@ -38,7 +38,7 @@ public interface FastMethods {
     /**
      * Método desarrollado por EVA, modificado por ELENA
      * Para realizar una modificación de los datos de usuario en la base de datos
-     * @param user objeto con los datos del usuario ( clase ModificarUsuarioRequest ) para modificar los datos en base de datos
+     * @param user objeto con los datos del usuario
      * @return devuelve un String con los datos modificados
      */
     @POST("usuario/modificar/")
