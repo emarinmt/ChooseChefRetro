@@ -20,6 +20,8 @@ import retrofit2.Retrofit;
  * a esta pantalla acedera el administrador para ver, modificar o borrar toda la info de los usuarios
  */
 public class Activity_user_ampliado extends AppCompatActivity {
+    //FUNCIONA TODO MENOS VER Y MODIFICAR LA VALORACION DEL USUARIO. YA LO REVISARÉ
+    //REVISAR. EN LA MUESTRA USUARIOS. MUESTRA VACIOS ?
     private boolean contentSuccessful = false; // Variable para rastrear el estado de la muestra del usuario
     private boolean modifySuccessful = false; // Variable para rastrear el estado de la modificación
     private boolean deleteSuccessful = false; // Variable para rastrear el estado del borrado
@@ -213,41 +215,47 @@ public class Activity_user_ampliado extends AppCompatActivity {
     }
 
     public void borrarUsuario(View view){
-        usuario_mod = user.getUsuario();
 
-        // call HTTP client para borrar al usuario
-        Call<String> call = mfastMethods.borrar_usuario(usuario_mod);
-        call.enqueue(new Callback<String>() { // Ejecutar la llamada de manera asíncrona
-            /**
-             * Método invocado cuando se recibe una respuesta de la solicitud HTTP
-             * @param call llamada que generó la respuesta
-             * @param response la respuesta recibida del servidor
-             */
-            @Override
-            public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
-                if (response.isSuccessful()) {
-                    deleteSuccessful = true;
-                    // String responseBody = response.body();
-                    Utils.showToast(Activity_user_ampliado.this, "Eliminación correcta!");
-                    Utils.gotoActivity(Activity_user_ampliado.this, Activity_admin.class);
-                } else {
-                    Utils.showToast(Activity_user_ampliado.this, "Error al eliminar usuario");
+        if (usuario_mod != null && !usuario_mod.isEmpty()) {
+
+            // call HTTP client para borrar al usuario
+            Call<String> call = mfastMethods.borrar_usuario(usuario_mod);
+            call.enqueue(new Callback<String>() { // Ejecutar la llamada de manera asíncrona
+                /**
+                 * Método invocado cuando se recibe una respuesta de la solicitud HTTP
+                 *
+                 * @param call     llamada que generó la respuesta
+                 * @param response la respuesta recibida del servidor
+                 */
+                @Override
+                public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
+                    if (response.isSuccessful()) {
+                        deleteSuccessful = true;
+                        // String responseBody = response.body();
+                        Utils.showToast(Activity_user_ampliado.this, "Eliminación correcta!");
+                        Utils.gotoActivity(Activity_user_ampliado.this, Activity_admin.class);
+                    } else {
+                        Utils.showToast(Activity_user_ampliado.this, "Error al eliminar usuario");
+                    }
                 }
-            }
 
-            /**
-             * Método invocado cuando ocurre un error durante la ejecución de la llamada HTTP
-             * @param call la llamada que generó el error
-             * @param t la excepción que ocurrió
-             */
-            @Override
-            public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
-                // Error en la llamada, muestra el mensaje de error y registra la excepción
-                t.printStackTrace();
-                Log.e(TAG, "Error en la llamada:" + t.getMessage());
-                Utils.showToast(Activity_user_ampliado.this, "Error en la llamada: " + t.getMessage());
-            }
-        });
+                /**
+                 * Método invocado cuando ocurre un error durante la ejecución de la llamada HTTP
+                 *
+                 * @param call la llamada que generó el error
+                 * @param t    la excepción que ocurrió
+                 */
+                @Override
+                public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
+                    // Error en la llamada, muestra el mensaje de error y registra la excepción
+                    t.printStackTrace();
+                    Log.e(TAG, "Error en la llamada:" + t.getMessage());
+                    Utils.showToast(Activity_user_ampliado.this, "Error en la llamada: " + t.getMessage());
+                }
+            });
+        } else {
+            Utils.showToast(Activity_user_ampliado.this, "Error el usuario esta vacío" + usuario_mod);
+        }
 
     }
 

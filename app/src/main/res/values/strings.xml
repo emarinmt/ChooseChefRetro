@@ -58,5 +58,16 @@
     <string name="fecha_reserva">fecha reserva</string>
     <string name="comentario">Comentario</string>
     <string name="introduce_tu_comentario">Introduce tu reseña</string>
+    <string name="usuario_t">Usuario :</string>
+    <string name="nombre_t">Nombre :</string>
+    <string name="Contras_t">Contraseña :</string>
+    <string name="descrip_t">Descripción :</string>
+    <string name="ubicacion_t">Ubicación :</string>
+    <string name="mail_t">Email :</string>
+    <string name="telefono_t">Teléfono :</string>
+    <string name="tipo_t">Tipo :</string>
+    <string name="comida_t">Comida :</string>
+    <string name="servicio_t">Servicio :</string>
+    <string name="valoracion_t">Valoración :</string>
 
 </resources>
