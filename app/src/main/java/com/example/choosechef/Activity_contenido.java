@@ -26,7 +26,7 @@ import retrofit2.Retrofit;
  */
 
 public class Activity_contenido extends AppCompatActivity {
-    private boolean contentSuccessful = false; // Variable para rastrear el estado del login
+    private boolean contentSuccessful = false; // Variable para rastrear el estado de la muestra del listado
     private final String TAG = Activity_contenido.class.getSimpleName();
     private static final int REQUEST_CODE = 1;
     // Añadido por EVA para recibir el usuario en esta actividad y enviarlo a la siguiente( modificaicón perfil)

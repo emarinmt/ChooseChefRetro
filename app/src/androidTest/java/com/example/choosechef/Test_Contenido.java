@@ -56,10 +56,10 @@ public class Test_Contenido {
         // Obtener la instancia de Activity_content
         contenido = ((Activity_contenido) getActivityInstance(Activity_contenido.class));
     }
-
+    // Recuperación de lista de chefs correcta
     @Test
     public void testRecuperarChefsWithNetwork() {
-        // Simular tener conexión de red (configurando el estado de red en falso)
+        // Simular tener conexión de red (configurando el estado de red en true)
         Utils.setNetworkAvailable(true);
         espera();
         contenido.recuperarChefs();

@@ -13,30 +13,34 @@ import androidx.appcompat.app.AppCompatActivity;
  * para mostrar toda la información de un chef
  */
 public class Activity_chef_ampliado extends AppCompatActivity {
+    private boolean contentSuccessful = false; // Variable para rastrear el estado de la muestra del chef
     private TextView nombreChefamp;
     private TextView tipoChefamp;
     private TextView provChefamp;
     private TextView descChefamp;
     private TextView telefonoChefamp;
+    public Intent intent;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chef_ampliado);
-
+        contentSuccessful = false;
         // Inicialización de variables
         nombreChefamp = findViewById(R.id.nombre_chef_ampliado);
         tipoChefamp = findViewById(R.id.tipo_comida_ampliado);
         provChefamp = findViewById(R.id.provincia_ampliado);
         descChefamp = findViewById(R.id.descripcion_ampliado);
-
         telefonoChefamp = findViewById(R.id.edt_telefono_chef);
 
         // Obtener el Intent que inició esta actividad
-        Intent intent = getIntent();
+        intent = getIntent();
 
+        obtenerIntent(intent);
+        /*
         // Verificar si el Intent contiene un extra con clave "user"
         if (intent != null && intent.hasExtra("user")) {
+            contentSuccessful = true;
             // Extraer el objeto User del Intent
             User user = (User) intent.getSerializableExtra("user");
 
@@ -51,6 +55,8 @@ public class Activity_chef_ampliado extends AppCompatActivity {
                 telefonoChefamp.setVisibility(View.INVISIBLE);
             }
         }
+        */
+
     }
     public void reservar(View view){
         //va a la siguiente pantalla donde vemos calendarios y crearemos la reserva
@@ -64,5 +70,29 @@ public class Activity_chef_ampliado extends AppCompatActivity {
     }
     public void logout(View view){
         Utils.gotoActivity(Activity_chef_ampliado.this, MainActivity_inicio.class);
+    }
+    public void obtenerIntent(Intent intent){
+        // Verificar si el Intent contiene un extra con clave "user"
+        if (intent != null && intent.hasExtra("user")) {
+            contentSuccessful = true;
+            // Extraer el objeto User del Intent
+            User user = (User) intent.getSerializableExtra("user");
+
+            // Usar el objeto User en esta actividad
+            if (user != null) {
+                nombreChefamp.setText(user.getNombre());
+                tipoChefamp.setText(user.getComida());
+                provChefamp.setText(user.getUbicacion());
+                descChefamp.setText(user.getDescripcion());
+                telefonoChefamp.setText(user.getTelefono());
+
+                telefonoChefamp.setVisibility(View.INVISIBLE);
+            }
+        }
+        contentSuccessful = false;
+    }
+
+    public boolean isContentSuccessful() {
+        return contentSuccessful;
     }
 }

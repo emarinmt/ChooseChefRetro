@@ -37,7 +37,9 @@ public class Test_Registro {
         registro = activityRule.getActivity();
     }
 
-    // Nuevo usuario, se crea correctamente
+
+
+    // Nuevo usuario, se crea correctamente (hay conexión)
     @Test
     public void testValidCredentials() {
         // Genera un nombre de usuario aleatorio
@@ -55,6 +57,25 @@ public class Test_Registro {
 
         // Aseguramos que el registro sea exitoso
         assertTrue(registro.isRegistrationSuccessful());
+    }
+    // // Nuevo usuario, no se crea correctamente (no hay conexión)
+    @Test
+    public void testRegisterWhenNoNetwork() {
+        // Simular no tener conexión de red (configurando el estado de red en falso)
+        Utils.setNetworkAvailable(false);
+        espera();
+        // Genera un nombre de usuario aleatorio
+        String randomUsername = generateRandomUsername();
+
+        // Simulamos la entrada de datos en los campos de registro
+        onView(withId(R.id.edt_usuario_registro)).perform(replaceText(randomUsername));
+        onView(withId(R.id.edt_contraseña_registro)).perform(replaceText("correctPass"));
+        onView(withId(R.id.edt_contraseña2_registro)).perform(replaceText("correctPass"));
+        // Realizamos el clic en el botón de registro
+        onView(withId(R.id.ibtn_registrarse_registro)).perform(click());
+        espera();
+        // Aseguramos que el registro sea fallido por falta de conexión
+        assertFalse(registro.isRegistrationSuccessful());
     }
 
     // Las contraseñas no coinciden, no se crea el usuario
