@@ -5,10 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.List;
 
 /**
@@ -28,13 +26,13 @@ public class Adapter_user extends RecyclerView.Adapter<Adapter_user.ViewHolder> 
 
     @NonNull
     @Override
-    public Adapter_user.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = layoutInflater.inflate(R.layout.custom_view_card_users,viewGroup,false);
-        return new Adapter_user.ViewHolder(view);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Adapter_user.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         User user = data.get(i); //NUEVO
         // Establece los datos del chef en las vistas del ViewHolder
         viewHolder.nombre_user.setText(user.getNombre());
@@ -43,7 +41,7 @@ public class Adapter_user extends RecyclerView.Adapter<Adapter_user.ViewHolder> 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Obtener el chef actual que fue clicado
+                // Obtener el usuario actual que fue clicado
                 User currentUser = data.get(viewHolder.getAdapterPosition());
 
                 // Utilizar el método gotoActivityWithUser para abrir la DetailActivity y pasar el objeto User

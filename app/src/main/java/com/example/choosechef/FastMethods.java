@@ -4,6 +4,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.POST;
@@ -101,6 +102,10 @@ public interface FastMethods {
     @POST("admin/modificar/{usuario}")
     Call<String> modificarUsuario_admin(@Path("usuario") String usuario, @Body User user);
 
+    @DELETE("usuario/{usuario}")
+    Call<String> borrar_usuario(@Path("usuario") String usuario);
+
+
     //PREPARADO ELENA. PENDIENTE MODIFICAR CUANDO ESTE HECHO EN EL SERVIDOR
     @POST("usuario/crear/")
     Call<String> crear(@Body Reserva reserva);
@@ -109,5 +114,7 @@ public interface FastMethods {
     //PREPARADO. PENDIENTE MODIFICAR CUANDO ESTE HECHO EN EL SERVIDOR
     @GET("reservas/listar/")
     Call<List<Reserva>>recuperar_reservas();
+
+
 
 }

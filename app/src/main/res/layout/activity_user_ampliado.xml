@@ -7,191 +7,224 @@
     android:background="@drawable/fondo1">
 
 
-
-    <TextView
-        android:id="@+id/usuario"
+    <EditText
+        android:id="@+id/edt_usuario"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="5dp"
         android:text="@string/usuario"
         android:textColor="@color/white"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/nombre_usuario"
+        app:layout_constraintBottom_toTopOf="@+id/edt_nombre_usuario"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:inputType="text"
+        tools:ignore="LabelFor,VisualLintTextFieldSize"
+        android:autofillHints="" />
 
-    <TextView
-        android:id="@+id/nombre_usuario"
+    <EditText
+        android:id="@+id/edt_nombre_usuario"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="5dp"
         android:text="@string/nombre_del_usuario"
         android:textColor="@color/white"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/contraseña_usuario"
+        app:layout_constraintBottom_toTopOf="@+id/edt_contraseña_usuario"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/usuario" />
+        app:layout_constraintTop_toBottomOf="@+id/edt_usuario"
+        android:inputType="text"
+        tools:ignore="LabelFor,VisualLintTextFieldSize"
+        android:autofillHints="" />
 
-    <TextView
-        android:id="@+id/contraseña_usuario"
+    <EditText
+        android:id="@+id/edt_contraseña_usuario"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="5dp"
         android:text="@string/contraseña_usuario"
         android:textColor="@color/white"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/descripcion_usuario"
+        app:layout_constraintBottom_toTopOf="@+id/edt_descripcion_usuario"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nombre_usuario" />
+        app:layout_constraintTop_toBottomOf="@+id/edt_nombre_usuario"
+        android:inputType="text"
+        tools:ignore="LabelFor,VisualLintTextFieldSize"
+        android:autofillHints="" />
 
-    <TextView
-        android:id="@+id/descripcion_usuario"
+    <EditText
+        android:id="@+id/edt_descripcion_usuario"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="5dp"
         android:text="@string/descripcion_usuario"
         android:textColor="@color/white"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/provincia_usuario"
+        app:layout_constraintBottom_toTopOf="@+id/edt_provincia_usuario"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/contraseña_usuario" />
+        app:layout_constraintTop_toBottomOf="@+id/edt_contraseña_usuario"
+        android:inputType="text"
+        tools:ignore="LabelFor,VisualLintTextFieldSize"
+        android:autofillHints="" />
 
-    <TextView
-        android:id="@+id/provincia_usuario"
+    <EditText
+        android:id="@+id/edt_provincia_usuario"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="5dp"
         android:text="@string/provincia_usuario"
         android:textColor="@color/white"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/mail_usuario"
+        app:layout_constraintBottom_toTopOf="@+id/edt_mail_usuario"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/descripcion_usuario" />
+        app:layout_constraintTop_toBottomOf="@+id/edt_descripcion_usuario"
+        android:inputType="text"
+        tools:ignore="LabelFor,VisualLintTextFieldSize"
+        android:autofillHints="" />
 
-    <TextView
-        android:id="@+id/mail_usuario"
+    <EditText
+        android:id="@+id/edt_mail_usuario"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="5dp"
         android:text="@string/mail_usuario"
         android:textColor="@color/white"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/telefono_usuario"
+        app:layout_constraintBottom_toTopOf="@+id/edt_telefono_usuario"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/provincia_usuario" />
+        app:layout_constraintTop_toBottomOf="@+id/edt_provincia_usuario"
+        android:inputType="text"
+        tools:ignore="LabelFor,VisualLintTextFieldSize"
+        android:autofillHints="" />
 
-    <TextView
-        android:id="@+id/telefono_usuario"
+    <EditText
+        android:id="@+id/edt_telefono_usuario"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="5dp"
         android:text="@string/telefono_usuario"
         android:textColor="@color/white"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/tipo_usuario"
+        app:layout_constraintBottom_toTopOf="@+id/edt_tipo_usuario"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mail_usuario" />
+        app:layout_constraintTop_toBottomOf="@+id/edt_mail_usuario"
+        android:inputType="number"
+        tools:ignore="LabelFor,VisualLintTextFieldSize"
+        android:autofillHints="" />
 
-    <TextView
-        android:id="@+id/tipo_usuario"
+    <EditText
+        android:id="@+id/edt_tipo_usuario"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="5dp"
         android:text="@string/tipo_usuario"
         android:textColor="@color/white"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/comida_usuario"
+        app:layout_constraintBottom_toTopOf="@+id/edt_comida_usuario"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/telefono_usuario" />
+        app:layout_constraintTop_toBottomOf="@+id/edt_telefono_usuario"
+        android:inputType="text"
+        tools:ignore="LabelFor,VisualLintTextFieldSize"
+        android:autofillHints="" />
 
-    <TextView
-        android:id="@+id/comida_usuario"
+    <EditText
+        android:id="@+id/edt_comida_usuario"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="5dp"
         android:text="@string/comida_usuario"
         android:textColor="@color/white"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/servicio_usuario"
+        app:layout_constraintBottom_toTopOf="@+id/edt_servicio_usuario"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tipo_usuario" />
+        app:layout_constraintTop_toBottomOf="@+id/edt_tipo_usuario"
+        android:inputType="text"
+        tools:ignore="LabelFor,VisualLintTextFieldSize"
+        android:autofillHints="" />
 
-    <TextView
-        android:id="@+id/servicio_usuario"
+    <EditText
+        android:id="@+id/edt_servicio_usuario"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="5dp"
         android:text="@string/servicio_usuario"
         android:textColor="@color/white"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/valoracion_usuario"
+        app:layout_constraintBottom_toTopOf="@+id/edt_valoracion_usuario"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/comida_usuario" />
+        app:layout_constraintTop_toBottomOf="@+id/edt_comida_usuario"
+        android:inputType="text"
+        tools:ignore="LabelFor,VisualLintTextFieldSize"
+        android:autofillHints="" />
 
-    <TextView
-        android:id="@+id/valoracion_usuario"
+    <EditText
+        android:id="@+id/edt_valoracion_usuario"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="90dp"
+        android:layout_marginBottom="5dp"
+        android:inputType="number|numberDecimal"
+        android:minHeight="48dp"
         android:text="@string/valoracion_usuario"
         android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/ibtn_delete"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/servicio_usuario" />
+        app:layout_constraintTop_toBottomOf="@+id/edt_servicio_usuario"
+        tools:ignore="LabelFor,VisualLintTextFieldSize"
+        android:autofillHints="" />
 
     <ImageButton
         android:id="@+id/btn_logout_user"
         android:layout_width="68dp"
         android:layout_height="56dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="84dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="72dp"
-        android:layout_marginBottom="65dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/fondo_boton_redondo_logout"
         android:contentDescription="@string/boton_modperfil"
         android:onClick="logout"
@@ -199,7 +232,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/ibtn_edit"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/valoracion_usuario"
+        app:layout_constraintTop_toBottomOf="@+id/edt_valoracion_usuario"
         app:srcCompat="@android:drawable/ic_lock_power_off"
         app:tint="@color/white"
         tools:ignore="ImageContrastCheck" />
@@ -208,18 +241,15 @@
         android:id="@+id/ibtn_edit"
         android:layout_width="67dp"
         android:layout_height="57dp"
-
-
-        android:layout_marginTop="84dp"
-
-        android:layout_marginBottom="65dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/fondo_boton_redondo"
         android:contentDescription="@string/boton_editar"
         android:onClick="editarUsuario"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/ibtn_delete"
         app:layout_constraintStart_toEndOf="@+id/btn_logout_user"
-        app:layout_constraintTop_toBottomOf="@+id/valoracion_usuario"
+        app:layout_constraintTop_toBottomOf="@+id/edt_valoracion_usuario"
         app:srcCompat="@android:drawable/ic_menu_edit"
         tools:ignore="ImageContrastCheck" />
 
@@ -228,15 +258,16 @@
         android:layout_width="67dp"
         android:layout_height="57dp"
         android:layout_marginStart="72dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginBottom="65dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/fondo_boton_redondo"
         android:contentDescription="@string/boton_borrar"
         android:onClick="borrarUsuario"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ibtn_edit"
-        app:layout_constraintTop_toBottomOf="@+id/valoracion_usuario"
+        app:layout_constraintTop_toBottomOf="@+id/edt_valoracion_usuario"
         app:srcCompat="@android:drawable/ic_menu_delete"
         tools:ignore="ImageContrastCheck" />
 
