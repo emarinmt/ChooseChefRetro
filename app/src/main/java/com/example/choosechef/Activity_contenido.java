@@ -224,7 +224,7 @@ public class Activity_contenido extends AppCompatActivity {
         return matchesProvincia && matchesComida && matchesServicio;
     }
     public void ajustes (View view) {
-        Utils.gotoActivity(Activity_contenido.this, Activity_admin.class);
+        Utils.gotoActivity(Activity_contenido.this, Activity_chef.class);
         //COMENTO PORQUE ME DA PROBLEMAS CON EL USUARIO ADMIN, SOLO QUIERO COMPROBAR QUE ESA CLASE FUNCIONA
         // Obtenemos tipo de usuario del usuario logeado
         /*
