@@ -1,5 +1,11 @@
 package com.example.choosechef;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 
 public class Reserva {
@@ -68,5 +74,17 @@ public class Reserva {
 
     public void setComentario(String comentario) {
         this.comentario = comentario;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public boolean esFechaHoyPosterior(){
+        //Convertir la fecha de tipo Date a LocalDate
+        LocalDate fechaReserva= fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        //Obtener la fecha de hoy
+        LocalDate hoy = LocalDate.now();
+
+        //Comparar las fechas
+        return !fechaReserva.isBefore(hoy); // Si la fecha de reserva es hoy o posterior, devuelve true
     }
 }

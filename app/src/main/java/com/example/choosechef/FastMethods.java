@@ -114,6 +114,10 @@ public interface FastMethods {
     //PREPARADO. PENDIENTE MODIFICAR CUANDO ESTE HECHO EN EL SERVIDOR
     @GET("reservas/listar/")
     Call<List<Reserva>>recuperar_reservas();
+    //PREPARADO. PENDIENTE MODIFICAR CUANDO ESTE HECHO EN EL SERVIDOR
+
+    @POST("usuario/modificar/reseña")
+    Call<String> modificar_reserva(@Body Reserva reserva);
 
 
 
