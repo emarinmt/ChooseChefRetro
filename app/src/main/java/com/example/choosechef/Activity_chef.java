@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -34,7 +33,7 @@ public class Activity_chef extends AppCompatActivity {
     public EditText descripcion;
     public String prov_seleccionada;
     public String comida_seleccionada;
-    public String servicio_seleccionado;
+    public String servicio_seleccionada;
     public String descripcionInput;
 
     FastMethods mfastMethods;
@@ -59,12 +58,52 @@ public class Activity_chef extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("MiPreferencia", Context.MODE_PRIVATE);
         token = sharedPreferences.getString("token", "");
 
-        //recuperarDatos(); //NO SE SI RECUPERAR Y QUE MUESTRE EN LOS SPINNER ( ES FOLLON) O DIRECTAMENTE QUE ELIJA Y SE CAMBIARÁ
 
-        prov_seleccionada = seleccionarProvincia();
-        comida_seleccionada = seleccionarComida();
-        servicio_seleccionado = seleccionarServicio();
-        descripcionInput = descripcion.getText().toString();
+        configurarSpinnerProvincia();
+        configurarSpinnerComida();
+        configurarSpinnerServicio();
+
+        recuperarDatos();
+
+    }
+
+    private void configurarSpinnerProvincia() {
+        ArrayList<String> provinciasList = new ArrayList<>();
+        provinciasList.add("Barcelona");
+        provinciasList.add("Lleida");
+        provinciasList.add("Tarragona");
+        provinciasList.add("Madrid");
+        provinciasList.add("Mallorca");
+        provinciasList.add("Zaragoza");
+        provinciasList.add("Salamanca");
+
+        ArrayAdapter<String> adapterProvincia = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, provinciasList);
+        adapterProvincia.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_prov.setAdapter(adapterProvincia);
+    }
+    private void configurarSpinnerComida() {
+        ArrayList<String> comidaList = new ArrayList<>();
+        comidaList.add("Italiana");
+        comidaList.add("Tailandesa");
+        comidaList.add("Japonesa");
+        comidaList.add("Mediterránea");
+        comidaList.add("Asiática");
+        comidaList.add("Africana");
+        comidaList.add("Coreana");
+
+        ArrayAdapter<String> adapterComida = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, comidaList);
+        adapterComida.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_comida.setAdapter(adapterComida);
+    }
+    private void configurarSpinnerServicio() {
+        ArrayList<String> servicioList = new ArrayList<>();
+        servicioList.add("Cátering a domicilio");
+        servicioList.add("Chef a domicilio");
+        servicioList.add("Cátering para evento");
+
+        ArrayAdapter<String> adapterServicio = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, servicioList);
+        adapterServicio.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_servicio.setAdapter(adapterServicio);
     }
     public void recuperarDatos(){
         // Compruebe el estado de la conexión de red
@@ -86,20 +125,10 @@ public class Activity_chef extends AppCompatActivity {
                     if (user != null) {
 
                         // Mostrar datos en pantalla
-
-                        //EJEMPLO DE IA.. MAÑANA LO REVISO. NO SE SI MOSTRAR EL QUE TIENE SELECCIONADO O SERA MUCHO FOLLON.. SI NO DIRECTAMENTE Q LO CAMBIE POR EL QUE ELIJA Y YA, TENGA O NO SERVICIO
-                        /*
-                        Spinner miSpinner = findViewById(R.id.mi_spinner);
-                        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.opciones, android.R.layout.simple_spinner_item);
-                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        miSpinner.setAdapter(adapter);
-
-
-
-                        // Seleccionar el segundo elemento de la lista (posición 1)
-                        miSpinner.setSelection(1);
-
-                         */
+                        spinner_prov.setSelection(getIndex(spinner_prov, user.getUbicacion()));
+                        spinner_comida.setSelection(getIndex(spinner_comida, user.getComida()));
+                        spinner_servicio.setSelection(getIndex(spinner_servicio, user.getServicio()));
+                        descripcion.setText(user.getDescripcion());
 
                     } else {
                         // Obtención de datos incorrecta, muestra un mensaje de error
@@ -121,128 +150,84 @@ public class Activity_chef extends AppCompatActivity {
             }
         });
     }
-
-    private String seleccionarProvincia() {
-        //Rellenar array de posibles provincias
-        ArrayList<String> provincias = new ArrayList<>();
-        provincias.add("Barcelona");
-        provincias.add("LLeida");
-        provincias.add("Madrid");
-        provincias.add("Mallorca");
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, provincias);
-        spinner_prov.setAdapter(adapter1);
-
-        spinner_prov.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                prov_seleccionada = (String) spinner_prov.getSelectedItem();
-                String mensaje_prov = "Ha seleccionado la provincia " + prov_seleccionada;
-                Utils.showToast(Activity_chef.this, mensaje_prov);
+    /**
+     * Metodo para obtener el índice de un elemento en un Spinner
+     * @param spinner el spinner donde buscar el índice
+     * @param value el valor que estamos buscando dentro del Spinner
+     * @return devuelve la posición donde está ese elemento
+     */
+    private int getIndex(Spinner spinner, String value) {
+        for (int i = 0; i < spinner.getCount(); i++) {
+            if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(value)) {
+                return i;
             }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-        return prov_seleccionada;
-    }
-    private String seleccionarComida() {
-        //Rellenar array de comidas posibles
-        ArrayList<String> comida = new ArrayList<>();
-        comida.add("Italiana");
-        comida.add("Tailandesa");
-        comida.add("Japonesa");
-        comida.add("Mediterranea");
-
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, comida);
-        spinner_comida.setAdapter(adapter2);
-
-        spinner_comida.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                comida_seleccionada = (String) spinner_comida.getSelectedItem();
-                String mensaje_comida = "Ha seleccionado el tipo de comida " + comida_seleccionada;
-                Utils.showToast(Activity_chef.this, mensaje_comida);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-        return comida_seleccionada;
-    }
-    private String seleccionarServicio() {
-        //Rellenar array posibles servicios
-        ArrayList<String> servicio = new ArrayList<>();
-        servicio.add("Cátering a domicilio");
-        servicio.add("Chef a domicilio");
-        servicio.add("Cátering para evento");
-
-        ArrayAdapter<String> adapter3 = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, servicio);
-        spinner_servicio.setAdapter(adapter3);
-
-        spinner_comida.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                servicio_seleccionado = (String) spinner_comida.getSelectedItem();
-                String mensaje_servicio = "Ha seleccionado el servicio " + servicio_seleccionado;
-                Utils.showToast(Activity_chef.this, mensaje_servicio);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-        return servicio_seleccionado;
-    }
-    public void confirmarServicio(View view) {
-        // Comprueba el estado de la conexión de red
-        if (!Utils.isNetworkAvailable(this)) {
-            Utils.showToast(Activity_chef.this, "No hay conexión a Internet");
-            return;
         }
-        //Actualiza los datos del usuario con los nuevos valores
-        user.setUbicacion(prov_seleccionada);
-        user.setComida(comida_seleccionada);
-        user.setServicio(servicio_seleccionado);
-        user.setDescripcion(descripcionInput);
+        return 0; // Valor por defecto si no se encuentra el elemento
+    }
 
-        // call HTTP client para modificar los datos de usuario
-        Call<String> call = mfastMethods.modificarUsuario(token, user);
-        call.enqueue(new Callback<String>() { // Ejecutar la llamada de manera asíncrona
-            /**
-             * Método invocado cuando se recibe una respuesta de la solicitud HTTP
-             * @param call llamada que generó la respuesta
-             * @param response la respuesta recibida del servidor
-             */
-            @Override
-            public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
-                if (response.isSuccessful()) {
-                    modifySuccessful = true;
-                    // String responseBody = response.body();
-                    Utils.showToast(Activity_chef.this, "Modificación correcta!");
-                    Utils.gotoActivity(Activity_chef.this, Activity_contenido.class);
-                } else {
-                    Utils.showToast(Activity_chef.this, "Error al modificar usuario");
+    /**
+     * Método para modificar la información del usuario en el servidor
+     * @param view el visor para hacer click al botón de confirmar
+     */
+    public void confirmarServicio(View view) {
+        // Obtener los valores seleccionados de los spinners y la descripción introducida
+        prov_seleccionada = (String) spinner_prov.getSelectedItem();
+        comida_seleccionada = (String) spinner_comida.getSelectedItem();
+        servicio_seleccionada = (String) spinner_servicio.getSelectedItem();
+        descripcionInput = descripcion.getText().toString();
+
+        // Validar que los valores no sean nulos o vacíos antes de proceder
+        if (prov_seleccionada != null && !prov_seleccionada.isEmpty() &&
+                comida_seleccionada != null && !comida_seleccionada.isEmpty() &&
+                servicio_seleccionada != null && !servicio_seleccionada.isEmpty()) {
+
+            // Comprueba el estado de la conexión de red
+            if (!Utils.isNetworkAvailable(this)) {
+                Utils.showToast(Activity_chef.this, "No hay conexión a Internet");
+                return;
+            }
+            //Actualiza los datos del usuario con los nuevos valores
+            user.setUbicacion(prov_seleccionada);
+            user.setComida(comida_seleccionada);
+            user.setServicio(servicio_seleccionada);
+            user.setDescripcion(descripcionInput);
+
+            // call HTTP client para modificar los datos de usuario
+            Call<String> call = mfastMethods.modificarUsuario(token, user);
+            call.enqueue(new Callback<String>() { // Ejecutar la llamada de manera asíncrona
+                /**
+                 * Método invocado cuando se recibe una respuesta de la solicitud HTTP
+                 *
+                 * @param call     llamada que generó la respuesta
+                 * @param response la respuesta recibida del servidor
+                 */
+                @Override
+                public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
+                    if (response.isSuccessful()) {
+                        modifySuccessful = true;
+                        // String responseBody = response.body();
+                        Utils.showToast(Activity_chef.this, "Modificación correcta!");
+                        Utils.gotoActivity(Activity_chef.this, Activity_contenido.class);
+                    } else {
+                        Utils.showToast(Activity_chef.this, "Error al modificar usuario");
+                    }
                 }
-            }
 
-            /**
-             * Método invocado cuando ocurre un error durante la ejecución de la llamada HTTP
-             * @param call la llamada que generó el error
-             * @param t la excepción que ocurrió
-             */
-            @Override
-            public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
-                // Error en la llamada, muestra el mensaje de error y registra la excepción
-                t.printStackTrace();
-                Log.e(TAG, "Error en la llamada:" + t.getMessage());
-                Utils.showToast(Activity_chef.this, "Error en la llamada: " + t.getMessage());
-            }
-        });
+                /**
+                 * Método invocado cuando ocurre un error durante la ejecución de la llamada HTTP
+                 *
+                 * @param call la llamada que generó el error
+                 * @param t    la excepción que ocurrió
+                 */
+                @Override
+                public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
+                    // Error en la llamada, muestra el mensaje de error y registra la excepción
+                    t.printStackTrace();
+                    Log.e(TAG, "Error en la llamada:" + t.getMessage());
+                    Utils.showToast(Activity_chef.this, "Error en la llamada: " + t.getMessage());
+                }
+            });
+        }
 
     }
     public void logout(View view){

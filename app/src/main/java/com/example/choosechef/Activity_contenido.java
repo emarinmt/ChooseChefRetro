@@ -188,8 +188,7 @@ public class Activity_contenido extends AppCompatActivity {
 
     //AJUSTES
     public void ajustes (View view) {
-        //Utils.gotoActivity(Activity_contenido.this, Activity_chef.class);
-        //COMENTO PORQUE ME DA PROBLEMAS CON EL USUARIO ADMIN, SOLO QUIERO COMPROBAR QUE ESA CLASE FUNCIONA
+        //HAY QUE REVISARLO PORQUE CON UN CLIK DICE ERROR OBTENIENDO TIPO USUARIO Y AL SEGUNDO CLIK ENTRA BIEN
         // Obtenemos tipo de usuario del usuario logeado
 
         recuperarDatos();

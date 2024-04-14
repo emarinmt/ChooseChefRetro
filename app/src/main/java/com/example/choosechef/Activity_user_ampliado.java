@@ -26,6 +26,7 @@ public class Activity_user_ampliado extends AppCompatActivity {
     private boolean modifySuccessful = false; // Variable para rastrear el estado de la modificación
     private boolean deleteSuccessful = false; // Variable para rastrear el estado del borrado
     private final String TAG = Activity_user_ampliado.class.getSimpleName();
+    //Variables para mostrar la información de los usuarios
     private TextView usuario;
     private TextView nombreUsuario;
     private TextView passwordUsuario;
@@ -37,13 +38,20 @@ public class Activity_user_ampliado extends AppCompatActivity {
     private TextView tipoComidaUsuario;
     private TextView tipoServicioUsuario;
     private TextView valoracionUsuario;
-    public Intent intent2;
+    //Variable para recibir información de la pantalla anterior
+    public Intent intent;
+    // Variables para conectar con la API
     FastMethods mfastMethods;
     Retrofit retro;
     private User user;
+    //Variables para llamadas a métodos
     String usuario_mod;
     private boolean camposHabilitados;
 
+    /**
+     * Método onCreate para la configuración incial de la actividad
+     * @param savedInstanceState estado de la instancia guardada, un objeto Bundle que contiene el estado previamente guardado de la actividad
+     */
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,9 +77,9 @@ public class Activity_user_ampliado extends AppCompatActivity {
         user = new User();
 
         // Obtener el Intent que inició esta actividad
-        intent2 = getIntent();
+        intent = getIntent();
         //recoge el usuario de la actividad anterior y muestra su información
-        obtenerIntent(intent2);
+        obtenerIntent(intent);
         //booleano para el boton editar
         camposHabilitados = false;
 
@@ -103,7 +111,7 @@ public class Activity_user_ampliado extends AppCompatActivity {
                 tipoUsuario.setText(user.getTipo());
                 tipoComidaUsuario.setText(user.getComida());
                 tipoServicioUsuario.setText(user.getServicio());
-                // valoracionUsuario.setText(user.getValoracion());
+                //valoracionUsuario.setText(user.getValoracion());
 
                 //guardar el nombre de usuario para la llamada al método de modicicación
                 usuario_mod = user.getUsuario();
@@ -214,6 +222,10 @@ public class Activity_user_ampliado extends AppCompatActivity {
         });
     }
 
+    /**
+     * Método para borrar al usuario
+     * @param view visor para cuando se clica al botón de delete
+     */
     public void borrarUsuario(View view){
 
         if (usuario_mod != null && !usuario_mod.isEmpty()) {
@@ -223,7 +235,6 @@ public class Activity_user_ampliado extends AppCompatActivity {
             call.enqueue(new Callback<String>() { // Ejecutar la llamada de manera asíncrona
                 /**
                  * Método invocado cuando se recibe una respuesta de la solicitud HTTP
-                 *
                  * @param call     llamada que generó la respuesta
                  * @param response la respuesta recibida del servidor
                  */
@@ -241,7 +252,6 @@ public class Activity_user_ampliado extends AppCompatActivity {
 
                 /**
                  * Método invocado cuando ocurre un error durante la ejecución de la llamada HTTP
-                 *
                  * @param call la llamada que generó el error
                  * @param t    la excepción que ocurrió
                  */

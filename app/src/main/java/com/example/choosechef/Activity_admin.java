@@ -108,6 +108,10 @@ public class Activity_admin extends AppCompatActivity {
         });
     }
 
+    /**
+     * Método para hacer logout
+     * @param view visor para hace rlogout al clicar el botón de logout
+     */
     public void logout(View view){
         Utils.gotoActivity(Activity_admin.this, MainActivity_inicio.class);
     }
