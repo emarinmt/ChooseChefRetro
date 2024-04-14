@@ -56,7 +56,7 @@ public class Test_Modperfil {
         onView(withId(R.id.btn_mod_perfil)).perform(click());
 
         espera();
-        // Verificar que se abre Activity_mod_perfil después del inicio de sesión
+        // Verificar que se abre Activity_mod_perfil después de clicar el boton
         intended(hasComponent(Activity_mod_perfil.class.getName()));
         // Asegurarnos de que la actividad se ha cargado completamente
         onView(withId(R.id.edt_nombre_mod_perfil)).check(matches(isDisplayed()));

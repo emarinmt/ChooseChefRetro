@@ -1,10 +1,11 @@
 package com.example.choosechef;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
@@ -22,15 +23,16 @@ import retrofit2.Retrofit;
 
 public class Activity_busqueda extends AppCompatActivity {
     private final String TAG = Activity_busqueda.class.getSimpleName();
-
-    //variables campos de entrada
+    private boolean provinciaSuccessful = false; // Variable para rastrear el estado de la muestra de provincias
+    // Variables para los spinners y selecciones
     Spinner spinner_prov;
     Spinner spinner_comida;
     Spinner spinner_servicio;
     String prov_seleccionada;
     String comida_seleccionada;
     String servicio_seleccionada;
-    ArrayList<String> provinciasList = new ArrayList<>(); // Lista para almacenar las provincias
+    // Lista para almacenar las provincias
+    ArrayList<String> provinciasList = new ArrayList<>();
     // Variables para conectar con la API
     FastMethods mfastMethods;
     Retrofit retro;
@@ -43,16 +45,22 @@ public class Activity_busqueda extends AppCompatActivity {
 
         retro=FastClient.getClient();
         mfastMethods = retro.create(FastMethods.class);
+        // Inicializar los spinners
+        spinner_prov = findViewById(R.id.spinner_provincias);
+        spinner_comida = findViewById(R.id.spinner_tipo_comida);
+        spinner_servicio = findViewById(R.id.spinner_servicios);
 
+        // Recuperar las provincias del servidor
         recuperarProvincias();
-        prov_seleccionada=seleccionarProvincia();
-        comida_seleccionada=seleccionarComida();
-        servicio_seleccionada=seleccionarServicio();
+
     }
     public void recuperarProvincias(){
+        // Obtener el contexto de la actividad (this)
+        Context context = this;
         // Compruebe el estado de la conexión de red
         if (!Utils.isNetworkAvailable(this)) {
-            Utils.showToast(Activity_busqueda.this, "No hay conexión a Internet");
+            Utils.showToastSecond(Activity_busqueda.this, context, "No hay conexión a Internet");
+            provinciaSuccessful = false;
             return;
         }
         // Call HTTP client para recuperar la información del usuario
@@ -65,14 +73,17 @@ public class Activity_busqueda extends AppCompatActivity {
              */
             public void onResponse(@NonNull Call<List<String>> call, @NonNull Response<List<String>> response) {
                 if (response.isSuccessful() && response.body() != null) {
+                    provinciaSuccessful = true;
                     provinciasList.clear(); // Limpiar la lista actual
                     provinciasList.addAll(response.body()); // Agregar todas las provincias recuperadas
-                    Log.e(TAG, provinciasList.toString());
-                    // Notificar al adaptador que los datos han cambiado
-                    //adapter1.notifyDataSetChanged();
-                    //seleccionarProvincia();
+
+                    // Configurar adaptador para el spinner de provincias
+                    ArrayAdapter<String> adapterProv = new ArrayAdapter<>(Activity_busqueda.this, android.R.layout.simple_spinner_item, provinciasList);
+                    adapterProv.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner_prov.setAdapter(adapterProv);
+
                 } else {
-                    Utils.showToast(Activity_busqueda.this, "No se encontraron provincias con chefs");
+                    Utils.showToastSecond(Activity_busqueda.this, context,"No se encontraron provincias con chefs");
                 }
             }
             /**
@@ -83,114 +94,79 @@ public class Activity_busqueda extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<List<String>> call, @NonNull Throwable t) {
                 // Error en la llamada, muestra el mensaje de error y registra la excepción
+                provinciaSuccessful = false;
                 t.printStackTrace();
                 Log.e(TAG, "Error en la llamada:" + t.getMessage());
-                Utils.showToast(Activity_busqueda.this, "Error en la llamada: " + t.getMessage());
+                Utils.showToastSecond(Activity_busqueda.this, context,"Error en la llamada: " + t.getMessage());
             }
         });
     }
-    private String seleccionarProvincia() {
-        spinner_prov = findViewById(R.id.spinner_provincias);
-        //
-        //ArrayList<String> provincias = provinciasList;
-
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, provinciasList);
-        spinner_prov.setAdapter(adapter1);
-
-        spinner_prov.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                prov_seleccionada = (String) spinner_prov.getSelectedItem();
-                String mensaje_prov = "Ha seleccionado la provincia " + prov_seleccionada;
-                Utils.showToast(Activity_busqueda.this, mensaje_prov);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
-        return prov_seleccionada;
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //seleccionarComida();
+        //seleccionarServicio();
+        configurarSpinnerComida();
+        configurarSpinnerServicio();
     }
-    private String seleccionarComida() {
-        spinner_comida = findViewById(R.id.spinner_tipo_comida);
-        //Aquí hay que decidir si hace falta hacer una clase de provincias, o directamente llamar al servidor y recuperar la lista de provincias
-        ArrayList<String> comida = new ArrayList<>();
-        comida.add("Italiana");
-        comida.add("Tailandesa");
-        comida.add("Japonesa");
-        comida.add("Mediterranea");
-        comida.add("Asiática");
-        comida.add("Africana");
-        comida.add("Coreana");
+    private void configurarSpinnerComida() {
+        ArrayList<String> comidaList = new ArrayList<>();
+        comidaList.add("Italiana");
+        comidaList.add("Tailandesa");
+        comidaList.add("Japonesa");
+        comidaList.add("Mediterránea");
+        comidaList.add("Asiática");
+        comidaList.add("Africana");
+        comidaList.add("Coreana");
 
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, comida);
-        spinner_comida.setAdapter(adapter2);
-
-        spinner_comida.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                comida_seleccionada = (String) spinner_comida.getSelectedItem();
-                String mensaje_comida = "Ha seleccionado el tipo de comida " + comida_seleccionada;
-                Utils.showToast(Activity_busqueda.this, mensaje_comida);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
-        return comida_seleccionada;
+        ArrayAdapter<String> adapterComida = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, comidaList);
+        adapterComida.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_comida.setAdapter(adapterComida);
     }
-    private String seleccionarServicio() {
-        spinner_servicio = findViewById(R.id.spinner_servicios);
-        //Aquí hay que decidir si hace falta hacer una clase de provincias, o directamente llamar al servidor y recuperar la lista de provincias
-        ArrayList<String> servicio = new ArrayList<>();
-        servicio.add("Cátering a domicilio");
-        servicio.add("Chef a domicilio");
-        servicio.add("Cátering para evento");
+    private void configurarSpinnerServicio() {
+        ArrayList<String> servicioList = new ArrayList<>();
+        servicioList.add("Cátering a domicilio");
+        servicioList.add("Chef a domicilio");
+        servicioList.add("Cátering para evento");
 
-        ArrayAdapter<String> adapter3 = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, servicio);
-        spinner_servicio.setAdapter(adapter3);
-
-        spinner_comida.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                servicio_seleccionada = (String) spinner_comida.getSelectedItem();
-                String mensaje_servicio = "Ha seleccionado el servicio " + servicio_seleccionada;
-                Utils.showToast(Activity_busqueda.this, mensaje_servicio);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
-        return servicio_seleccionada;
+        ArrayAdapter<String> adapterServicio = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, servicioList);
+        adapterServicio.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_servicio.setAdapter(adapterServicio);
     }
+
+
     public void confirmarBusqueda(View view) {
-        Utils.showToast(Activity_busqueda.this, "Busqueda correcta!");
-        //Utils.gotoActivity(Activity_busqueda.this, Activity_contenido.class);
-        Bundle extras = new Bundle();
-        extras.putString("provincia", prov_seleccionada);
-        extras.putString("comida", comida_seleccionada);
-        extras.putString("servicio", servicio_seleccionada);
-        Utils.sendActivityResult(Activity_busqueda.this, extras, Activity.RESULT_OK);
+        // Obtener los valores seleccionados de los spinners
+        prov_seleccionada = (String) spinner_prov.getSelectedItem();
+        comida_seleccionada = (String) spinner_comida.getSelectedItem();
+        servicio_seleccionada = (String) spinner_servicio.getSelectedItem();
+
+        // Validar que los valores no sean nulos o vacíos antes de proceder
+        if (prov_seleccionada != null && !prov_seleccionada.isEmpty() &&
+                comida_seleccionada != null && !comida_seleccionada.isEmpty() &&
+                servicio_seleccionada != null && !servicio_seleccionada.isEmpty()) {
+
+            // Crear un intent para enviar los datos de vuelta a Activity_contenido
+            Intent intent = new Intent();
+            intent.putExtra("provincia", prov_seleccionada);
+            intent.putExtra("comida", comida_seleccionada);
+            intent.putExtra("servicio", servicio_seleccionada);
+
+            // Establecer el resultado como OK y adjuntar el intent con los datos
+            setResult(Activity.RESULT_OK, intent);
+            finish(); // Finalizar la actividad actual y volver a Activity_contenido
+        } else {
+            // Mostrar un mensaje de error si alguno de los valores seleccionados es nulo o vacío
+            Utils.showToast(Activity_busqueda.this, "Por favor, seleccione una opción válida para cada campo.");
+        }
     }
+
     public void logout(View view){
         Utils.gotoActivity(Activity_busqueda.this, MainActivity_inicio.class);
     }
-       /* //Spinner spinner_prov = findViewById(R.id.lista_provincias);
-        //List<String> spinnerProvincias = List.of("Barcelona", "Tarragona","Lleida", "Madrid", "Mallorca");
-        //ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, spinnerProvincias);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.provincias_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_prov.setAdapter(adapter);
 
-        //establece la posición del adapter seleccionada. Por omisión es la primera (0).
-        spinner_prov.setSelection(3);
-        //obtiene la posición del adapter seleccionada
-        int posSelected = spinner_prov.getSelectedItemPosition();
-
-        */
-
-
+    public boolean isProvSuccessful() {
+        return provinciaSuccessful;
+    }
 
 }

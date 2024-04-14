@@ -1,5 +1,6 @@
 package com.example.choosechef;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -68,7 +69,7 @@ public class Activity_contenido extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("MiPreferencia", Context.MODE_PRIVATE);
         token = sharedPreferences.getString("token", "");
 
-        // Llamar al método recuperarDatos
+        // Llamar al método recuperarChefs
         recuperarChefs();
     }
 
@@ -175,22 +176,28 @@ public class Activity_contenido extends AppCompatActivity {
         // Redirige al usuario a la pantalla de modificación de perfil
         Utils.gotoActivity(Activity_contenido.this, Activity_mod_perfil.class);
     }
+    //BUSQUEDA
     public void search(View view) {
         // Redirige al usuario a la pantalla de busqueda
-        Utils.gotoActivityWithResult(Activity_contenido.this, Activity_busqueda.class, REQUEST_CODE);
+        //Utils.gotoActivityWithResult(Activity_contenido.this, Activity_busqueda.class, REQUEST_CODE);
+        Intent intent = new Intent(Activity_contenido.this, Activity_busqueda.class);
+        startActivityForResult(intent, REQUEST_CODE);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                if (data != null) {
-                    // Obtener datos devueltos por ActivityB
+        if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            if (data != null) {
+                    // Obtener datos devueltos por Activity_busqueda
                     prov_seleccionada = data.getStringExtra("provincia");
                     comida_seleccionada = data.getStringExtra("comida");
                     servicio_seleccionada = data.getStringExtra("servicio");
 
+                // Aquí puedes usar los datos recibidos para actualizar la interfaz de usuario
+                Log.d(TAG, "Provincia seleccionada: " + prov_seleccionada);
+                Log.d(TAG, "Comida seleccionada: " + comida_seleccionada);
+                Log.d(TAG, "Servicio seleccionado: " + servicio_seleccionada);
                     // Filtrar userList localmente con los filtros seleccionados
                     List<User> filteredList = filterUsers(userList, prov_seleccionada, comida_seleccionada, servicio_seleccionada);
 
@@ -201,12 +208,11 @@ public class Activity_contenido extends AppCompatActivity {
                     // Mostrar la lista filtrada en el RecyclerView
                     adapter.notifyDataSetChanged();
 
-                }
             }
         }
     }
 
-    private List<User> filterUsers(List<User> userList, String provincia, String comida, String servicio) {
+    public List<User> filterUsers(List<User> userList, String provincia, String comida, String servicio) {
         List<User> filteredList = new ArrayList<>();
         for (User user : userList) {
             // Aplicar el filtro basado en los criterios seleccionados
@@ -223,6 +229,8 @@ public class Activity_contenido extends AppCompatActivity {
         boolean matchesServicio = servicio == null || servicio.isEmpty() || user.getServicio().equalsIgnoreCase(servicio);
         return matchesProvincia && matchesComida && matchesServicio;
     }
+
+    //AJUSTES
     public void ajustes (View view) {
         Utils.gotoActivity(Activity_contenido.this, Activity_chef.class);
         //COMENTO PORQUE ME DA PROBLEMAS CON EL USUARIO ADMIN, SOLO QUIERO COMPROBAR QUE ESA CLASE FUNCIONA

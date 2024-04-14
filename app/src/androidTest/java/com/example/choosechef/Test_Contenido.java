@@ -30,7 +30,7 @@ import java.util.Random;
 
 /**
  * Clase desarrollada por ELENA
- * Para realizar los tests referentes a la modificación del perfil de usuario
+ * Para realizar los tests referentes a la muestra de chefs
  */
 @RunWith(AndroidJUnit4.class)
 public class Test_Contenido {
@@ -51,7 +51,7 @@ public class Test_Contenido {
 
         espera();
 
-        // Verificar que se abre Activity_contenido después del registro
+        // Verificar que se abre Activity_contenido después del login
         intended(hasComponent(Activity_contenido.class.getName()));
         // Obtener la instancia de Activity_content
         contenido = ((Activity_contenido) getActivityInstance(Activity_contenido.class));
