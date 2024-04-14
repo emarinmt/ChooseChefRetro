@@ -22,10 +22,17 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 /**
- * Clase desarrollada por ELENA
- * para gestionar la actividad contenido
+ * Clase contenido
+ * Gestionar la actividad contenido
+ * Muestra una lista de todos los chefs de la app
+ * Después de filtrar la búsqueda muestra los chefs que cumplen las condiciones de búsqueda
+ * Botón lupa permite ir a la pantalla de búsqueda donde seleccionar los criterios para filtrar la búsqueda de chefs
+ * Botón modificación de perfil permite ir a la pantalla de modificación de perfil estandard para todos los usuarios
+ * Botón ajustes, permite ir a diferentes pantallas en función del tipo de usuario
+ *        usuario administrador, va a la pantalla administrador, para gestionar todos los usuarios de la app
+ *        usuaio cliente, va a la pantalla usuario, para gestionar sus reservas e introducir reseñas
+ *        usuario chef, va a la pantalla chef, para gestionar su perfil de chef y modificar el servicio que ofrece
  */
-
 public class Activity_contenido extends AppCompatActivity {
     private boolean contentSuccessful = false; // Variable para rastrear el estado de la muestra del listado
     private final String TAG = Activity_contenido.class.getSimpleName();
@@ -39,9 +46,10 @@ public class Activity_contenido extends AppCompatActivity {
     // Variables para conectar con la API
     FastMethods mfastMethods;
     Retrofit retro;
-    private User user; // ELENA
-    private User user_logeado; // ELENA
+    private User user;
+    private User user_logeado;
     String token;
+    //Variables para los filtros de búsqueda y la gestión de ir a diferentes pantallas en función del usuario
     String mTipoLogeado;
     String prov_seleccionada;
     String comida_seleccionada;
@@ -125,49 +133,68 @@ public class Activity_contenido extends AppCompatActivity {
 
     /**
      * Método para manejar el clic del botón de modificación de perfil.
-     * Dirige al usuario a la pantalla de modificación
-     * @param view La vista (Button) que se hizo clic.
+     * Dirige al usuario a la pantalla de modificación de perfil
+     * @param view La vista (Button) a la que se hizo clic.
      */
     public void changeProfile (View view) {
         // Redirige al usuario a la pantalla de modificación de perfil
         Utils.gotoActivity(Activity_contenido.this, Activity_mod_perfil.class);
     }
-    //BUSQUEDA
+    /**
+     * Método para manejar el clic del botón lupa.
+     * Dirige al usuario a la pantalla de búsqueda
+     * @param view La vista (Button) a la que se hizo clic.
+     */
     public void search(View view) {
         // Redirige al usuario a la pantalla de busqueda
-        //Utils.gotoActivityWithResult(Activity_contenido.this, Activity_busqueda.class, REQUEST_CODE);
         Intent intent = new Intent(Activity_contenido.this, Activity_busqueda.class);
         startActivityForResult(intent, REQUEST_CODE);
     }
 
+    /**
+     *Método llamado cuando se recibe un resultado de una actividad lanzada mediante startActityForResult()
+     * @param requestCode El código de solicitud originalmente proporcionado a startActivityForResult(),
+     *  *                     que permite identificar de quién proviene este resultado.
+     * @param resultCode El código de resultado devuelto por la actividad secundaria a través de su setResult().
+     * @param data Un Intent, que puede devolver datos de resultado al llamador
+     *  *             (varios datos pueden adjuntarse a "extras" del Intent).
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             if (data != null) {
-                    // Obtener datos devueltos por Activity_busqueda
-                    prov_seleccionada = data.getStringExtra("provincia");
-                    comida_seleccionada = data.getStringExtra("comida");
-                    servicio_seleccionada = data.getStringExtra("servicio");
+                // Obtener datos devueltos por Activity_busqueda
+                prov_seleccionada = data.getStringExtra("provincia");
+                comida_seleccionada = data.getStringExtra("comida");
+                servicio_seleccionada = data.getStringExtra("servicio");
 
-                // Aquí puedes usar los datos recibidos para actualizar la interfaz de usuario
+                // Usar los datos recibidos para actualizar la interfaz de usuario
                 Log.d(TAG, "Provincia seleccionada: " + prov_seleccionada);
                 Log.d(TAG, "Comida seleccionada: " + comida_seleccionada);
                 Log.d(TAG, "Servicio seleccionado: " + servicio_seleccionada);
-                    // Filtrar userList localmente con los filtros seleccionados
-                    List<User> filteredList = filterUsers(userList, prov_seleccionada, comida_seleccionada, servicio_seleccionada);
 
-                    // Actualizar userList con la lista filtrada
-                    userList.clear();
-                    userList.addAll(filteredList);
+                // Filtrar userList localmente con los filtros seleccionados
+                List<User> filteredList = filterUsers(userList, prov_seleccionada, comida_seleccionada, servicio_seleccionada);
 
-                    // Mostrar la lista filtrada en el RecyclerView
-                    adapter.notifyDataSetChanged();
+                // Actualizar userList con la lista filtrada
+                userList.clear();
+                userList.addAll(filteredList);
 
+                // Mostrar la lista filtrada en el RecyclerView
+                adapter.notifyDataSetChanged();
             }
         }
     }
 
+    /**
+     *Método para filtrar la lista de usuarios segun los criterios de búsqueda de provincia, comida y servicio
+     * @param userList la lista de usuarios a filtrar
+     * @param provincia la provincia seleccionada como criterio de búsqueda
+     * @param comida la comida seleccionada como criterio de búsqueda
+     * @param servicio el servicio seleccionado como criterio de búsqueda
+     * @return devuelve una lista de usuarios filtrada según los criterios especificados
+     */
     public List<User> filterUsers(List<User> userList, String provincia, String comida, String servicio) {
         List<User> filteredList = new ArrayList<>();
         for (User user : userList) {
@@ -178,6 +205,15 @@ public class Activity_contenido extends AppCompatActivity {
         }
         return filteredList;
     }
+
+    /**
+     * Método para verificar si el usuario cumple los criterios de filtro
+     * @param user usuario a verificar
+     * @param provincia criterio de búsqueda provincia a verificar
+     * @param comida criterio de búsqueda comida a verificar
+     * @param servicio criterio de búsqueda servicio a verificar
+     * @return devuelve un booleano en función de si están verificados o no dichos campos
+     */
     private boolean matchesFilter(User user, String provincia, String comida, String servicio) {
         // Verificar si el usuario cumple con los criterios de filtro
         boolean matchesProvincia = provincia == null || provincia.isEmpty() || user.getUbicacion().equalsIgnoreCase(provincia);
@@ -186,11 +222,14 @@ public class Activity_contenido extends AppCompatActivity {
         return matchesProvincia && matchesComida && matchesServicio;
     }
 
-    //AJUSTES
+    /**
+     * Método para gestionar el botón ajustes
+     * Redirige al usuario según su tipo a la pantalla diseñada para gestionar sus opciones específicas.
+     * @param view La vista (Button) a la que se hizo clic.
+     */
     public void ajustes (View view) {
         //HAY QUE REVISARLO PORQUE CON UN CLIK DICE ERROR OBTENIENDO TIPO USUARIO Y AL SEGUNDO CLIK ENTRA BIEN
         // Obtenemos tipo de usuario del usuario logeado
-
         recuperarDatos();
         if (mTipoLogeado != null && !mTipoLogeado.isEmpty()) {
             // Redirige segun el usuario a la pantalla de configuracion de chef, admin o usuario
@@ -211,7 +250,7 @@ public class Activity_contenido extends AppCompatActivity {
 
     /**
      * Método recuperarDatos
-     * Para recuperar los datos del usuario logeado
+     * Recuperar los datos del usuario logeado
      */
     public void recuperarDatos(){
         // Compruebe el estado de la conexión de red
@@ -253,15 +292,27 @@ public class Activity_contenido extends AppCompatActivity {
         });
     }
 
-
+    /**
+     * Método para hacer logout
+     * Redirige al usuario a la pantalla de inicio
+     * @param view La vista (Button) a la que se hizo clic.
+     */
     public void logout(View view){
         Utils.gotoActivity(Activity_contenido.this, MainActivity_inicio.class);
     }
 
+    /**
+     * Método para test
+     * @return devuelve un booleano en función de si ha ido bien la muestra de contenido.
+     */
     public boolean isContentSuccessful() {
         return contentSuccessful;
     }
 
+    /**
+     * Método para recuperar la lista de usuarios
+     * @return devuelve la lista de usuarios
+     */
     public List<User> getUserList() {
         return userList;
     }

@@ -19,14 +19,15 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+/**
+ * Clase chef.
+ * Gestiona las opciones propias del usuario chef.
+ * Permite rellenar el perfil del chef, ubicación, tipo de comida, tipo de servicio y descripción.
+ */
 public class Activity_chef extends AppCompatActivity {
-    /*
-    La idea de esta clase es, cuando accede le aparece la informacion que hay en bases de datos del servicio que tiene, si lo toca y confirma se modifica.
-    Si no tiene servicio saldra en blanco y podra introducirlo
-    de momento copio el codigo de la clase busqueda, porque he aprovacho los spinner ya que va a ser lo mismo
-     */
     private boolean modifySuccessful = false; // Variable para rastrear el estado de la modificación
     private final String TAG = Activity_chef.class.getSimpleName();
+    //Variables para los spinners, descripción y selecciones
     Spinner spinner_prov;
     Spinner spinner_comida;
     Spinner spinner_servicio;
@@ -36,13 +37,19 @@ public class Activity_chef extends AppCompatActivity {
     public String servicio_seleccionada;
     public String descripcionInput;
 
+    // Variables para conectar con la API
     FastMethods mfastMethods;
     Retrofit retro;
     private User user;
     String token;
+    /**
+     * Método onCreate para la configuración incial de la actividad
+     * @param savedInstanceState estado de la instancia guardada, un objeto Bundle que contiene el estado previamente guardado de la actividad
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Establece el diseño de la actividad.
         setContentView(R.layout.activity_chef);
 
         //Inicialización de variables
@@ -58,15 +65,19 @@ public class Activity_chef extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("MiPreferencia", Context.MODE_PRIVATE);
         token = sharedPreferences.getString("token", "");
 
-
+        //Configuración de las opciones disponibles para elegir en los spinners
         configurarSpinnerProvincia();
         configurarSpinnerComida();
         configurarSpinnerServicio();
 
+        //Recupera datos del servidor para mostrarlos seleccionados en los spinners y la descripción
         recuperarDatos();
 
     }
 
+    /**
+     * Método para configurar las opciones disponibles en el spinner de provincias
+     */
     private void configurarSpinnerProvincia() {
         ArrayList<String> provinciasList = new ArrayList<>();
         provinciasList.add("Barcelona");
@@ -81,6 +92,9 @@ public class Activity_chef extends AppCompatActivity {
         adapterProvincia.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_prov.setAdapter(adapterProvincia);
     }
+    /**
+     * Método para configurar las opciones disponibles en el spinner de comida
+     */
     private void configurarSpinnerComida() {
         ArrayList<String> comidaList = new ArrayList<>();
         comidaList.add("Italiana");
@@ -95,6 +109,9 @@ public class Activity_chef extends AppCompatActivity {
         adapterComida.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_comida.setAdapter(adapterComida);
     }
+    /**
+     * Método para configurar las opciones disponibles en el spinner de servicio
+     */
     private void configurarSpinnerServicio() {
         ArrayList<String> servicioList = new ArrayList<>();
         servicioList.add("Cátering a domicilio");
@@ -105,6 +122,10 @@ public class Activity_chef extends AppCompatActivity {
         adapterServicio.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_servicio.setAdapter(adapterServicio);
     }
+
+    /**
+     * Método para recuperar los datos del servidor y mostrarlos en los spinners y descripción
+     */
     public void recuperarDatos(){
         // Compruebe el estado de la conexión de red
         if (!Utils.isNetworkAvailable(this)) {
@@ -167,7 +188,7 @@ public class Activity_chef extends AppCompatActivity {
 
     /**
      * Método para modificar la información del usuario en el servidor
-     * @param view el visor para hacer click al botón de confirmar
+     * @param view La vista (Button) a la que se hizo clic.
      */
     public void confirmarServicio(View view) {
         // Obtener los valores seleccionados de los spinners y la descripción introducida
@@ -176,7 +197,7 @@ public class Activity_chef extends AppCompatActivity {
         servicio_seleccionada = (String) spinner_servicio.getSelectedItem();
         descripcionInput = descripcion.getText().toString();
 
-        // Validar que los valores no sean nulos o vacíos antes de proceder
+        // Validar que los valores no sean nulos o vacíos antes de proceder ( la descripción permitimos que sea vacía)
         if (prov_seleccionada != null && !prov_seleccionada.isEmpty() &&
                 comida_seleccionada != null && !comida_seleccionada.isEmpty() &&
                 servicio_seleccionada != null && !servicio_seleccionada.isEmpty()) {
@@ -228,11 +249,21 @@ public class Activity_chef extends AppCompatActivity {
                 }
             });
         }
-
     }
+
+    /**
+     * Método para hacer logout
+     * Redirige al usuario a la pantalla de inicio
+     * @param view La vista (Button) a la que se hizo clic.
+     */
     public void logout(View view){
         Utils.gotoActivity(Activity_chef.this, MainActivity_inicio.class);
     }
+
+    /**
+     * Método para test
+     * @return devuelve un booleano en función de si ha ido bien la modificación de datos
+     */
     public boolean isContentSuccessful() {
         return modifySuccessful;
     }

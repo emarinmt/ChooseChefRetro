@@ -69,5 +69,6 @@
     <string name="comida_t">Comida :</string>
     <string name="servicio_t">Servicio :</string>
     <string name="valoracion_t">Valoración :</string>
+    <string name="servicio">Servicio</string>
 
 </resources>

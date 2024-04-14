@@ -16,6 +16,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 /**
+ * Clase usuario ampliado
  * Actividad ara gestionar la información del usuario ampliada,
  * a esta pantalla acedera el administrador para ver, modificar o borrar toda la info de los usuarios
  */
@@ -56,6 +57,7 @@ public class Activity_user_ampliado extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Establece el diseño de la actividad
         setContentView(R.layout.activity_user_ampliado);
         contentSuccessful = false;
 
@@ -142,7 +144,7 @@ public class Activity_user_ampliado extends AppCompatActivity {
      * Método para gestionar el click del botón confirmar
      * Habilita los campos para poder editarlos, recoge los datos modificados
      * Y llama al método para modificar esos datos en el servidor
-     * @param view visor para detectar el click del boton
+     * @param view La vista (Button) a la que se hizo clic.
      */
     public void editarUsuario(View view){
         if(!camposHabilitados){
@@ -224,7 +226,7 @@ public class Activity_user_ampliado extends AppCompatActivity {
 
     /**
      * Método para borrar al usuario
-     * @param view visor para cuando se clica al botón de delete
+     * @param view La vista (Button) a la que se hizo clic.
      */
     public void borrarUsuario(View view){
 
@@ -271,13 +273,17 @@ public class Activity_user_ampliado extends AppCompatActivity {
 
     /**
      * Método para hacer logout
-     * @param view visor del botón asociado a logout
+     * Redirige al usuario a la pantalla de inicio
+     * @param view La vista (Button) a la que se hizo clic.
      */
     public void logout(View view){
         Utils.gotoActivity(Activity_user_ampliado.this, MainActivity_inicio.class);
     }
 
-
+    /**
+     * Método para test
+     * @return devuelve un booleano en funcion de si ha ido bien la muestra de contenido
+     */
     public boolean isContentSuccessful() {
         return contentSuccessful;
     }

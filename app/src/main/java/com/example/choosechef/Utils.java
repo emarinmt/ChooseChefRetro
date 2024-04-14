@@ -12,7 +12,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 /**
- * Clase desarrollada por ELENA
+ * Clase utilidades
  * Contiene métodos reutilizables por otras clases con funcionalidades comunes.
  */
 public class Utils extends AppCompatActivity{

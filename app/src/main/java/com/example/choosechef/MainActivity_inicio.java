@@ -5,13 +5,12 @@ import android.widget.ImageButton;
 import androidx.appcompat.app.AppCompatActivity;
 
 /**
- * Clase desarrollada por EVA
+ * Clase inicio
  * Actividad principal de inicio de la aplicación
  * Contiene dos botones los cuales llevan a la actividad de inicio de sesion o registro de usuario
  */
 
 public class MainActivity_inicio extends AppCompatActivity {
-// FUNCIONANDO Y REVISADA CON COMENTARIOS
     /**
      * Método onCreate para la configuración incial de la actividad
      * @param savedInstanceState estado de la instancia guardada, un objeto Bundle que contiene el estado previamente guardado de la actividad

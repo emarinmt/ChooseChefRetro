@@ -11,7 +11,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 /**
- * Interfaz desarrollada por ELENA, (EVA añade metodos)
+ * Interfaz FastMethods
  * Interfaz que define los métodos para realizar llamadas a la API
  */
 public interface FastMethods {

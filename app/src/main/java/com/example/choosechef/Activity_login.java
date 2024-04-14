@@ -1,26 +1,27 @@
 package com.example.choosechef;
 
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.annotation.NonNull;
-import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
 /**
- * Clase desarrollada por ELENA
+ * Clase login
  * Maneja el proceso de inicio de sesión de los usuarios.
  */
 public class Activity_login extends AppCompatActivity {
-// FUNCIONANDO Y REVISADA CON COMENTARIOS
     private boolean loginSuccessful = false; // Variable para rastrear el estado del login
     private final String TAG = Activity_login.class.getSimpleName();
 
@@ -129,17 +130,6 @@ public class Activity_login extends AppCompatActivity {
                         // Inicio de sesión fallido, muestra un mensaje de error
                         Utils.showToast(Activity_login.this, "Inicio de sesión incorrecto");
                     }
-                    /*
-                    String token = tokenResponse.getToken();
-
-                    // Guardar el token de acceso en SharedPreferences
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("token", token);
-                    editor.apply();
-
-                    // Inicio de sesión exitoso, redirige al usuario a la pantalla de contenido
-                    //Utils.gotoActivity(Activity_login.this, Activity_contenido.class);
-                    */
                 } else {
                     // Inicio de sesión fallido, muestra un mensaje de error
                     Utils.showToast(Activity_login.this, "Inicio de sesión incorrecto");
@@ -161,6 +151,11 @@ public class Activity_login extends AppCompatActivity {
         });
 
     }
+
+    /**
+     * Método para test
+     * @return devuelve un booleano en funcion de si ha ido bien el login
+     */
     public boolean isLoginSuccessful() {
         return loginSuccessful;
     }

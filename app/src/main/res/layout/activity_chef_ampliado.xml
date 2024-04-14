@@ -24,8 +24,8 @@
 
     <ImageView
         android:id="@+id/foto_chef_ampliado"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="149dp"
+        android:layout_height="166dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="245dp"
         android:contentDescription="@string/foto_chef"
@@ -86,11 +86,28 @@
         app:layout_constraintStart_toEndOf="@+id/foto_chef_ampliado"
         app:layout_constraintTop_toBottomOf="@+id/tipo_comida_ampliado"
         app:layout_constraintVertical_bias="0.0" />
+    <TextView
+        android:id="@+id/servicio_ampliado"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/servicio"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/foto_chef_ampliado"
+        app:layout_constraintTop_toBottomOf="@+id/provincia_ampliado"
+        app:layout_constraintVertical_bias="0.0" />
+
 
     <TextView
         android:id="@+id/descripcion_ampliado"
-        android:layout_width="218dp"
-        android:layout_height="53dp"
+        android:layout_width="214dp"
+        android:layout_height="35dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
@@ -101,8 +118,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/foto_chef_ampliado"
-        app:layout_constraintTop_toBottomOf="@+id/provincia_ampliado"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/servicio_ampliado"
+        app:layout_constraintVertical_bias="0.004" />
 
     <ImageButton
         android:id="@+id/ibtn_reservar"

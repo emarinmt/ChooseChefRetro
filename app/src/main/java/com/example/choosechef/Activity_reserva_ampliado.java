@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import java.time.LocalDate;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -20,23 +19,37 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+/**
+ * Clase reserva ampliado
+ * Muestra todas las reservas del usuario logeado
+ * Si la fecha de la reserva es igual o superior a la fecha actual deja introducir una reseña ( valoración y comentario)
+ */
 public class Activity_reserva_ampliado  extends AppCompatActivity {
     private boolean contentSuccessful = false; // Variable para rastrear el estado de la muestra de la reserva
     private boolean modifySuccessful = false; // Variable para rastrear el estado de la modificacion de la reserva
     private final String TAG = Activity_reserva_ampliado.class.getSimpleName();
+    //Variables para mostrar la información de la reserva
     private TextView nombre_chef;
     private TextView fecha_reserva;
     private EditText comentario;
     RatingBar valoracion;
-    public Intent intent3;
+    //Variable para recibir información de la reserva de la pantalla anterior
+    public Intent intent;
+    //Variables para conectar con la API
     FastMethods mfastMethods;
     Retrofit retro;
     public Reserva reserva;
+
+    /**
+     * Método onCreate para la configuración incial de la actividad
+     * @param savedInstanceState estado de la instancia guardada, un objeto Bundle que contiene el estado previamente guardado de la actividad
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Establece el diseño de la actividad
         setContentView(R.layout.activity_reserva_ampliado);
         contentSuccessful = false;
         modifySuccessful = false;
@@ -52,10 +65,10 @@ public class Activity_reserva_ampliado  extends AppCompatActivity {
         valoracion = findViewById(R.id.rating_valoracion_reserva);
 
         // Obtener el Intent que inició esta actividad
-        intent3 = getIntent();
+        intent = getIntent();
 
         //Recuperar datos de la reserva de la pantalla anterior
-        obtenerIntent(intent3);
+        obtenerIntent(intent);
 
         //Por defecto los campos para añadir una reseña estan deshabilitados
         valoracion.setEnabled(false);
@@ -68,7 +81,10 @@ public class Activity_reserva_ampliado  extends AppCompatActivity {
         }
     }
 
-
+    /**
+     * Método para obtener la información de la reserva de la pantalla anterior
+     * @param intent contiene la información de la reserva de la pantalla anterior
+     */
     public void obtenerIntent(Intent intent){
         // Verificar si el Intent contiene un extra con clave "user"
         if (intent != null && intent.hasExtra("reserva")) {
@@ -86,6 +102,11 @@ public class Activity_reserva_ampliado  extends AppCompatActivity {
         }
         contentSuccessful = false;
     }
+
+    /**
+     * Método para modificar la reseña en el servidor ( añadir valoración y comentario)
+     * @param view La vista (Button) a la que se hizo clic.
+     */
     public void confirmarComentario(View view){
         //Recogemos los datos añadidos
         Float valoracionInput = valoracion.getRating();
@@ -135,9 +156,19 @@ public class Activity_reserva_ampliado  extends AppCompatActivity {
         });
     }
 
+    /**
+     * Método para hacer logout
+     * Redirige al usuario a la pantalla de inicio
+     * @param view La vista (Button) a la que se hizo clic.
+     */
     public void logout(View view){
         Utils.gotoActivity(Activity_reserva_ampliado.this, MainActivity_inicio.class);
     }
+
+    /**
+     * Método para test
+     * @return devuelve un booleano en funcion de si ha ido bien al muestra de contenido
+     */
     public boolean isContentSuccessful() {
         return contentSuccessful;
     }

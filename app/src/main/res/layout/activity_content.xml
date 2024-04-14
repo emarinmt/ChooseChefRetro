@@ -83,7 +83,6 @@
         android:background="@drawable/fondo_boton_redondo"
         android:contentDescription="@string/boton_ajustes"
         android:onClick="ajustes"
-        android:tintMode="src_in"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.86"

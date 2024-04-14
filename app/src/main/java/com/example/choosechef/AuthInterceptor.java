@@ -10,7 +10,6 @@ import okhttp3.Response;
  * Agrega un encabezado de autorización a las solicitudes HTTP salientes
  */
 public class AuthInterceptor implements Interceptor {
-// FUNCIONANDO Y REVISADA CON COMENTARIOS
     private String token;
 
     // Constructor que recibe el token como parámetro

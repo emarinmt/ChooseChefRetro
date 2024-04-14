@@ -3,7 +3,7 @@ package com.example.choosechef;
 import java.io.Serializable;
 
 /**
- * Clase desarrollada por ELENA
+ * Clase usuario
  * para gestionar la información del usuario y unificar las respuestas del servidor y los datos de envios
  */
 public class User implements Serializable {
@@ -21,8 +21,27 @@ public class User implements Serializable {
     private String servicio;
     private float valoracion;
 
+    /**
+     * Constructor vacío del objeto usuario
+     */
     public User() {
     }
+
+    /**
+     * Constructor del objeto usuario
+     * @param id id usuario
+     * @param usuario usuario
+     * @param nombre nombre usuario
+     * @param password contraseña del usuario
+     * @param descripcion descripcion del usuario
+     * @param ubicacion ubicacion del usuario
+     * @param email email del usuario
+     * @param telefono telefono del usuario
+     * @param tipo tipo de usuario
+     * @param comida tipo de comida que ofrece un chef
+     * @param servicio tipo de servicio que ofrece un chef
+     * @param valoracion valoración a un chef obtenida por otros usuarios clientes
+     */
     public User(int id, String usuario, String nombre, String password, String descripcion, String ubicacion, String email,
                 String telefono, String tipo, String comida, String servicio, float valoracion) {
         this.id = id;
@@ -38,7 +57,7 @@ public class User implements Serializable {
         this.servicio = servicio;
         this.valoracion = valoracion;
     }
-
+//Setters y getters
     public int getId() {
         return id;
     }

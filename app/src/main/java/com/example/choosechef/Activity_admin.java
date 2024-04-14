@@ -19,7 +19,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 /**
- * Clase desarrollada por EVA
+ * Clase administrador.
  * Gestiona las opciones del usuario administrador
  * Muestra una lista de todos los usuarios de la app
  */
@@ -110,11 +110,17 @@ public class Activity_admin extends AppCompatActivity {
 
     /**
      * Método para hacer logout
-     * @param view visor para hace rlogout al clicar el botón de logout
+     * Redirige al usuario a la pantalla de inicio
+     * @param view La vista (Button) a la que se hizo clic.
      */
     public void logout(View view){
         Utils.gotoActivity(Activity_admin.this, MainActivity_inicio.class);
     }
+
+    /**
+     * Método para test
+     * @return devuelve un boleano en función de si ha ido bien la muestra de usuarios
+     */
     public boolean isContentSuccessful() {
         return contentSuccessful;
     }

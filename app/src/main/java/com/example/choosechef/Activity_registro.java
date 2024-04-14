@@ -15,12 +15,11 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 /**
- * Clase desarrollada por ELENA
+ * Clase registro.
  * Representa la actividad de registro de la aplicación
  * Se llega a través del boton "Registro" de la actividad principal inicio
  */
 public class Activity_registro extends AppCompatActivity {
-// FUNCIONANDO Y REVISADA CON COMENTARIOS
     private boolean registrationSuccessful = false; // Variable para rastrear el estado del registro
     private final String TAG = Activity_registro.class.getSimpleName();
     // Variables para los campos de entrada
@@ -98,9 +97,7 @@ public class Activity_registro extends AppCompatActivity {
 
         // Llamamos al método que ejecuta la llamada al servidor enviando los datos
         crearUsuario(user);
-
     }
-
 
     /**
      * Método para validar los campos de entrada
@@ -172,6 +169,11 @@ public class Activity_registro extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     * Método para test
+     * @return devuelve un booleano en funcion de si ha ido bien el registro
+     */
     public boolean isRegistrationSuccessful() {
         return registrationSuccessful;
     }

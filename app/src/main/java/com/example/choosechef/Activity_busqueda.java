@@ -20,7 +20,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-
+/**
+ * Clase búsqueda.
+ * Gestiona los filtros de búsqueda y devuelve a la clase contenido el resultado
+ */
 public class Activity_busqueda extends AppCompatActivity {
     private final String TAG = Activity_busqueda.class.getSimpleName();
     private boolean provinciaSuccessful = false; // Variable para rastrear el estado de la muestra de provincias
@@ -36,7 +39,10 @@ public class Activity_busqueda extends AppCompatActivity {
     // Variables para conectar con la API
     FastMethods mfastMethods;
     Retrofit retro;
-
+    /**
+     * Método onCreate para la configuración incial de la actividad
+     * @param savedInstanceState estado de la instancia guardada, un objeto Bundle que contiene el estado previamente guardado de la actividad
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,14 +107,21 @@ public class Activity_busqueda extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     *Método de ciclo de vida de una actividad que se llama cuando la actividad se vuele a mostrar al ausuario y se hace nuevamente interactiva después de haber estaod en pausa o detenida.
+     * Está sobreescrito para ejecutar ciertas acciones cada vez que la actividad se reanuda.
+     */
     @Override
     protected void onResume() {
         super.onResume();
-        //seleccionarComida();
-        //seleccionarServicio();
         configurarSpinnerComida();
         configurarSpinnerServicio();
     }
+
+    /**
+     * Método para configurar las opciones disponibles en el spinner de comida
+     */
     private void configurarSpinnerComida() {
         ArrayList<String> comidaList = new ArrayList<>();
         comidaList.add("Italiana");
@@ -123,6 +136,10 @@ public class Activity_busqueda extends AppCompatActivity {
         adapterComida.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_comida.setAdapter(adapterComida);
     }
+
+    /**
+     * Método para configurar las opciones disponibles en el spinner de servicio
+     */
     private void configurarSpinnerServicio() {
         ArrayList<String> servicioList = new ArrayList<>();
         servicioList.add("Cátering a domicilio");
@@ -134,7 +151,10 @@ public class Activity_busqueda extends AppCompatActivity {
         spinner_servicio.setAdapter(adapterServicio);
     }
 
-
+    /**
+     * Método para confirmar los valores introducidos como filtros para la búsqueda y enviar los datos a la pantalla de contenido
+     * @param view La vista (Button) a la que se hizo clic.
+     */
     public void confirmarBusqueda(View view) {
         // Obtener los valores seleccionados de los spinners
         prov_seleccionada = (String) spinner_prov.getSelectedItem();
@@ -161,10 +181,19 @@ public class Activity_busqueda extends AppCompatActivity {
         }
     }
 
+    /**
+     * Método para hacer logout
+     * Redirige al usuario a la pantalla de inicio
+     * @param view La vista (Button) a la que se hizo clic.
+     */
     public void logout(View view){
         Utils.gotoActivity(Activity_busqueda.this, MainActivity_inicio.class);
     }
 
+    /**
+     * Método para test
+     * @return devuelve un booleano en función de si ha ido bien la obtención de la lista de provincias
+     */
     public boolean isProvSuccessful() {
         return provinciaSuccessful;
     }

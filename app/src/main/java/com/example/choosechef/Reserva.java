@@ -8,6 +8,10 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 
+/**
+ * Clase reserva
+ * Gestiona el objeto Reserva
+ */
 public class Reserva {
     private int id;
     private String usuario_chef;
@@ -16,9 +20,21 @@ public class Reserva {
     private float valoracion;
     private String comentario;
 
+    /**
+     * Constructor vacío del objeto reserva
+     */
     public Reserva() {
     }
 
+    /**
+     * Constructor del objeto reserva
+     * @param id id de la reserva
+     * @param usuario_chef usuario chef
+     * @param usuario_client usuario cliente
+     * @param fecha fecha de la reserva
+     * @param valoracion valoración del usuario
+     * @param comentario comentario (reseña)
+     */
     public Reserva(int id, String usuario_chef, String usuario_client, Date fecha, float valoracion, String comentario) {
         this.id = id;
         this.usuario_chef = usuario_chef;
@@ -27,7 +43,7 @@ public class Reserva {
         this.valoracion = valoracion;
         this.comentario = comentario;
     }
-
+//Setters y getters
     public int getId() {
         return id;
     }
@@ -76,6 +92,10 @@ public class Reserva {
         this.comentario = comentario;
     }
 
+    /**
+     * Método para comprobar si la fecha de la reserva es posterior o igual a hoy
+     * @return devuelve un booleano en función de si se cumple o no la condición
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public boolean esFechaHoyPosterior(){
         //Convertir la fecha de tipo Date a LocalDate

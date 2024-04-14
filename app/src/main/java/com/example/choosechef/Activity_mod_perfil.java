@@ -1,15 +1,16 @@
 package com.example.choosechef;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.annotation.NonNull;
-import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Switch;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -17,14 +18,13 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 /**
- * Clase desarrollada por EVA
- * para gestionar la actividad modificar perfil de usuario
- * Modificada por ELENA para utilizar el token y
+ * Clase modificación de perfil
+ * Gestiona la actividad modificar perfil de usuario
+ * Modificada para utilizar el token y
  * la clase User como obtención de datos para modificar y enviar al servidor
  */
 
 public class Activity_mod_perfil extends AppCompatActivity {
-// FUNCIONANDO Y REVISADA CON COMENTARIOS
     private boolean modifySuccessful = false; // Variable para rastrear el estado de la modificación
     private final String TAG = Activity_mod_perfil.class.getSimpleName();
     // Variables para los campos de entrada
@@ -41,12 +41,6 @@ public class Activity_mod_perfil extends AppCompatActivity {
     Retrofit retro;
     private User user; // ELENA
     String token;
-    /*
-    //variables para recibir usuario y contraseña de otra clase
-    String usuario;
-    String pass;
-    */
-    // Borrado por ELENA para usar el token
 
     /**
      * Método onCreate para la configuración incial de la actividad
@@ -172,9 +166,6 @@ public class Activity_mod_perfil extends AppCompatActivity {
                 return;
             }
             user.setPassword(queryNewPassString); // Cambio de contraseña
-        }  else {
-            // Se mantiene la contraseña enviada por el servidor
-            //user.setPassword(user.getPassword());
         }
 
         // Actualizamos los datos del usuario con los nuevos valores
@@ -270,9 +261,19 @@ public class Activity_mod_perfil extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     * Método para test
+     * @return devuelve un booleano en función de si ha ido bien la modificación
+     */
     public boolean isModifySuccessful() {
         return modifySuccessful;
     }
+    /**
+     * Método para hacer logout
+     * Redirige al usuario a la pantalla de inicio
+     * @param view La vista (Button) a la que se hizo clic.
+     */
     public void logout(View view){
         Utils.gotoActivity(Activity_mod_perfil.this, MainActivity_inicio.class);
     }

@@ -18,8 +18,9 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 /**
- * Actividad desarrollada por
- * para gestionar las reseñas del usuario
+ * Clase usuario
+ * Gestiona las opciones del usuario
+ * Muestra una lista de las reseñas del usuario
  */
 
 public class Activity_user extends AppCompatActivity {
@@ -33,6 +34,10 @@ public class Activity_user extends AppCompatActivity {
     // Variables para conectar con la API
     FastMethods mfastMethods;
     Retrofit retro;
+    /**
+     * Método onCreate para la configuración incial de la actividad
+     * @param savedInstanceState estado de la instancia guardada, un objeto Bundle que contiene el estado previamente guardado de la actividad
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +57,11 @@ public class Activity_user extends AppCompatActivity {
         // Llamar al método recuperarDatos
         recuperarDatos();
     }
+
+    /**
+     * Método para recuperar datos del servidor
+     * LLama al servidor y recupera la lista de reserva del usuario logeado
+     */
     public void recuperarDatos(){
         // Compruebe el estado de la conexión de red
         if (!Utils.isNetworkAvailable(this)) {
@@ -91,7 +101,11 @@ public class Activity_user extends AppCompatActivity {
             }
         });
     }
-
+    /**
+     * Método para hacer logout
+     * Redirige al usuario a la pantalla de inicio
+     * @param view La vista (Button) a la que se hizo clic.
+     */
     public void logout(View view){
         Utils.gotoActivity(Activity_user.this, MainActivity_inicio.class);
     }
