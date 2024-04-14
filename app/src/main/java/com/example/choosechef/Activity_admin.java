@@ -1,18 +1,16 @@
 package com.example.choosechef;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -80,6 +78,7 @@ public class Activity_admin extends AppCompatActivity {
              * @param call llamada que generó la respuesta
              * @param response la respuesta recibida del servidor
              */
+            @SuppressLint("NotifyDataSetChanged")
             public void onResponse(@NonNull Call<List<User>> call, @NonNull Response<List<User>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     contentSuccessful = true;

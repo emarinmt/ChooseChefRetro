@@ -24,6 +24,9 @@ public class Activity_chef_ampliado extends AppCompatActivity {
     private TextView descChefamp;
     private TextView telefonoChefamp;
     public Intent intent;
+    private String user_chef;
+
+
 
     /**
      * Método onCreate para la configuración incial de la actividad
@@ -56,8 +59,8 @@ public class Activity_chef_ampliado extends AppCompatActivity {
      * @param view La vista (Button) a la que se hizo clic.
      */
     public void reservar(View view){
-        //va a la pantalla reservar donde vemos calendarios y crearemos la reserva
-        Utils.gotoActivity(Activity_chef_ampliado.this, Activity_reservar.class);
+        //va a la pantalla reservar donde vemos calendarios y crearemos la reserva ( envia el usuario chef de esta actividad)
+        Utils.gotoActivityWithString(Activity_chef_ampliado.this, Activity_reservar.class, user_chef);
     }
 
     /**
@@ -100,6 +103,8 @@ public class Activity_chef_ampliado extends AppCompatActivity {
                 telefonoChefamp.setText(user.getTelefono());
                 //Ocultar el teléfono
                 telefonoChefamp.setVisibility(View.INVISIBLE);
+                //guardar el usuario del chef para enviarlo a la siguiente pantalla
+                user_chef = user.getUsuario();
             }
         }
         contentSuccessful = false;

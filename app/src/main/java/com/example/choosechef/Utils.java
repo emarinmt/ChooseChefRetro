@@ -16,7 +16,6 @@ import androidx.appcompat.app.AppCompatActivity;
  * Contiene métodos reutilizables por otras clases con funcionalidades comunes.
  */
 public class Utils extends AppCompatActivity{
-// QUITAR EL MÉTODO QUE PASA INFO ENTRE ACTIVIDADES SI NO LO USAMOS?
 // COMPROBAR SI EL DE OCULTAR EL BOTÓN ESTÁ FUNCIONANDO BIEN O ES EL EMULADOR
 private static boolean isNetworkAvailable = true; // Estado predeterminado de la conexión
 
@@ -31,6 +30,19 @@ private static boolean isNetworkAvailable = true; // Estado predeterminado de la
         Intent i = new Intent(parent, destination);
         parent.startActivity(i);
         parent.finish();
+    }
+
+    /**
+     * Método desarrollado por EVA
+     * Abre una actividad enviando un string y finaliza la actividad padre
+     * @param context contexto des de donde se llama
+     * @param destination actividad de destino
+     * @param mens mensaje a enviar
+     */
+    public static void gotoActivityWithString(Context context, Class destination, String mens) {
+        Intent i = new Intent(context, destination);
+        i.putExtra("string", mens);
+        context.startActivity(i);
     }
 
     /**
@@ -49,7 +61,7 @@ private static boolean isNetworkAvailable = true; // Estado predeterminado de la
     //REVISAR EVA
     public static void gotoActivityWithReserva(Context context, Class destination, Reserva reserva) {
         Intent i = new Intent(context, destination);
-        i.putExtra("reserva", reserva.toString());
+        i.putExtra("reserva", reserva);
         context.startActivity(i);
     }
 
@@ -87,27 +99,6 @@ private static boolean isNetworkAvailable = true; // Estado predeterminado de la
         }
         parent.setResult(resultCode, i);
         parent.finish();
-    }
-
-    // QUITAR PARA TOKEN
-    /**
-     * Método añadido por EVA para abrir actividad y enviar mensaje, elige si se finaliza la actividad
-     * @param parent Actividad padre
-     * @param destination Actividad destino
-     * @param msg1 String primer mensaje
-     * @param inf1 String información primer mensaje
-     * @param msg2 String segundo mensaje
-     * @param inf2 String información segundo mensaje
-     * @param finish Booleano para elegir si se finaliza actividad padre
-     */
-    public static void gotoActivityMessage(AppCompatActivity parent, Class destination, String msg1, String inf1, String msg2, String inf2, Boolean finish){
-        Intent i = new Intent(parent, destination);
-        i.putExtra(msg1,inf1);
-        i.putExtra(msg2,inf2);
-        parent.startActivity(i);
-        if(finish) {
-            parent.finish();
-        }
     }
 
     /**
@@ -150,6 +141,11 @@ private static boolean isNetworkAvailable = true; // Estado predeterminado de la
         return false;
     }
 
+    /**
+     * Método desarrollado por ELENA
+     * Para establecer el estado de conexión de red
+     * @param available booleano para establecer el estado de conexión
+     */
     public static void setNetworkAvailable(boolean available) {
         // Método para establecer el estado de la conexión de red
         isNetworkAvailable = available;

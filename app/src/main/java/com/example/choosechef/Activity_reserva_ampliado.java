@@ -95,7 +95,7 @@ public class Activity_reserva_ampliado  extends AppCompatActivity {
             // Usar el objeto User en esta actividad
             if (reserva != null) {
                 nombre_chef.setText(reserva.getUsuario_chef());
-                fecha_reserva.setText(reserva.getFecha().toString());
+                fecha_reserva.setText(reserva.getFecha());
                 comentario.setText(reserva.getComentario());
                 valoracion.setRating(reserva.getValoracion());
             }
@@ -109,7 +109,7 @@ public class Activity_reserva_ampliado  extends AppCompatActivity {
      */
     public void confirmarComentario(View view){
         //Recogemos los datos añadidos
-        Float valoracionInput = valoracion.getRating();
+        float valoracionInput = valoracion.getRating();
         String comentarioInput = comentario.getText().toString();
 
         // Comprueba el estado de la conexión de red
