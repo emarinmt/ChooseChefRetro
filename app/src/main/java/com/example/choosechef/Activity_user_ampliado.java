@@ -22,7 +22,6 @@ import retrofit2.Retrofit;
  */
 public class Activity_user_ampliado extends AppCompatActivity {
     //FUNCIONA TODO MENOS VER Y MODIFICAR LA VALORACION DEL USUARIO. YA LO REVISARÉ
-    //REVISAR. EN LA MUESTRA USUARIOS. MUESTRA VACIOS ?
     private boolean contentSuccessful = false; // Variable para rastrear el estado de la muestra del usuario
     private boolean modifySuccessful = false; // Variable para rastrear el estado de la modificación
     private boolean deleteSuccessful = false; // Variable para rastrear el estado del borrado
@@ -286,5 +285,11 @@ public class Activity_user_ampliado extends AppCompatActivity {
      */
     public boolean isContentSuccessful() {
         return contentSuccessful;
+    }
+    public boolean isDeleteSuccessful() {
+        return deleteSuccessful;
+    }
+    public boolean isModifySuccessful() {
+        return modifySuccessful;
     }
 }

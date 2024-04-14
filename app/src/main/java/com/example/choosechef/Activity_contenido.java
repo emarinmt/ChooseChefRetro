@@ -228,23 +228,25 @@ public class Activity_contenido extends AppCompatActivity {
      * @param view La vista (Button) a la que se hizo clic.
      */
     public void ajustes (View view) {
-        //HAY QUE REVISARLO PORQUE CON UN CLIK DICE ERROR OBTENIENDO TIPO USUARIO Y AL SEGUNDO CLIK ENTRA BIEN
         // Obtenemos tipo de usuario del usuario logeado
-        recuperarDatos();
-        if (mTipoLogeado != null && !mTipoLogeado.isEmpty()) {
-            // Redirige segun el usuario a la pantalla de configuracion de chef, admin o usuario
-            if (mTipoLogeado.equalsIgnoreCase("chef")){
-                Utils.gotoActivity(Activity_contenido.this, Activity_chef.class);
-            } else if (mTipoLogeado.equalsIgnoreCase("client")) {
-                Utils.gotoActivity(Activity_contenido.this, Activity_user.class);
-            } else if (mTipoLogeado.equalsIgnoreCase("admin")) {   //DE MOMENTO SOLO MUESTSRA CHEFS
-                Utils.gotoActivity(Activity_contenido.this, Activity_admin.class);
-            } else {
-                Utils.showToast(Activity_contenido.this, "Tipo de usuario incorrecto");
+        recuperarDatos(new Runnable() {
+            @Override
+            public void run() {
+                if (mTipoLogeado != null && !mTipoLogeado.isEmpty()) {
+                    if (mTipoLogeado.equalsIgnoreCase("chef")) {
+                        Utils.gotoActivity(Activity_contenido.this, Activity_chef.class);
+                    } else if (mTipoLogeado.equalsIgnoreCase("client")) {
+                        Utils.gotoActivity(Activity_contenido.this, Activity_user.class);
+                    } else if (mTipoLogeado.equalsIgnoreCase("admin")) {
+                        Utils.gotoActivity(Activity_contenido.this, Activity_admin.class);
+                    } else {
+                        Utils.showToast(Activity_contenido.this, "Tipo de usuario incorrecto");
+                    }
+                } else {
+                    Utils.showToast(Activity_contenido.this, "Error obteniendo el tipo de usuario");
+                }
             }
-        } else {
-            Utils.showToast(Activity_contenido.this, "Error obteniendo el tipo de usuario");
-        }
+        });
 
     }
 
@@ -252,7 +254,7 @@ public class Activity_contenido extends AppCompatActivity {
      * Método recuperarDatos
      * Recuperar los datos del usuario logeado
      */
-    public void recuperarDatos(){
+    public void recuperarDatos(final Runnable callback){
         // Compruebe el estado de la conexión de red
         if (!Utils.isNetworkAvailable(this)) {
             Utils.showToast(Activity_contenido.this, "No hay conexión a Internet");
@@ -271,6 +273,7 @@ public class Activity_contenido extends AppCompatActivity {
                     user_logeado = response.body(); // Recibe los datos del usuario
                     if (user_logeado != null) {
                         mTipoLogeado = user_logeado.getTipo();
+                        callback.run(); // Ejecuta el callback una vez que se haya recibido la respuesta
                     } else {
                         // Obtención de datos incorrecta, muestra un mensaje de error
                         Utils.showToast(Activity_contenido.this, "Obtención de datos incorrecta");

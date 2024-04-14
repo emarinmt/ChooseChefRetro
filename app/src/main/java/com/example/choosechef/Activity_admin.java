@@ -68,7 +68,7 @@ public class Activity_admin extends AppCompatActivity {
         Context context = this;
         // Compruebe el estado de la conexión de red
         if (!Utils.isNetworkAvailable(this)) {
-            Utils.showToast(Activity_admin.this, "No hay conexión a Internet");
+            Utils.showToastSecond(Activity_admin.this,context, "No hay conexión a Internet");
             contentSuccessful = false;
             return;
         }
@@ -89,7 +89,7 @@ public class Activity_admin extends AppCompatActivity {
                     // Notificar al adaptador que los datos han cambiado
                     adapter.notifyDataSetChanged();
                 } else {
-                    Utils.showToast(Activity_admin.this, "No se encontraron usuarios");
+                    Utils.showToastSecond(Activity_admin.this, context,"No se encontraron usuarios");
                 }
             }
             /**
@@ -103,7 +103,7 @@ public class Activity_admin extends AppCompatActivity {
                 contentSuccessful = false;
                 t.printStackTrace();
                 Log.e(TAG, "Error en la llamada:" + t.getMessage());
-                Utils.showToast(Activity_admin.this, "Error en la llamada: " + t.getMessage());
+                Utils.showToastSecond(Activity_admin.this, context,"Error en la llamada: " + t.getMessage());
             }
         });
     }

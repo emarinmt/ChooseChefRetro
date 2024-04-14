@@ -46,7 +46,7 @@ public class Test_ContenidoAmpliado {
         onView(withId(R.id.edt_contra_login)).perform(typeText("4"), closeSoftKeyboard());
         onView(withId(R.id.ibtn_entrar_login)).perform(click());
         espera();
-        // Verificar que se abre Activity_contenido después del registro
+        // Verificar que se abre Activity_contenido después del login
         intended(hasComponent(Activity_contenido.class.getName()));
 
     }
