@@ -1,17 +1,17 @@
 package com.example.choosechef;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -34,6 +34,7 @@ public class Activity_user extends AppCompatActivity {
     // Variables para conectar con la API
     FastMethods mfastMethods;
     Retrofit retro;
+    String token;
     /**
      * Método onCreate para la configuración incial de la actividad
      * @param savedInstanceState estado de la instancia guardada, un objeto Bundle que contiene el estado previamente guardado de la actividad
@@ -46,12 +47,14 @@ public class Activity_user extends AppCompatActivity {
 
         retro=FastClient.getClient();
         mfastMethods = retro.create(FastMethods.class);
+        // Obtener el token de SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences("MiPreferencia", Context.MODE_PRIVATE);
+        token = sharedPreferences.getString("token", "");
 
         // Configurar RecyclerView
         recyclerView = findViewById(R.id.rv_reservas);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new Adapter_reserva(this, reservasList);
-        //adapter = new Adapter(this,items);
         recyclerView.setAdapter(adapter);
 
         // Llamar al método recuperarDatos
@@ -69,13 +72,14 @@ public class Activity_user extends AppCompatActivity {
             return;
         }
         // Call HTTP client para recuperar la información del usuario
-        Call<List<Reserva>> call = mfastMethods.recuperar_reservas(); //CAMBIAR
+        Call<List<Reserva>> call = mfastMethods.recuperar_reservas(token);
         call.enqueue(new Callback<List<Reserva>>() { // Ejecutar la llamada de manera asíncrona
             /**
              * Método invocado cuando se recibe una respuesta de la solicitud HTTP
              * @param call llamada que generó la respuesta
              * @param response la respuesta recibida del servidor
              */
+            @SuppressLint("NotifyDataSetChanged")
             public void onResponse(@NonNull Call<List<Reserva>> call, @NonNull Response<List<Reserva>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     reservasList.clear(); // Limpiar la lista actual

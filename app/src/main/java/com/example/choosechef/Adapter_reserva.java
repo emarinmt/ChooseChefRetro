@@ -50,7 +50,7 @@ public class Adapter_reserva extends RecyclerView.Adapter<Adapter_reserva.ViewHo
         // Establece los datos de la reserva en las vistas del ViewHolder
 
         viewHolder.nombre_chef.setText(reserva.getUsuario_chef());
-        viewHolder.fecha_reserva.setText(reserva.getFecha().toString());
+        viewHolder.fecha_reserva.setText(reserva.getFecha());
 
         // Manjear que al clicar una reserva se muestre esta ampliado
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {

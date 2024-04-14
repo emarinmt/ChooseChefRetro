@@ -1,5 +1,6 @@
 package com.example.choosechef;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -102,6 +103,7 @@ public class Activity_contenido extends AppCompatActivity {
              * @param call llamada que generó la respuesta
              * @param response la respuesta recibida del servidor
              */
+            @SuppressLint("NotifyDataSetChanged")
             public void onResponse(@NonNull Call<List<User>> call, @NonNull Response<List<User>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     contentSuccessful = true;
@@ -159,6 +161,7 @@ public class Activity_contenido extends AppCompatActivity {
      * @param data Un Intent, que puede devolver datos de resultado al llamador
      *  *             (varios datos pueden adjuntarse a "extras" del Intent).
      */
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -237,7 +240,7 @@ public class Activity_contenido extends AppCompatActivity {
                 Utils.gotoActivity(Activity_contenido.this, Activity_chef.class);
             } else if (mTipoLogeado.equalsIgnoreCase("client")) {
                 Utils.gotoActivity(Activity_contenido.this, Activity_user.class);
-            } else if (mTipoLogeado.equalsIgnoreCase("admin")) {   //DE MOMENTO SOLO MUESTSRA CHEFS
+            } else if (mTipoLogeado.equalsIgnoreCase("admin")) {
                 Utils.gotoActivity(Activity_contenido.this, Activity_admin.class);
             } else {
                 Utils.showToast(Activity_contenido.this, "Tipo de usuario incorrecto");
@@ -245,7 +248,6 @@ public class Activity_contenido extends AppCompatActivity {
         } else {
             Utils.showToast(Activity_contenido.this, "Error obteniendo el tipo de usuario");
         }
-
     }
 
     /**

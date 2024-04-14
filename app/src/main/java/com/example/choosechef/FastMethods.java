@@ -71,7 +71,7 @@ public interface FastMethods {
      */
     @GET("provincias/conChef/")
     Call<List<String>>recuperar_provincias();
-
+/*BORRAR SI NO SE VA A UTILIZAR
     /**
      * Método desarrolado por EVA,
      * Para realizar una consulta al servidor y recuperar los chefs que cumplen los siguientes filtros (ubicación, comida y servicio)
@@ -80,10 +80,10 @@ public interface FastMethods {
      * @param comida tipo de comida que ofrecen los chefs
      * @param servicio tipo de servicio que ofrecen los chefs
      * @return devuelve una lista de chefs que cumplen los filtros seleccionados
-     */
+     *//*
     @GET("chef/listar/por/{ubicacion}/{comida}/{servicio}")
     Call<List<User>>recuperar_chefs_filtrados(@Path("ubicacion")String ubicacion, @Path("comida")String comida, @Path("servicio")String servicio);
-
+*/
     /**
      * Método desarrollado por EVA,
      * Para realizar una consulta al servidor y recuperar todos los usuarios de la base de datos
@@ -102,21 +102,42 @@ public interface FastMethods {
     @POST("admin/modificar/{usuario}")
     Call<String> modificarUsuario_admin(@Path("usuario") String usuario, @Body User user);
 
+    /**
+     * Método desarrollado por EVA,
+     * Para borrar a un usuario del servidor
+     * @param usuario usuario a borrar
+     * @return devuelve un string si el borrado ha sido correcto o no
+     */
     @DELETE("usuario/{usuario}")
     Call<String> borrar_usuario(@Path("usuario") String usuario);
 
 
-    //PREPARADO ELENA. PENDIENTE MODIFICAR CUANDO ESTE HECHO EN EL SERVIDOR
-    @POST("usuario/crear/")
-    Call<String> crear(@Body Reserva reserva);
+    /**
+     * Método desarrollado por Eva,
+     * Para crear una reserva en el servidor
+     * @param reserva objeto reserva a crear
+     * @return devuelve un string si se ha creado correctamente o no
+     */
+    @POST("reserva/crear/")
+    Call<String> crear_reserva(@Body Reserva reserva);
 
 
-    //PREPARADO. PENDIENTE MODIFICAR CUANDO ESTE HECHO EN EL SERVIDOR
-    @GET("reservas/listar/")
-    Call<List<Reserva>>recuperar_reservas();
-    //PREPARADO. PENDIENTE MODIFICAR CUANDO ESTE HECHO EN EL SERVIDOR
+    /**
+     * Método desarrollado por EVA,
+     * Para listar las reservas de un usuario
+     * @return devuelve una lista con las reservas del usuario
+     */
+    @GET("reserva/listar/{token}")
+    Call<List<Reserva>>recuperar_reservas(@Path("token") String token);
 
-    @POST("usuario/modificar/reseña")
+
+    /**
+     * Método desarrollado por EVA,
+     * Para modificar los datos de una reserva
+     * @param reserva objeto reserva con los datos a modificar
+     * @return devuelve un string si la modificación se ha hecho correctamente o no.
+     */
+    @POST("reserva/modificar/{id}")
     Call<String> modificar_reserva(@Body Reserva reserva);
 
 
