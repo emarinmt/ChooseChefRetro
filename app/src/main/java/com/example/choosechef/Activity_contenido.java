@@ -122,50 +122,6 @@ public class Activity_contenido extends AppCompatActivity {
         });
     }
 
-    /**
-     * Método recuperarDatos
-     * Para recuperar los datos del usuario logeado
-     */
-    public void recuperarDatos(){
-        // Compruebe el estado de la conexión de red
-        if (!Utils.isNetworkAvailable(this)) {
-            Utils.showToast(Activity_contenido.this, "No hay conexión a Internet");
-            return;
-        }
-        // Call HTTP client para recuperar la información del usuario
-        Call<User> call = mfastMethods.recuperar_info(token);
-        call.enqueue(new Callback<User>() { // Ejecutar la llamada de manera asíncrona
-            /**
-             * Método invocado cuando se recibe una respuesta de la solicitud HTTP
-             * @param call llamada que generó la respuesta
-             * @param response la respuesta recibida del servidor
-             */
-            public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
-                if (response.isSuccessful()) {
-                    user_logeado = response.body(); // Recibe los datos del usuario
-                    if (user_logeado != null) {
-                        mTipoLogeado = user_logeado.getTipo();
-                    } else {
-                        // Obtención de datos incorrecta, muestra un mensaje de error
-                        Utils.showToast(Activity_contenido.this, "Obtención de datos incorrecta");
-                    }
-                }
-            }
-            /**
-             *Método invocado cuando ocurre un error durante la ejecución de la llamada HTTP
-             * @param call la llamada que generó el error
-             * @param t la excepción que ocurrió
-             */
-            @Override
-            public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
-                // Error en la llamada, muestra el mensaje de error y registra la excepción
-                t.printStackTrace();
-                Log.e(TAG, "Error en la llamada:" + t.getMessage());
-                Utils.showToast(Activity_contenido.this, "Error en la llamada: " + t.getMessage());
-            }
-        });
-    }
-
 
     /**
      * Método para manejar el clic del botón de modificación de perfil.
@@ -232,10 +188,10 @@ public class Activity_contenido extends AppCompatActivity {
 
     //AJUSTES
     public void ajustes (View view) {
-        Utils.gotoActivity(Activity_contenido.this, Activity_chef.class);
+        //Utils.gotoActivity(Activity_contenido.this, Activity_chef.class);
         //COMENTO PORQUE ME DA PROBLEMAS CON EL USUARIO ADMIN, SOLO QUIERO COMPROBAR QUE ESA CLASE FUNCIONA
         // Obtenemos tipo de usuario del usuario logeado
-        /*
+
         recuperarDatos();
         if (mTipoLogeado != null && !mTipoLogeado.isEmpty()) {
             // Redirige segun el usuario a la pantalla de configuracion de chef, admin o usuario
@@ -251,10 +207,54 @@ public class Activity_contenido extends AppCompatActivity {
         } else {
             Utils.showToast(Activity_contenido.this, "Error obteniendo el tipo de usuario");
         }
-        
-         */
 
     }
+
+    /**
+     * Método recuperarDatos
+     * Para recuperar los datos del usuario logeado
+     */
+    public void recuperarDatos(){
+        // Compruebe el estado de la conexión de red
+        if (!Utils.isNetworkAvailable(this)) {
+            Utils.showToast(Activity_contenido.this, "No hay conexión a Internet");
+            return;
+        }
+        // Call HTTP client para recuperar la información del usuario
+        Call<User> call = mfastMethods.recuperar_info(token);
+        call.enqueue(new Callback<User>() { // Ejecutar la llamada de manera asíncrona
+            /**
+             * Método invocado cuando se recibe una respuesta de la solicitud HTTP
+             * @param call llamada que generó la respuesta
+             * @param response la respuesta recibida del servidor
+             */
+            public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
+                if (response.isSuccessful()) {
+                    user_logeado = response.body(); // Recibe los datos del usuario
+                    if (user_logeado != null) {
+                        mTipoLogeado = user_logeado.getTipo();
+                    } else {
+                        // Obtención de datos incorrecta, muestra un mensaje de error
+                        Utils.showToast(Activity_contenido.this, "Obtención de datos incorrecta");
+                    }
+                }
+            }
+            /**
+             *Método invocado cuando ocurre un error durante la ejecución de la llamada HTTP
+             * @param call la llamada que generó el error
+             * @param t la excepción que ocurrió
+             */
+            @Override
+            public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
+                // Error en la llamada, muestra el mensaje de error y registra la excepción
+                t.printStackTrace();
+                Log.e(TAG, "Error en la llamada:" + t.getMessage());
+                Utils.showToast(Activity_contenido.this, "Error en la llamada: " + t.getMessage());
+            }
+        });
+    }
+
+
     public void logout(View view){
         Utils.gotoActivity(Activity_contenido.this, MainActivity_inicio.class);
     }
