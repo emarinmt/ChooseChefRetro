@@ -95,7 +95,7 @@ public class Test_Busqueda {
 
     // Recuperación de provincias correcta
     @Test
-    public void testRecuperarChefsWithNetwork() {
+    public void testRecuperarProvWithNetwork() {
         // Simular tener conexión de red (configurando el estado de red en true)
         Utils.setNetworkAvailable(true);
         espera();
@@ -111,7 +111,7 @@ public class Test_Busqueda {
 
     // Recuperación de provincias incorrecta, no hay conexión
     @Test
-    public void testRecuperarChefsWhenNoNetwork() {
+    public void testRecuperarProvWhenNoNetwork() {
         // Simular no tener conexión de red (configurando el estado de red en falso)
         Utils.setNetworkAvailable(false);
         espera();
