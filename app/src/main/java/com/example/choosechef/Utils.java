@@ -5,11 +5,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
+
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.time.LocalDate;
 
 /**
  * Clase utilidades
@@ -161,6 +166,25 @@ private static boolean isNetworkAvailable = true; // Estado predeterminado de la
         InputMethodManager inputManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         if (inputManager != null) {
             inputManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+    }
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public static boolean esFechaHoyPosterior(String fecha_reserva) {
+        if (fecha_reserva == null) {
+            return false;
+        } else {
+            //Obtener la fecha de hoy
+            LocalDate hoy = LocalDate.now();
+
+            //Convertir la fecha de la reserva a LocalDate
+            LocalDate fechaReserva = LocalDate.parse(fecha_reserva);
+
+            //Comparar las fechas
+            if (fechaReserva.isBefore(hoy) || fechaReserva.isEqual(hoy)){
+                return true;
+            }else {
+                return false;
+            }
         }
     }
 

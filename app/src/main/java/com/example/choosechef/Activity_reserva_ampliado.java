@@ -9,11 +9,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -38,7 +36,7 @@ public class Activity_reserva_ampliado  extends AppCompatActivity {
     //Variables para conectar con la API
     FastMethods mfastMethods;
     Retrofit retro;
-    public Reserva reserva;
+    public Reserva reserva = new Reserva();
 
     /**
      * Método onCreate para la configuración incial de la actividad
@@ -56,7 +54,7 @@ public class Activity_reserva_ampliado  extends AppCompatActivity {
 
         retro=FastClient.getClient();
         mfastMethods = retro.create(FastMethods.class);
-        reserva = new Reserva();
+       // Reserva reserva = new Reserva();
 
         //Inicialización de variables
         nombre_chef = findViewById(R.id.nombre_chef_reserva);
@@ -64,20 +62,29 @@ public class Activity_reserva_ampliado  extends AppCompatActivity {
         comentario = findViewById(R.id.comentario);
         valoracion = findViewById(R.id.rating_valoracion_reserva);
 
+        //Por defecto los campos para añadir una reseña estan deshabilitados
+        valoracion.setEnabled(false);
+        comentario.setEnabled(false);
+
         // Obtener el Intent que inició esta actividad
         intent = getIntent();
 
         //Recuperar datos de la reserva de la pantalla anterior
         obtenerIntent(intent);
 
-        //Por defecto los campos para añadir una reseña estan deshabilitados
-        valoracion.setEnabled(false);
-        comentario.setEnabled(false);
 
+        Utils.showToast(Activity_reserva_ampliado.this, "FECHA."+ reserva.getFecha());
+        fechaPosterior();
+    }
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void fechaPosterior(){
         //Si la fecha de la reserva es hoy o posterior se habilitan estos campos para escribir la reseña
-        if(reserva.esFechaHoyPosterior()){
+        if(Utils.esFechaHoyPosterior(reserva.getFecha())){
             valoracion.setEnabled(true);
             comentario.setEnabled(true);
+            Utils.showToast(Activity_reserva_ampliado.this, "TRUE Introduce tu reseña!"+ reserva.getFecha());
+        }else{
+            Utils.showToast(Activity_reserva_ampliado.this, "FALSE No puedes introducir la reseña todavia"+reserva.getFecha());
         }
     }
 
@@ -85,12 +92,13 @@ public class Activity_reserva_ampliado  extends AppCompatActivity {
      * Método para obtener la información de la reserva de la pantalla anterior
      * @param intent contiene la información de la reserva de la pantalla anterior
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void obtenerIntent(Intent intent){
         // Verificar si el Intent contiene un extra con clave "user"
         if (intent != null && intent.hasExtra("reserva")) {
             contentSuccessful = true;
             // Extraer el objeto Reserva del Intent
-            Reserva reserva = (Reserva) intent.getSerializableExtra("reserva");
+            reserva = (Reserva) intent.getSerializableExtra("reserva");
 
             // Usar el objeto User en esta actividad
             if (reserva != null) {
@@ -98,9 +106,10 @@ public class Activity_reserva_ampliado  extends AppCompatActivity {
                 fecha_reserva.setText(reserva.getFecha());
                 comentario.setText(reserva.getComentario());
                 valoracion.setRating(reserva.getValoracion());
+                Utils.showToast(Activity_reserva_ampliado.this, "fecha!"+ reserva.getFecha());
             }
+            contentSuccessful = false;
         }
-        contentSuccessful = false;
     }
 
     /**
@@ -121,8 +130,9 @@ public class Activity_reserva_ampliado  extends AppCompatActivity {
         reserva.setValoracion(valoracionInput);
         reserva.setComentario(comentarioInput);
 
+
         // call HTTP client para modificar los datos de usuario
-        Call<String> call = mfastMethods.modificar_reserva(reserva);
+        Call<String> call = mfastMethods.modificar_reserva(reserva.getId(),reserva);
         call.enqueue(new Callback<String>() { // Ejecutar la llamada de manera asíncrona
             /**
              * Método invocado cuando se recibe una respuesta de la solicitud HTTP

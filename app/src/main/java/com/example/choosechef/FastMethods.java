@@ -138,7 +138,7 @@ public interface FastMethods {
      * @return devuelve un string si la modificación se ha hecho correctamente o no.
      */
     @POST("reserva/modificar/{id}")
-    Call<String> modificar_reserva(@Body Reserva reserva);
+    Call<String> modificar_reserva(@Path("id") Integer id, @Body Reserva reserva);
 
 
 

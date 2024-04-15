@@ -1,12 +1,6 @@
 package com.example.choosechef;
 
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
-
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 /**
  * Clase reserva
@@ -96,23 +90,29 @@ public class Reserva implements Serializable {
      * Método para comprobar si la fecha de la reserva es posterior o igual a hoy
      * @return devuelve un booleano en función de si se cumple o no la condición
      */
+    /*
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public boolean esFechaHoyPosterior() {
-        if (fecha == null) {
+    public boolean esFechaHoyPosterior(String fecha_reserva) {
+        if (fecha_reserva == null) {
             return false;
         } else {
             //Obtener la fecha de hoy
             LocalDate hoy = LocalDate.now();
+            //Convertir la fecha de la reserva a LocalDate
+            LocalDate fechaReserva = LocalDate.parse(fecha_reserva);
+
+            /*
             DateTimeFormatter isoFecha = DateTimeFormatter.ISO_LOCAL_DATE;
             LocalDate fechaHoy = LocalDate.parse(hoy.format(isoFecha));
 
             //DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
             LocalDate fechaReserva = LocalDate.parse(String.format(String.valueOf(isoFecha)));
-
+*/
 
         //Comparar las fechas*/
-            return !fechaReserva.isBefore(fechaHoy); // Si la fecha de reserva es hoy o posterior, devuelve true
-        }
-    }
+            //return !fechaReserva.isBefore(hoy); // Si la fecha de reserva es hoy o posterior, devuelve true
+        //}
+    //}
+
 
 }
