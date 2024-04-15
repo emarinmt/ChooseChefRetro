@@ -24,6 +24,7 @@ import retrofit2.Retrofit;
  */
 
 public class Activity_user extends AppCompatActivity {
+    private boolean contentSuccessful = false; // Variable para rastrear el estado de la muestra del listado
     private final String TAG = Activity_user.class.getSimpleName();
 
     // Variables para mostrar las reservas
@@ -66,9 +67,11 @@ public class Activity_user extends AppCompatActivity {
      * LLama al servidor y recupera la lista de reserva del usuario logeado
      */
     public void recuperarDatos(){
+        Context context = this;
         // Compruebe el estado de la conexión de red
         if (!Utils.isNetworkAvailable(this)) {
-            Utils.showToast(Activity_user.this, "No hay conexión a Internet");
+            Utils.showToastSecond(Activity_user.this, context,"No hay conexión a Internet");
+            contentSuccessful = false;
             return;
         }
         // Call HTTP client para recuperar la información del usuario
@@ -82,13 +85,14 @@ public class Activity_user extends AppCompatActivity {
             @SuppressLint("NotifyDataSetChanged")
             public void onResponse(@NonNull Call<List<Reserva>> call, @NonNull Response<List<Reserva>> response) {
                 if (response.isSuccessful() && response.body() != null) {
+                    contentSuccessful = true;
                     reservasList.clear(); // Limpiar la lista actual
                     reservasList.addAll(response.body()); // Agregar todos los usuarios recuperados
 
                     // Notificar al adaptador que los datos han cambiado
                     adapter.notifyDataSetChanged();
                 } else {
-                    Utils.showToast(Activity_user.this, "No se encontraron reservas");
+                    Utils.showToastSecond(Activity_user.this, context,"No se encontraron reservas");
                 }
             }
             /**
@@ -99,9 +103,10 @@ public class Activity_user extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<List<Reserva>> call, @NonNull Throwable t) {
                 // Error en la llamada, muestra el mensaje de error y registra la excepción
+                contentSuccessful = false;
                 t.printStackTrace();
                 Log.e(TAG, "Error en la llamada:" + t.getMessage());
-                Utils.showToast(Activity_user.this, "Error en la llamada: " + t.getMessage());
+                Utils.showToastSecond(Activity_user.this, context,"Error en la llamada: " + t.getMessage());
             }
         });
     }
@@ -112,5 +117,12 @@ public class Activity_user extends AppCompatActivity {
      */
     public void logout(View view){
         Utils.gotoActivity(Activity_user.this, MainActivity_inicio.class);
+    }
+    /**
+     * Método para test
+     * @return devuelve un boleano en función de si ha ido bien la muestra de reservas
+     */
+    public boolean isContentSuccessful() {
+        return contentSuccessful;
     }
 }

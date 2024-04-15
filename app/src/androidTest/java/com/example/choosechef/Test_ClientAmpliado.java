@@ -2,6 +2,8 @@ package com.example.choosechef;
 import android.app.Activity;
 
 import android.content.Context;
+import android.content.Intent;
+
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.intent.rule.IntentsTestRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -20,67 +22,59 @@ import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import java.util.Collection;
-
-
+import androidx.test.espresso.contrib.RecyclerViewActions;
 /**
  * Para realizar los tests referentes a la modificación del perfil de usuario
  */
 @RunWith(AndroidJUnit4.class)
-public class Test_AjustesChef {
+public class Test_ClientAmpliado {
     @Rule
     public IntentsTestRule<Activity_login> activityRule = new IntentsTestRule<>(Activity_login.class);
+    private Activity_reserva_ampliado clientAmpliado;
     private Context context;
-    private Activity_chef actChef;
-
     @Before
     public void setUp() {
         FastClient.initialize(ApplicationProvider.getApplicationContext());
         context = ApplicationProvider.getApplicationContext();
-        // Iniciar sesión como chef
-        onView(withId(R.id.edt_usuario_login)).perform(typeText("chef"));
-        onView(withId(R.id.edt_contra_login)).perform(typeText("chef"), closeSoftKeyboard());
+        // Iniciar sesión como usuario de prueba
+        onView(withId(R.id.edt_usuario_login)).perform(typeText("4"));
+        onView(withId(R.id.edt_contra_login)).perform(typeText("4"), closeSoftKeyboard());
         onView(withId(R.id.ibtn_entrar_login)).perform(click());
         espera();
         onView(withId(R.id.btn_ajustes)).perform(click());
         espera();
-        // Verificar que se abre Activity_chef después de clicar en ajustes
+        // Verificar que se abre Activity_user después de clicar en ajustes
         intended(hasComponent(Activity_chef.class.getName()));
-        // Obtener la instancia de Activity_chef
-        actChef = ((Activity_chef) getActivityInstance(Activity_chef.class));
+        // Hacer clic en el primer elemento de la lista (suponiendo que hay al menos un chef en la lista)
+        onView(withId(R.id.rv_reservas))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        // Verificar que la actividad reservar_ampliado se inicia correctamente
+        intended(hasComponent(Activity_chef_ampliado.class.getName()));
+        // Obtener la instancia de Activity_reserva_ampliado
+        clientAmpliado = ((Activity_reserva_ampliado) getActivityInstance(Activity_reserva_ampliado.class));
+
     }
 
-    // Modificación opciones chef correcta
+    // Ampliación de reserva correcta
     @Test
-    public void testOptionsChefsSuccess() {
-        // Definir criterios de modificación
-        String provincia = "Barcelona";
-        String comida = "Italiana";
-        String servicio = "Chef a domicilio";
-
-        // Seleccionar un valor en el Spinner de provincias
-        onView(withId(R.id.spinner_provincias)).perform(click()); // Abrir el Spinner
-        onView(withText("Barcelona")).perform(click()); // Seleccionar un valor específico
-
-        // Seleccionar un valor en el Spinner de tipo de comida
-        onView(withId(R.id.spinner_tipo_comida)).perform(click()); // Abrir el Spinner
-        onView(withText("Italiana")).perform(click()); // Seleccionar un valor específico
-
-        // Seleccionar un valor en el Spinner de servicios
-        onView(withId(R.id.spinner_servicios)).perform(click()); // Abrir el Spinner
-        onView(withText("Chef a domicilio")).perform(click()); // Seleccionar un valor específico
-
-        onView(withId(R.id.ibtn_confirmar)).perform(click());
-        espera();
-
-        // Verificar si la modificación fue exitosa
-        assertTrue(actChef.isModifySuccessful());
+    public void testAmpliarReservaValid() {
+        assertTrue(clientAmpliado.isContentSuccessful());
     }
-
-
+    // Ampliación de reserva incorrecta, simulamos un intent erroneo
+    @Test
+    public void testAmpliarReservaInvalid() {
+        // Simular un Intent inválido (null o sin el extra "user")
+        Intent invalidIntent = null;
+        // Llamar manualmente obtenerIntent() y pasar el Intent inválido
+        clientAmpliado.obtenerIntent(invalidIntent);
+        espera();
+        // Verificar que contentSuccessful es false
+        assertFalse(clientAmpliado.isContentSuccessful());
+    }
 
     // Método para obtener la instancia de una actividad específica
     private Activity getActivityInstance(Class<? extends Activity> activityClass) {
@@ -104,4 +98,6 @@ public class Test_AjustesChef {
             e.printStackTrace();
         }
     }
+
 }
+

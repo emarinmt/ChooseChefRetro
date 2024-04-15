@@ -32,7 +32,6 @@ import java.util.Collection;
 import java.util.Random;
 
 /**
- * Clase desarrollada por ELENA
  * Para realizar los tests referentes a la modificación del perfil de usuario
  */
 @RunWith(AndroidJUnit4.class)
@@ -56,11 +55,6 @@ public class Test_AdminAmpliado {
         intended(hasComponent(Activity_admin.class.getName()));
         // Obtener la instancia de Activity_admin
        // actAdmin = ((Activity_admin) getActivityInstance(Activity_admin.class));
-
-    }
-    // Ampliación de usuario correcta
-    @Test
-    public void testAmpliarUserValid() {
         // Hacer clic en el primer elemento de la lista (suponiendo que hay al menos un usuario en la lista)
         onView(withId(R.id.rv_users))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
@@ -68,6 +62,10 @@ public class Test_AdminAmpliado {
         intended(hasComponent(Activity_user_ampliado.class.getName()));
         // Obtener la instancia de Activity_user_ampliado
         actAdminAmpl = ((Activity_user_ampliado) getActivityInstance(Activity_user_ampliado.class));
+    }
+    // Ampliación de usuario correcta
+    @Test
+    public void testAmpliarUserValid() {
         // Verificar que contentSuccessful es true
         espera();
         assertTrue(actAdminAmpl.isContentSuccessful());
@@ -76,13 +74,6 @@ public class Test_AdminAmpliado {
     // Ampliación de usuario incorrecta, simulamos un intent erroneo
     @Test
     public void testAmpliarUserInvalid() {
-        // Hacer clic en el primer elemento de la lista (suponiendo que hay al menos un usuario en la lista)
-        onView(withId(R.id.rv_users))
-                .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
-        // Verificar que la actividad user_ampliado se inicia correctamente
-        intended(hasComponent(Activity_user_ampliado.class.getName()));
-        // Obtener la instancia de Activity_user_ampliado
-        actAdminAmpl = ((Activity_user_ampliado) getActivityInstance(Activity_user_ampliado.class));
         // Simular un Intent inválido (null o sin el extra "user")
         Intent invalidIntent = null;
         // Llamar manualmente obtenerIntent() y pasar el Intent inválido
@@ -94,13 +85,6 @@ public class Test_AdminAmpliado {
     // Modificación datos usuario correcta
     @Test
     public void testModifyUserValid() {
-        // Hacer clic en el primer elemento de la lista (suponiendo que hay al menos un usuario en la lista)
-        onView(withId(R.id.rv_users))
-                .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
-        // Verificar que la actividad user_ampliado se inicia correctamente
-        intended(hasComponent(Activity_user_ampliado.class.getName()));
-        // Obtener la instancia de Activity_user_ampliado
-        actAdminAmpl = ((Activity_user_ampliado) getActivityInstance(Activity_user_ampliado.class));
         espera();
         // Realizamos el clic en el botón de editar
         onView(withId(R.id.ibtn_edit)).perform(click());
@@ -130,13 +114,6 @@ public class Test_AdminAmpliado {
     @Test
     public void testDeleteUserValid() {
         int initialSize = actAdmin.userList.size();
-        // Hacer clic en el primer elemento de la lista (suponiendo que hay al menos un usuario en la lista)
-        onView(withId(R.id.rv_users))
-                .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
-        // Verificar que la actividad user_ampliado se inicia correctamente
-        intended(hasComponent(Activity_user_ampliado.class.getName()));
-        // Obtener la instancia de Activity_user_ampliado
-        actAdminAmpl = ((Activity_user_ampliado) getActivityInstance(Activity_user_ampliado.class));
         onView(withId(R.id.ibtn_delete)).perform(click());
         espera();
         int finalSize = actAdmin.userList.size();

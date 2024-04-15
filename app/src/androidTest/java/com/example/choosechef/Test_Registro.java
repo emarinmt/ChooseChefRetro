@@ -20,7 +20,6 @@ import static org.junit.Assert.assertTrue;
 import java.util.Random;
 
 /**
- * Clase desarrollada por ELENA
  * Para realizar los tests referentes al registro de usuarios
  */
 @RunWith(AndroidJUnit4.class)

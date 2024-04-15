@@ -29,7 +29,6 @@ import java.util.Collection;
 import java.util.Random;
 
 /**
- * Clase desarrollada por ELENA
  * Para realizar los tests referentes a la modificación del perfil de usuario
  */
 @RunWith(AndroidJUnit4.class)

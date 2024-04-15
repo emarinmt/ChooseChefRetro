@@ -18,7 +18,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Clase desarrollada por ELENA
  * Para realizar los tests referentes al login de usuarios
  */
 @RunWith(AndroidJUnit4.class)

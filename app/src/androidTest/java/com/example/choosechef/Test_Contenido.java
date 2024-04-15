@@ -29,7 +29,6 @@ import java.util.Collection;
 import java.util.Random;
 
 /**
- * Clase desarrollada por ELENA
  * Para realizar los tests referentes a la muestra de chefs
  */
 @RunWith(AndroidJUnit4.class)

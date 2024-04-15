@@ -28,7 +28,6 @@ import static org.junit.Assert.assertTrue;
 import java.util.Collection;
 import androidx.test.espresso.contrib.RecyclerViewActions;
 /**
- * Clase desarrollada por ELENA
  * Para realizar los tests referentes a la modificación del perfil de usuario
  */
 @RunWith(AndroidJUnit4.class)
@@ -48,12 +47,6 @@ public class Test_ContenidoAmpliado {
         espera();
         // Verificar que se abre Activity_contenido después del login
         intended(hasComponent(Activity_contenido.class.getName()));
-
-    }
-
-    // Ampliación de chef correcta
-    @Test
-    public void testAmpliarChefValid() {
         // Hacer clic en el primer elemento de la lista (suponiendo que hay al menos un chef en la lista)
         onView(withId(R.id.rv_chefs))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
@@ -61,6 +54,12 @@ public class Test_ContenidoAmpliado {
         intended(hasComponent(Activity_chef_ampliado.class.getName()));
         // Obtener la instancia de Activity_content_ampliado
         contenidoAmpliado = ((Activity_chef_ampliado) getActivityInstance(Activity_chef_ampliado.class));
+
+    }
+
+    // Ampliación de chef correcta
+    @Test
+    public void testAmpliarChefValid() {
         // Verificar que contentSuccessful es true
         System.out.println("isContentSuccessful(): " + contenidoAmpliado.isContentSuccessful());
         espera();
@@ -70,13 +69,6 @@ public class Test_ContenidoAmpliado {
     // Ampliación de chef incorrecta, simulamos un intent erroneo
     @Test
     public void testAmpliarChefInvalid() {
-        // Hacer clic en el primer elemento de la lista (suponiendo que hay al menos un chef en la lista)
-        onView(withId(R.id.rv_chefs))
-                .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
-        // Verificar que la actividad chef_ampliado se inicia correctamente
-        intended(hasComponent(Activity_chef_ampliado.class.getName()));
-        // Obtener la instancia de Activity_content_ampliado
-        contenidoAmpliado = ((Activity_chef_ampliado) getActivityInstance(Activity_chef_ampliado.class));
         // Simular un Intent inválido (null o sin el extra "user")
         Intent invalidIntent = null;
         // Llamar manualmente obtenerIntent() y pasar el Intent inválido
