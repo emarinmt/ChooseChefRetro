@@ -112,7 +112,7 @@ public class Activity_user_ampliado extends AppCompatActivity {
                 tipoUsuario.setText(user.getTipo());
                 tipoComidaUsuario.setText(user.getComida());
                 tipoServicioUsuario.setText(user.getServicio());
-                //valoracionUsuario.setText(user.getValoracion());
+                //valoracionUsuario.setText((int) user.getValoracion());
 
                 //guardar el nombre de usuario para la llamada al método de modicicación
                 usuario_mod = user.getUsuario();
@@ -184,7 +184,7 @@ public class Activity_user_ampliado extends AppCompatActivity {
             user.setTipo(tipoInput);
             user.setComida(comidaInput);
             user.setServicio(servicioInput);
-            // user.setValoracion(Float.parseFloat(valoracionInput));
+            //user.setValoracion(Float.parseFloat(valoracionInput));
 
             //llamar al método que ejecuta la llamada al servidor enviando los datos
             modificarDatos(user);

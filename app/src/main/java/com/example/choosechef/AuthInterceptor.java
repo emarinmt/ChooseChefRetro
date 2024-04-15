@@ -12,7 +12,11 @@ import okhttp3.Response;
 public class AuthInterceptor implements Interceptor {
     private String token;
 
-    // Constructor que recibe el token como parámetro
+
+    /**
+     * Constructor que recibe el token como parámetro
+     * @param token token
+     */
     public AuthInterceptor(String token) {
         this.token = token;
     }

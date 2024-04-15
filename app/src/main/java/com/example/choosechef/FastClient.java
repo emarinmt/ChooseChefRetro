@@ -21,7 +21,10 @@ public class FastClient {
     // Agrega una referencia al contexto para poder acceder a SharedPreferences
     private static Context mContext;
 
-    // Método para establecer el contexto, llamado desde tu aplicación al inicializar
+    /**
+     * Método para establecer el contexto, llamado des de tu aplicación al inicializar
+     * @param context contexto
+     */
     public static void initialize(Context context) { //NUEVO
         mContext = context.getApplicationContext();
     }

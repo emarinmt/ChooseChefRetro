@@ -39,9 +39,6 @@ public class Activity_reservar extends AppCompatActivity {
     Reserva reserva;
     private String fechaStr;
 
-
-
-
     /**
      * Método onCreate para la configuración incial de la actividad
      * @param savedInstanceState estado de la instancia guardada, un objeto Bundle que contiene el estado previamente guardado de la actividad

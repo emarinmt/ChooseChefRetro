@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,10 +25,9 @@ public class Activity_chef_ampliado extends AppCompatActivity {
     private TextView servChefamp;
     private TextView descChefamp;
     private TextView telefonoChefamp;
+    private ImageView imagen;
     public Intent intent;
     private String user_chef;
-
-
 
     /**
      * Método onCreate para la configuración incial de la actividad
@@ -48,6 +48,7 @@ public class Activity_chef_ampliado extends AppCompatActivity {
         servChefamp = findViewById(R.id.servicio_ampliado);
         descChefamp = findViewById(R.id.descripcion_ampliado);
         telefonoChefamp = findViewById(R.id.edt_telefono_chef);
+        imagen = findViewById(R.id.foto_chef_ampliado);
 
         // Obtener el Intent que inició esta actividad
         intent = getIntent();

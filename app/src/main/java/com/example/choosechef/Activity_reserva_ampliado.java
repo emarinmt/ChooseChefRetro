@@ -20,7 +20,7 @@ import retrofit2.Retrofit;
 /**
  * Clase reserva ampliado
  * Muestra todas las reservas del usuario logeado
- * Si la fecha de la reserva es igual o superior a la fecha actual deja introducir una reseña ( valoración y comentario)
+ * Si la fecha de la reserva es igual o anterior a la fecha actual deja introducir una reseña ( valoración y comentario)
  */
 public class Activity_reserva_ampliado  extends AppCompatActivity {
     private boolean contentSuccessful = false; // Variable para rastrear el estado de la muestra de la reserva
@@ -76,6 +76,10 @@ public class Activity_reserva_ampliado  extends AppCompatActivity {
         Utils.showToast(Activity_reserva_ampliado.this, "FECHA."+ reserva.getFecha());
         fechaPosterior();
     }
+
+    /**
+     * Método para comprobar si la fecha es anterior o igual a hoy permite introducir la reseña ( valoraicón y comentario)
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void fechaPosterior(){
         //Si la fecha de la reserva es hoy o posterior se habilitan estos campos para escribir la reseña

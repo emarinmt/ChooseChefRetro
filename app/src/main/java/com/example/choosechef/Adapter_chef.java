@@ -55,8 +55,10 @@ public class Adapter_chef extends RecyclerView.Adapter<Adapter_chef.ViewHolder> 
         // Establece los datos del chef en las vistas del ViewHolder
         viewHolder.nombre_chef.setText(user.getNombre());
         viewHolder.tipo_comida.setText(user.getComida());
+        viewHolder.servicio.setText(user.getServicio());
         viewHolder.provincia.setText(user.getUbicacion());
         viewHolder.valoracion.setRating(user.getValoracion());
+        viewHolder.valoracion.setEnabled(false);
 
         //falta imagen
 
@@ -91,7 +93,7 @@ public class Adapter_chef extends RecyclerView.Adapter<Adapter_chef.ViewHolder> 
      * Contiene referencias a las vistas individuales que componen el elemento de la lista.
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView nombre_chef, tipo_comida, provincia;
+        TextView nombre_chef, tipo_comida, provincia, servicio;
         RatingBar valoracion;
 
         /**
@@ -102,6 +104,7 @@ public class Adapter_chef extends RecyclerView.Adapter<Adapter_chef.ViewHolder> 
             super(itemView);
             nombre_chef = itemView.findViewById(R.id.nombre_chef);
             tipo_comida = itemView.findViewById(R.id.tipo_comida);
+            servicio = itemView.findViewById(R.id.tipo_servicio);
             provincia = itemView.findViewById(R.id.provincia);
             valoracion = itemView.findViewById(R.id.ratingBar);
         }

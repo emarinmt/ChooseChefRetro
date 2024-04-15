@@ -70,5 +70,6 @@
     <string name="servicio_t">Servicio :</string>
     <string name="valoracion_t">Valoración :</string>
     <string name="servicio">Servicio</string>
+    <string name="tipo_de_servicio">tipo de servicio</string>
 
 </resources>

@@ -89,9 +89,9 @@
         app:layout_constraintStart_toEndOf="@+id/btn_mod_perfil"
         app:layout_constraintTop_toTopOf="@+id/rv_chefs"
         app:layout_constraintVertical_bias="0.957"
+        app:srcCompat="@android:drawable/ic_menu_manage"
         app:tint="@color/white"
-        tools:ignore="ImageContrastCheck"
-        tools:srcCompat="@android:drawable/ic_menu_manage" />
+        tools:ignore="ImageContrastCheck" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_chefs"

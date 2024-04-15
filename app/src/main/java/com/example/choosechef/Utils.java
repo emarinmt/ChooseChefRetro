@@ -20,8 +20,9 @@ import java.time.LocalDate;
  * Clase utilidades
  * Contiene métodos reutilizables por otras clases con funcionalidades comunes.
  */
+//DEJO COMENTARIO ASÍ ENCIMA DE MÉTODOS QUE NO FUNCIONAN PARA BORRARLOS AL ACABAR
 public class Utils extends AppCompatActivity{
-// COMPROBAR SI EL DE OCULTAR EL BOTÓN ESTÁ FUNCIONANDO BIEN O ES EL EMULADOR
+
 private static boolean isNetworkAvailable = true; // Estado predeterminado de la conexión
 
     /**
@@ -39,7 +40,7 @@ private static boolean isNetworkAvailable = true; // Estado predeterminado de la
 
     /**
      * Método desarrollado por EVA
-     * Abre una actividad enviando un string y finaliza la actividad padre
+     * Abre una actividad enviando un string
      * @param context contexto des de donde se llama
      * @param destination actividad de destino
      * @param mens mensaje a enviar
@@ -63,7 +64,15 @@ private static boolean isNetworkAvailable = true; // Estado predeterminado de la
         i.putExtra("user", user);
         context.startActivity(i);
     }
-    //REVISAR EVA
+
+    /**
+     * Método desarrollado por EVA
+     * Abre una actividad en adapter y envia reserva
+     * Activa second activity y pasa RESERVA sin feedback (solo para adapter
+     * @param context contexto des de donde se llama
+     * @param destination actividad de destino
+     * @param reserva objeto reserva
+     */
     public static void gotoActivityWithReserva(Context context, Class destination, Reserva reserva) {
         Intent i = new Intent(context, destination);
         i.putExtra("reserva", reserva);
@@ -83,7 +92,7 @@ private static boolean isNetworkAvailable = true; // Estado predeterminado de la
         i.putExtras(extras);
         parent.startActivity(i);
     }
-
+//BORRAR SI NO SE UTILIZA
     /**
      * Método desarrollado por ELENA
      * Abre una actividad y espera info
@@ -95,7 +104,7 @@ private static boolean isNetworkAvailable = true; // Estado predeterminado de la
         Intent i = new Intent(parent, destination);
         parent.startActivityForResult(i, requestcode);
     }
-
+//BORRAR SI NO SE UTILIZA
     // Enviar datos de vuelta a la actividad anterior
     public static void sendActivityResult(AppCompatActivity parent, Bundle extras, int resultCode) {
         Intent i = new Intent();
@@ -116,6 +125,7 @@ private static boolean isNetworkAvailable = true; // Estado predeterminado de la
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
     /**
+     * Método desarrollado por ELENA
      * Muestra un toast en un hilo secundario utilizando la actividad proporcionada.
      * @param activity Actividad en la que se mostrará el toast.
      * @param context Contexto para el toast.
@@ -168,6 +178,13 @@ private static boolean isNetworkAvailable = true; // Estado predeterminado de la
             inputManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         }
     }
+
+    /**
+     * Método desarrollado por EVA
+     * Comprueba si la fecha pasada por parámetro es anterior o igual a hoy
+     * @param fecha_reserva fecha de la reserva
+     * @return devuelve un boleano true si la fecha pasada por parámetro es anterior o igual a hoy, en caso contrario false
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static boolean esFechaHoyPosterior(String fecha_reserva) {
         if (fecha_reserva == null) {
@@ -180,11 +197,7 @@ private static boolean isNetworkAvailable = true; // Estado predeterminado de la
             LocalDate fechaReserva = LocalDate.parse(fecha_reserva);
 
             //Comparar las fechas
-            if (fechaReserva.isBefore(hoy) || fechaReserva.isEqual(hoy)){
-                return true;
-            }else {
-                return false;
-            }
+            return fechaReserva.isBefore(hoy) || fechaReserva.isEqual(hoy);
         }
     }
 

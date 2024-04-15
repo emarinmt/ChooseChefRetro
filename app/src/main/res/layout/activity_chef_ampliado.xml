@@ -36,7 +36,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.118"
         tools:ignore="ImageContrastCheck"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:srcCompat="@drawable/foto_chef2" />
 
     <TextView
         android:id="@+id/nombre_chef_ampliado"

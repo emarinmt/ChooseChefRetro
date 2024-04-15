@@ -44,6 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="23dp"
         android:layout_marginBottom="38dp"
+        android:progressTint="#FFEB3B"
         app:layout_constraintBottom_toTopOf="@+id/comentario"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
