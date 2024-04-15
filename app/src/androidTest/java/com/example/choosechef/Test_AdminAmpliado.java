@@ -18,6 +18,7 @@ import org.junit.runner.RunWith;
 
 
 import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.clearText;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.typeText;
@@ -54,7 +55,7 @@ public class Test_AdminAmpliado {
         // Verificar que se abre Activity_admin después de clicar en ajustes
         intended(hasComponent(Activity_admin.class.getName()));
         // Obtener la instancia de Activity_admin
-        //actAdmin = ((Activity_admin) getActivityInstance(Activity_admin.class));
+       // actAdmin = ((Activity_admin) getActivityInstance(Activity_admin.class));
 
     }
     // Ampliación de usuario correcta
@@ -63,13 +64,13 @@ public class Test_AdminAmpliado {
         // Hacer clic en el primer elemento de la lista (suponiendo que hay al menos un usuario en la lista)
         onView(withId(R.id.rv_users))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
-        espera();
         // Verificar que la actividad user_ampliado se inicia correctamente
         intended(hasComponent(Activity_user_ampliado.class.getName()));
         // Obtener la instancia de Activity_user_ampliado
-        //actAdminAmpl = ((Activity_user_ampliado) getActivityInstance(Activity_user_ampliado.class));
+        actAdminAmpl = ((Activity_user_ampliado) getActivityInstance(Activity_user_ampliado.class));
         // Verificar que contentSuccessful es true
-        //assertTrue(actAdminAmpl.isContentSuccessful());
+        espera();
+        assertTrue(actAdminAmpl.isContentSuccessful());
     }
 
     // Ampliación de usuario incorrecta, simulamos un intent erroneo
@@ -104,6 +105,16 @@ public class Test_AdminAmpliado {
         // Realizamos el clic en el botón de editar
         onView(withId(R.id.ibtn_edit)).perform(click());
         espera();
+
+        // Obtener texto actual del campo de nombre
+        String currentDesc = actAdminAmpl.getDescUsuario(); // Ejemplo: método para obtener nombre de usuario
+
+        // Borrar el texto actual del campo de nombre
+        onView(withId(R.id.edt_descripcion_usuario)).perform(clearText());
+
+        // Escribir un nuevo nombre en el campo de nombre
+        onView(withId(R.id.edt_descripcion_usuario)).perform(typeText(currentDesc), closeSoftKeyboard());
+
         // Realizamos el clic en el botón de editar
         onView(withId(R.id.ibtn_edit)).perform(click());
         espera();

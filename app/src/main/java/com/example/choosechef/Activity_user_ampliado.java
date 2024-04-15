@@ -96,12 +96,12 @@ public class Activity_user_ampliado extends AppCompatActivity {
     public void obtenerIntent(Intent intent){
         // Verificar si el Intent contiene un extra con clave "user"
         if (intent != null && intent.hasExtra("user")) {
-            contentSuccessful = true;
             // Extraer el objeto User del Intent
             User user = (User) intent.getSerializableExtra("user");
 
             // Usar el objeto User en esta actividad
             if (user != null) {
+                contentSuccessful = true;
                 usuario.setText(user.getUsuario());
                 nombreUsuario.setText(user.getNombre());
                 passwordUsuario.setText(user.getPassword());
@@ -116,9 +116,13 @@ public class Activity_user_ampliado extends AppCompatActivity {
 
                 //guardar el nombre de usuario para la llamada al método de modicicación
                 usuario_mod = user.getUsuario();
+
             }
+        } else {
+            // Si no se recibió información del usuario, la carga de contenido falló
+            contentSuccessful = false;
         }
-        contentSuccessful = false;
+
     }
 
     /**
@@ -291,5 +295,9 @@ public class Activity_user_ampliado extends AppCompatActivity {
     }
     public boolean isModifySuccessful() {
         return modifySuccessful;
+    }
+
+    public String getDescUsuario() {
+        return descripUsuario.getText().toString(); // Obtener el texto del TextView nombreUsuario
     }
 }

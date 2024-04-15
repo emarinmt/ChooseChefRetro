@@ -62,6 +62,8 @@ public class Test_ContenidoAmpliado {
         // Obtener la instancia de Activity_content_ampliado
         contenidoAmpliado = ((Activity_chef_ampliado) getActivityInstance(Activity_chef_ampliado.class));
         // Verificar que contentSuccessful es true
+        System.out.println("isContentSuccessful(): " + contenidoAmpliado.isContentSuccessful());
+        espera();
         assertTrue(contenidoAmpliado.isContentSuccessful());
     }
 

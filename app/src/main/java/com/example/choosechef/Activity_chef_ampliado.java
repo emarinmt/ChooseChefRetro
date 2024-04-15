@@ -3,6 +3,7 @@ package com.example.choosechef;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -88,12 +89,12 @@ public class Activity_chef_ampliado extends AppCompatActivity {
     public void obtenerIntent(Intent intent){
         // Verificar si el Intent contiene un extra con clave "user"
         if (intent != null && intent.hasExtra("user")) {
-            contentSuccessful = true;
             // Extraer el objeto User del Intent
             User user = (User) intent.getSerializableExtra("user");
-
             // Usar el objeto User en esta actividad
             if (user != null) {
+                contentSuccessful = true;
+                Log.d("Activity_chef_ampliado", "contentSuccessful: " + contentSuccessful);
                 //Mostrar información en pantalla
                 nombreChefamp.setText(user.getNombre());
                 tipoChefamp.setText(user.getComida());
@@ -106,8 +107,11 @@ public class Activity_chef_ampliado extends AppCompatActivity {
                 //guardar el usuario del chef para enviarlo a la siguiente pantalla
                 user_chef = user.getUsuario();
             }
+        } else {
+            // Si no se recibió información del usuario, la carga de contenido falló
+            contentSuccessful = false;
         }
-        contentSuccessful = false;
+
     }
 
     /**
