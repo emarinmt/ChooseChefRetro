@@ -87,12 +87,12 @@ public class Activity_registro extends AppCompatActivity {
         user.setNombre(" ");
         user.setPassword(queryPasswordString);
         user.setDescripcion(" ");
-        user.setUbicacion("Barcelona");
+        user.setUbicacion(" ");
         user.setEmail(" ");
         user.setTelefono(" ");
         user.setTipo(queryTipo);
-        user.setComida("Italiana");
-        user.setServicio("Chef a domicilio");
+        user.setComida(" ");
+        user.setServicio(" ");
         user.setValoracion(0);
 
         // Llamamos al método que ejecuta la llamada al servidor enviando los datos

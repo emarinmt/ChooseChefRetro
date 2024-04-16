@@ -66,7 +66,7 @@ public class Activity_admin extends AppCompatActivity {
         Context context = this;
         // Compruebe el estado de la conexión de red
         if (!Utils.isNetworkAvailable(this)) {
-            Utils.showToastSecond(Activity_admin.this,context, "No hay conexión a Internet");
+            Utils.showToastSecond(Activity_admin.this, context, "No hay conexión a Internet");
             contentSuccessful = false;
             return;
         }

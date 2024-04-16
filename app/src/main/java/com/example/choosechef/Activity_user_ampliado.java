@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,17 +27,17 @@ public class Activity_user_ampliado extends AppCompatActivity {
     private boolean deleteSuccessful = false; // Variable para rastrear el estado del borrado
     private final String TAG = Activity_user_ampliado.class.getSimpleName();
     //Variables para mostrar la información de los usuarios
-    private TextView usuario;
-    private TextView nombreUsuario;
-    private TextView passwordUsuario;
-    private TextView descripUsuario;
-    private TextView provinciaUsuario;
-    private TextView mailUsuario;
-    private TextView telefonoUsuario;
-    private TextView tipoUsuario;
-    private TextView tipoComidaUsuario;
-    private TextView tipoServicioUsuario;
-    private TextView valoracionUsuario;
+    private EditText usuario;
+    private EditText nombreUsuario;
+    private EditText passwordUsuario;
+    private EditText descripUsuario;
+    private EditText provinciaUsuario;
+    private EditText mailUsuario;
+    private EditText telefonoUsuario;
+    private EditText tipoUsuario;
+    private EditText tipoComidaUsuario;
+    private EditText tipoServicioUsuario;
+    private EditText valoracionUsuario;
     //Variable para recibir información de la pantalla anterior
     public Intent intent;
     // Variables para conectar con la API
@@ -112,8 +112,9 @@ public class Activity_user_ampliado extends AppCompatActivity {
                 tipoUsuario.setText(user.getTipo());
                 tipoComidaUsuario.setText(user.getComida());
                 tipoServicioUsuario.setText(user.getServicio());
-                //valoracionUsuario.setText((int) user.getValoracion());
-
+                //valoracionUsuario.setText(user.getValoracion());
+                float valoracion = user.getValoracion();
+                valoracionUsuario.setText(String.valueOf(valoracion));
                 //guardar el nombre de usuario para la llamada al método de modicicación
                 usuario_mod = user.getUsuario();
 
@@ -184,7 +185,7 @@ public class Activity_user_ampliado extends AppCompatActivity {
             user.setTipo(tipoInput);
             user.setComida(comidaInput);
             user.setServicio(servicioInput);
-            //user.setValoracion(Float.parseFloat(valoracionInput));
+            user.setValoracion(Float.parseFloat(valoracionInput));
 
             //llamar al método que ejecuta la llamada al servidor enviando los datos
             modificarDatos(user);

@@ -61,7 +61,6 @@ public class Test_ContenidoAmpliado {
     @Test
     public void testAmpliarChefValid() {
         // Verificar que contentSuccessful es true
-        System.out.println("isContentSuccessful(): " + contenidoAmpliado.isContentSuccessful());
         espera();
         assertTrue(contenidoAmpliado.isContentSuccessful());
     }

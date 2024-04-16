@@ -10,6 +10,13 @@ import android.view.View;
 import android.widget.CalendarView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -23,7 +30,7 @@ import retrofit2.Retrofit;
 public class Activity_reservar extends AppCompatActivity {
     private final String TAG = Activity_reservar.class.getSimpleName();
     private boolean contentSuccessful = false; // Variable para rastrear el estado de la muestra del usuario
-    private boolean modifySuccessful = false; // Variable para rastrear el estado de la modificación
+    private boolean reservaSuccessful = false; // Variable para rastrear el estado de la modificación
     //Variable para el calendario
     CalendarView calendario;
     //Variables para conectar con la API
@@ -31,11 +38,10 @@ public class Activity_reservar extends AppCompatActivity {
     Retrofit retro;
     //Variable para recibir información de la pantalla anterior
     public Intent intent;
-
-    private User user_logeado;
-    private String user_chef;
-    String usuario_cliente;
-    String token;
+    public User user_logeado;
+    public String user_chef;
+    public String usuario_cliente;
+    public String token;
     Reserva reserva;
     private String fechaStr;
 
@@ -48,9 +54,10 @@ public class Activity_reservar extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         // Establece el diseño de la actividad.
         setContentView(R.layout.activity_reservar);
+        Log.d(TAG, "Activity_reservar onCreate()");
         contentSuccessful = false;
         //Inicializa variable
-        calendario = findViewById(R.id.calendarView);
+        calendario = findViewById(R.id.calendarView_reserva);
 
         retro=FastClient.getClient();
         mfastMethods = retro.create(FastMethods.class);
@@ -68,30 +75,32 @@ public class Activity_reservar extends AppCompatActivity {
         //Recoge el usuario cliente logeado
         recuperarDatosCliente();
 
+
         //Recoge la fecha introducida por el usuario para la reserva
         calendario.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
             //Se define el formato de dos digitos para el mes ( se suma uno,porque el calendario empieza en el 0 )
             @SuppressLint("DefaultLocale") String monthStr = String.format("%02d", month +1);
             //Se construye la fecha con el formato deseado para el servidor
             fechaStr = year + "-" + monthStr +"-"+ dayOfMonth;
+            Log.d(TAG, "Fecha seleccionada: " + fechaStr);
             //mostramos la fecha escogida
             Utils.showToast(Activity_reservar.this, fechaStr);
         });
-
     }
 
     /**
      * Método para obtener el usuario chef
      * @param intent string usuario chef
      */
+
     public void obtenerIntentChef(Intent intent){
-        // Verificar si el Intent contiene un extra con clave "user"
+        // Verificar si el Intent contiene un extra con clave "string"
         if (intent != null && intent.hasExtra("string")) {
             contentSuccessful = true;
-            // Extraer el objeto User del Intent
+            // Extraer el string del Intent
             user_chef = (String) intent.getSerializableExtra("string");
 
-            // Usar el objeto User en esta actividad
+            // Usar el string en esta actividad
             if (user_chef != null) {
                 reserva.setUsuario_chef(user_chef);
             }
@@ -102,6 +111,7 @@ public class Activity_reservar extends AppCompatActivity {
     /**
      * Método para obtener el usuario cliente
      */
+
     public void recuperarDatosCliente(){
         // Compruebe el estado de la conexión de red
         if (!Utils.isNetworkAvailable(this)) {
@@ -116,13 +126,16 @@ public class Activity_reservar extends AppCompatActivity {
              * @param call llamada que generó la respuesta
              * @param response la respuesta recibida del servidor
              */
+
             public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
                 if (response.isSuccessful()) {
                     user_logeado = response.body(); // Recibe los datos del usuario
                     if (user_logeado != null) {
                         usuario_cliente = user_logeado.getUsuario();
                         reserva.setUsuario_cliente(usuario_cliente);
+                        Log.d(TAG, "Datos del usuario recibidos correctamente: " + usuario_cliente);
                     } else {
+                        Log.d(TAG, "Error: Respuesta del servidor no exitosa, código " + response.code());
                         // Obtención de datos incorrecta, muestra un mensaje de error
                         Utils.showToast(Activity_reservar.this, "Obtención de datos incorrecta");
                     }
@@ -133,6 +146,7 @@ public class Activity_reservar extends AppCompatActivity {
              * @param call la llamada que generó el error
              * @param t la excepción que ocurrió
              */
+
             @Override
             public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
                 // Error en la llamada, muestra el mensaje de error y registra la excepción
@@ -148,6 +162,13 @@ public class Activity_reservar extends AppCompatActivity {
      * @param view La vista (Button) a la que se hizo clic.
      */
     public void reservar (View view) {
+        // Obtener el contexto de la actividad (this)
+        Context context = this;
+        // Validar la fecha antes de continuar con la reserva
+        if (!validarFecha(fechaStr, context)) {
+            reservaSuccessful = false;
+            return; // Detener el proceso de reserva si la fecha no es válida
+        }
         //guarda los datos en el objeto reserva
         reserva.setUsuario_chef(user_chef);
         reserva.setUsuario_cliente(usuario_cliente);
@@ -163,16 +184,19 @@ public class Activity_reservar extends AppCompatActivity {
              * @param call llamada que generó la respuesta
              * @param response la respuesta recibida del servidor
              */
+
             @Override
             public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
                 if (response.isSuccessful()) {
-                    modifySuccessful = true;
+                    reservaSuccessful = true;
                     // String responseBody = response.body();
-                    Utils.showToast(Activity_reservar.this, "Reserva correcta!");
+                    Utils.showToastSecond(Activity_reservar.this, context,"Reserva correcta!");
+                    Log.d(TAG, "Reserva creada correctamente");
                     //volvemos a pantalla anterior
                     Utils.gotoActivity(Activity_reservar.this, Activity_chef_ampliado.class);
                 } else {
-                    Utils.showToast(Activity_reservar.this, "Error al crear la reserva");
+                    reservaSuccessful = false;
+                    Utils.showToastSecond(Activity_reservar.this, context,"Error al crear la reserva");
                 }
             }
 
@@ -181,14 +205,49 @@ public class Activity_reservar extends AppCompatActivity {
              * @param call la llamada que generó el error
              * @param t la excepción que ocurrió
              */
+
             @Override
             public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
                 // Error en la llamada, muestra el mensaje de error y registra la excepción
+                //reservaSuccessful = false;
                 t.printStackTrace();
                 Log.e(TAG, "Error en la llamada:" + t.getMessage());
-                Utils.showToast(Activity_reservar.this, "Error en la llamada: " + t.getMessage());
+                Utils.showToastSecond(Activity_reservar.this, context,"Error en la llamada: " + t.getMessage());
             }
         });
+    }
+
+    /**
+     * Método para validar la fecha antes de realizar la reserva.
+     * Verifica que la fechaStr no sea nula, vacía y que no sea anterior a la fecha actual.
+     * @param fechaStr Fecha en formato de cadena (YYYY-MM-DD) a validar.
+     * @param context Contexto de la actividad para mostrar mensajes.
+     * @return true si la fecha es válida, false si no lo es.
+     */
+    private boolean validarFecha(String fechaStr, Context context) {
+        if (fechaStr == null || fechaStr.isEmpty()) {
+            Utils.showToastSecond(Activity_reservar.this, context, "Selecciona una fecha antes de reservar");
+            return false;
+        }
+        try {
+            // Obtener la fecha actual
+            Calendar calendarActual = Calendar.getInstance();
+
+            // Convertir fechaStr a un objeto Date
+            Date fechaSeleccionada = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(fechaStr);
+
+            // Comparar la fecha seleccionada con la fecha actual
+            if (fechaSeleccionada.before(calendarActual.getTime())) {
+                Utils.showToastSecond(Activity_reservar.this, context, "No puedes reservar en fechas pasadas");
+                return false;
+            }
+        } catch (ParseException e) {
+            // Manejar cualquier excepción que pueda ocurrir durante la conversión de la fecha
+            Utils.showToastSecond(Activity_reservar.this, context, "Error al validar la fecha");
+            e.printStackTrace();
+            return false;
+        }
+        return true; // La fecha es válida
     }
     /**
      * Método para hacer logout
@@ -209,8 +268,17 @@ public class Activity_reservar extends AppCompatActivity {
      * Método para test
      * @return devuelve un booleano en función de si ha ido bien la creación de la reserva.
      */
-    public boolean isModifySuccessful() {
-        return modifySuccessful;
+    public boolean isReservaSuccessful() {
+        return reservaSuccessful;
     }
 
+    /**
+     * Método para test
+     * Establece la fecha de reserva sin necesidad de interactuar con el calendario
+     * @param fecha  fecha en la que se quiere establecer la reserva
+     */
+    public void setFechaStr(String fecha) {
+        this.fechaStr = fecha;
+    }
 }
+
