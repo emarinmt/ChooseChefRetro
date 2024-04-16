@@ -4,18 +4,16 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.CalendarView;
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
+import java.time.format.DateTimeParseException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -161,9 +159,9 @@ public class Activity_reservar extends AppCompatActivity {
      * Método para gestionar la creación de la reserva
      * @param view La vista (Button) a la que se hizo clic.
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void reservar (View view) {
-        // Obtener el contexto de la actividad (this)
-        Context context = this;
+        Context context = this; // Obtener el contexto de la actividad (this)
         // Validar la fecha antes de continuar con la reserva
         if (!validarFecha(fechaStr, context)) {
             reservaSuccessful = false;
@@ -224,31 +222,25 @@ public class Activity_reservar extends AppCompatActivity {
      * @param context Contexto de la actividad para mostrar mensajes.
      * @return true si la fecha es válida, false si no lo es.
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private boolean validarFecha(String fechaStr, Context context) {
         if (fechaStr == null || fechaStr.isEmpty()) {
             Utils.showToastSecond(Activity_reservar.this, context, "Selecciona una fecha antes de reservar");
             return false;
         }
         try {
-            // Obtener la fecha actual
-            Calendar calendarActual = Calendar.getInstance();
-
-            // Convertir fechaStr a un objeto Date
-            Date fechaSeleccionada = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(fechaStr);
-
-            // Comparar la fecha seleccionada con la fecha actual
-            if (fechaSeleccionada.before(calendarActual.getTime())) {
+            if (Utils.esFechaHoyAnterior(fechaStr)) {
                 Utils.showToastSecond(Activity_reservar.this, context, "No puedes reservar en fechas pasadas");
                 return false;
+            } else {
+                return true; // La fecha es válida
             }
-        } catch (ParseException e) {
-            // Manejar cualquier excepción que pueda ocurrir durante la conversión de la fecha
-            Utils.showToastSecond(Activity_reservar.this, context, "Error al validar la fecha");
-            e.printStackTrace();
+        } catch (DateTimeParseException e) {
+            Utils.showToastSecond(Activity_reservar.this, context, "Formato de fecha inválido");
             return false;
         }
-        return true; // La fecha es válida
     }
+
     /**
      * Método para hacer logout
      * Redirige al usuario a la pantalla de inicio

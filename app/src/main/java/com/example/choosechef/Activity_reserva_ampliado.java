@@ -1,6 +1,7 @@
 package com.example.choosechef;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -82,8 +83,8 @@ public class Activity_reserva_ampliado  extends AppCompatActivity {
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void fechaPosterior(){
-        //Si la fecha de la reserva es hoy o posterior se habilitan estos campos para escribir la reseña
-        if(Utils.esFechaHoyPosterior(reserva.getFecha())){
+        //Si la fecha de la reserva es hoy o anterior se habilitan estos campos para escribir la reseña
+        if(Utils.esFechaHoyAnterior(reserva.getFecha())){
             valoracion.setEnabled(true);
             comentario.setEnabled(true);
             Utils.showToast(Activity_reserva_ampliado.this, "TRUE Introduce tu reseña!"+ reserva.getFecha());
@@ -121,6 +122,7 @@ public class Activity_reserva_ampliado  extends AppCompatActivity {
      * @param view La vista (Button) a la que se hizo clic.
      */
     public void confirmarComentario(View view){
+        Context context = this; // Obtener el contexto de la actividad (this)
         //Recogemos los datos añadidos
         float valoracionInput = valoracion.getRating();
         String comentarioInput = comentario.getText().toString();
@@ -133,7 +135,6 @@ public class Activity_reserva_ampliado  extends AppCompatActivity {
         //Actualiza los datos de la reserva con los nuevos datos
         reserva.setValoracion(valoracionInput);
         reserva.setComentario(comentarioInput);
-
 
         // call HTTP client para modificar los datos de usuario
         Call<String> call = mfastMethods.modificar_reserva(reserva.getId(),reserva);
@@ -148,10 +149,10 @@ public class Activity_reserva_ampliado  extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     modifySuccessful = true;
                     // String responseBody = response.body();
-                    Utils.showToast(Activity_reserva_ampliado.this, "Modificación correcta!");
+                    Utils.showToastSecond(Activity_reserva_ampliado.this, context,"Modificación correcta!");
                     Utils.gotoActivity(Activity_reserva_ampliado.this, Activity_user.class);
                 } else {
-                    Utils.showToast(Activity_reserva_ampliado.this, "Error al modificar la reseña");
+                    Utils.showToastSecond(Activity_reserva_ampliado.this, context,"Error al modificar la reseña");
                 }
             }
 
@@ -165,7 +166,7 @@ public class Activity_reserva_ampliado  extends AppCompatActivity {
                 // Error en la llamada, muestra el mensaje de error y registra la excepción
                 t.printStackTrace();
                 Log.e(TAG, "Error en la llamada:" + t.getMessage());
-                Utils.showToast(Activity_reserva_ampliado.this, "Error en la llamada: " + t.getMessage());
+                Utils.showToastSecond(Activity_reserva_ampliado.this, context,"Error en la llamada: " + t.getMessage());
             }
         });
     }

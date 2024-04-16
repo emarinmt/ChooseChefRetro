@@ -61,8 +61,7 @@ public class Activity_busqueda extends AppCompatActivity {
 
     }
     public void recuperarProvincias(){
-        // Obtener el contexto de la actividad (this)
-        Context context = this;
+        Context context = this; // Obtener el contexto de la actividad (this)
         // Compruebe el estado de la conexión de red
         if (!Utils.isNetworkAvailable(this)) {
             Utils.showToastSecond(Activity_busqueda.this, context, "No hay conexión a Internet");

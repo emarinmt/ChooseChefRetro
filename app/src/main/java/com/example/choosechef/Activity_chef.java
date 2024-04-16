@@ -127,9 +127,10 @@ public class Activity_chef extends AppCompatActivity {
      * Método para recuperar los datos del servidor y mostrarlos en los spinners y descripción
      */
     public void recuperarDatos(){
+        Context context = this; // Obtener el contexto de la actividad (this)
         // Compruebe el estado de la conexión de red
         if (!Utils.isNetworkAvailable(this)) {
-            Utils.showToast(Activity_chef.this, "No hay conexión a Internet");
+            Utils.showToastSecond(Activity_chef.this, context,"No hay conexión a Internet");
             return;
         }
         // Call HTTP client para recuperar la información del usuario
@@ -144,16 +145,14 @@ public class Activity_chef extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     user = response.body(); // Recibe los datos del usuario
                     if (user != null) {
-
                         // Mostrar datos en pantalla
                         spinner_prov.setSelection(getIndex(spinner_prov, user.getUbicacion()));
                         spinner_comida.setSelection(getIndex(spinner_comida, user.getComida()));
                         spinner_servicio.setSelection(getIndex(spinner_servicio, user.getServicio()));
                         descripcion.setText(user.getDescripcion());
-
                     } else {
                         // Obtención de datos incorrecta, muestra un mensaje de error
-                        Utils.showToast(Activity_chef.this, "Obtención de datos incorrecta");
+                        Utils.showToastSecond(Activity_chef.this, context,"Obtención de datos incorrecta");
                     }
                 }
             }
@@ -167,7 +166,7 @@ public class Activity_chef extends AppCompatActivity {
                 // Error en la llamada, muestra el mensaje de error y registra la excepción
                 t.printStackTrace();
                 Log.e(TAG, "Error en la llamada:" + t.getMessage());
-                Utils.showToast(Activity_chef.this, "Error en la llamada: " + t.getMessage());
+                Utils.showToastSecond(Activity_chef.this, context,"Error en la llamada: " + t.getMessage());
             }
         });
     }
@@ -191,6 +190,7 @@ public class Activity_chef extends AppCompatActivity {
      * @param view La vista (Button) a la que se hizo clic.
      */
     public void confirmarServicio(View view) {
+        Context context = this; // Obtener el contexto de la actividad (this)
         // Obtener los valores seleccionados de los spinners y la descripción introducida
         prov_seleccionada = (String) spinner_prov.getSelectedItem();
         comida_seleccionada = (String) spinner_comida.getSelectedItem();
@@ -227,10 +227,10 @@ public class Activity_chef extends AppCompatActivity {
                     if (response.isSuccessful()) {
                         modifySuccessful = true;
                         // String responseBody = response.body();
-                        Utils.showToast(Activity_chef.this, "Modificación correcta!");
+                        Utils.showToastSecond(Activity_chef.this,context, "Modificación correcta!");
                         Utils.gotoActivity(Activity_chef.this, Activity_contenido.class);
                     } else {
-                        Utils.showToast(Activity_chef.this, "Error al modificar usuario");
+                        Utils.showToastSecond(Activity_chef.this, context,"Error al modificar usuario");
                     }
                 }
 
@@ -245,7 +245,7 @@ public class Activity_chef extends AppCompatActivity {
                     // Error en la llamada, muestra el mensaje de error y registra la excepción
                     t.printStackTrace();
                     Log.e(TAG, "Error en la llamada:" + t.getMessage());
-                    Utils.showToast(Activity_chef.this, "Error en la llamada: " + t.getMessage());
+                    Utils.showToastSecond(Activity_chef.this, context,"Error en la llamada: " + t.getMessage());
                 }
             });
         }

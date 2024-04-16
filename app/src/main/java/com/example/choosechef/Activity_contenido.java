@@ -87,8 +87,7 @@ public class Activity_contenido extends AppCompatActivity {
      */
     public void recuperarChefs(){
         userList.clear(); // Limpiar la lista actual
-        // Obtener el contexto de la actividad (this)
-        Context context = this;
+        Context context = this; // Obtener el contexto de la actividad (this)
         // Compruebe el estado de la conexión de red
         if (!Utils.isNetworkAvailable(this)) {
             Utils.showToastSecond(Activity_contenido.this, context,"No hay conexión a Internet");
@@ -109,7 +108,6 @@ public class Activity_contenido extends AppCompatActivity {
                     contentSuccessful = true;
                     userList.clear(); // Limpiar la lista actual
                     userList.addAll(response.body()); // Agregar todos los usuarios recuperados
-
                     // Notificar al adaptador que los datos han cambiado
                     adapter.notifyDataSetChanged();
                 } else {
@@ -258,6 +256,7 @@ public class Activity_contenido extends AppCompatActivity {
      * Recuperar los datos del usuario logeado
      */
     public void recuperarDatos(final Runnable callback){
+        Context context = this; // Obtener el contexto de la actividad (this)
         // Compruebe el estado de la conexión de red
         if (!Utils.isNetworkAvailable(this)) {
             Utils.showToast(Activity_contenido.this, "No hay conexión a Internet");
@@ -279,7 +278,7 @@ public class Activity_contenido extends AppCompatActivity {
                         callback.run(); // Ejecuta el callback una vez que se haya recibido la respuesta
                     } else {
                         // Obtención de datos incorrecta, muestra un mensaje de error
-                        Utils.showToast(Activity_contenido.this, "Obtención de datos incorrecta");
+                        Utils.showToastSecond(Activity_contenido.this,context, "Obtención de datos incorrecta");
                     }
                 }
             }
@@ -293,7 +292,7 @@ public class Activity_contenido extends AppCompatActivity {
                 // Error en la llamada, muestra el mensaje de error y registra la excepción
                 t.printStackTrace();
                 Log.e(TAG, "Error en la llamada:" + t.getMessage());
-                Utils.showToast(Activity_contenido.this, "Error en la llamada: " + t.getMessage());
+                Utils.showToastSecond(Activity_contenido.this, context,"Error en la llamada: " + t.getMessage());
             }
         });
     }

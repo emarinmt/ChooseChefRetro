@@ -1,6 +1,7 @@
 package com.example.choosechef;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,7 +22,6 @@ import retrofit2.Retrofit;
  * a esta pantalla acedera el administrador para ver, modificar o borrar toda la info de los usuarios
  */
 public class Activity_user_ampliado extends AppCompatActivity {
-    //FUNCIONA TODO MENOS VER Y MODIFICAR LA VALORACION DEL USUARIO. YA LO REVISARÉ
     private boolean contentSuccessful = false; // Variable para rastrear el estado de la muestra del usuario
     private boolean modifySuccessful = false; // Variable para rastrear el estado de la modificación
     private boolean deleteSuccessful = false; // Variable para rastrear el estado del borrado
@@ -193,6 +193,7 @@ public class Activity_user_ampliado extends AppCompatActivity {
     }
 
     public void modificarDatos(User user){
+        Context context = this; // Obtener el contexto de la actividad (this)
         // call HTTP client para modificar los datos de usuario
         Call<String> call = mfastMethods.modificarUsuario_admin(usuario_mod, user);
         call.enqueue(new Callback<String>() { // Ejecutar la llamada de manera asíncrona
@@ -206,10 +207,10 @@ public class Activity_user_ampliado extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     modifySuccessful = true;
                     // String responseBody = response.body();
-                    Utils.showToast(Activity_user_ampliado.this, "Modificación correcta!");
+                    Utils.showToastSecond(Activity_user_ampliado.this,context, "Modificación correcta!");
                     Utils.gotoActivity(Activity_user_ampliado.this, Activity_admin.class);
                 } else {
-                    Utils.showToast(Activity_user_ampliado.this, "Error al modificar usuario");
+                    Utils.showToastSecond(Activity_user_ampliado.this,context, "Error al modificar usuario");
                 }
             }
 
@@ -223,7 +224,7 @@ public class Activity_user_ampliado extends AppCompatActivity {
                 // Error en la llamada, muestra el mensaje de error y registra la excepción
                 t.printStackTrace();
                 Log.e(TAG, "Error en la llamada:" + t.getMessage());
-                Utils.showToast(Activity_user_ampliado.this, "Error en la llamada: " + t.getMessage());
+                Utils.showToastSecond(Activity_user_ampliado.this, context,"Error en la llamada: " + t.getMessage());
             }
         });
     }
@@ -233,9 +234,8 @@ public class Activity_user_ampliado extends AppCompatActivity {
      * @param view La vista (Button) a la que se hizo clic.
      */
     public void borrarUsuario(View view){
-
+        Context context = this; // Obtener el contexto de la actividad (this)
         if (usuario_mod != null && !usuario_mod.isEmpty()) {
-
             // call HTTP client para borrar al usuario
             Call<String> call = mfastMethods.borrar_usuario(usuario_mod);
             call.enqueue(new Callback<String>() { // Ejecutar la llamada de manera asíncrona
@@ -249,13 +249,12 @@ public class Activity_user_ampliado extends AppCompatActivity {
                     if (response.isSuccessful()) {
                         deleteSuccessful = true;
                         // String responseBody = response.body();
-                        Utils.showToast(Activity_user_ampliado.this, "Eliminación correcta!");
+                        Utils.showToastSecond(Activity_user_ampliado.this, context,"Eliminación correcta!");
                         Utils.gotoActivity(Activity_user_ampliado.this, Activity_admin.class);
                     } else {
-                        Utils.showToast(Activity_user_ampliado.this, "Error al eliminar usuario");
+                        Utils.showToastSecond(Activity_user_ampliado.this, context,"Error al eliminar usuario");
                     }
                 }
-
                 /**
                  * Método invocado cuando ocurre un error durante la ejecución de la llamada HTTP
                  * @param call la llamada que generó el error
@@ -266,11 +265,11 @@ public class Activity_user_ampliado extends AppCompatActivity {
                     // Error en la llamada, muestra el mensaje de error y registra la excepción
                     t.printStackTrace();
                     Log.e(TAG, "Error en la llamada:" + t.getMessage());
-                    Utils.showToast(Activity_user_ampliado.this, "Error en la llamada: " + t.getMessage());
+                    Utils.showToastSecond(Activity_user_ampliado.this, context,"Error en la llamada: " + t.getMessage());
                 }
             });
         } else {
-            Utils.showToast(Activity_user_ampliado.this, "Error el usuario esta vacío" + usuario_mod);
+            Utils.showToastSecond(Activity_user_ampliado.this, context,"Error el usuario esta vacío" + usuario_mod);
         }
 
     }

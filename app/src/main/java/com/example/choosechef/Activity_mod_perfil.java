@@ -88,6 +88,7 @@ public class Activity_mod_perfil extends AppCompatActivity {
      * Hace la primera consulta al servidor, para recuperar los datos del usuario y mostrarlos en pantalla
      */
     public void recuperarDatos(){
+        Context context = this; // Obtener el contexto de la actividad (this)
         // Compruebe el estado de la conexión de red
         if (!Utils.isNetworkAvailable(this)) {
             Utils.showToast(Activity_mod_perfil.this, "No hay conexión a Internet");
@@ -105,16 +106,13 @@ public class Activity_mod_perfil extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     user = response.body(); // Recibe los datos del usuario
                     if (user != null) {
-
                         // Mostrar datos en pantalla
-
                         mNameInput.setText(user.getNombre());
                         mAdressInput.setText(user.getUbicacion());
                         mPhoneInput.setText(user.getTelefono());
-
                     } else {
                         // Obtención de datos incorrecta, muestra un mensaje de error
-                        Utils.showToast(Activity_mod_perfil.this, "Obtención de datos incorrecta");
+                        Utils.showToastSecond(Activity_mod_perfil.this, context,"Obtención de datos incorrecta");
                     }
                 }
             }
@@ -128,7 +126,7 @@ public class Activity_mod_perfil extends AppCompatActivity {
                 // Error en la llamada, muestra el mensaje de error y registra la excepción
                 t.printStackTrace();
                 Log.e(TAG, "Error en la llamada:" + t.getMessage());
-                Utils.showToast(Activity_mod_perfil.this, "Error en la llamada: " + t.getMessage());
+                Utils.showToastSecond(Activity_mod_perfil.this, context,"Error en la llamada: " + t.getMessage());
             }
         });
     }
@@ -227,6 +225,7 @@ public class Activity_mod_perfil extends AppCompatActivity {
      * @param user objeto con los datos del nuevo usuario
      */
     public void modificacion(User user) {
+        Context context = this; // Obtener el contexto de la actividad (this)
         // call HTTP client para modificar los datos de usuario
         Call<String> call = mfastMethods.modificarUsuario(token, user);
         call.enqueue(new Callback<String>() { // Ejecutar la llamada de manera asíncrona
@@ -240,10 +239,10 @@ public class Activity_mod_perfil extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     modifySuccessful = true;
                     // String responseBody = response.body();
-                    Utils.showToast(Activity_mod_perfil.this, "Modificación correcta!");
+                    Utils.showToastSecond(Activity_mod_perfil.this,context, "Modificación correcta!");
                     Utils.gotoActivity(Activity_mod_perfil.this, Activity_contenido.class);
                 } else {
-                    Utils.showToast(Activity_mod_perfil.this, "Error al modificar usuario");
+                    Utils.showToastSecond(Activity_mod_perfil.this, context,"Error al modificar usuario");
                 }
             }
 
@@ -257,7 +256,7 @@ public class Activity_mod_perfil extends AppCompatActivity {
                 // Error en la llamada, muestra el mensaje de error y registra la excepción
                 t.printStackTrace();
                 Log.e(TAG, "Error en la llamada:" + t.getMessage());
-                Utils.showToast(Activity_mod_perfil.this, "Error en la llamada: " + t.getMessage());
+                Utils.showToastSecond(Activity_mod_perfil.this, context,"Error en la llamada: " + t.getMessage());
             }
         });
     }

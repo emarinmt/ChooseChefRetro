@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
-import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
@@ -20,7 +19,6 @@ import java.time.LocalDate;
  * Clase utilidades
  * Contiene métodos reutilizables por otras clases con funcionalidades comunes.
  */
-//DEJO COMENTARIO ASÍ ENCIMA DE MÉTODOS QUE NO FUNCIONAN PARA BORRARLOS AL ACABAR
 public class Utils extends AppCompatActivity{
 
 private static boolean isNetworkAvailable = true; // Estado predeterminado de la conexión
@@ -77,42 +75,6 @@ private static boolean isNetworkAvailable = true; // Estado predeterminado de la
         Intent i = new Intent(context, destination);
         i.putExtra("reserva", reserva);
         context.startActivity(i);
-    }
-
-    /**
-     * Método desarrollado por ELENA
-     * Abre una actividad y envia información
-     * ACTIVAR SECOND ACTIVITY Y PASAR INFO SIN FEEDBACK
-     * @param parent  Actividad padre.
-     * @param destination Actividad de destino.
-     * @param extras info a enviar
-     */
-    public static void gotoActivityWithExtras(AppCompatActivity parent, Class destination, Bundle extras) {
-        Intent i = new Intent(parent, destination);
-        i.putExtras(extras);
-        parent.startActivity(i);
-    }
-//BORRAR SI NO SE UTILIZA
-    /**
-     * Método desarrollado por ELENA
-     * Abre una actividad y espera info
-     * ACTIVAR SECOND ACTIVITY CON FEEDBACK
-     * @param parent  Actividad padre.
-     * @param destination Actividad de destino.
-     */
-    public static void gotoActivityWithResult(AppCompatActivity parent, Class destination, int requestcode){
-        Intent i = new Intent(parent, destination);
-        parent.startActivityForResult(i, requestcode);
-    }
-//BORRAR SI NO SE UTILIZA
-    // Enviar datos de vuelta a la actividad anterior
-    public static void sendActivityResult(AppCompatActivity parent, Bundle extras, int resultCode) {
-        Intent i = new Intent();
-        if (extras != null) {
-            i.putExtras(extras);
-        }
-        parent.setResult(resultCode, i);
-        parent.finish();
     }
 
     /**
@@ -186,7 +148,7 @@ private static boolean isNetworkAvailable = true; // Estado predeterminado de la
      * @return devuelve un boleano true si la fecha pasada por parámetro es anterior o igual a hoy, en caso contrario false
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public static boolean esFechaHoyPosterior(String fecha_reserva) {
+    public static boolean esFechaHoyAnterior(String fecha_reserva) {
         if (fecha_reserva == null) {
             return false;
         } else {

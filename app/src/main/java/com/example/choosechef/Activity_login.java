@@ -104,6 +104,7 @@ public class Activity_login extends AppCompatActivity {
      * @param password contraseña introducida
      */
     private void loginUsuario(String username, String password) {
+        Context context = this; // Obtener el contexto de la actividad (this)
         Call<TokenResponse> call = mfastMethods.login(username,password);
         call.enqueue(new Callback<TokenResponse>() { // Ejecutar la llamada de manera asíncrona
             /**
@@ -121,18 +122,17 @@ public class Activity_login extends AppCompatActivity {
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString("token", token);
                         editor.apply();
-
                         // Inicio de sesión exitoso, redirige al usuario a la pantalla de contenido
                         loginSuccessful = true;
                         Utils.gotoActivity(Activity_login.this, Activity_contenido.class);
 
                     } else {
                         // Inicio de sesión fallido, muestra un mensaje de error
-                        Utils.showToast(Activity_login.this, "Inicio de sesión incorrecto");
+                        Utils.showToastSecond(Activity_login.this, context,"Inicio de sesión incorrecto");
                     }
                 } else {
                     // Inicio de sesión fallido, muestra un mensaje de error
-                    Utils.showToast(Activity_login.this, "Inicio de sesión incorrecto");
+                    Utils.showToastSecond(Activity_login.this,context, "Inicio de sesión incorrecto");
                 }
             }
 
@@ -146,7 +146,7 @@ public class Activity_login extends AppCompatActivity {
                 // Error en la llamada, muestra el mensaje de error y registra la excepción
                 t.printStackTrace();
                 Log.e(TAG, "Error en la llamada:" + t.getMessage());
-                Utils.showToast(Activity_login.this, "Error en la llamada: " + t.getMessage());
+                Utils.showToastSecond(Activity_login.this, context,"Error en la llamada: " + t.getMessage());
             }
         });
 

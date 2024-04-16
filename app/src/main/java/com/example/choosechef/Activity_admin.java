@@ -62,8 +62,7 @@ public class Activity_admin extends AppCompatActivity {
      */
     public void recuperarDatos(){
         userList.clear(); // Limpiar la lista actual
-        // Obtener el contexto de la actividad (this)
-        Context context = this;
+        Context context = this; // Obtener el contexto de la actividad (this)
         // Compruebe el estado de la conexión de red
         if (!Utils.isNetworkAvailable(this)) {
             Utils.showToastSecond(Activity_admin.this, context, "No hay conexión a Internet");
@@ -84,7 +83,6 @@ public class Activity_admin extends AppCompatActivity {
                     contentSuccessful = true;
                     userList.clear(); // Limpiar la lista actual
                     userList.addAll(response.body()); // Agregar todos los usuarios recuperados
-
                     // Notificar al adaptador que los datos han cambiado
                     adapter.notifyDataSetChanged();
                 } else {

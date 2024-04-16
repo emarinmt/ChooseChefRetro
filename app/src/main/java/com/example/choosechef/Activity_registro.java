@@ -1,5 +1,6 @@
 package com.example.choosechef;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -135,6 +136,7 @@ public class Activity_registro extends AppCompatActivity {
      * @param user objeto con los datos del nuevo usuario
      */
     public void crearUsuario(User user) {
+        Context context = this; // Obtener el contexto de la actividad (this)
         Call<String> call = mfastMethods.crear(user);
         call.enqueue(new Callback<String>() { // Ejecutar la llamada de manera asíncrona
             /**
@@ -148,10 +150,10 @@ public class Activity_registro extends AppCompatActivity {
                     registrationSuccessful = true;
                     // String responseBody = response.body();
                     // Registro exitoso, redirige al usuario a la pantalla de login
-                    Utils.showToast(Activity_registro.this, "Registro exitoso");
+                    Utils.showToastSecond(Activity_registro.this, context,"Registro exitoso");
                     Utils.gotoActivity(Activity_registro.this, Activity_login.class);
                 } else {
-                    Utils.showToast(Activity_registro.this, "El usuario ya existe");
+                    Utils.showToastSecond(Activity_registro.this, context, "El usuario ya existe");
                 }
             }
 
@@ -165,7 +167,7 @@ public class Activity_registro extends AppCompatActivity {
                 // Error en la llamada, muestra el mensaje de error y registra la excepción
                 t.printStackTrace();
                 Log.e(TAG, "Error en la llamada:" + t.getMessage());
-                Utils.showToast(Activity_registro.this, "Error en la llamada: " + t.getMessage());
+                Utils.showToastSecond(Activity_registro.this, context,"Error en la llamada: " + t.getMessage());
             }
         });
     }

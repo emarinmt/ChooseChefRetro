@@ -67,7 +67,7 @@ public class Activity_user extends AppCompatActivity {
      * LLama al servidor y recupera la lista de reserva del usuario logeado
      */
     public void recuperarDatos(){
-        Context context = this;
+        Context context = this; // Obtener el contexto de la actividad (this)
         // Compruebe el estado de la conexión de red
         if (!Utils.isNetworkAvailable(this)) {
             Utils.showToastSecond(Activity_user.this, context,"No hay conexión a Internet");

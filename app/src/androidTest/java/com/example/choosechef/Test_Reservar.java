@@ -83,7 +83,7 @@ public class Test_Reservar {
     @Test
     public void testReservaInValidDate() {
         // Establecer el valor deseado de fechaStr
-        String fechaDeseada = "2023-05-22";
+        String fechaDeseada = "2023-05-23";
         reservar.setFechaStr(fechaDeseada);
         espera();
         // Confirma la selección haciendo clic en el botón de confirmar reserva
