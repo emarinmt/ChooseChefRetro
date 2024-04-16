@@ -55,7 +55,7 @@ public class Activity_reserva_ampliado  extends AppCompatActivity {
 
         retro=FastClient.getClient();
         mfastMethods = retro.create(FastMethods.class);
-       // Reserva reserva = new Reserva();
+        // Reserva reserva = new Reserva();
 
         //Inicialización de variables
         nombre_chef = findViewById(R.id.nombre_chef_reserva);

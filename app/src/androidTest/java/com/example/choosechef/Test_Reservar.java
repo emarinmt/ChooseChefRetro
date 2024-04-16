@@ -16,12 +16,9 @@ import org.junit.runner.RunWith;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
-
 import static androidx.test.espresso.action.ViewActions.typeText;
-
 import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
-
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 
@@ -43,16 +40,17 @@ public class Test_Reservar {
     public IntentsTestRule<Activity_login> activityRule = new IntentsTestRule<>(Activity_login.class);
     private Activity_reservar reservar;
     private Context context;
-
+    private static int daysToAdd = 0; // Contador para los días a agregar
     @Before
     public void setUp() {
         FastClient.initialize(ApplicationProvider.getApplicationContext());
         context = ApplicationProvider.getApplicationContext();
-        // Iniciar sesión como usuario de prueba
+        // Iniciar sesión como usuario de prueba client
         onView(withId(R.id.edt_usuario_login)).perform(typeText("client"));
         onView(withId(R.id.edt_contra_login)).perform(typeText("client"), closeSoftKeyboard());
         onView(withId(R.id.ibtn_entrar_login)).perform(click());
         espera();
+        // PARA MÁS ADELANTE IMPLEMENTAR QUE CLIQUE EN UN CHEF DETERMINADO
         // Hacer clic en el primer elemento de la lista (suponiendo que hay al menos un chef en la lista)
         onView(withId(R.id.rv_chefs))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
@@ -65,54 +63,59 @@ public class Test_Reservar {
     }
 
     // Reserva correcta
+    // De momomento, no hemos implementado un método para obtener las fechas ocupadas,
+    // por lo tanto usamos una fecha muy posterior y vamos añadiendo días para asegurar que esté libre
     @Test
     public void testReservaValid() {
-        // Establecer el valor deseado de fechaStr
-        String fechaDeseada = "2024-05-20";
+        // Obtener una fecha posterior libre
+        String fechaDeseada = obtenerFechaDeseada();
+        // Establecer la fecha deseada en Activity_reservar mediante el método setFechaStr()
         reservar.setFechaStr(fechaDeseada);
         espera();
         // Confirma la selección haciendo clic en el botón de confirmar reserva
         onView(withId(R.id.imageButton2)).perform(click());
         espera();
-        // Verifica el estado de la reserva después de la acción
         // Verificar si la reserva fue exitosa
         assertTrue(reservar.isReservaSuccessful());
+        daysToAdd++; // para evitar errores con futuros tests
     }
 
     // Reserva incorrecta (fecha anterior a la actual)
     @Test
     public void testReservaInValidDate() {
-        // Establecer el valor deseado de fechaStr
+        // Establecemos una fecha anterior a la actual
         String fechaDeseada = "2023-05-23";
+        // Establecer la fecha deseada en Activity_reservar mediante el método setFechaStr()
         reservar.setFechaStr(fechaDeseada);
         espera();
         // Confirma la selección haciendo clic en el botón de confirmar reserva
         onView(withId(R.id.imageButton2)).perform(click());
         espera();
-        // Verifica el estado de la reserva después de la acción
-        // Verificar si la reserva fue exitosa
+        // Verificar si la reserva fue fallida
         assertFalse(reservar.isReservaSuccessful());
     }
+
     // Reserva incorrecta (fecha ya reservada)
     @Test
     public void testReservaInvalidOcupada() {
-        // Establecer el valor deseado de fechaStr
-        String fechaAocupar = "2024-05-20";
-        reservar.setFechaStr(fechaAocupar);
-        espera();
-        // Confirma la selección haciendo clic en el botón de confirmar reserva
-        onView(withId(R.id.imageButton2)).perform(click());
-        espera();
-        // Establecer el valor deseado de fechaStr
-        String fechaDeseada = "2024-05-20";
+        // Obtener una fecha posterior libre
+        String fechaDeseada = obtenerFechaDeseada();
+        // Establecer la fecha deseada en Activity_reservar mediante el método setFechaStr()
         reservar.setFechaStr(fechaDeseada);
         espera();
         // Confirma la selección haciendo clic en el botón de confirmar reserva
         onView(withId(R.id.imageButton2)).perform(click());
         espera();
-        // Verifica el estado de la reserva después de la acción
-        // Verificar si la reserva fue exitosa
-        assertTrue(reservar.isReservaSuccessful());
+
+        // Repetimos el proceso con la misma fecha
+        reservar.setFechaStr(fechaDeseada);
+        espera();
+        // Confirma la selección haciendo clic en el botón de confirmar reserva
+        onView(withId(R.id.imageButton2)).perform(click());
+        espera();
+        // Verificar si la reserva fue fallida
+        assertFalse(reservar.isReservaSuccessful());
+        daysToAdd++; // Para evitar errores con futuros tests
     }
 
     // Método para obtener la instancia de una actividad específica
@@ -129,18 +132,34 @@ public class Test_Reservar {
         });
         return currentActivity[0];
     }
+
+    // Método para establecer tiempos de espera
     public void espera() {
         // Esperar un tiempo suficiente para que se complete la operación asíncrona
         try {
-            Thread.sleep(25000); // Espera 5 segundos
+            Thread.sleep(5000); // Espera 5 segundos
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
-    public static long getDateInMillis(int year, int month, int day) {
+    // Método para obtener la fecha deseada en el formato "YYYY-MM-DD"
+    public String obtenerFechaDeseada() {
+        // Crear una instancia de Calendar para la fecha base (1 de enero de 2025)
         Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month, day);
-        return calendar.getTimeInMillis();
+        calendar.set(2025, Calendar.JANUARY, 02);
+
+        // Agregar días adicionales (según el contador daysToAdd)
+        calendar.add(Calendar.DAY_OF_MONTH, daysToAdd);
+
+        // Obtener año, mes y día de la fecha resultante
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH); // Mes actual (zero-based)
+        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+
+        // Formatear la fecha en formato deseado (YYYY-MM-DD)
+        String fechaDeseada = String.format("%d-%02d-%02d", year, month + 1, dayOfMonth);
+
+        return fechaDeseada;
     }
 
 }

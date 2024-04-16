@@ -272,5 +272,13 @@ public class Activity_reservar extends AppCompatActivity {
     public void setFechaStr(String fecha) {
         this.fechaStr = fecha;
     }
+
+    /*
+    PARA MÁS ADELANTE, NECESITARIAMOS UN MÉTODO QUE NOS DEVUELVA LAS RESERVAS DE ESE CHEG
+    PARA PASAR TEST CON FECHA OCUPADA O LIBRE Y PARA QUE LUEGO LAS GESTIONE EL ADMIN
+    private void obtenerFechasOcupadasDelChef(String chefUsuario) {
+    }
+    */
+
 }
 
