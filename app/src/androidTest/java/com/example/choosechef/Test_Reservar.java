@@ -133,9 +133,8 @@ public class Test_Reservar {
         return currentActivity[0];
     }
 
-    // Método para establecer tiempos de espera
+    // Método para esperar a que se complete la operación asíncrona
     public void espera() {
-        // Esperar un tiempo suficiente para que se complete la operación asíncrona
         try {
             Thread.sleep(5000); // Espera 5 segundos
         } catch (InterruptedException e) {

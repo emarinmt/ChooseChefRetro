@@ -36,8 +36,6 @@ public class Test_Registro {
         registro = activityRule.getActivity();
     }
 
-
-
     // Nuevo usuario, se crea correctamente (hay conexión)
     @Test
     public void testValidCredentials() {
@@ -57,7 +55,8 @@ public class Test_Registro {
         // Aseguramos que el registro sea exitoso
         assertTrue(registro.isRegistrationSuccessful());
     }
-    // // Nuevo usuario, no se crea correctamente (no hay conexión)
+
+    // Nuevo usuario, no se crea correctamente (no hay conexión)
     @Test
     public void testRegisterWhenNoNetwork() {
         // Simular no tener conexión de red (configurando el estado de red en falso)
@@ -80,7 +79,6 @@ public class Test_Registro {
     // Las contraseñas no coinciden, no se crea el usuario
     @Test
     public void testInvalidPassword() {
-
         // Simulamos la entrada de datos en los campos de registro
         onView(withId(R.id.edt_usuario_registro)).perform(replaceText("user"));
         onView(withId(R.id.edt_contraseña_registro)).perform(replaceText("password"));
@@ -96,9 +94,8 @@ public class Test_Registro {
     // El usuario ya existe, no se crea el usuario
     @Test
     public void testInvalidUsername() {
-
         // Simulamos la entrada de datos en los campos de registro
-        onView(withId(R.id.edt_usuario_registro)).perform(replaceText("1"));
+        onView(withId(R.id.edt_usuario_registro)).perform(replaceText("client"));
         onView(withId(R.id.edt_contraseña_registro)).perform(replaceText("pruebappass"));
         onView(withId(R.id.edt_contraseña2_registro)).perform(replaceText("pruebappass"));
 
@@ -112,7 +109,6 @@ public class Test_Registro {
     // Faltan datos, no se crea el usuario
     @Test
     public void testEmptyFields() {
-
         // Simulamos la entrada de datos en los campos de registro
         onView(withId(R.id.edt_usuario_registro)).perform(replaceText(""));
         onView(withId(R.id.edt_contraseña_registro)).perform(replaceText(""));
@@ -131,8 +127,9 @@ public class Test_Registro {
         int randomNumber = random.nextInt(1000); // Genera un número aleatorio entre 0 y 999
         return "test" + randomNumber; // Devuelve un nombre de usuario único cada vez que se llama
     }
+
+    // Método para esperar a que se complete la operación asíncrona
     public void espera() {
-        // Esperar un tiempo suficiente para que se complete la operación asíncrona
         try {
             Thread.sleep(5000); // Espera 5 segundos
         } catch (InterruptedException e) {

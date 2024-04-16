@@ -32,6 +32,8 @@ import androidx.test.espresso.contrib.RecyclerViewActions;
  */
 @RunWith(AndroidJUnit4.class)
 public class Test_ContenidoAmpliado {
+    // CORRESPONDERIA A LA CLASE ACTIVITY_CHEF_AMPLIADO
+
     @Rule
     public IntentsTestRule<Activity_login> activityRule = new IntentsTestRule<>(Activity_login.class);
     private Activity_chef_ampliado contenidoAmpliado;
@@ -41,8 +43,8 @@ public class Test_ContenidoAmpliado {
         FastClient.initialize(ApplicationProvider.getApplicationContext());
         context = ApplicationProvider.getApplicationContext();
         // Iniciar sesión como usuario de prueba
-        onView(withId(R.id.edt_usuario_login)).perform(typeText("4"));
-        onView(withId(R.id.edt_contra_login)).perform(typeText("4"), closeSoftKeyboard());
+        onView(withId(R.id.edt_usuario_login)).perform(typeText("client"));
+        onView(withId(R.id.edt_contra_login)).perform(typeText("client"), closeSoftKeyboard());
         onView(withId(R.id.ibtn_entrar_login)).perform(click());
         espera();
         // Verificar que se abre Activity_contenido después del login
@@ -52,9 +54,8 @@ public class Test_ContenidoAmpliado {
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         // Verificar que la actividad chef_ampliado se inicia correctamente
         intended(hasComponent(Activity_chef_ampliado.class.getName()));
-        // Obtener la instancia de Activity_content_ampliado
+        // Obtener la instancia de Activity_chef_ampliado
         contenidoAmpliado = ((Activity_chef_ampliado) getActivityInstance(Activity_chef_ampliado.class));
-
     }
 
     // Ampliación de chef correcta
@@ -91,10 +92,10 @@ public class Test_ContenidoAmpliado {
         });
         return currentActivity[0];
     }
+    // Método para esperar a que se complete la operación asíncrona
     public void espera() {
-        // Esperar un tiempo suficiente para que se complete la operación asíncrona
         try {
-            Thread.sleep(15000); // Espera 5 segundos
+            Thread.sleep(5000); // Espera 5 segundos
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

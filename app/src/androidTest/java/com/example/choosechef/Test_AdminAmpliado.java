@@ -15,27 +15,25 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-
 import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.action.ViewActions.clearText;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.action.ViewActions.clearText;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
-import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import java.util.Collection;
-import java.util.Random;
 
 /**
  * Para realizar los tests referentes a la modificación del perfil de usuario
  */
 @RunWith(AndroidJUnit4.class)
 public class Test_AdminAmpliado {
+    // CORRESPONDERIA A LA CLASE ACTIVITY_USER_AMPLIADO
     @Rule
     public IntentsTestRule<Activity_login> activityRule = new IntentsTestRule<>(Activity_login.class);
     private Context context;
@@ -54,7 +52,7 @@ public class Test_AdminAmpliado {
         // Verificar que se abre Activity_admin después de clicar en ajustes
         intended(hasComponent(Activity_admin.class.getName()));
         // Obtener la instancia de Activity_admin
-       // actAdmin = ((Activity_admin) getActivityInstance(Activity_admin.class));
+        // actAdmin = ((Activity_admin) getActivityInstance(Activity_admin.class));
         // Hacer clic en el primer elemento de la lista (suponiendo que hay al menos un usuario en la lista)
         onView(withId(R.id.rv_users))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
@@ -63,6 +61,7 @@ public class Test_AdminAmpliado {
         // Obtener la instancia de Activity_user_ampliado
         actAdminAmpl = ((Activity_user_ampliado) getActivityInstance(Activity_user_ampliado.class));
     }
+
     // Ampliación de usuario correcta
     @Test
     public void testAmpliarUserValid() {
@@ -82,6 +81,7 @@ public class Test_AdminAmpliado {
         // Verificar que contentSuccessful es false
         assertFalse(actAdminAmpl.isContentSuccessful());
     }
+
     // Modificación datos usuario correcta
     @Test
     public void testModifyUserValid() {
@@ -90,13 +90,13 @@ public class Test_AdminAmpliado {
         onView(withId(R.id.ibtn_edit)).perform(click());
         espera();
 
-        // Obtener texto actual del campo de nombre
-        String currentDesc = actAdminAmpl.getDescUsuario(); // Ejemplo: método para obtener nombre de usuario
+        // Obtener texto actual del campo descripción
+        String currentDesc = actAdminAmpl.getDescUsuario(); // Ejemplo: método para obtener descripción de usuario
 
-        // Borrar el texto actual del campo de nombre
+        // Borrar el texto actual del campo descripción
         onView(withId(R.id.edt_descripcion_usuario)).perform(clearText());
 
-        // Escribir un nuevo nombre en el campo de nombre
+        // Escribir un nuevo nombre en el campo descripción
         onView(withId(R.id.edt_descripcion_usuario)).perform(typeText(currentDesc), closeSoftKeyboard());
 
         // Realizamos el clic en el botón de editar
@@ -106,14 +106,13 @@ public class Test_AdminAmpliado {
         assertTrue(actAdminAmpl.isModifySuccessful());
     }
 
-
+/*
     // CUIDADOOO!! NO PASAR!!!
     // No puedo especificar qué usuario se borra, solo si sé la posicion en la lista
-    /*
     // Eliminación de usuario correcta
     @Test
     public void testDeleteUserValid() {
-        int initialSize = actAdmin.userList.size();
+        //int initialSize = actAdmin.userList.size();
         onView(withId(R.id.ibtn_delete)).perform(click());
         espera();
         int finalSize = actAdmin.userList.size();
@@ -123,6 +122,7 @@ public class Test_AdminAmpliado {
         assertTrue(actAdminAmpl.isDeleteSuccessful());
     }
 */
+
 
     // Método para obtener la instancia de una actividad específica
     private Activity getActivityInstance(Class<? extends Activity> activityClass) {
@@ -138,18 +138,12 @@ public class Test_AdminAmpliado {
         });
         return currentActivity[0];
     }
+    // Método para esperar a que se complete la operación asíncrona
     public void espera() {
-        // Esperar un tiempo suficiente para que se complete la operación asíncrona
         try {
-            Thread.sleep(15000); // Espera 5 segundos
+            Thread.sleep(5000); // Espera 5 segundos
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-    }
-    // Método para generar un nombre de usuario aleatorio
-    private String generateRandomUsername() {
-        Random random = new Random();
-        int randomNumber = random.nextInt(1000); // Genera un número aleatorio entre 0 y 999
-        return "test" + randomNumber; // Devuelve un nombre de usuario único cada vez que se llama
     }
 }

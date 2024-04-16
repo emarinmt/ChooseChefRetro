@@ -23,16 +23,15 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
  */
 @RunWith(AndroidJUnit4.class)
 public class Test_AjustesTipo {
+    // PARA COMPROBAR QUE LA PANTALLA POSTERIOR A CLIAR EN AJUSTES VARIA SEGÚN EL TIPO DE USUARIO
     @Rule
     public IntentsTestRule<Activity_login> activityRule = new IntentsTestRule<>(Activity_login.class);
     private Context context;
-
 
     @Before
     public void setUp() {
         FastClient.initialize(ApplicationProvider.getApplicationContext());
         context = ApplicationProvider.getApplicationContext();
-
     }
 
     // Redirección ajustes admin correcta
@@ -58,7 +57,7 @@ public class Test_AjustesTipo {
         onView(withId(R.id.ibtn_entrar_login)).perform(click());
         espera();
         onView(withId(R.id.btn_ajustes)).perform(click());
-        // Verificar que se abre Activity_admin después de clicar en ajustes
+        // Verificar que se abre Activity_chef después de clicar en ajustes
         intended(hasComponent(Activity_chef.class.getName()));
     }
 
@@ -71,14 +70,14 @@ public class Test_AjustesTipo {
         onView(withId(R.id.ibtn_entrar_login)).perform(click());
         espera();
         onView(withId(R.id.btn_ajustes)).perform(click());
-        // Verificar que se abre Activity_admin después de clicar en ajustes
+        // Verificar que se abre Activity_user después de clicar en ajustes
         intended(hasComponent(Activity_user.class.getName()));
     }
 
+    // Método para esperar a que se complete la operación asíncrona
     public void espera() {
-        // Esperar un tiempo suficiente para que se complete la operación asíncrona
         try {
-            Thread.sleep(15000); // Espera 5 segundos
+            Thread.sleep(5000); // Espera 5 segundos
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

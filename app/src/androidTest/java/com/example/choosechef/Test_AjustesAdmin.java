@@ -33,6 +33,7 @@ import java.util.Random;
  */
 @RunWith(AndroidJUnit4.class)
 public class Test_AjustesAdmin {
+    // CORRESPONDERIA A LA CLASE ACTIVITY_ADMIN
     @Rule
     public IntentsTestRule<Activity_login> activityRule = new IntentsTestRule<>(Activity_login.class);
     private Context context;
@@ -55,7 +56,7 @@ public class Test_AjustesAdmin {
         actAdmin = ((Activity_admin) getActivityInstance(Activity_admin.class));
     }
 
-    // Recuperación de lista de usuarios correcta
+    // Recuperación de lista de usuarios correcta (hay conexión)
     @Test
     public void testRecuperarChefsWithNetwork() {
         // Simular tener conexión de red (configurando el estado de red en true)
@@ -67,7 +68,7 @@ public class Test_AjustesAdmin {
         assertTrue(actAdmin.isContentSuccessful());
     }
 
-    // Recuperación de lista de usuarios incorrecta, no hay conexión
+    // Recuperación de lista de usuarios incorrecta (no hay conexión)
     @Test
     public void testRecuperarChefsWhenNoNetwork() {
         // Simular no tener conexión de red (configurando el estado de red en falso)
@@ -81,10 +82,10 @@ public class Test_AjustesAdmin {
         assertFalse(actAdmin.isContentSuccessful());
     }
 
-    // Recuperación de lista de usuarios correcta, añadiendo un chef para comprobar que se mpdifica la lista
+    // Recuperación de lista de usuarios correcta, añadiendo un chef para comprobar que se modifica la lista
     @Test
     public void testRecuperarChefsSuccess() {
-        int initialSize = actAdmin.userList.size();// Número de usuarios antes del registro
+        int initialSize = actAdmin.userList.size();// Número de usuarios antes del registro, para poder comparar
         onView(withId(R.id.btn_logout_user)).perform(click()); // Logout
         // Registro, simulando la entrada de datos
         onView(withId(R.id.ibtn_registro)).perform(click());
@@ -123,10 +124,10 @@ public class Test_AjustesAdmin {
         });
         return currentActivity[0];
     }
+    // Método para esperar a que se complete la operación asíncrona
     public void espera() {
-        // Esperar un tiempo suficiente para que se complete la operación asíncrona
         try {
-            Thread.sleep(15000); // Espera 5 segundos
+            Thread.sleep(5000); // Espera 5 segundos
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

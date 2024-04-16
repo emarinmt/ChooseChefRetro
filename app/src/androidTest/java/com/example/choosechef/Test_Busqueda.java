@@ -39,18 +39,15 @@ public class Test_Busqueda {
     private Activity_busqueda busqueda;
     private Context context;
 
-
     @Before
     public void setUp() {
         FastClient.initialize(ApplicationProvider.getApplicationContext());
         context = ApplicationProvider.getApplicationContext();
         // Iniciar sesión como usuario de prueba
-        onView(withId(R.id.edt_usuario_login)).perform(typeText("4"));
-        onView(withId(R.id.edt_contra_login)).perform(typeText("4"), closeSoftKeyboard());
+        onView(withId(R.id.edt_usuario_login)).perform(typeText("client"));
+        onView(withId(R.id.edt_contra_login)).perform(typeText("client"), closeSoftKeyboard());
         onView(withId(R.id.ibtn_entrar_login)).perform(click());
-
         espera();
-
         // Verificar que se abre Activity_contenido después del login
         intended(hasComponent(Activity_contenido.class.getName()));
         // Obtener la instancia de Activity_content
@@ -66,9 +63,9 @@ public class Test_Busqueda {
         String servicio = "Chef a domicilio";
         // Filtrar la lista de usuarios por los criterios definidos
         List<User> chefsFiltrados = contenido.filterUsers(contenido.userList, provincia, comida, servicio);
-
-        int initialSize = chefsFiltrados.size(); // Número esperado de chefs con estos criterios
-
+        // Número esperado de chefs con estos criterios, para poder comparar
+        int initialSize = chefsFiltrados.size();
+        // Clicamos a buscar
         onView(withId(R.id.btn_lupa)).perform(click());
         // Obtener la instancia de Activity_busqueda
         busqueda = ((Activity_busqueda) getActivityInstance(Activity_busqueda.class));
@@ -85,14 +82,14 @@ public class Test_Busqueda {
         onView(withId(R.id.spinner_servicios)).perform(click()); // Abrir el Spinner
         onView(withText("Chef a domicilio")).perform(click()); // Seleccionar un valor específico
 
-        onView(withId(R.id.ibtn_confirmar)).perform(click());
+        onView(withId(R.id.ibtn_confirmar)).perform(click()); // Clicar en confirmar
         espera();
         int finalSize = contenido.userList.size(); // Número de chefs después del registro
-        // Aseguramos que el el número de chefs inicial + 1 coincide con el actual
+        // Aseguramos que el el número de chefs filtrados inicial coincide con el actual
         assertEquals(initialSize, finalSize);
     }
 
-    // Recuperación de provincias correcta
+    // Recuperación de provincias correcta (hay conexión)
     @Test
     public void testRecuperarProvWithNetwork() {
         // Simular tener conexión de red (configurando el estado de red en true)
@@ -108,7 +105,7 @@ public class Test_Busqueda {
         assertTrue(busqueda.isProvSuccessful());
     }
 
-    // Recuperación de provincias incorrecta, no hay conexión
+    // Recuperación de provincias incorrecta (no hay conexión)
     @Test
     public void testRecuperarProvWhenNoNetwork() {
         // Simular no tener conexión de red (configurando el estado de red en falso)
@@ -140,10 +137,11 @@ public class Test_Busqueda {
         });
         return currentActivity[0];
     }
+    // Método para esperar a que se complete la operación asíncrona
     public void espera() {
         // Esperar un tiempo suficiente para que se complete la operación asíncrona
         try {
-            Thread.sleep(15000); // Espera 5 segundos
+            Thread.sleep(5000); // Espera 5 segundos
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

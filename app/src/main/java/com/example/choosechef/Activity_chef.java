@@ -26,6 +26,7 @@ import retrofit2.Retrofit;
  */
 public class Activity_chef extends AppCompatActivity {
     private boolean modifySuccessful = false; // Variable para rastrear el estado de la modificación
+    private boolean contentSuccessful = false; // Variable para rastrear el estado de la muestra del listado
     private final String TAG = Activity_chef.class.getSimpleName();
     //Variables para los spinners, descripción y selecciones
     Spinner spinner_prov;
@@ -131,6 +132,7 @@ public class Activity_chef extends AppCompatActivity {
         // Compruebe el estado de la conexión de red
         if (!Utils.isNetworkAvailable(this)) {
             Utils.showToastSecond(Activity_chef.this, context,"No hay conexión a Internet");
+            contentSuccessful = false;
             return;
         }
         // Call HTTP client para recuperar la información del usuario
@@ -145,6 +147,7 @@ public class Activity_chef extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     user = response.body(); // Recibe los datos del usuario
                     if (user != null) {
+                        contentSuccessful = true;
                         // Mostrar datos en pantalla
                         spinner_prov.setSelection(getIndex(spinner_prov, user.getUbicacion()));
                         spinner_comida.setSelection(getIndex(spinner_comida, user.getComida()));
@@ -164,6 +167,7 @@ public class Activity_chef extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
                 // Error en la llamada, muestra el mensaje de error y registra la excepción
+                contentSuccessful = false;
                 t.printStackTrace();
                 Log.e(TAG, "Error en la llamada:" + t.getMessage());
                 Utils.showToastSecond(Activity_chef.this, context,"Error en la llamada: " + t.getMessage());
@@ -266,5 +270,8 @@ public class Activity_chef extends AppCompatActivity {
      */
     public boolean isModifySuccessful() {
         return modifySuccessful;
+    }
+    public boolean isContentSuccessful() {
+        return contentSuccessful;
     }
 }

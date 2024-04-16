@@ -38,7 +38,6 @@ public class Test_Modperfil {
 
     @Rule
     public IntentsTestRule<Activity_login> activityRule = new IntentsTestRule<>(Activity_login.class);
-
     private Activity_mod_perfil modperfil;
     private Context context;
     @Before
@@ -49,11 +48,8 @@ public class Test_Modperfil {
         onView(withId(R.id.edt_usuario_login)).perform(typeText("4"));
         onView(withId(R.id.edt_contra_login)).perform(typeText("4"), closeSoftKeyboard());
         onView(withId(R.id.ibtn_entrar_login)).perform(click());
-
         espera();
-
         onView(withId(R.id.btn_mod_perfil)).perform(click());
-
         espera();
         // Verificar que se abre Activity_mod_perfil después de clicar el boton
         intended(hasComponent(Activity_mod_perfil.class.getName()));
@@ -152,7 +148,6 @@ public class Test_Modperfil {
         assertFalse(modperfil.isModifySuccessful());
     }
 
-
     // Faltan datos, no se modifica el perfil
     @Test
     public void testEmptyFields() {
@@ -188,15 +183,13 @@ public class Test_Modperfil {
         });
         return currentActivity[0];
     }
+    // Método para esperar a que se complete la operación asíncrona
     public void espera() {
-        // Esperar un tiempo suficiente para que se complete la operación asíncrona
         try {
-            Thread.sleep(15000); // Espera 5 segundos
+            Thread.sleep(5000); // Espera 5 segundos
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
-
-
 
 }

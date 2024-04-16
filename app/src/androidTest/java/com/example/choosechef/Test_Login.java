@@ -41,8 +41,8 @@ public class Test_Login {
     public void testValidCredentials() {
 
         // Simulamos la entrada de datos en los campos de login
-        onView(withId(R.id.edt_usuario_login)).perform(replaceText("4"));
-        onView(withId(R.id.edt_contra_login)).perform(replaceText("4"));
+        onView(withId(R.id.edt_usuario_login)).perform(replaceText("client"));
+        onView(withId(R.id.edt_contra_login)).perform(replaceText("client"));
 
         // Realizamos el clic en el botón de entrar
         onView(withId(R.id.ibtn_entrar_login)).perform(click());
@@ -59,8 +59,8 @@ public class Test_Login {
     public void testInvalidPassword() {
 
         // Simulamos la entrada de datos en los campos de login
-        onView(withId(R.id.edt_usuario_login)).perform(replaceText("1"));
-        onView(withId(R.id.edt_contra_login)).perform(replaceText("3"));
+        onView(withId(R.id.edt_usuario_login)).perform(replaceText("client"));
+        onView(withId(R.id.edt_contra_login)).perform(replaceText("wrongPass"));
 
         // Realizamos el clic en el botón de entrar
         onView(withId(R.id.ibtn_entrar_login)).perform(click());
@@ -74,8 +74,8 @@ public class Test_Login {
     public void testInvalidUsername() {
 
         // Simulamos la entrada de datos en los campos de login
-        onView(withId(R.id.edt_usuario_login)).perform(replaceText("2"));
-        onView(withId(R.id.edt_contra_login)).perform(replaceText("3"));
+        onView(withId(R.id.edt_usuario_login)).perform(replaceText("clientwrong"));
+        onView(withId(R.id.edt_contra_login)).perform(replaceText("pass"));
 
         // Realizamos el clic en el botón de entrar
         onView(withId(R.id.ibtn_entrar_login)).perform(click());
@@ -98,8 +98,8 @@ public class Test_Login {
         // Aseguramos que el login sea fallido
         assertFalse(login.isLoginSuccessful());
     }
+    // Método para esperar a que se complete la operación asíncrona
     public void espera() {
-        // Esperar un tiempo suficiente para que se complete la operación asíncrona
         try {
             Thread.sleep(5000); // Espera 5 segundos
         } catch (InterruptedException e) {

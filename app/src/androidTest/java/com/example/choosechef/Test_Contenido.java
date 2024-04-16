@@ -38,24 +38,22 @@ public class Test_Contenido {
     private Activity_contenido contenido;
     private Context context;
 
-
     @Before
     public void setUp() {
         FastClient.initialize(ApplicationProvider.getApplicationContext());
         context = ApplicationProvider.getApplicationContext();
-        // Iniciar sesión como usuario de prueba
-        onView(withId(R.id.edt_usuario_login)).perform(typeText("4"));
-        onView(withId(R.id.edt_contra_login)).perform(typeText("4"), closeSoftKeyboard());
+        // Iniciar sesión como usuario de prueba client
+        onView(withId(R.id.edt_usuario_login)).perform(typeText("client"));
+        onView(withId(R.id.edt_contra_login)).perform(typeText("client"), closeSoftKeyboard());
         onView(withId(R.id.ibtn_entrar_login)).perform(click());
-
         espera();
-
         // Verificar que se abre Activity_contenido después del login
         intended(hasComponent(Activity_contenido.class.getName()));
         // Obtener la instancia de Activity_content
         contenido = ((Activity_contenido) getActivityInstance(Activity_contenido.class));
     }
-    // Recuperación de lista de chefs correcta
+
+    // Recuperación de lista de chefs correcta (hay conexión)
     @Test
     public void testRecuperarChefsWithNetwork() {
         // Simular tener conexión de red (configurando el estado de red en true)
@@ -67,7 +65,7 @@ public class Test_Contenido {
         assertTrue(contenido.isContentSuccessful());
     }
 
-    // Recuperación de lista de chefs incorrecta, no hay conexión
+    // Recuperación de lista de chefs incorrecta (no hay conexión)
     @Test
     public void testRecuperarChefsWhenNoNetwork() {
         // Simular no tener conexión de red (configurando el estado de red en falso)
@@ -80,6 +78,7 @@ public class Test_Contenido {
         // Verificar que contentSuccessful es falso
         assertFalse(contenido.isContentSuccessful());
     }
+
     // Recuperación de lista de chefs correcta, añadiendo un chef para comprobar que se mpdifica la lista
     @Test
     public void testRecuperarChefsSuccess() {
@@ -95,8 +94,8 @@ public class Test_Contenido {
         onView(withId(R.id.ibtn_registrarse_registro)).perform(click());
         espera();
         // Iniciar sesión como usuario de prueba
-        onView(withId(R.id.edt_usuario_login)).perform(typeText("4"));
-        onView(withId(R.id.edt_contra_login)).perform(typeText("4"), closeSoftKeyboard());
+        onView(withId(R.id.edt_usuario_login)).perform(typeText("client"));
+        onView(withId(R.id.edt_contra_login)).perform(typeText("client"), closeSoftKeyboard());
         onView(withId(R.id.ibtn_entrar_login)).perform(click());
         contenido.recuperarChefs();
         espera();
@@ -121,8 +120,8 @@ public class Test_Contenido {
         onView(withId(R.id.ibtn_registrarse_registro)).perform(click());
         espera();
         // Iniciar sesión como usuario de prueba
-        onView(withId(R.id.edt_usuario_login)).perform(typeText("4"));
-        onView(withId(R.id.edt_contra_login)).perform(typeText("4"), closeSoftKeyboard());
+        onView(withId(R.id.edt_usuario_login)).perform(typeText("client"));
+        onView(withId(R.id.edt_contra_login)).perform(typeText("client"), closeSoftKeyboard());
         onView(withId(R.id.ibtn_entrar_login)).perform(click());
         contenido.recuperarChefs();
         espera();
@@ -148,10 +147,11 @@ public class Test_Contenido {
         });
         return currentActivity[0];
     }
+
+    // Método para esperar a que se complete la operación asíncrona
     public void espera() {
-        // Esperar un tiempo suficiente para que se complete la operación asíncrona
         try {
-            Thread.sleep(15000); // Espera 5 segundos
+            Thread.sleep(5000); // Espera 5 segundos
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -163,7 +163,4 @@ public class Test_Contenido {
         int randomNumber = random.nextInt(1000); // Genera un número aleatorio entre 0 y 999
         return "test" + randomNumber; // Devuelve un nombre de usuario único cada vez que se llama
     }
-
-
-
 }

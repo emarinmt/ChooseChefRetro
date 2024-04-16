@@ -22,6 +22,7 @@ import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import java.util.Collection;
 
@@ -31,6 +32,7 @@ import java.util.Collection;
  */
 @RunWith(AndroidJUnit4.class)
 public class Test_AjustesChef {
+    // CORRESPONDERIA A LA CLASE ACTIVITY_CHEF
     @Rule
     public IntentsTestRule<Activity_login> activityRule = new IntentsTestRule<>(Activity_login.class);
     private Context context;
@@ -80,7 +82,17 @@ public class Test_AjustesChef {
         assertTrue(actChef.isModifySuccessful());
     }
 
-
+    // Recuperación de datos de chef incorrecta (no hay conexión)
+    @Test
+    public void testRecuperarChefsWhenNoNetwork() {
+        // Simular no tener conexión de red (configurando el estado de red en falso)
+        Utils.setNetworkAvailable(false);
+        espera();
+        actChef.recuperarDatos();
+        espera();
+        // Verificar que contentSuccessful es falso
+        assertFalse(actChef.isContentSuccessful());
+    }
 
     // Método para obtener la instancia de una actividad específica
     private Activity getActivityInstance(Class<? extends Activity> activityClass) {
@@ -96,10 +108,11 @@ public class Test_AjustesChef {
         });
         return currentActivity[0];
     }
+
+    // Método para esperar a que se complete la operación asíncrona
     public void espera() {
-        // Esperar un tiempo suficiente para que se complete la operación asíncrona
         try {
-            Thread.sleep(15000); // Espera 5 segundos
+            Thread.sleep(5000); // Espera 5 segundos
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
