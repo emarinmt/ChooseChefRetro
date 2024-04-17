@@ -1,13 +1,9 @@
 package com.example.choosechef;
-import android.app.Activity;
 
 import android.content.Context;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.intent.rule.IntentsTestRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.runner.lifecycle.ActivityLifecycleMonitorRegistry;
-import androidx.test.runner.lifecycle.Stage;
-
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -21,15 +17,13 @@ import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import java.util.Collection;
 import java.util.List;
 
 /**
- * Para realizar los tests referentes a la modificación del perfil de usuario
+ * Para realizar los tests referentes a la búsqueda de chefs
  */
 @RunWith(AndroidJUnit4.class)
 public class Test_Busqueda {
@@ -47,11 +41,11 @@ public class Test_Busqueda {
         onView(withId(R.id.edt_usuario_login)).perform(typeText("client"));
         onView(withId(R.id.edt_contra_login)).perform(typeText("client"), closeSoftKeyboard());
         onView(withId(R.id.ibtn_entrar_login)).perform(click());
-        espera();
+        UtilsTests.espera(10000);
         // Verificar que se abre Activity_contenido después del login
         intended(hasComponent(Activity_contenido.class.getName()));
         // Obtener la instancia de Activity_content
-        contenido = ((Activity_contenido) getActivityInstance(Activity_contenido.class));
+        contenido = ((Activity_contenido) UtilsTests.getActivityInstance(Activity_contenido.class));
     }
 
     // Muestra chefs filtrados correcta
@@ -68,7 +62,7 @@ public class Test_Busqueda {
         // Clicamos a buscar
         onView(withId(R.id.btn_lupa)).perform(click());
         // Obtener la instancia de Activity_busqueda
-        busqueda = ((Activity_busqueda) getActivityInstance(Activity_busqueda.class));
+        busqueda = ((Activity_busqueda) UtilsTests.getActivityInstance(Activity_busqueda.class));
 
         // Seleccionar un valor en el Spinner de provincias
         onView(withId(R.id.spinner_provincias)).perform(click()); // Abrir el Spinner
@@ -83,7 +77,7 @@ public class Test_Busqueda {
         onView(withText("Chef a domicilio")).perform(click()); // Seleccionar un valor específico
 
         onView(withId(R.id.ibtn_confirmar)).perform(click()); // Clicar en confirmar
-        espera();
+        UtilsTests.espera(10000);
         int finalSize = contenido.userList.size(); // Número de chefs después del registro
         // Aseguramos que el el número de chefs filtrados inicial coincide con el actual
         assertEquals(initialSize, finalSize);
@@ -94,13 +88,13 @@ public class Test_Busqueda {
     public void testRecuperarProvWithNetwork() {
         // Simular tener conexión de red (configurando el estado de red en true)
         Utils.setNetworkAvailable(true);
-        espera();
+        UtilsTests.espera(10000);
         onView(withId(R.id.btn_lupa)).perform(click());
         // Obtener la instancia de Activity_busqueda
-        busqueda = ((Activity_busqueda) getActivityInstance(Activity_busqueda.class));
+        busqueda = ((Activity_busqueda) UtilsTests.getActivityInstance(Activity_busqueda.class));
 
         busqueda.recuperarProvincias();
-        espera();
+        UtilsTests.espera(10000);
         // Verificar que provinciaSuccessful es true
         assertTrue(busqueda.isProvSuccessful());
     }
@@ -110,40 +104,16 @@ public class Test_Busqueda {
     public void testRecuperarProvWhenNoNetwork() {
         // Simular no tener conexión de red (configurando el estado de red en falso)
         Utils.setNetworkAvailable(false);
-        espera();
+        UtilsTests.espera(10000);
         onView(withId(R.id.btn_lupa)).perform(click());
         // Obtener la instancia de Activity_busqueda
-        busqueda = ((Activity_busqueda) getActivityInstance(Activity_busqueda.class));
+        busqueda = ((Activity_busqueda) UtilsTests.getActivityInstance(Activity_busqueda.class));
         busqueda.recuperarProvincias();
-        espera();
+        UtilsTests.espera(10000);
         // Verificar que userList está vacía
         assertEquals(0, busqueda.provinciasList.size());
         // Verificar que contentSuccessful es falso
         assertFalse(busqueda.isProvSuccessful());
     }
 
-
-    // Método para obtener la instancia de una actividad específica
-    private Activity getActivityInstance(Class<? extends Activity> activityClass) {
-        final Activity[] currentActivity = new Activity[1];
-        getInstrumentation().runOnMainSync(() -> {
-            Collection<Activity> resumedActivities = ActivityLifecycleMonitorRegistry.getInstance().getActivitiesInStage(Stage.RESUMED);
-            for (Activity activity : resumedActivities) {
-                if (activityClass.isInstance(activity)) {
-                    currentActivity[0] = activity;
-                    break;
-                }
-            }
-        });
-        return currentActivity[0];
-    }
-    // Método para esperar a que se complete la operación asíncrona
-    public void espera() {
-        // Esperar un tiempo suficiente para que se complete la operación asíncrona
-        try {
-            Thread.sleep(5000); // Espera 5 segundos
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
 }

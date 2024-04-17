@@ -6,9 +6,6 @@ import android.content.Context;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.intent.rule.IntentsTestRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.runner.lifecycle.ActivityLifecycleMonitorRegistry;
-import androidx.test.runner.lifecycle.Stage;
-
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -24,11 +21,8 @@ import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
-import java.util.Collection;
 
 /**
  * Para realizar los tests referentes a la modificación del perfil de usuario
@@ -48,16 +42,16 @@ public class Test_Modperfil {
         onView(withId(R.id.edt_usuario_login)).perform(typeText("4"));
         onView(withId(R.id.edt_contra_login)).perform(typeText("4"), closeSoftKeyboard());
         onView(withId(R.id.ibtn_entrar_login)).perform(click());
-        espera();
+        UtilsTests.espera(10000);
         onView(withId(R.id.btn_mod_perfil)).perform(click());
-        espera();
+        UtilsTests.espera(10000);
         // Verificar que se abre Activity_mod_perfil después de clicar el boton
         intended(hasComponent(Activity_mod_perfil.class.getName()));
         // Asegurarnos de que la actividad se ha cargado completamente
         onView(withId(R.id.edt_nombre_mod_perfil)).check(matches(isDisplayed()));
 
         // Obtener la instancia de Activity_mod_perfil
-        modperfil = ((Activity_mod_perfil) getActivityInstance(Activity_mod_perfil.class));
+        modperfil = ((Activity_mod_perfil) UtilsTests.getActivityInstance(Activity_mod_perfil.class));
     }
 
     // Modificación de datos correcta (sin contraseña)
@@ -71,7 +65,7 @@ public class Test_Modperfil {
         // Realizamos el clic en el botón de confirmar
         onView(withId(R.id.ibtn_confirmar_mod_perfil)).perform(click());
 
-        espera();
+        UtilsTests.espera(10000);
 
         // Verificar si la modificación fue exitosa
         assertTrue(modperfil.isModifySuccessful());
@@ -91,7 +85,7 @@ public class Test_Modperfil {
 
         // Realizamos el clic en el botón de confirmar
         onView(withId(R.id.ibtn_confirmar_mod_perfil)).perform(click());
-        espera();
+        UtilsTests.espera(10000);
 
         // Restaurar la contraseña original
         onView(withId(R.id.btn_mod_perfil)).perform(click());
@@ -99,11 +93,11 @@ public class Test_Modperfil {
         onView(withId(R.id.edt_contraseña_anterior_mod_perfil)).perform(replaceText("newPass"));
         onView(withId(R.id.edt_contraseña_nueva_mod_perfil)).perform(replaceText("4"));
         onView(withId(R.id.edt_contraseña2_nueva_mod_perfil)).perform(replaceText("4"));
-        espera();
+        UtilsTests.espera(10000);
 
         // Realizamos el clic en el botón de confirmar
         onView(withId(R.id.ibtn_confirmar_mod_perfil)).perform(click());
-        espera();
+        UtilsTests.espera(10000);
 
         // Aseguramos que la modificación sea exitosa
         assertTrue(modperfil.isModifySuccessful());
@@ -163,33 +157,11 @@ public class Test_Modperfil {
 
         // Realizamos el clic en el botón de confirmar
         onView(withId(R.id.ibtn_confirmar_mod_perfil)).perform(click());
-        espera();
+        UtilsTests.espera(10000);
 
         // Aseguramos que el registro sea fallido debido al nombre de usuario inválido
         assertFalse(modperfil.isModifySuccessful());
     }
 
-    // Método para obtener la instancia de una actividad específica
-    private Activity getActivityInstance(Class<? extends Activity> activityClass) {
-        final Activity[] currentActivity = new Activity[1];
-        getInstrumentation().runOnMainSync(() -> {
-            Collection<Activity> resumedActivities = ActivityLifecycleMonitorRegistry.getInstance().getActivitiesInStage(Stage.RESUMED);
-            for (Activity activity : resumedActivities) {
-                if (activityClass.isInstance(activity)) {
-                    currentActivity[0] = activity;
-                    break;
-                }
-            }
-        });
-        return currentActivity[0];
-    }
-    // Método para esperar a que se complete la operación asíncrona
-    public void espera() {
-        try {
-            Thread.sleep(5000); // Espera 5 segundos
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
 
 }

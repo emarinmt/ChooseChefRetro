@@ -17,7 +17,6 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Random;
 
 /**
  * Para realizar los tests referentes al registro de usuarios
@@ -40,7 +39,7 @@ public class Test_Registro {
     @Test
     public void testValidCredentials() {
         // Genera un nombre de usuario aleatorio
-        String randomUsername = generateRandomUsername();
+        String randomUsername = UtilsTests.generateRandomUsername();
 
         // Simulamos la entrada de datos en los campos de registro
         onView(withId(R.id.edt_usuario_registro)).perform(replaceText(randomUsername));
@@ -50,7 +49,7 @@ public class Test_Registro {
         // Realizamos el clic en el botón de registro
         onView(withId(R.id.ibtn_registrarse_registro)).perform(click());
 
-        espera();
+        UtilsTests.espera(10000);
 
         // Aseguramos que el registro sea exitoso
         assertTrue(registro.isRegistrationSuccessful());
@@ -61,9 +60,9 @@ public class Test_Registro {
     public void testRegisterWhenNoNetwork() {
         // Simular no tener conexión de red (configurando el estado de red en falso)
         Utils.setNetworkAvailable(false);
-        espera();
+        UtilsTests.espera(10000);
         // Genera un nombre de usuario aleatorio
-        String randomUsername = generateRandomUsername();
+        String randomUsername = UtilsTests.generateRandomUsername();
 
         // Simulamos la entrada de datos en los campos de registro
         onView(withId(R.id.edt_usuario_registro)).perform(replaceText(randomUsername));
@@ -71,7 +70,7 @@ public class Test_Registro {
         onView(withId(R.id.edt_contraseña2_registro)).perform(replaceText("correctPass"));
         // Realizamos el clic en el botón de registro
         onView(withId(R.id.ibtn_registrarse_registro)).perform(click());
-        espera();
+        UtilsTests.espera(10000);
         // Aseguramos que el registro sea fallido por falta de conexión
         assertFalse(registro.isRegistrationSuccessful());
     }
@@ -121,19 +120,4 @@ public class Test_Registro {
         assertFalse(registro.isRegistrationSuccessful());
     }
 
-    // Método para generar un nombre de usuario aleatorio
-    private String generateRandomUsername() {
-        Random random = new Random();
-        int randomNumber = random.nextInt(1000); // Genera un número aleatorio entre 0 y 999
-        return "test" + randomNumber; // Devuelve un nombre de usuario único cada vez que se llama
-    }
-
-    // Método para esperar a que se complete la operación asíncrona
-    public void espera() {
-        try {
-            Thread.sleep(5000); // Espera 5 segundos
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
 }

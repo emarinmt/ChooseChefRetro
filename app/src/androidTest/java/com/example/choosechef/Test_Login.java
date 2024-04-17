@@ -47,7 +47,7 @@ public class Test_Login {
         // Realizamos el clic en el botón de entrar
         onView(withId(R.id.ibtn_entrar_login)).perform(click());
 
-        espera();
+        UtilsTests.espera(10000);
 
         // Aseguramos que el login sea exitoso
         assertTrue(login.isLoginSuccessful());
@@ -98,12 +98,5 @@ public class Test_Login {
         // Aseguramos que el login sea fallido
         assertFalse(login.isLoginSuccessful());
     }
-    // Método para esperar a que se complete la operación asíncrona
-    public void espera() {
-        try {
-            Thread.sleep(5000); // Espera 5 segundos
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
+
 }

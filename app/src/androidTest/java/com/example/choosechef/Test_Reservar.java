@@ -1,13 +1,8 @@
 package com.example.choosechef;
-import android.app.Activity;
-
 import android.content.Context;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.intent.rule.IntentsTestRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.runner.lifecycle.ActivityLifecycleMonitorRegistry;
-import androidx.test.runner.lifecycle.Stage;
-
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -20,18 +15,15 @@ import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Calendar;
-import java.util.Collection;
-
 import androidx.test.espresso.contrib.RecyclerViewActions;
 
 /**
- * Para realizar los tests referentes a la modificación del perfil de usuario
+ * Para realizar los tests referentes a la creación de reservas
+ * COORESPONDE A LA CLASSE ACTIVITY_RESERVA
  */
 @RunWith(AndroidJUnit4.class)
 public class Test_Reservar {
@@ -49,7 +41,7 @@ public class Test_Reservar {
         onView(withId(R.id.edt_usuario_login)).perform(typeText("client"));
         onView(withId(R.id.edt_contra_login)).perform(typeText("client"), closeSoftKeyboard());
         onView(withId(R.id.ibtn_entrar_login)).perform(click());
-        espera();
+        UtilsTests.espera(10000);
         // PARA MÁS ADELANTE IMPLEMENTAR QUE CLIQUE EN UN CHEF DETERMINADO
         // Hacer clic en el primer elemento de la lista (suponiendo que hay al menos un chef en la lista)
         onView(withId(R.id.rv_chefs))
@@ -59,7 +51,7 @@ public class Test_Reservar {
         // Verificar que la actividad reservar se inicia correctamente
         intended(hasComponent(Activity_reservar.class.getName()));
         // Obtener la instancia de Activity_reservar
-        reservar = ((Activity_reservar) getActivityInstance(Activity_reservar.class));
+        reservar = ((Activity_reservar) UtilsTests.getActivityInstance(Activity_reservar.class));
     }
 
     // Reserva correcta
@@ -71,10 +63,10 @@ public class Test_Reservar {
         String fechaDeseada = obtenerFechaDeseada();
         // Establecer la fecha deseada en Activity_reservar mediante el método setFechaStr()
         reservar.setFechaStr(fechaDeseada);
-        espera();
+        UtilsTests.espera(10000);
         // Confirma la selección haciendo clic en el botón de confirmar reserva
         onView(withId(R.id.imageButton2)).perform(click());
-        espera();
+        UtilsTests.espera(10000);
         // Verificar si la reserva fue exitosa
         assertTrue(reservar.isReservaSuccessful());
         daysToAdd++; // para evitar errores con futuros tests
@@ -87,10 +79,10 @@ public class Test_Reservar {
         String fechaDeseada = "2023-05-23";
         // Establecer la fecha deseada en Activity_reservar mediante el método setFechaStr()
         reservar.setFechaStr(fechaDeseada);
-        espera();
+        UtilsTests.espera(10000);
         // Confirma la selección haciendo clic en el botón de confirmar reserva
         onView(withId(R.id.imageButton2)).perform(click());
-        espera();
+        UtilsTests.espera(10000);
         // Verificar si la reserva fue fallida
         assertFalse(reservar.isReservaSuccessful());
     }
@@ -102,45 +94,22 @@ public class Test_Reservar {
         String fechaDeseada = obtenerFechaDeseada();
         // Establecer la fecha deseada en Activity_reservar mediante el método setFechaStr()
         reservar.setFechaStr(fechaDeseada);
-        espera();
+        UtilsTests.espera(10000);
         // Confirma la selección haciendo clic en el botón de confirmar reserva
         onView(withId(R.id.imageButton2)).perform(click());
-        espera();
+        UtilsTests.espera(10000);
 
         // Repetimos el proceso con la misma fecha
         reservar.setFechaStr(fechaDeseada);
-        espera();
+        UtilsTests.espera(10000);
         // Confirma la selección haciendo clic en el botón de confirmar reserva
         onView(withId(R.id.imageButton2)).perform(click());
-        espera();
+        UtilsTests.espera(10000);
         // Verificar si la reserva fue fallida
         assertFalse(reservar.isReservaSuccessful());
         daysToAdd++; // Para evitar errores con futuros tests
     }
 
-    // Método para obtener la instancia de una actividad específica
-    private Activity getActivityInstance(Class<? extends Activity> activityClass) {
-        final Activity[] currentActivity = new Activity[1];
-        getInstrumentation().runOnMainSync(() -> {
-            Collection<Activity> resumedActivities = ActivityLifecycleMonitorRegistry.getInstance().getActivitiesInStage(Stage.RESUMED);
-            for (Activity activity : resumedActivities) {
-                if (activityClass.isInstance(activity)) {
-                    currentActivity[0] = activity;
-                    break;
-                }
-            }
-        });
-        return currentActivity[0];
-    }
-
-    // Método para esperar a que se complete la operación asíncrona
-    public void espera() {
-        try {
-            Thread.sleep(5000); // Espera 5 segundos
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
     // Método para obtener la fecha deseada en el formato "YYYY-MM-DD"
     public String obtenerFechaDeseada() {
         // Crear una instancia de Calendar para la fecha base (1 de enero de 2025)

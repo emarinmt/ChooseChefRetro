@@ -1,5 +1,4 @@
 package com.example.choosechef;
-import android.app.Activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,8 +6,6 @@ import android.content.Intent;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.intent.rule.IntentsTestRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.runner.lifecycle.ActivityLifecycleMonitorRegistry;
-import androidx.test.runner.lifecycle.Stage;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -22,10 +19,10 @@ import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import java.util.Collection;
+
 import androidx.test.espresso.contrib.RecyclerViewActions;
 /**
  * Para realizar los tests referentes a la modificación del perfil de usuario
@@ -44,9 +41,9 @@ public class Test_ClientAmpliado {
         onView(withId(R.id.edt_usuario_login)).perform(typeText("4"));
         onView(withId(R.id.edt_contra_login)).perform(typeText("4"), closeSoftKeyboard());
         onView(withId(R.id.ibtn_entrar_login)).perform(click());
-        espera();
+        UtilsTests.espera(10000);
         onView(withId(R.id.btn_ajustes)).perform(click());
-        espera();
+        UtilsTests.espera(10000);
         // Verificar que se abre Activity_user después de clicar en ajustes
         intended(hasComponent(Activity_chef.class.getName()));
         // Hacer clic en el primer elemento de la lista (suponiendo que hay al menos un chef en la lista)
@@ -55,7 +52,7 @@ public class Test_ClientAmpliado {
         // Verificar que la actividad reservar_ampliado se inicia correctamente
         intended(hasComponent(Activity_chef_ampliado.class.getName()));
         // Obtener la instancia de Activity_reserva_ampliado
-        clientAmpliado = ((Activity_reserva_ampliado) getActivityInstance(Activity_reserva_ampliado.class));
+        clientAmpliado = ((Activity_reserva_ampliado) UtilsTests.getActivityInstance(Activity_reserva_ampliado.class));
 
     }
 
@@ -71,33 +68,11 @@ public class Test_ClientAmpliado {
         Intent invalidIntent = null;
         // Llamar manualmente obtenerIntent() y pasar el Intent inválido
         clientAmpliado.obtenerIntent(invalidIntent);
-        espera();
+        UtilsTests.espera(10000);
         // Verificar que contentSuccessful es false
         assertFalse(clientAmpliado.isContentSuccessful());
     }
 
-    // Método para obtener la instancia de una actividad específica
-    private Activity getActivityInstance(Class<? extends Activity> activityClass) {
-        final Activity[] currentActivity = new Activity[1];
-        getInstrumentation().runOnMainSync(() -> {
-            Collection<Activity> resumedActivities = ActivityLifecycleMonitorRegistry.getInstance().getActivitiesInStage(Stage.RESUMED);
-            for (Activity activity : resumedActivities) {
-                if (activityClass.isInstance(activity)) {
-                    currentActivity[0] = activity;
-                    break;
-                }
-            }
-        });
-        return currentActivity[0];
-    }
-    public void espera() {
-        // Esperar un tiempo suficiente para que se complete la operación asíncrona
-        try {
-            Thread.sleep(15000); // Espera 5 segundos
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
 
 }
 

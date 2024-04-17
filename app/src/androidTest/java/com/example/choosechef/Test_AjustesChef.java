@@ -1,12 +1,9 @@
 package com.example.choosechef;
-import android.app.Activity;
 
 import android.content.Context;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.intent.rule.IntentsTestRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.runner.lifecycle.ActivityLifecycleMonitorRegistry;
-import androidx.test.runner.lifecycle.Stage;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -21,18 +18,18 @@ import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import java.util.Collection;
+
 
 
 /**
- * Para realizar los tests referentes a la modificación del perfil de usuario
+ * Para realizar los tests referentes a la modificación de servicios del chef
+ * CORRESPONDERIA A LA CLASE ACTIVITY_CHEF
  */
 @RunWith(AndroidJUnit4.class)
 public class Test_AjustesChef {
-    // CORRESPONDERIA A LA CLASE ACTIVITY_CHEF
+
     @Rule
     public IntentsTestRule<Activity_login> activityRule = new IntentsTestRule<>(Activity_login.class);
     private Context context;
@@ -46,13 +43,13 @@ public class Test_AjustesChef {
         onView(withId(R.id.edt_usuario_login)).perform(typeText("chef"));
         onView(withId(R.id.edt_contra_login)).perform(typeText("chef"), closeSoftKeyboard());
         onView(withId(R.id.ibtn_entrar_login)).perform(click());
-        espera();
+        UtilsTests.espera(10000);
         onView(withId(R.id.btn_ajustes)).perform(click());
-        espera();
+        UtilsTests.espera(10000);
         // Verificar que se abre Activity_chef después de clicar en ajustes
         intended(hasComponent(Activity_chef.class.getName()));
         // Obtener la instancia de Activity_chef
-        actChef = ((Activity_chef) getActivityInstance(Activity_chef.class));
+        actChef = ((Activity_chef)UtilsTests.getActivityInstance(Activity_chef.class));
     }
 
     // Modificación opciones chef correcta
@@ -76,7 +73,7 @@ public class Test_AjustesChef {
         onView(withText("Chef a domicilio")).perform(click()); // Seleccionar un valor específico
 
         onView(withId(R.id.ibtn_confirmar)).perform(click());
-        espera();
+        UtilsTests.espera(10000);
 
         // Verificar si la modificación fue exitosa
         assertTrue(actChef.isModifySuccessful());
@@ -87,34 +84,11 @@ public class Test_AjustesChef {
     public void testRecuperarChefsWhenNoNetwork() {
         // Simular no tener conexión de red (configurando el estado de red en falso)
         Utils.setNetworkAvailable(false);
-        espera();
+        UtilsTests.espera(10000);
         actChef.recuperarDatos();
-        espera();
+        UtilsTests.espera(10000);
         // Verificar que contentSuccessful es falso
         assertFalse(actChef.isContentSuccessful());
     }
 
-    // Método para obtener la instancia de una actividad específica
-    private Activity getActivityInstance(Class<? extends Activity> activityClass) {
-        final Activity[] currentActivity = new Activity[1];
-        getInstrumentation().runOnMainSync(() -> {
-            Collection<Activity> resumedActivities = ActivityLifecycleMonitorRegistry.getInstance().getActivitiesInStage(Stage.RESUMED);
-            for (Activity activity : resumedActivities) {
-                if (activityClass.isInstance(activity)) {
-                    currentActivity[0] = activity;
-                    break;
-                }
-            }
-        });
-        return currentActivity[0];
-    }
-
-    // Método para esperar a que se complete la operación asíncrona
-    public void espera() {
-        try {
-            Thread.sleep(5000); // Espera 5 segundos
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
 }

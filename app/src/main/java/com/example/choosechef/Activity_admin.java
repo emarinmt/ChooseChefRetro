@@ -121,5 +121,6 @@ public class Activity_admin extends AppCompatActivity {
     public boolean isContentSuccessful() {
         return contentSuccessful;
     }
+
 }
 

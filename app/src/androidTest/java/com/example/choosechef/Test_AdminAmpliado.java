@@ -1,42 +1,52 @@
 package com.example.choosechef;
-import android.app.Activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.test.core.app.ApplicationProvider;
+import androidx.test.espresso.PerformException;
+import androidx.test.espresso.UiController;
+import androidx.test.espresso.ViewAction;
 import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.espresso.intent.rule.IntentsTestRule;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.runner.lifecycle.ActivityLifecycleMonitorRegistry;
-import androidx.test.runner.lifecycle.Stage;
 
+import androidx.test.espresso.util.HumanReadables;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+
+import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
+
+import static androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.action.ViewActions.clearText;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
-import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import java.util.Collection;
+
+import android.view.View;
 
 /**
- * Para realizar los tests referentes a la modificación del perfil de usuario
+ * Para realizar los tests referentes a la modificación de datos de usuarios por parte del admin
+ * CORRESPONDERIA A LA CLASE ACTIVITY_USER_AMPLIADO
  */
 @RunWith(AndroidJUnit4.class)
 public class Test_AdminAmpliado {
-    // CORRESPONDERIA A LA CLASE ACTIVITY_USER_AMPLIADO
+// PROBANDO PARA HACER EL TEST DE ELIMINAR, NO ACABADA
     @Rule
     public IntentsTestRule<Activity_login> activityRule = new IntentsTestRule<>(Activity_login.class);
     private Context context;
+    private Activity_admin actAdmin;
     private Activity_user_ampliado actAdminAmpl;
     @Before
     public void setUp() {
@@ -46,30 +56,53 @@ public class Test_AdminAmpliado {
         onView(withId(R.id.edt_usuario_login)).perform(typeText("admin"));
         onView(withId(R.id.edt_contra_login)).perform(typeText("admin"), closeSoftKeyboard());
         onView(withId(R.id.ibtn_entrar_login)).perform(click());
-        espera();
+        UtilsTests.espera(10000);
         onView(withId(R.id.btn_ajustes)).perform(click());
-        espera();
+        UtilsTests.espera(10000);
         // Verificar que se abre Activity_admin después de clicar en ajustes
         intended(hasComponent(Activity_admin.class.getName()));
         // Obtener la instancia de Activity_admin
-        // actAdmin = ((Activity_admin) getActivityInstance(Activity_admin.class));
+        //actAdmin = ((Activity_admin) UtilsTests.getActivityInstance(Activity_admin.class));
+
+        /* Buscar y hacer clic en un usuario específico en la lista
+        Clicaremos en aquellos usuarios cucyo nombre empiezan por test
+        ya que son los creados en los test y no hay problema en eliminarlos
+        NO SE PUEDE IMPLEMENTAR DEBIDO AL EMULADOR, NO PERMITE ANIMACIONES, POR LO TANTO
+        NO PODEMOS HACER SCROLL. SI EL NOMBRE ESTÁ EN LA PANTALLA SÍ SE CLICA
+        //String nombreUsuario = "4"; // Nombre del usuario deseado (parcial)
+        //clickOnItemWithText(nombreUsuario);
+         */
+
         // Hacer clic en el primer elemento de la lista (suponiendo que hay al menos un usuario en la lista)
         onView(withId(R.id.rv_users))
-                .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+          .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         // Verificar que la actividad user_ampliado se inicia correctamente
-        intended(hasComponent(Activity_user_ampliado.class.getName()));
+       intended(hasComponent(Activity_user_ampliado.class.getName()));
         // Obtener la instancia de Activity_user_ampliado
-        actAdminAmpl = ((Activity_user_ampliado) getActivityInstance(Activity_user_ampliado.class));
+      actAdminAmpl = ((Activity_user_ampliado) UtilsTests.getActivityInstance(Activity_user_ampliado.class));
     }
 
     // Ampliación de usuario correcta
     @Test
     public void testAmpliarUserValid() {
         // Verificar que contentSuccessful es true
-        espera();
+        UtilsTests.espera(10000);
+        onView(withId(R.id.rv_users))
+          .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        // Verificar que la actividad user_ampliado se inicia correctamente
+        intended(hasComponent(Activity_user_ampliado.class.getName()));
+        // Obtener la instancia de Activity_user_ampliado
+        actAdminAmpl = ((Activity_user_ampliado) UtilsTests.getActivityInstance(Activity_user_ampliado.class));
         assertTrue(actAdminAmpl.isContentSuccessful());
     }
 
+    // Ampliación de usuario correcta
+    @Test
+    public void testAmpliarUserValid2() {
+        // Verificar que contentSuccessful es true
+        UtilsTests.espera(10000);
+        assertTrue(actAdminAmpl.isContentSuccessful());
+    }
     // Ampliación de usuario incorrecta, simulamos un intent erroneo
     @Test
     public void testAmpliarUserInvalid() {
@@ -77,7 +110,7 @@ public class Test_AdminAmpliado {
         Intent invalidIntent = null;
         // Llamar manualmente obtenerIntent() y pasar el Intent inválido
         actAdminAmpl.obtenerIntent(invalidIntent);
-        espera();
+        UtilsTests.espera(10000);
         // Verificar que contentSuccessful es false
         assertFalse(actAdminAmpl.isContentSuccessful());
     }
@@ -85,10 +118,10 @@ public class Test_AdminAmpliado {
     // Modificación datos usuario correcta
     @Test
     public void testModifyUserValid() {
-        espera();
+        UtilsTests.espera(10000);
         // Realizamos el clic en el botón de editar
         onView(withId(R.id.ibtn_edit)).perform(click());
-        espera();
+        UtilsTests.espera(10000);
 
         // Obtener texto actual del campo descripción
         String currentDesc = actAdminAmpl.getDescUsuario(); // Ejemplo: método para obtener descripción de usuario
@@ -101,49 +134,74 @@ public class Test_AdminAmpliado {
 
         // Realizamos el clic en el botón de editar
         onView(withId(R.id.ibtn_edit)).perform(click());
-        espera();
+        UtilsTests.espera(10000);
         // Verificar si la modificación fue exitosa
         assertTrue(actAdminAmpl.isModifySuccessful());
     }
 
-/*
-    // CUIDADOOO!! NO PASAR!!!
-    // No puedo especificar qué usuario se borra, solo si sé la posicion en la lista
     // Eliminación de usuario correcta
+    // Hemos creado un filtro en el adapter para que se muestren solo los usuarios con la palabra
+    // "test" y así poder eliminarlos sin problema
     @Test
     public void testDeleteUserValid() {
         //int initialSize = actAdmin.userList.size();
         onView(withId(R.id.ibtn_delete)).perform(click());
-        espera();
-        int finalSize = actAdmin.userList.size();
+        //espera();
+        //int finalSize = actAdmin.userList.size();
         // Aseguramos que el el número de usuarios inicial - 1 coincide con el actual
-        assertEquals((initialSize - 1), finalSize);
+        //assertEquals((initialSize - 1), finalSize);
         // Verificar que deleteSuccessful es true
         assertTrue(actAdminAmpl.isDeleteSuccessful());
     }
-*/
 
 
-    // Método para obtener la instancia de una actividad específica
-    private Activity getActivityInstance(Class<? extends Activity> activityClass) {
-        final Activity[] currentActivity = new Activity[1];
-        getInstrumentation().runOnMainSync(() -> {
-            Collection<Activity> resumedActivities = ActivityLifecycleMonitorRegistry.getInstance().getActivitiesInStage(Stage.RESUMED);
-            for (Activity activity : resumedActivities) {
-                if (activityClass.isInstance(activity)) {
-                    currentActivity[0] = activity;
-                    break;
-                }
+    // RECYCLER VIEW TEXTO QUE COINCIDA
+    // DE MOMENTO NO LO PODEMOS IMPLEMENTAR
+
+    public static ViewAction actionOnItemViewWithText(final String itemText, final ViewAction action) {
+        return new ViewAction() {
+            @Override
+            public Matcher<View> getConstraints() {
+                return isAssignableFrom(RecyclerView.class);
             }
-        });
-        return currentActivity[0];
+
+            @Override
+            public String getDescription() {
+                return "Action on item with text: " + itemText;
+            }
+
+            @Override
+            public void perform(UiController uiController, View view) {
+                RecyclerView recyclerView = (RecyclerView) view;
+                RecyclerView.Adapter adapter = recyclerView.getAdapter();
+                if (adapter != null) {
+                    for (int position = 0; position < adapter.getItemCount(); position++) {
+                        RecyclerView.ViewHolder viewHolder = recyclerView.findViewHolderForAdapterPosition(position);
+                        if (viewHolder != null) {
+                            View itemView = viewHolder.itemView;
+                            // Buscar un TextView dentro del itemView
+                            TextView textView = itemView.findViewById(R.id.nombre_usuario);
+                            if (textView != null && textView.getText().toString().equals(itemText)) {
+                                // Realizar la acción sobre el itemView
+                                action.perform(uiController, itemView);
+                                return;
+                            }
+                        }
+                    }
+                }
+                // Si no se encuentra el elemento, lanzar una excepción
+                throw new PerformException.Builder()
+                        .withActionDescription(getDescription())
+                        .withViewDescription(HumanReadables.describe(view))
+                        .withCause(new RuntimeException("Item with text '" + itemText + "' not found."))
+                        .build();
+            }
+        };
     }
-    // Método para esperar a que se complete la operación asíncrona
-    public void espera() {
-        try {
-            Thread.sleep(5000); // Espera 5 segundos
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
+    // Método para realizar clic en un elemento con texto específico en la RecyclerView
+    public void clickOnItemWithText(String itemText) {
+        onView(withId(R.id.rv_users)).perform(actionOnItemViewWithText(itemText, click()));
     }
+
 }

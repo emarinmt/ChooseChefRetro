@@ -300,4 +300,6 @@ public class Activity_user_ampliado extends AppCompatActivity {
     public String getDescUsuario() {
         return descripUsuario.getText().toString(); // Obtener el texto del TextView nombreUsuario
     }
+
+
 }

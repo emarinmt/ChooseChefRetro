@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.List;
 
 /**
@@ -48,8 +49,8 @@ public class Adapter_user extends RecyclerView.Adapter<Adapter_user.ViewHolder> 
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         User user = data.get(i); //NUEVO
         // Establece los datos del chef en las vistas del ViewHolder
-        viewHolder.nombre_user.setText(user.getNombre());
-
+        //viewHolder.nombre_user.setText(user.getNombre());
+        viewHolder.nombre_user.setText(user.getUsuario());
         // Manjear que al clicar un usuario se muestre este ampliado
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             /**
@@ -90,4 +91,5 @@ public class Adapter_user extends RecyclerView.Adapter<Adapter_user.ViewHolder> 
             nombre_user = itemView.findViewById(R.id.nombre_usuario);
         }
     }
+
 }
