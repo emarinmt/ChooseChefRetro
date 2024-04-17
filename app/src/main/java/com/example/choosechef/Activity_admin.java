@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -34,6 +35,7 @@ public class Activity_admin extends AppCompatActivity {
     // Variables para conectar con la API
     FastMethods mfastMethods;
     Retrofit retro;
+
     /**
      * Método onCreate para la configuración incial de la actividad
      * @param savedInstanceState estado de la instancia guardada, un objeto Bundle que contiene el estado previamente guardado de la actividad
@@ -121,6 +123,58 @@ public class Activity_admin extends AppCompatActivity {
     public boolean isContentSuccessful() {
         return contentSuccessful;
     }
+
+    // FILTRO PARA TEST
+    // PARA SIGUIENTE TEA IMPLEMENTAR BOTON)
+
+    /**
+     * Método para filtrar la lista de usuarios localmente por el nombre de usuario.
+     * @param username a filtrar
+     */
+    public void buscar(String username) {
+        String searchText = username; // Texto de búsqueda (nombre de usuario a filtrar)
+
+        // Filtrar userList localmente con el texto de búsqueda
+        List<User> filteredList = filterUsers(userList, searchText);
+
+        // Actualizar userList con la lista filtrada
+        userList.clear();
+        userList.addAll(filteredList);
+
+        // Actualizar el adaptador en el hilo principal utilizando runOnUiThread()
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                adapter.notifyDataSetChanged(); // Notificar al adaptador que los datos han cambiado
+            }
+        });
+
+        // Actualizar el estado de contentSuccessful basado en si se encontraron usuarios después del filtro
+        contentSuccessful = !userList.isEmpty(); // Si la lista filtrada no está vacía, entonces el contenido fue exitoso
+    }
+    /**
+     * Método para filtrar la lista de usuarios localmente por el nombre de usuario.
+     * @param username Nombre de usuario a buscar para el filtro
+     */
+    public List<User> filterUsers(List<User> userList, String username) {
+        List<User> filteredList = new ArrayList<>();
+
+        // Convertir la palabra clave a minúsculas para hacer la búsqueda insensible a mayúsculas/minúsculas
+        String lowercaseKeyword = username.toLowerCase();
+
+        for (User user : userList) {
+            // Obtener el nombre de usuario en minúsculas para hacer la comparación insensible a mayúsculas/minúsculas
+            String lowercaseUsername = user.getUsuario().toLowerCase();
+
+            // Verificar si el nombre de usuario contiene la palabra clave (ignorando mayúsculas/minúsculas)
+            if (lowercaseUsername.contains(lowercaseKeyword)) {
+                filteredList.add(user);
+            }
+        }
+
+        return filteredList;
+    }
+
 
 }
 

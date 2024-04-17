@@ -19,6 +19,7 @@ public class Adapter_user extends RecyclerView.Adapter<Adapter_user.ViewHolder> 
 
     private final LayoutInflater layoutInflater;
     private final List<User> data;
+
     /**
      *Constructor de la clase Adapter_user
      * @param context contexto de la aplicación

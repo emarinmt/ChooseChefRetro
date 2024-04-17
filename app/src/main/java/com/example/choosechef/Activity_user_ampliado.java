@@ -112,12 +112,10 @@ public class Activity_user_ampliado extends AppCompatActivity {
                 tipoUsuario.setText(user.getTipo());
                 tipoComidaUsuario.setText(user.getComida());
                 tipoServicioUsuario.setText(user.getServicio());
-                //valoracionUsuario.setText(user.getValoracion());
                 float valoracion = user.getValoracion();
                 valoracionUsuario.setText(String.valueOf(valoracion));
                 //guardar el nombre de usuario para la llamada al método de modicicación
                 usuario_mod = user.getUsuario();
-
             }
         } else {
             // Si no se recibió información del usuario, la carga de contenido falló
@@ -248,10 +246,12 @@ public class Activity_user_ampliado extends AppCompatActivity {
                 public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
                     if (response.isSuccessful()) {
                         deleteSuccessful = true;
+                        Log.d(TAG, "Eliminación exitosa");
                         // String responseBody = response.body();
                         Utils.showToastSecond(Activity_user_ampliado.this, context,"Eliminación correcta!");
                         Utils.gotoActivity(Activity_user_ampliado.this, Activity_admin.class);
                     } else {
+                        Log.d(TAG, "Eliminación no exitosa");
                         Utils.showToastSecond(Activity_user_ampliado.this, context,"Error al eliminar usuario");
                     }
                 }

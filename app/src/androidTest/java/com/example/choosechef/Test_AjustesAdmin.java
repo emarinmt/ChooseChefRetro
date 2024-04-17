@@ -22,7 +22,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-
 /**
  * Para realizar los tests referentes a la lista de todos los usuarios
  * CORRESPONDERIA A LA CLASE ACTIVITY_ADMIN
@@ -102,6 +101,17 @@ public class Test_AjustesAdmin {
         // Aseguramos que el el número de usuarios inicial + 1 coincide con el actual
         assertEquals((initialSize + 1), finalSize);
         // Aseguramos que la recuperación sea exitosa
+        assertTrue(actAdmin.isContentSuccessful());
+    }
+
+    // PROBANDO FILTRO  (PARA SIGUIENTE TEA IMPLEMENTAR BOTON)
+    // Recuperación de lista de usuarios correcta con filtro
+    @Test
+    public void testRecuperarUsersFiltrados() {
+        UtilsTests.espera(20000);
+        actAdmin.buscar("test");
+        UtilsTests.espera(20000);
+        // Verificar que contentSuccessful es true
         assertTrue(actAdmin.isContentSuccessful());
     }
 
