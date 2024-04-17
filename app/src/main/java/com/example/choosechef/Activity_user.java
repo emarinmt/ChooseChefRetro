@@ -127,7 +127,7 @@ public class Activity_user extends AppCompatActivity {
     }
 
     // FILTRO PARA TEST
-    // PARA SIGUIENTE TEA IMPLEMENTAR BOTON)
+    // PARA SIGUIENTE TEA IMPLEMENTAR BOTON?
     /**
      * Método para filtrar la lista de reservas localmente por fecha
      * @param year año a filtrar

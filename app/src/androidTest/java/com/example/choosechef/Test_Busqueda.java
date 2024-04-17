@@ -114,6 +114,7 @@ public class Test_Busqueda {
         assertEquals(0, busqueda.provinciasList.size());
         // Verificar que contentSuccessful es falso
         assertFalse(busqueda.isProvSuccessful());
+        Utils.setNetworkAvailable(true);
     }
 
 }

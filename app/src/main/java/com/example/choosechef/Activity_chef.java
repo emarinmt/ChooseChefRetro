@@ -271,6 +271,10 @@ public class Activity_chef extends AppCompatActivity {
     public boolean isModifySuccessful() {
         return modifySuccessful;
     }
+    /**
+     * Método para test
+     * @return devuelve un booleano en función de si ha ido bien la muestra de contenido
+     */
     public boolean isContentSuccessful() {
         return contentSuccessful;
     }

@@ -75,9 +75,10 @@ public class Test_AjustesAdmin {
         assertEquals(0, actAdmin.userList.size());
         // Verificar que contentSuccessful es falso
         assertFalse(actAdmin.isContentSuccessful());
+        Utils.setNetworkAvailable(true);
     }
 
-    // Recuperación de lista de usuarios correcta, añadiendo un chef para comprobar que se modifica la lista
+    // Recuperación de lista de usuarios correcta, añadiendo un usuario para comprobar que se modifica la lista
     @Test
     public void testRecuperarChefsSuccess() {
         int initialSize = actAdmin.userList.size();// Número de usuarios antes del registro, para poder comparar
@@ -94,10 +95,12 @@ public class Test_AjustesAdmin {
         onView(withId(R.id.edt_usuario_login)).perform(typeText("admin"));
         onView(withId(R.id.edt_contra_login)).perform(typeText("admin"), closeSoftKeyboard());
         onView(withId(R.id.ibtn_entrar_login)).perform(click());
+        UtilsTests.espera(10000);
         onView(withId(R.id.btn_ajustes)).perform(click());
         actAdmin.recuperarDatos();
         UtilsTests.espera(10000);
         int finalSize = actAdmin.userList.size(); // Número de usuarios después del registro
+        UtilsTests.espera(10000);
         // Aseguramos que el el número de usuarios inicial + 1 coincide con el actual
         assertEquals((initialSize + 1), finalSize);
         // Aseguramos que la recuperación sea exitosa

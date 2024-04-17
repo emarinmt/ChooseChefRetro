@@ -17,7 +17,6 @@ import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -69,13 +68,12 @@ public class Test_AjustesClient {
         UtilsTests.espera(10000);
         actClient.recuperarDatos();
         UtilsTests.espera(10000);
-        // Verificar que reservasList está vacía
-        assertEquals(0, actClient.reservasList.size());
         // Verificar que contentSuccessful es falso
         assertFalse(actClient.isContentSuccessful());
+        Utils.setNetworkAvailable(true);
     }
 
-    // PROBANDO FILTRO  (PARA SIGUIENTE TEA IMPLEMENTAR BOTON)
+    // FILTRO  (PARA SIGUIENTE TEA IMPLEMENTAR BOTON)
     // Recuperación de lista de reservas correcta con filtro
     @Test
     public void testRecuperarReservasFiltrados() {

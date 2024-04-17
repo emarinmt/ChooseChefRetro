@@ -38,6 +38,8 @@ public class Test_Registro {
     // Nuevo usuario, se crea correctamente (hay conexión)
     @Test
     public void testValidCredentials() {
+        // Simular no tener conexión de red (configurando el estado de red en falso)
+        Utils.setNetworkAvailable(true);
         // Genera un nombre de usuario aleatorio
         String randomUsername = UtilsTests.generateRandomUsername();
 
@@ -73,6 +75,7 @@ public class Test_Registro {
         UtilsTests.espera(10000);
         // Aseguramos que el registro sea fallido por falta de conexión
         assertFalse(registro.isRegistrationSuccessful());
+        Utils.setNetworkAvailable(true);
     }
 
     // Las contraseñas no coinciden, no se crea el usuario

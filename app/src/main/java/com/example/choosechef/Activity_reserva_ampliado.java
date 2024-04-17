@@ -195,6 +195,10 @@ public class Activity_reserva_ampliado  extends AppCompatActivity {
         return modifySuccessful;
     }
 
+    /**
+     * Método para test
+     * @return devuelve el contenido del comentario de una reserva
+     */
     public String getComentReserva() {
         return comentario.getText().toString(); // Obtener el texto del Edittext comentario
     }

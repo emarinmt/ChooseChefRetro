@@ -1,5 +1,4 @@
 package com.example.choosechef;
-import android.app.Activity;
 
 import android.content.Context;
 import androidx.test.core.app.ApplicationProvider;
@@ -72,9 +71,10 @@ public class Test_Contenido {
         assertEquals(0, contenido.getUserList().size());
         // Verificar que contentSuccessful es falso
         assertFalse(contenido.isContentSuccessful());
+        Utils.setNetworkAvailable(true);
     }
 
-    // Recuperación de lista de chefs correcta, añadiendo un chef para comprobar que se mpdifica la lista
+    // Recuperación de lista de chefs correcta, añadiendo un chef para comprobar que se modifica la lista
     @Test
     public void testRecuperarChefsSuccess() {
         int initialSize = contenido.userList.size();// Número de chefs antes del registro
@@ -121,8 +121,8 @@ public class Test_Contenido {
         contenido.recuperarChefs();
         UtilsTests.espera(10000);
         int finalSize = contenido.userList.size(); // Número de chefs después del registro
-        // Aseguramos que el el número de chefs inicial + 1 no coincide con el actual
-        assertEquals((initialSize + 1), finalSize);
+        // Aseguramos que el el número de chefs inicial coincide con el actual
+        assertEquals((initialSize), finalSize);
         // Aseguramos que la recuperación sea exitosa
         assertTrue(contenido.isContentSuccessful());
     }

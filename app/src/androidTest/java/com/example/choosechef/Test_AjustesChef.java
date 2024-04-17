@@ -89,6 +89,7 @@ public class Test_AjustesChef {
         UtilsTests.espera(10000);
         // Verificar que contentSuccessful es falso
         assertFalse(actChef.isContentSuccessful());
+        Utils.setNetworkAvailable(true);
     }
 
 }

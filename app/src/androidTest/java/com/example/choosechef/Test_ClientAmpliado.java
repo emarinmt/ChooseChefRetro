@@ -53,17 +53,18 @@ public class Test_ClientAmpliado {
         actUser = ((Activity_user) UtilsTests.getActivityInstance(Activity_user.class));
     }
 
-    // Ampliación de reserva correcta
+    // Ampliación de reserva incorrecta (fecha posterior)
     @Test
     public void testAmpliarReservaValid() {
         // Hacer clic en el primer elemento de la lista (suponiendo que hay al menos una reserva en la lista)
         onView(withId(R.id.rv_reservas))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         // Verificar que la actividad reservar_ampliado se inicia correctamente
-        intended(hasComponent(Activity_chef_ampliado.class.getName()));
+        intended(hasComponent(Activity_reserva_ampliado.class.getName()));
         // Obtener la instancia de Activity_reserva_ampliado
         clientAmpliado = ((Activity_reserva_ampliado) UtilsTests.getActivityInstance(Activity_reserva_ampliado.class));
-        assertTrue(clientAmpliado.isContentSuccessful());
+        UtilsTests.espera(10000);
+        assertFalse(clientAmpliado.isContentSuccessful());
     }
 
     // Ampliación de reserva incorrecta, simulamos un intent erroneo
@@ -73,7 +74,7 @@ public class Test_ClientAmpliado {
         onView(withId(R.id.rv_reservas))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         // Verificar que la actividad reservar_ampliado se inicia correctamente
-        intended(hasComponent(Activity_chef_ampliado.class.getName()));
+        intended(hasComponent(Activity_reserva_ampliado.class.getName()));
         // Obtener la instancia de Activity_reserva_ampliado
         clientAmpliado = ((Activity_reserva_ampliado) UtilsTests.getActivityInstance(Activity_reserva_ampliado.class));
         // Simular un Intent inválido
@@ -85,7 +86,7 @@ public class Test_ClientAmpliado {
         assertFalse(clientAmpliado.isContentSuccessful());
     }
 
-    // Valoración de reserva correcta (anterior a fecha actual)
+    // Ampliar + Valoración de reserva correcta (anterior a fecha actual)
     @Test
     public void testValorarReservaValid() {
         // Filtramos las reservas, ya que solo se pueden valorar las pasadas

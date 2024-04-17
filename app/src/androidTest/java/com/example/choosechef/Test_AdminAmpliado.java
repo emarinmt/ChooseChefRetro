@@ -142,6 +142,7 @@ public class Test_AdminAmpliado {
         actAdmin.buscar("test");
         UtilsTests.espera(10000);
         // Hacer clic en el SEGUNDO elemento de la lista (HAY UN ERROR CON EL PRIMERO, NO EXISTE)
+        // El usuario Test Repetido lo usa Laura para sus tests, cambiará el nombre
         onView(withId(R.id.rv_users))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(1, click()));
         UtilsTests.espera(10000);

@@ -52,12 +52,13 @@ public class Test_AjustesTipo {
     // Redirección ajustes chef correcta
     @Test
     public void testAjustesChefCorrecta() {
-        // Iniciar sesión como admin
+        // Iniciar sesión como chef
         onView(withId(R.id.edt_usuario_login)).perform(typeText("chef"));
         onView(withId(R.id.edt_contra_login)).perform(typeText("chef"), closeSoftKeyboard());
         onView(withId(R.id.ibtn_entrar_login)).perform(click());
         UtilsTests.espera(10000);
         onView(withId(R.id.btn_ajustes)).perform(click());
+        UtilsTests.espera(10000);
         // Verificar que se abre Activity_chef después de clicar en ajustes
         intended(hasComponent(Activity_chef.class.getName()));
     }
@@ -65,12 +66,13 @@ public class Test_AjustesTipo {
     // Redirección ajustes client correcta
     @Test
     public void testAjustesClientCorrecta() {
-        // Iniciar sesión como admin
+        // Iniciar sesión como client
         onView(withId(R.id.edt_usuario_login)).perform(typeText("client"));
         onView(withId(R.id.edt_contra_login)).perform(typeText("client"), closeSoftKeyboard());
         onView(withId(R.id.ibtn_entrar_login)).perform(click());
         UtilsTests.espera(10000);
         onView(withId(R.id.btn_ajustes)).perform(click());
+        UtilsTests.espera(10000);
         // Verificar que se abre Activity_user después de clicar en ajustes
         intended(hasComponent(Activity_user.class.getName()));
     }

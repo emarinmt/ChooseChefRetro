@@ -1,5 +1,7 @@
 package com.example.choosechef;
 import android.content.Context;
+import android.content.SharedPreferences;
+
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.intent.rule.IntentsTestRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -32,7 +34,8 @@ public class Test_Reservar {
     public IntentsTestRule<Activity_login> activityRule = new IntentsTestRule<>(Activity_login.class);
     private Activity_reservar reservar;
     private Context context;
-    private static int daysToAdd = 0; // Contador para los días a agregar
+    private static final String PREFS_NAME = "MiPreferencia"; // Nombre del archivo de preferencias
+    private static final String DAYS_TO_ADD_KEY = "daysToAdd"; // Clave para daysToAdd en SharedPreferences
     @Before
     public void setUp() {
         FastClient.initialize(ApplicationProvider.getApplicationContext());
@@ -54,11 +57,9 @@ public class Test_Reservar {
         reservar = ((Activity_reservar) UtilsTests.getActivityInstance(Activity_reservar.class));
     }
 
-    // Reserva correcta
-    // De momomento, no hemos implementado un método para obtener las fechas ocupadas,
-    // por lo tanto usamos una fecha muy posterior y vamos añadiendo días para asegurar que esté libre
+    // Reserva incorrecta (fecha ya reservada)
     @Test
-    public void testReservaValid() {
+    public void testReservaInvalidOcupada() {
         // Obtener una fecha posterior libre
         String fechaDeseada = obtenerFechaDeseada();
         // Establecer la fecha deseada en Activity_reservar mediante el método setFechaStr()
@@ -67,9 +68,16 @@ public class Test_Reservar {
         // Confirma la selección haciendo clic en el botón de confirmar reserva
         onView(withId(R.id.imageButton2)).perform(click());
         UtilsTests.espera(10000);
-        // Verificar si la reserva fue exitosa
-        assertTrue(reservar.isReservaSuccessful());
-        daysToAdd++; // para evitar errores con futuros tests
+        onView(withId(R.id.ibtn_reservar)).perform(click());  // Botón reservar
+        // Repetimos el proceso con la misma fecha
+        reservar.setFechaStr(fechaDeseada);
+        UtilsTests.espera(10000);
+        // Confirma la selección haciendo clic en el botón de confirmar reserva
+        onView(withId(R.id.imageButton2)).perform(click());
+        UtilsTests.espera(20000);
+        // Verificar si la reserva fue fallida
+        assertFalse(reservar.isReservaSuccessful());
+        incrementDaysToAdd(1); // Incrementar daysToAdd en 1 día // Para evitar errores con futuros tests
     }
 
     // Reserva incorrecta (fecha anterior a la actual)
@@ -87,9 +95,11 @@ public class Test_Reservar {
         assertFalse(reservar.isReservaSuccessful());
     }
 
-    // Reserva incorrecta (fecha ya reservada)
+    // Reserva correcta (fecha libre)
+    // De momomento, no hemos implementado un método para obtener las fechas ocupadas,
+    // por lo tanto usamos una fecha muy posterior y vamos añadiendo días para asegurar que esté libre
     @Test
-    public void testReservaInvalidOcupada() {
+    public void testReservaValid() {
         // Obtener una fecha posterior libre
         String fechaDeseada = obtenerFechaDeseada();
         // Establecer la fecha deseada en Activity_reservar mediante el método setFechaStr()
@@ -97,27 +107,20 @@ public class Test_Reservar {
         UtilsTests.espera(10000);
         // Confirma la selección haciendo clic en el botón de confirmar reserva
         onView(withId(R.id.imageButton2)).perform(click());
-        UtilsTests.espera(10000);
-
-        // Repetimos el proceso con la misma fecha
-        reservar.setFechaStr(fechaDeseada);
-        UtilsTests.espera(10000);
-        // Confirma la selección haciendo clic en el botón de confirmar reserva
-        onView(withId(R.id.imageButton2)).perform(click());
-        UtilsTests.espera(10000);
-        // Verificar si la reserva fue fallida
-        assertFalse(reservar.isReservaSuccessful());
-        daysToAdd++; // Para evitar errores con futuros tests
+        UtilsTests.espera(20000);
+        // Verificar si la reserva fue exitosa
+        assertTrue(reservar.isReservaSuccessful());
+        incrementDaysToAdd(1); // Incrementar daysToAdd en 1 día // para evitar errores con futuros tests
     }
 
     // Método para obtener la fecha deseada en el formato "YYYY-MM-DD"
     public String obtenerFechaDeseada() {
-        // Crear una instancia de Calendar para la fecha base (1 de enero de 2025)
+        // Crear una instancia de Calendar para la fecha base (5 de enero de 2025)
         Calendar calendar = Calendar.getInstance();
-        calendar.set(2025, Calendar.JANUARY, 02);
+        calendar.set(2026, Calendar.APRIL, 17);
 
         // Agregar días adicionales (según el contador daysToAdd)
-        calendar.add(Calendar.DAY_OF_MONTH, daysToAdd);
+        calendar.add(Calendar.DAY_OF_MONTH, getDaysToAdd());
 
         // Obtener año, mes y día de la fecha resultante
         int year = calendar.get(Calendar.YEAR);
@@ -128,6 +131,22 @@ public class Test_Reservar {
         String fechaDeseada = String.format("%d-%02d-%02d", year, month + 1, dayOfMonth);
 
         return fechaDeseada;
+    }
+
+    // Método estático para obtener el valor actual de daysToAdd desde SharedPreferences
+    private int getDaysToAdd() {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        return prefs.getInt(DAYS_TO_ADD_KEY, 0);
+    }
+
+    // Método estático para incrementar daysToAdd y guardar el nuevo valor en SharedPreferences
+    private void incrementDaysToAdd(int days) {
+        int currentDaysToAdd = getDaysToAdd();
+        currentDaysToAdd += days;
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt(DAYS_TO_ADD_KEY, currentDaysToAdd);
+        editor.apply(); // Guardar el nuevo valor de daysToAdd en SharedPreferences
     }
 
 }

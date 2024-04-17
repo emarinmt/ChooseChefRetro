@@ -290,13 +290,25 @@ public class Activity_user_ampliado extends AppCompatActivity {
     public boolean isContentSuccessful() {
         return contentSuccessful;
     }
+    /**
+     * Método para test
+     * @return devuelve un booleano en funcion de si ha ido bien la eliminación de usuario
+     */
     public boolean isDeleteSuccessful() {
         return deleteSuccessful;
     }
+    /**
+     * Método para test
+     * @return devuelve un booleano en funcion de si ha ido bien la modificación de usuario
+     */
     public boolean isModifySuccessful() {
         return modifySuccessful;
     }
 
+    /**
+     * Método par test
+     * @return devuelve el valor de la descripción de un usuario
+     */
     public String getDescUsuario() {
         return descripUsuario.getText().toString(); // Obtener el texto del EditText Descripcion
     }

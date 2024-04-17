@@ -125,7 +125,7 @@ public class Activity_admin extends AppCompatActivity {
     }
 
     // FILTRO PARA TEST
-    // PARA SIGUIENTE TEA IMPLEMENTAR BOTON)
+    // PARA SIGUIENTE TEA IMPLEMENTAR BOTON?
 
     /**
      * Método para filtrar la lista de usuarios localmente por el nombre de usuario.
