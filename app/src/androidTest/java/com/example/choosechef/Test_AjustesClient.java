@@ -23,7 +23,7 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * Para realizar los tests referentes a la muestra de reservas de un cliente
- * CORRESPONDERIA A LA CLASE ACTIVITY_USER
+ * CORRESPONDERIA A LA CLASE ACTIVITY_USER (GESTION RESERVAS)
  */
 @RunWith(AndroidJUnit4.class)
 public class Test_AjustesClient {
@@ -44,7 +44,7 @@ public class Test_AjustesClient {
         onView(withId(R.id.btn_ajustes)).perform(click());
         UtilsTests.espera(10000);
         // Verificar que se abre Activity_user después de clicar en ajustes
-        intended(hasComponent(Activity_chef.class.getName()));
+        intended(hasComponent(Activity_user.class.getName()));
         // Obtener la instancia de Activity_user
         actClient = ((Activity_user) UtilsTests.getActivityInstance(Activity_user.class));
     }
@@ -61,7 +61,7 @@ public class Test_AjustesClient {
         assertTrue(actClient.isContentSuccessful());
     }
 
-    // Recuperación de  reservas incorrecta (hay conexión)
+    // Recuperación de reservas incorrecta (hay conexión)
     @Test
     public void testRecuperarReservaWhenNoNetwork() {
         // Simular no tener conexión de red (configurando el estado de red en falso)
@@ -75,9 +75,21 @@ public class Test_AjustesClient {
         assertFalse(actClient.isContentSuccessful());
     }
 
+    // PROBANDO FILTRO  (PARA SIGUIENTE TEA IMPLEMENTAR BOTON)
+    // Recuperación de lista de reservas correcta con filtro
+    @Test
+    public void testRecuperarReservasFiltrados() {
+        UtilsTests.espera(20000);
+        actClient.buscar(2023);
+        UtilsTests.espera(20000);
+        // Verificar que contentSuccessful es true
+        assertTrue(actClient.isContentSuccessful());
+    }
+
     /*
     PARA COMPROBAR QUE LA LISTA DE RESERVAS AUMENTA AL CREAR UNA, SE REALIZARA EL TEST
     EN LA CLASE TEST_RESERVAR, YA QUE ES DONDE SE SIMULA UNA RESERVA
+    NO PODEMOS CLICAR A UN CHEF EN CONCRETO
      */
 
 }

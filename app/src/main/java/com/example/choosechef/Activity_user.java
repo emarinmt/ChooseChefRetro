@@ -125,4 +125,58 @@ public class Activity_user extends AppCompatActivity {
     public boolean isContentSuccessful() {
         return contentSuccessful;
     }
+
+    // FILTRO PARA TEST
+    // PARA SIGUIENTE TEA IMPLEMENTAR BOTON)
+    /**
+     * Método para filtrar la lista de reservas localmente por fecha
+     * @param year año a filtrar
+     */
+    public void buscar(int year) {
+        int searchText = year; // Fecha a filtrar
+
+        // Filtrar reservasList localmente con la fecha de búsqueda
+        List<Reserva> filteredList = filterReservas(reservasList, searchText);
+
+        // Actualizar reservasList con la lista filtrada
+        reservasList.clear();
+        reservasList.addAll(filteredList);
+
+        // Notificar al adaptador que los datos han cambiado en el hilo principal
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                adapter.notifyDataSetChanged(); // Notificar al adaptador que los datos han cambiado
+            }
+        });
+
+        // Actualizar el estado de contentSuccessful basado en si se encontraron reservas después del filtro
+        contentSuccessful = !reservasList.isEmpty(); // Si la lista filtrada no está vacía, entonces el contenido fue exitoso
+    }
+    /**
+     * Método para filtrar la lista de reservas localmente por fecha.
+     * @param reservasList Lista actual de reservas
+     * @param year año a filtrar
+     */
+    public List<Reserva> filterReservas(List<Reserva> reservasList, int year) {
+        List<Reserva> filteredList = new ArrayList<>();
+
+        for (Reserva reserva : reservasList) {
+            // Obtener la fecha de la reserva
+            String reservaDate = reserva.getFecha();
+
+            // Extraer el año de la fecha (asumiendo que la fecha está en formato "YYYY-MM-DD")
+            String[] parts = reservaDate.split("-");
+            if (parts.length >= 1) {
+                int reservaYear = Integer.parseInt(parts[0]); // Año de la reserva
+
+                // Verificar si la reserva es del año especificado (por ejemplo, 2023)
+                if (reservaYear == year) {
+                    filteredList.add(reserva);
+                }
+            }
+        }
+        return filteredList;
+    }
+
 }

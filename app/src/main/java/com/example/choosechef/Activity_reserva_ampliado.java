@@ -187,5 +187,15 @@ public class Activity_reserva_ampliado  extends AppCompatActivity {
     public boolean isContentSuccessful() {
         return contentSuccessful;
     }
+    /**
+     * Método para test
+     * @return devuelve un boleano en función de si ha ido bien la modificación de reservas
+     */
+    public boolean isModifySuccessful() {
+        return modifySuccessful;
+    }
 
+    public String getComentReserva() {
+        return comentario.getText().toString(); // Obtener el texto del Edittext comentario
+    }
 }

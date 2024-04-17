@@ -154,6 +154,7 @@ public class Activity_admin extends AppCompatActivity {
     }
     /**
      * Método para filtrar la lista de usuarios localmente por el nombre de usuario.
+     * @param userList Lista actual de usuarios
      * @param username Nombre de usuario a buscar para el filtro
      */
     public List<User> filterUsers(List<User> userList, String username) {

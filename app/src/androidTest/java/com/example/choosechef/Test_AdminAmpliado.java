@@ -71,7 +71,7 @@ public class Test_AdminAmpliado {
 
     // Ampliación de usuario correcta
     @Test
-    public void testAmpliarUserValid2() {
+    public void testAmpliarUserValid() {
         // Hacer clic en el primer elemento de la lista (suponiendo que hay al menos un usuario en la lista)
         onView(withId(R.id.rv_users))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
@@ -141,7 +141,7 @@ public class Test_AdminAmpliado {
         // Filtramos los usuarios
         actAdmin.buscar("test");
         UtilsTests.espera(10000);
-        // Hacer clic en el SEGUNDO elemento de la lista
+        // Hacer clic en el SEGUNDO elemento de la lista (HAY UN ERROR CON EL PRIMERO, NO EXISTE)
         onView(withId(R.id.rv_users))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(1, click()));
         UtilsTests.espera(10000);
