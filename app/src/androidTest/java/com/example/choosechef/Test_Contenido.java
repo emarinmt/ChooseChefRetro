@@ -83,8 +83,8 @@ public class Test_Contenido {
         onView(withId(R.id.ibtn_registro)).perform(click());
         String randomUsername = UtilsTests.generateRandomUsername(); // Genera un nombre de usuario aleatorio
         onView(withId(R.id.edt_usuario_registro)).perform(replaceText(randomUsername));
-        onView(withId(R.id.edt_contraseña_registro)).perform(replaceText("test"));
-        onView(withId(R.id.edt_contraseña2_registro)).perform(replaceText("test"));
+        onView(withId(R.id.edt_contrasena_registro)).perform(replaceText("test"));
+        onView(withId(R.id.edt_contrasena2_registro)).perform(replaceText("test"));
         onView(withId(R.id.switch_chef_registro)).perform(click()); // Tipo = Chef
         onView(withId(R.id.ibtn_registrarse_registro)).perform(click());
         UtilsTests.espera(10000);
@@ -110,8 +110,8 @@ public class Test_Contenido {
         onView(withId(R.id.ibtn_registro)).perform(click());
         String randomUsername = UtilsTests.generateRandomUsername(); // Genera un nombre de usuario aleatorio
         onView(withId(R.id.edt_usuario_registro)).perform(replaceText(randomUsername));
-        onView(withId(R.id.edt_contraseña_registro)).perform(replaceText("test"));
-        onView(withId(R.id.edt_contraseña2_registro)).perform(replaceText("test"));
+        onView(withId(R.id.edt_contrasena_registro)).perform(replaceText("test"));
+        onView(withId(R.id.edt_contrasena2_registro)).perform(replaceText("test"));
         onView(withId(R.id.ibtn_registrarse_registro)).perform(click());
         UtilsTests.espera(10000);
         // Iniciar sesión como usuario de prueba

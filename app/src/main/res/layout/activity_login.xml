@@ -44,7 +44,7 @@
         android:layout_marginBottom="145dp"
         android:autofillHints=""
         android:ems="10"
-        android:hint="@string/contraseña"
+        android:hint="@string/contrasena"
         android:inputType="textPassword"
         android:textColor="@color/white"
         android:textColorHint="@color/hint"
@@ -54,12 +54,12 @@
         app:layout_constraintTop_toBottomOf="@+id/edt_usuario_login" />
 
     <TextView
-        android:id="@+id/txt_olvido_contraseña"
+        android:id="@+id/txt_olvido_contrasena"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="63dp"
         android:layout_marginBottom="110dp"
-        android:text="@string/has_olvidado_la_contraseña"
+        android:text="@string/has_olvidado_la_contrasena"
         android:textColor="@color/hint"
         app:layout_constraintBottom_toTopOf="@+id/ibtn_entrar_login"
         app:layout_constraintEnd_toEndOf="parent"

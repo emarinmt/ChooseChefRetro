@@ -22,7 +22,7 @@ public interface FastMethods {
      * La anotación @GET indica que esta solicitud se realiza con el método GET HTTP
      * La anotación @Path se utiliza para agregar parámetros a la solicitud
      * @param usuario nombre de usuario
-     * @param password contraseña
+     * @param password contrasena
      * @return token de sesión
      */
     @GET("usuario/login/token/{usuario}/{password}")

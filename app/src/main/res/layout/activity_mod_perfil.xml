@@ -73,23 +73,23 @@
         android:inputType="phone"
         android:textColor="@color/white"
         android:textColorHint="@color/hint"
-        app:layout_constraintBottom_toTopOf="@+id/switch_cambio_contraseña"
+        app:layout_constraintBottom_toTopOf="@+id/switch_cambio_contrasena"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.50"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edt_direccion_mod_perfil" />
 
     <Switch
-        android:id="@+id/switch_cambio_contraseña"
+        android:id="@+id/switch_cambio_contrasena"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="10dp"
         android:enabled="true"
         android:minHeight="48dp"
-        android:text="@string/quieres_cambiar_la_contraseña"
+        android:text="@string/quieres_cambiar_la_contrasena"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/edt_contraseña_anterior_mod_perfil"
+        app:layout_constraintBottom_toTopOf="@+id/edt_contrasena_anterior_mod_perfil"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.50"
         app:layout_constraintStart_toStartOf="parent"
@@ -98,7 +98,7 @@
 
 
     <EditText
-        android:id="@+id/edt_contraseña_anterior_mod_perfil"
+        android:id="@+id/edt_contrasena_anterior_mod_perfil"
         android:layout_width="284dp"
         android:layout_height="48dp"
         android:layout_marginTop="10dp"
@@ -106,21 +106,21 @@
         android:autofillHints=""
         android:ems="10"
         android:enabled="true"
-        android:hint="@string/contraseña_anterior"
+        android:hint="@string/contrasena_anterior"
         android:inputType="textPassword"
         android:textColor="@color/white"
         android:textColorHint="@color/hint"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/edt_contraseña_nueva_mod_perfil"
+        app:layout_constraintBottom_toTopOf="@+id/edt_contrasena_nueva_mod_perfil"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.50"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switch_cambio_contraseña"
+        app:layout_constraintTop_toBottomOf="@+id/switch_cambio_contrasena"
         tools:visibility="visible" />
 
 
     <EditText
-        android:id="@+id/edt_contraseña_nueva_mod_perfil"
+        android:id="@+id/edt_contrasena_nueva_mod_perfil"
         android:layout_width="284dp"
         android:layout_height="48dp"
         android:layout_marginTop="10dp"
@@ -128,21 +128,21 @@
         android:autofillHints=""
         android:ems="10"
         android:enabled="true"
-        android:hint="@string/contraseña_nueva"
+        android:hint="@string/contrasena_nueva"
         android:inputType="textPassword"
         android:textColor="@color/white"
         android:textColorHint="@color/hint"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/edt_contraseña2_nueva_mod_perfil"
+        app:layout_constraintBottom_toTopOf="@+id/edt_contrasena2_nueva_mod_perfil"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.50"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_contraseña_anterior_mod_perfil"
+        app:layout_constraintTop_toBottomOf="@+id/edt_contrasena_anterior_mod_perfil"
         app:layout_constraintVertical_bias="0.102"
         tools:visibility="visible" />
 
     <EditText
-        android:id="@+id/edt_contraseña2_nueva_mod_perfil"
+        android:id="@+id/edt_contrasena2_nueva_mod_perfil"
         android:layout_width="284dp"
         android:layout_height="48dp"
         android:layout_marginTop="10dp"
@@ -150,7 +150,7 @@
         android:autofillHints=""
         android:ems="10"
         android:enabled="true"
-        android:hint="@string/contraseña2_nueva"
+        android:hint="@string/contrasena2_nueva"
         android:inputType="textPassword"
         android:textColor="@color/white"
         android:textColorHint="@color/hint"
@@ -159,7 +159,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.50"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_contraseña_nueva_mod_perfil"
+        app:layout_constraintTop_toBottomOf="@+id/edt_contrasena_nueva_mod_perfil"
         tools:visibility="visible" />
 
     <ImageButton
@@ -174,7 +174,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btn_logout_user"
-        app:layout_constraintTop_toBottomOf="@+id/edt_contraseña2_nueva_mod_perfil"
+        app:layout_constraintTop_toBottomOf="@+id/edt_contrasena2_nueva_mod_perfil"
         app:srcCompat="@drawable/boton_confirmar" />
 
     <ImageButton

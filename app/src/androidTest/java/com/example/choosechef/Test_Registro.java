@@ -45,8 +45,8 @@ public class Test_Registro {
 
         // Simulamos la entrada de datos en los campos de registro
         onView(withId(R.id.edt_usuario_registro)).perform(replaceText(randomUsername));
-        onView(withId(R.id.edt_contraseña_registro)).perform(replaceText("correctPass"));
-        onView(withId(R.id.edt_contraseña2_registro)).perform(replaceText("correctPass"));
+        onView(withId(R.id.edt_contrasena_registro)).perform(replaceText("correctPass"));
+        onView(withId(R.id.edt_contrasena2_registro)).perform(replaceText("correctPass"));
 
         // Realizamos el clic en el botón de registro
         onView(withId(R.id.ibtn_registrarse_registro)).perform(click());
@@ -68,8 +68,8 @@ public class Test_Registro {
 
         // Simulamos la entrada de datos en los campos de registro
         onView(withId(R.id.edt_usuario_registro)).perform(replaceText(randomUsername));
-        onView(withId(R.id.edt_contraseña_registro)).perform(replaceText("correctPass"));
-        onView(withId(R.id.edt_contraseña2_registro)).perform(replaceText("correctPass"));
+        onView(withId(R.id.edt_contrasena_registro)).perform(replaceText("correctPass"));
+        onView(withId(R.id.edt_contrasena2_registro)).perform(replaceText("correctPass"));
         // Realizamos el clic en el botón de registro
         onView(withId(R.id.ibtn_registrarse_registro)).perform(click());
         UtilsTests.espera(10000);
@@ -83,13 +83,13 @@ public class Test_Registro {
     public void testInvalidPassword() {
         // Simulamos la entrada de datos en los campos de registro
         onView(withId(R.id.edt_usuario_registro)).perform(replaceText("user"));
-        onView(withId(R.id.edt_contraseña_registro)).perform(replaceText("password"));
-        onView(withId(R.id.edt_contraseña2_registro)).perform(replaceText("wrongpassword"));
+        onView(withId(R.id.edt_contrasena_registro)).perform(replaceText("password"));
+        onView(withId(R.id.edt_contrasena2_registro)).perform(replaceText("wrongpassword"));
 
         // Realizamos el clic en el botón de registro
         onView(withId(R.id.ibtn_registrarse_registro)).perform(click());
 
-        // Aseguramos que el registro sea fallido debido a la contraseña inválida
+        // Aseguramos que el registro sea fallido debido a la contrasena inválida
         assertFalse(registro.isRegistrationSuccessful());
     }
 
@@ -98,8 +98,8 @@ public class Test_Registro {
     public void testInvalidUsername() {
         // Simulamos la entrada de datos en los campos de registro
         onView(withId(R.id.edt_usuario_registro)).perform(replaceText("client"));
-        onView(withId(R.id.edt_contraseña_registro)).perform(replaceText("pruebappass"));
-        onView(withId(R.id.edt_contraseña2_registro)).perform(replaceText("pruebappass"));
+        onView(withId(R.id.edt_contrasena_registro)).perform(replaceText("pruebappass"));
+        onView(withId(R.id.edt_contrasena2_registro)).perform(replaceText("pruebappass"));
 
         // Realizamos el clic en el botón de registro
         onView(withId(R.id.ibtn_registrarse_registro)).perform(click());
@@ -113,8 +113,8 @@ public class Test_Registro {
     public void testEmptyFields() {
         // Simulamos la entrada de datos en los campos de registro
         onView(withId(R.id.edt_usuario_registro)).perform(replaceText(""));
-        onView(withId(R.id.edt_contraseña_registro)).perform(replaceText(""));
-        onView(withId(R.id.edt_contraseña2_registro)).perform(replaceText(""));
+        onView(withId(R.id.edt_contrasena_registro)).perform(replaceText(""));
+        onView(withId(R.id.edt_contrasena2_registro)).perform(replaceText(""));
 
         // Realizamos el clic en el botón de registro
         onView(withId(R.id.ibtn_registrarse_registro)).perform(click());

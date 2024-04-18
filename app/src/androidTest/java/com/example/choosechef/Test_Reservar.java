@@ -45,7 +45,7 @@ public class Test_Reservar {
         onView(withId(R.id.edt_contra_login)).perform(typeText("client"), closeSoftKeyboard());
         onView(withId(R.id.ibtn_entrar_login)).perform(click());
         UtilsTests.espera(10000);
-        // PARA MÁS ADELANTE IMPLEMENTAR QUE CLIQUE EN UN CHEF DETERMINADO
+        // PARA MAS ADELANTE IMPLEMENTAR QUE CLIQUE EN UN CHEF DETERMINADO
         // Hacer clic en el primer elemento de la lista (suponiendo que hay al menos un chef en la lista)
         onView(withId(R.id.rv_chefs))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));

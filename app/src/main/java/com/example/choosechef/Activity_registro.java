@@ -44,8 +44,8 @@ public class Activity_registro extends AppCompatActivity {
 
         // Inicialización de variables
         mUserInput = findViewById(R.id.edt_usuario_registro);
-        mPassInput = findViewById(R.id.edt_contraseña_registro);
-        mConfirmPassInput = findViewById(R.id.edt_contraseña2_registro);
+        mPassInput = findViewById(R.id.edt_contrasena_registro);
+        mConfirmPassInput = findViewById(R.id.edt_contrasena2_registro);
         mChef = findViewById(R.id.switch_chef_registro);
 
         retro=FastClient.getClient();
@@ -103,8 +103,8 @@ public class Activity_registro extends AppCompatActivity {
     /**
      * Método para validar los campos de entrada
      * @param username nombre de usuario introducido
-     * @param password contraseña introducida
-     * @param confirmPassword confirmación de contraseña introducida
+     * @param password contrasena introducida
+     * @param confirmPassword confirmación de contrasena introducida
      * @return true si los campos estan rellenados y las contraseñas coinciden o false en caso contrario
      */
     public boolean validateFields(String username, String password, String confirmPassword) {
@@ -113,13 +113,13 @@ public class Activity_registro extends AppCompatActivity {
             return false;
         }
 
-        if (TextUtils.isEmpty(password)) { // Comprueba si el campo contraseña está vacio
-            mPassInput.setError("¡Debe ingresar una contraseña!");
+        if (TextUtils.isEmpty(password)) { // Comprueba si el campo contrasena está vacio
+            mPassInput.setError("¡Debe ingresar una contrasena!");
             return false;
         }
 
-        if (TextUtils.isEmpty(confirmPassword)) { // Comprueba si el campo contraseña está vacio
-            mConfirmPassInput.setError("¡Debe confirmar la contraseña!");
+        if (TextUtils.isEmpty(confirmPassword)) { // Comprueba si el campo contrasena está vacio
+            mConfirmPassInput.setError("¡Debe confirmar la contrasena!");
             return false;
         }
 

@@ -1,5 +1,4 @@
 package com.example.choosechef;
-import android.app.Activity;
 
 import android.content.Context;
 
@@ -54,7 +53,7 @@ public class Test_Modperfil {
         modperfil = ((Activity_mod_perfil) UtilsTests.getActivityInstance(Activity_mod_perfil.class));
     }
 
-    // Modificación de datos correcta (sin contraseña)
+    // Modificación de datos correcta (sin contrasena)
     @Test
     public void testValidData() {
         // Simulamos la entrada de datos en los campos
@@ -71,28 +70,28 @@ public class Test_Modperfil {
         assertTrue(modperfil.isModifySuccessful());
     }
 
-    // Modificación de datos correcta (con contraseña)
+    // Modificación de datos correcta (con contrasena)
     @Test
     public void testValidDataPass() {
         // Simulamos la entrada de datos en los campos
         onView(withId(R.id.edt_nombre_mod_perfil)).perform(replaceText("5"));
         onView(withId(R.id.edt_direccion_mod_perfil)).perform(replaceText("5"));
         onView(withId(R.id.edt_telefono_mod_perfil)).perform(replaceText("5"));
-        onView(withId(R.id.switch_cambio_contraseña)).perform(click());
-        onView(withId(R.id.edt_contraseña_anterior_mod_perfil)).perform(replaceText("4"));
-        onView(withId(R.id.edt_contraseña_nueva_mod_perfil)).perform(replaceText("newPass"));
-        onView(withId(R.id.edt_contraseña2_nueva_mod_perfil)).perform(replaceText("newPass"));
+        onView(withId(R.id.switch_cambio_contrasena)).perform(click());
+        onView(withId(R.id.edt_contrasena_anterior_mod_perfil)).perform(replaceText("4"));
+        onView(withId(R.id.edt_contrasena_nueva_mod_perfil)).perform(replaceText("newPass"));
+        onView(withId(R.id.edt_contrasena2_nueva_mod_perfil)).perform(replaceText("newPass"));
 
         // Realizamos el clic en el botón de confirmar
         onView(withId(R.id.ibtn_confirmar_mod_perfil)).perform(click());
         UtilsTests.espera(10000);
 
-        // Restaurar la contraseña original
+        // Restaurar la contrasena original
         onView(withId(R.id.btn_mod_perfil)).perform(click());
-        onView(withId(R.id.switch_cambio_contraseña)).perform(click());
-        onView(withId(R.id.edt_contraseña_anterior_mod_perfil)).perform(replaceText("newPass"));
-        onView(withId(R.id.edt_contraseña_nueva_mod_perfil)).perform(replaceText("4"));
-        onView(withId(R.id.edt_contraseña2_nueva_mod_perfil)).perform(replaceText("4"));
+        onView(withId(R.id.switch_cambio_contrasena)).perform(click());
+        onView(withId(R.id.edt_contrasena_anterior_mod_perfil)).perform(replaceText("newPass"));
+        onView(withId(R.id.edt_contrasena_nueva_mod_perfil)).perform(replaceText("4"));
+        onView(withId(R.id.edt_contrasena2_nueva_mod_perfil)).perform(replaceText("4"));
         UtilsTests.espera(10000);
 
         // Realizamos el clic en el botón de confirmar
@@ -103,17 +102,17 @@ public class Test_Modperfil {
         assertTrue(modperfil.isModifySuccessful());
     }
 
-    // Modificación de datos incorrecta (contraseña anterior no coincide)
+    // Modificación de datos incorrecta (contrasena anterior no coincide)
     @Test
     public void testInvalidPass() {
         // Simulamos la entrada de datos en los campos
         onView(withId(R.id.edt_nombre_mod_perfil)).perform(replaceText("probando2"));
         onView(withId(R.id.edt_direccion_mod_perfil)).perform(replaceText("probando2"));
         onView(withId(R.id.edt_telefono_mod_perfil)).perform(replaceText("probando2"));
-        onView(withId(R.id.switch_cambio_contraseña)).perform(click());
-        onView(withId(R.id.edt_contraseña_anterior_mod_perfil)).perform(replaceText("3"));
-        onView(withId(R.id.edt_contraseña_nueva_mod_perfil)).perform(replaceText("newPass"));
-        onView(withId(R.id.edt_contraseña2_nueva_mod_perfil)).perform(replaceText("newPass"));
+        onView(withId(R.id.switch_cambio_contrasena)).perform(click());
+        onView(withId(R.id.edt_contrasena_anterior_mod_perfil)).perform(replaceText("3"));
+        onView(withId(R.id.edt_contrasena_nueva_mod_perfil)).perform(replaceText("newPass"));
+        onView(withId(R.id.edt_contrasena2_nueva_mod_perfil)).perform(replaceText("newPass"));
 
         // Realizamos el clic en el botón de confirmar
         onView(withId(R.id.ibtn_confirmar_mod_perfil)).perform(click());
@@ -130,10 +129,10 @@ public class Test_Modperfil {
         onView(withId(R.id.edt_nombre_mod_perfil)).perform(replaceText("probando2"));
         onView(withId(R.id.edt_direccion_mod_perfil)).perform(replaceText("probando2"));
         onView(withId(R.id.edt_telefono_mod_perfil)).perform(replaceText("probando2"));
-        onView(withId(R.id.switch_cambio_contraseña)).perform(click());
-        onView(withId(R.id.edt_contraseña_anterior_mod_perfil)).perform(replaceText("4"));
-        onView(withId(R.id.edt_contraseña_nueva_mod_perfil)).perform(replaceText("newPass"));
-        onView(withId(R.id.edt_contraseña2_nueva_mod_perfil)).perform(replaceText("newPasswrong"));
+        onView(withId(R.id.switch_cambio_contrasena)).perform(click());
+        onView(withId(R.id.edt_contrasena_anterior_mod_perfil)).perform(replaceText("4"));
+        onView(withId(R.id.edt_contrasena_nueva_mod_perfil)).perform(replaceText("newPass"));
+        onView(withId(R.id.edt_contrasena2_nueva_mod_perfil)).perform(replaceText("newPasswrong"));
 
         // Realizamos el clic en el botón de confirmar
         onView(withId(R.id.ibtn_confirmar_mod_perfil)).perform(click());
@@ -150,10 +149,10 @@ public class Test_Modperfil {
         onView(withId(R.id.edt_nombre_mod_perfil)).perform(replaceText("probando2"));
         onView(withId(R.id.edt_direccion_mod_perfil)).perform(replaceText("probando2"));
         onView(withId(R.id.edt_telefono_mod_perfil)).perform(replaceText("probando2"));
-        onView(withId(R.id.switch_cambio_contraseña)).perform(click());
-        onView(withId(R.id.edt_contraseña_anterior_mod_perfil)).perform(replaceText(""));
-        onView(withId(R.id.edt_contraseña_nueva_mod_perfil)).perform(replaceText("newPass"));
-        onView(withId(R.id.edt_contraseña2_nueva_mod_perfil)).perform(replaceText(""));
+        onView(withId(R.id.switch_cambio_contrasena)).perform(click());
+        onView(withId(R.id.edt_contrasena_anterior_mod_perfil)).perform(replaceText(""));
+        onView(withId(R.id.edt_contrasena_nueva_mod_perfil)).perform(replaceText("newPass"));
+        onView(withId(R.id.edt_contrasena2_nueva_mod_perfil)).perform(replaceText(""));
 
         // Realizamos el clic en el botón de confirmar
         onView(withId(R.id.ibtn_confirmar_mod_perfil)).perform(click());

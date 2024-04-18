@@ -55,10 +55,10 @@ public class Activity_mod_perfil extends AppCompatActivity {
         mNameInput = findViewById(R.id.edt_nombre_mod_perfil);
         mAdressInput = findViewById(R.id.edt_direccion_mod_perfil);
         mPhoneInput = findViewById(R.id.edt_telefono_mod_perfil);
-        mPassInput = findViewById(R.id.edt_contraseña_anterior_mod_perfil);
-        mNewPassInput = findViewById(R.id.edt_contraseña_nueva_mod_perfil);
-        mNewPassConfInput = findViewById(R.id.edt_contraseña2_nueva_mod_perfil);
-        mChangePass = findViewById(R.id.switch_cambio_contraseña);
+        mPassInput = findViewById(R.id.edt_contrasena_anterior_mod_perfil);
+        mNewPassInput = findViewById(R.id.edt_contrasena_nueva_mod_perfil);
+        mNewPassConfInput = findViewById(R.id.edt_contrasena2_nueva_mod_perfil);
+        mChangePass = findViewById(R.id.switch_cambio_contrasena);
 
         retro=FastClient.getClient();
         mfastMethods = retro.create(FastMethods.class);
@@ -157,13 +157,13 @@ public class Activity_mod_perfil extends AppCompatActivity {
             return;
         }
 
-        // Condicional según la opción del switch de cambio de contraseña
+        // Condicional según la opción del switch de cambio de contrasena
         if (queryOptionPass) {
             // Comprueba si los campos de entrada son correctos
             if (!validateFields(queryPassString, queryNewPassString, queryNewPassConfString)) {
                 return;
             }
-            user.setPassword(queryNewPassString); // Cambio de contraseña
+            user.setPassword(queryNewPassString); // Cambio de contrasena
         }
 
         // Actualizamos los datos del usuario con los nuevos valores
@@ -177,26 +177,26 @@ public class Activity_mod_perfil extends AppCompatActivity {
 
     /**
      * Método para validar los campos de entrada
-     * @param oldPass contraseña actual introducido
-     * @param newPass contraseña nuevaintroducida
-     * @param confirmPassword confirmación de contraseña introducida
+     * @param oldPass contrasena actual introducido
+     * @param newPass contrasena nuevaintroducida
+     * @param confirmPassword confirmación de contrasena introducida
      * @return true si los campos estan rellenados y las contraseñas coinciden o false en caso contrario
      */
     private boolean validateFields(String oldPass, String newPass, String confirmPassword) {
-        if (TextUtils.isEmpty(oldPass)) { // Comprueba si el campo contraseña actual está vacio
-            mPassInput.setError("¡Debe ingresar una contraseña!");
+        if (TextUtils.isEmpty(oldPass)) { // Comprueba si el campo contrasena actual está vacio
+            mPassInput.setError("¡Debe ingresar una contrasena!");
             return false;
         }
-        if (!oldPass.equals(user.getPassword())) { // Comprueba si la contraseña actual ingresada no coincide con la del usuario
-            mPassInput.setError("¡La contraseña actual es incorrecta!");
+        if (!oldPass.equals(user.getPassword())) { // Comprueba si la contrasena actual ingresada no coincide con la del usuario
+            mPassInput.setError("¡La contrasena actual es incorrecta!");
             return false;
         }
-        if (TextUtils.isEmpty(newPass)) { // Comprueba si el campo contraseña nueva está vacio
-            mNewPassInput.setError("¡Debe ingresar una contraseña nueva!");
+        if (TextUtils.isEmpty(newPass)) { // Comprueba si el campo contrasena nueva está vacio
+            mNewPassInput.setError("¡Debe ingresar una contrasena nueva!");
             return false;
         }
-        if (TextUtils.isEmpty(confirmPassword)) { // Comprueba si el campo contraseña nueva confirmación está vacio
-            mNewPassConfInput.setError("¡Debe confirmar la contraseña!");
+        if (TextUtils.isEmpty(confirmPassword)) { // Comprueba si el campo contrasena nueva confirmación está vacio
+            mNewPassConfInput.setError("¡Debe confirmar la contrasena!");
             return false;
         }
         if (!newPass.equals(confirmPassword)) { // Comprobueba si las contraseñas coinciden

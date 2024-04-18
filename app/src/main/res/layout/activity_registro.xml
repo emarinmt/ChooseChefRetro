@@ -37,7 +37,7 @@
         android:textColorHint="@color/hint"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/switch_chef_registro"
-        app:layout_constraintBottom_toTopOf="@+id/edt_contraseña_registro"
+        app:layout_constraintBottom_toTopOf="@+id/edt_contrasena_registro"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.392"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,16 +45,16 @@
         app:layout_constraintVertical_bias="0.222" />
 
     <EditText
-        android:id="@+id/edt_contraseña_registro"
+        android:id="@+id/edt_contrasena_registro"
         android:layout_width="284dp"
         android:layout_height="48dp"
         android:autofillHints=""
         android:ems="10"
-        android:hint="@string/contraseña_registro"
+        android:hint="@string/contrasena_registro"
         android:inputType="textPassword"
         android:textColor="@color/white"
         android:textColorHint="@color/hint"
-        app:layout_constraintBottom_toTopOf="@+id/edt_contraseña2_registro"
+        app:layout_constraintBottom_toTopOf="@+id/edt_contrasena2_registro"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.385"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,12 +62,12 @@
         app:layout_constraintVertical_bias="0.102" />
 
     <EditText
-        android:id="@+id/edt_contraseña2_registro"
+        android:id="@+id/edt_contrasena2_registro"
         android:layout_width="284dp"
         android:layout_height="48dp"
         android:autofillHints=""
         android:ems="10"
-        android:hint="@string/contraseña2_registro"
+        android:hint="@string/contrasena2_registro"
         android:inputType="textPassword"
         android:textColor="@color/white"
         android:textColorHint="@color/hint"
@@ -75,7 +75,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.385"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_contraseña_registro" />
+        app:layout_constraintTop_toBottomOf="@+id/edt_contrasena_registro" />
 
     <ImageButton
         android:id="@+id/ibtn_registrarse_registro"
@@ -88,7 +88,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.531"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_contraseña2_registro"
+        app:layout_constraintTop_toBottomOf="@+id/edt_contrasena2_registro"
         app:srcCompat="@drawable/boton_registrate" />
 
 

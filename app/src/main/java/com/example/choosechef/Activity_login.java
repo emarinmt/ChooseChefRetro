@@ -25,7 +25,7 @@ public class Activity_login extends AppCompatActivity {
     private boolean loginSuccessful = false; // Variable para rastrear el estado del login
     private final String TAG = Activity_login.class.getSimpleName();
 
-    // Variables para los campos de entrada de usuario y contraseña
+    // Variables para los campos de entrada de usuario y contrasena
     private EditText mUserInput;
     private EditText mPassInput;
     FastMethods mfastMethods;
@@ -83,7 +83,7 @@ public class Activity_login extends AppCompatActivity {
     /**
      * Método para validar los campos
      * @param username nombre de usuario introducido
-     * @param password contraseña introducida
+     * @param password contrasena introducida
      * @return booleano true si los campos estan rellenados o false si alguno está vacio
      */
     private boolean validateFields(String username, String password) {
@@ -91,8 +91,8 @@ public class Activity_login extends AppCompatActivity {
             mUserInput.setError("¡Debe ingresar un nombre de usuario!");
             return false;
         }
-        if (TextUtils.isEmpty(password)) { // Comprueba si el campo contraseña está vacio
-            mPassInput.setError("¡Debe ingresar una contraseña!");
+        if (TextUtils.isEmpty(password)) { // Comprueba si el campo contrasena está vacio
+            mPassInput.setError("¡Debe ingresar una contrasena!");
             return false;
         }
         return true;
@@ -101,7 +101,7 @@ public class Activity_login extends AppCompatActivity {
     /**
      * Método para realizar el login
      * @param username nombre de usuario introducido
-     * @param password contraseña introducida
+     * @param password contrasena introducida
      */
     private void loginUsuario(String username, String password) {
         Context context = this; // Obtener el contexto de la actividad (this)

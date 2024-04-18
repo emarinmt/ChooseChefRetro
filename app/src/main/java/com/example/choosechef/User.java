@@ -31,7 +31,7 @@ public class User implements Serializable {
      * @param id id usuario
      * @param usuario usuario
      * @param nombre nombre usuario
-     * @param password contraseña del usuario
+     * @param password contrasena del usuario
      * @param descripcion descripcion del usuario
      * @param ubicacion ubicacion del usuario
      * @param email email del usuario

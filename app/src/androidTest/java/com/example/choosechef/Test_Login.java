@@ -36,7 +36,7 @@ public class Test_Login {
         login = activityRule.getActivity();
     }
 
-    // Usuario existente y contraseña correcta, login correcto
+    // Usuario existente y contrasena correcta, login correcto
     @Test
     public void testValidCredentials() {
 
@@ -54,7 +54,7 @@ public class Test_Login {
 
     }
 
-    // Usuario existente y contraseña incorrecta, login incorrecto
+    // Usuario existente y contrasena incorrecta, login incorrecto
     @Test
     public void testInvalidPassword() {
 

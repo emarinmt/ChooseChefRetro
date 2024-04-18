@@ -62,7 +62,7 @@ public class Test_AdminAmpliado {
         Clicaremos en aquellos usuarios cucyo nombre empiezan por test
         ya que son los creados en los test y no hay problema en eliminarlos
         NO SE PUEDE IMPLEMENTAR DEBIDO AL EMULADOR, NO PERMITE ANIMACIONES, POR LO TANTO
-        NO PODEMOS HACER SCROLL. SI EL NOMBRE ESTÁ EN LA PANTALLA SÍ SE CLICA
+        NO PODEMOS HACER SCROLL. SI EL NOMBRE ESTA EN LA PANTALLA SI SE CLICA
         //String nombreUsuario = "4"; // Nombre del usuario deseado (parcial)
         //clickOnItemWithText(nombreUsuario);
          */
@@ -142,7 +142,7 @@ public class Test_AdminAmpliado {
         actAdmin.buscar("test");
         UtilsTests.espera(10000);
         // Hacer clic en el SEGUNDO elemento de la lista (HAY UN ERROR CON EL PRIMERO, NO EXISTE)
-        // El usuario Test Repetido lo usa Laura para sus tests, cambiará el nombre
+        // El usuario Test Repetido lo usa Laura para sus tests, cambiara el nombre
         onView(withId(R.id.rv_users))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(1, click()));
         UtilsTests.espera(10000);

@@ -63,7 +63,7 @@ public class Activity_user_ampliado extends AppCompatActivity {
         // Inicialización de variables
         usuario = findViewById(R.id.edt_usuario);
         nombreUsuario = findViewById(R.id.edt_nombre_usuario);
-        passwordUsuario = findViewById(R.id.edt_contraseña_usuario);
+        passwordUsuario = findViewById(R.id.edt_contrasena_usuario);
         descripUsuario = findViewById(R.id.edt_descripcion_usuario);
         provinciaUsuario = findViewById(R.id.edt_provincia_usuario);
         mailUsuario = findViewById(R.id.edt_mail_usuario);

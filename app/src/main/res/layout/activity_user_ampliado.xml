@@ -70,7 +70,7 @@
         android:text="@string/nombre_del_usuario"
         android:textColor="@color/white"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/edt_contraseña_usuario"
+        app:layout_constraintBottom_toTopOf="@+id/edt_contrasena_usuario"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -87,14 +87,14 @@
         android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/txt_descrip"
-        app:layout_constraintEnd_toStartOf="@+id/edt_contraseña_usuario"
+        app:layout_constraintEnd_toStartOf="@+id/edt_contrasena_usuario"
         app:layout_constraintHorizontal_bias="0.375"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_nombre"
         tools:ignore="TextSizeCheck" />
 
     <EditText
-        android:id="@+id/edt_contraseña_usuario"
+        android:id="@+id/edt_contrasena_usuario"
         android:layout_width="273dp"
         android:layout_height="48dp"
         android:layout_marginStart="5dp"
@@ -146,7 +146,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_contraseña_usuario"
+        app:layout_constraintTop_toBottomOf="@+id/edt_contrasena_usuario"
         tools:ignore="LabelFor,VisualLintTextFieldSize,TextSizeCheck" />
 
     <TextView
