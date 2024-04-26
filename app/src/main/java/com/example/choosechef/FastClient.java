@@ -4,6 +4,15 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import java.io.InputStream;
+import java.security.KeyStore;
+import java.security.cert.Certificate;
+import java.security.cert.CertificateFactory;
+
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManagerFactory;
+
+import okhttp3.CertificatePinner;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -53,11 +62,15 @@ public class FastClient {
                 // Manejar el caso cuando mContext es null
                 Log.e("FastClient", "Context is null");
             }
-            //SharedPreferences sharedPreferences = mContext.getSharedPreferences("MiPreferencia", Context.MODE_PRIVATE);
-            //String token = sharedPreferences.getString("token", "");
 
-            //httpClient.addInterceptor(new AuthInterceptor(token)); // Agregar interceptor de autenticación
-            // "token" es el token de acceso que hemos almacenado localmente)
+            // Agregar la validación del certificado del servidor
+            CertificatePinner certificatePinner = new CertificatePinner.Builder()
+                    .add("choose-chef.vercel.app", "sha256/Ewk2q8vq2vIcbk8vwG5Vh3OTClEtYGBNnSl78OqYmQA")
+                    .build();
+            httpClient.certificatePinner(certificatePinner);
+
+            // Configurar OkHttpClient para que use el certificado
+            httpClient.sslSocketFactory(getSSLConfig(mContext).getSocketFactory());
 
             // Construcción de la instancia de Retrofit
             retrofit = new Retrofit.Builder()
@@ -67,5 +80,30 @@ public class FastClient {
                     .build();
         }
         return retrofit;
+    }
+
+    // Método para obtener el SSLContext con el certificado
+    private static SSLContext getSSLConfig(Context context) {
+        try {
+            CertificateFactory cf = CertificateFactory.getInstance("X.509");
+            InputStream cert = context.getResources().openRawResource(R.raw.vercel_cer);
+            Certificate ca = cf.generateCertificate(cert);
+            cert.close();
+
+            KeyStore keyStore = KeyStore.getInstance("BKS");
+            keyStore.load(null, null);
+            keyStore.setCertificateEntry("ca", ca);
+
+            TrustManagerFactory tmf = TrustManagerFactory.getInstance("X509");
+            tmf.init(keyStore);
+
+            SSLContext sslContext = SSLContext.getInstance("TLS");
+            sslContext.init(null, tmf.getTrustManagers(), null);
+
+            return sslContext;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
