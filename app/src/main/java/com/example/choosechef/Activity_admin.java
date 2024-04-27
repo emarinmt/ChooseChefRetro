@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,6 +36,8 @@ public class Activity_admin extends AppCompatActivity {
     // Variables para conectar con la API
     FastMethods mfastMethods;
     Retrofit retro;
+    //variable para filtrar por usuario
+    private EditText nombre_usuario_filtro;
 
     /**
      * Método onCreate para la configuración incial de la actividad
@@ -45,6 +48,9 @@ public class Activity_admin extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         // Establece el diseño de la actividad.
         setContentView(R.layout.activity_admin);
+
+        //Inicializar variables
+        nombre_usuario_filtro = findViewById(R.id.edt_buscar_usuario);
 
         retro=FastClient.getClient();
         mfastMethods = retro.create(FastMethods.class);
@@ -124,8 +130,18 @@ public class Activity_admin extends AppCompatActivity {
         return contentSuccessful;
     }
 
-    // FILTRO PARA TEST
-    // PARA SIGUIENTE TEA IMPLEMENTAR BOTON?
+    /**
+     * Método para filtrar la lista de usuarios por el nombre de usuario
+     * @param view La vista (Button) a la que se hizo clic.
+     */
+    public void buscar_usuario(View view){
+        String usuario = nombre_usuario_filtro.getText().toString();
+        if(usuario.isEmpty()){
+            Utils.showToast(this, "Introduza un usuario para buscarlo");
+        }else{
+            buscar(usuario);
+        }
+    }
 
     /**
      * Método para filtrar la lista de usuarios localmente por el nombre de usuario.

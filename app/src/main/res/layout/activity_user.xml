@@ -20,6 +20,42 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.52" />
 
+    <EditText
+        android:id="@+id/edt_fecha_filtro"
+        android:layout_width="324dp"
+        android:layout_height="51dp"
+        android:layout_marginStart="19dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="10dp"
+        android:ems="10"
+        android:hint="@string/busca_fecha"
+        android:inputType="number"
+        android:textColorHint="@color/hint"
+        app:layout_constraintBottom_toTopOf="@+id/rv_reservas"
+        app:layout_constraintEnd_toStartOf="@+id/btn_lupa3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_titulo_user"
+        android:autofillHints="" />
+
+    <ImageButton
+        android:id="@+id/btn_lupa3"
+        android:layout_width="52dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="7dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/fondo_boton_redondo"
+        android:contentDescription="@string/boton_lupa"
+        android:onClick="buscar_reserva"
+        app:layout_constraintBottom_toTopOf="@+id/rv_reservas"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/edt_fecha_filtro"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_search"
+        tools:ignore="ImageContrastCheck" />
+
     <ImageButton
         android:id="@+id/btn_logout_user"
         tools:ignore="ImageContrastCheck"
@@ -39,13 +75,14 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_reservas"
-        android:layout_width="409dp"
-        android:layout_height="612dp"
-        android:layout_marginTop="10dp"
+        android:layout_width="404dp"
+        android:layout_height="541dp"
         android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toTopOf="@+id/btn_logout_user"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_titulo_user" />
+        app:layout_constraintTop_toBottomOf="@+id/edt_fecha_filtro" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

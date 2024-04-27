@@ -70,5 +70,7 @@
     <string name="valoracion_t">Valoración :</string>
     <string name="servicio">Servicio</string>
     <string name="tipo_de_servicio">tipo de servicio</string>
+    <string name="busca_un_usuario">Filtra por usuario</string>
+    <string name="busca_fecha">Filtra las reservas por año</string>
 
 </resources>

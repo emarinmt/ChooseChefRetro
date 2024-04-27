@@ -6,12 +6,16 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -36,6 +40,9 @@ public class Activity_user extends AppCompatActivity {
     FastMethods mfastMethods;
     Retrofit retro;
     String token;
+
+    //variable filtro reservas
+    private EditText fecha_filtro;
     /**
      * Método onCreate para la configuración incial de la actividad
      * @param savedInstanceState estado de la instancia guardada, un objeto Bundle que contiene el estado previamente guardado de la actividad
@@ -45,6 +52,9 @@ public class Activity_user extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         // Establece el diseño de la actividad.
         setContentView(R.layout.activity_user);
+
+        //inicializar variables
+        fecha_filtro = findViewById(R.id.edt_fecha_filtro);
 
         retro=FastClient.getClient();
         mfastMethods = retro.create(FastMethods.class);
@@ -126,9 +136,27 @@ public class Activity_user extends AppCompatActivity {
         return contentSuccessful;
     }
 
-    // FILTRO PARA TEST
-    // PARA SIGUIENTE TEA IMPLEMENTAR BOTON?
     /**
+     * Método para filtrar las reservas por fehca
+     * @param view La vista (Button) a la que se hizo clic.
+     */
+    public void buscar_reserva(View view){
+       // int fecha = fecha_filtro.getInputType();
+        String fecha_str = String.valueOf(fecha_filtro.getText());
+        if(fecha_str.isEmpty()){
+            Utils.showToast(this, "Introduce un año para filtrar las reservas por año");
+        }else{
+            if(fecha_str.length() != 4){
+                Utils.showToast(this, fecha_str);
+                Utils.showToast(this, "Introduce un año en formato de 4 digitos");
+            }else{
+                int fecha = Integer.parseInt(fecha_str);
+                buscar(fecha);
+            }
+        }
+    }
+    /** REVISAR. SOLO FUNCIONA LA PRIMERA VEZ. NO SE ARREGLARLO
+     *
      * Método para filtrar la lista de reservas localmente por fecha
      * @param year año a filtrar
      */
