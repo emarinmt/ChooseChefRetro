@@ -1,6 +1,7 @@
 package com.example.choosechef;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,7 +9,18 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 /**
  * Clase chef ampliado.
@@ -18,6 +30,7 @@ import androidx.appcompat.app.AppCompatActivity;
  */
 public class Activity_chef_ampliado extends AppCompatActivity {
     private boolean contentSuccessful = false; // Variable para rastrear el estado de la muestra del chef
+    private final String TAG = Activity_chef_ampliado.class.getSimpleName();
     //Variables para el texto mostrado en pantalla
     private TextView nombreChefamp;
     private TextView tipoChefamp;
@@ -25,9 +38,15 @@ public class Activity_chef_ampliado extends AppCompatActivity {
     private TextView servChefamp;
     private TextView descChefamp;
     private TextView telefonoChefamp;
-    private ImageView imagen;
     public Intent intent;
     private String user_chef;
+    // Variables para mostrar las reservas
+    RecyclerView recyclerView;
+    Adapter_reseña_chef_amp adapter;
+    List<Reserva> reservasList = new ArrayList<>(); // Lista para almacenar las reservas
+    // Variables para conectar con la API
+    FastMethods mfastMethods;
+    Retrofit retro;
 
     /**
      * Método onCreate para la configuración incial de la actividad
@@ -48,12 +67,23 @@ public class Activity_chef_ampliado extends AppCompatActivity {
         servChefamp = findViewById(R.id.servicio_ampliado);
         descChefamp = findViewById(R.id.descripcion_ampliado);
         telefonoChefamp = findViewById(R.id.edt_telefono_chef);
-        imagen = findViewById(R.id.foto_chef_ampliado);
+        ImageView imagen = findViewById(R.id.foto_chef_ampliado);
 
         // Obtener el Intent que inició esta actividad
         intent = getIntent();
         //Muestra la información obtenida por pantalla
         obtenerIntent(intent);
+
+        //conectar con api
+        retro=FastClient.getClient();
+        mfastMethods = retro.create(FastMethods.class);
+        // Configurar RecyclerView
+        recyclerView = findViewById(R.id.rv_reseñas_chef_amp);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new Adapter_reseña_chef_amp(this, reservasList);
+        recyclerView.setAdapter(adapter);
+        // Llamar al método recuperarDatos
+        recuperarDatos();
     }
 
     /**
@@ -112,7 +142,6 @@ public class Activity_chef_ampliado extends AppCompatActivity {
             // Si no se recibió información del usuario, la carga de contenido falló
             contentSuccessful = false;
         }
-
     }
 
     /**
@@ -121,5 +150,55 @@ public class Activity_chef_ampliado extends AppCompatActivity {
      */
     public boolean isContentSuccessful() {
         return contentSuccessful;
+    }
+
+    /**
+     * Método para recuperar datos del servidor
+     * LLama al servidor y recupera la lista de reserva del usuario logeado
+     */
+    public void recuperarDatos(){
+        Context context = this; // Obtener el contexto de la actividad (this)
+        // Compruebe el estado de la conexión de red
+        if (!Utils.isNetworkAvailable(this)) {
+            Utils.showToastSecond(Activity_chef_ampliado.this, context,"No hay conexión a Internet");
+            contentSuccessful = false;
+            return;
+        }
+        //NECESITAMOS METODO NUEVO QUE RECUPERE TODAS LAS RESERVAS DEL CHEF-----------------------------------------------------------
+        // Call HTTP client para recuperar la información del usuario
+        Call<List<Reserva>> call = mfastMethods.recuperar_reseñas_chef(user_chef);
+        call.enqueue(new Callback<List<Reserva>>() { // Ejecutar la llamada de manera asíncrona
+            /**
+             * Método invocado cuando se recibe una respuesta de la solicitud HTTP
+             * @param call llamada que generó la respuesta
+             * @param response la respuesta recibida del servidor
+             */
+            @SuppressLint("NotifyDataSetChanged")
+            public void onResponse(@NonNull Call<List<Reserva>> call, @NonNull Response<List<Reserva>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    contentSuccessful = true;
+                    reservasList.clear(); // Limpiar la lista actual
+                    reservasList.addAll(response.body()); // Agregar todos los usuarios recuperados
+
+                    // Notificar al adaptador que los datos han cambiado
+                    adapter.notifyDataSetChanged();
+                } else {
+                    Utils.showToastSecond(Activity_chef_ampliado.this, context,"No se encontraron reservas");
+                }
+            }
+            /**
+             *Método invocado cuando ocurre un error durante la ejecución de la llamada HTTP
+             * @param call la llamada que generó el error
+             * @param t la excepción que ocurrió
+             */
+            @Override
+            public void onFailure(@NonNull Call<List<Reserva>> call, @NonNull Throwable t) {
+                // Error en la llamada, muestra el mensaje de error y registra la excepción
+                contentSuccessful = false;
+                t.printStackTrace();
+                Log.e(TAG, "Error en la llamada:" + t.getMessage());
+                Utils.showToastSecond(Activity_chef_ampliado.this, context,"Error en la llamada: " + t.getMessage());
+            }
+        });
     }
 }

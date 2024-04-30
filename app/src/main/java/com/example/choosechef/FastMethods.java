@@ -125,4 +125,12 @@ public interface FastMethods {
     @POST("reserva/modificar/{id}")
     Call<String> modificar_reserva(@Path("id") Integer id, @Body Reserva reserva);
 
+    /**
+     * Método desarrollado por EVA,
+     * Para listar las reservas de un usuario
+     * @return devuelve una lista con las reservas del usuario
+     */
+    @GET("reserva/listar/{usuario}")
+    Call<List<Reserva>>recuperar_reseñas_chef(@Path("usuario") String usuario);
+
 }
