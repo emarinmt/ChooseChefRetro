@@ -125,12 +125,21 @@ public interface FastMethods {
     @POST("reserva/modificar/{id}")
     Call<String> modificar_reserva(@Path("id") Integer id, @Body Reserva reserva);
 
-    /**
+    /** PREPARADO. FALTA METODO EN SERVIDOR Y CAMBIAR RUTA
      * Método desarrollado por EVA,
      * Para listar las reservas de un usuario
      * @return devuelve una lista con las reservas del usuario
      */
     @GET("reserva/listar/{usuario}")
     Call<List<Reserva>>recuperar_reseñas_chef(@Path("usuario") String usuario);
+
+    /** PREPARADO. FALTA METODO EN SERVIDOR Y CAMBIAR RUTA
+     * Método desarrollado por EVA,
+     * Para borrar una reserva
+     * @param id reserva a borrar
+     * @return devuelve un string si el borrado ha sido correcto o no.
+     */
+    @DELETE("reserva/borrar/{id}")
+    Call<String> borrar_reserva(@Path("id") Integer id);
 
 }

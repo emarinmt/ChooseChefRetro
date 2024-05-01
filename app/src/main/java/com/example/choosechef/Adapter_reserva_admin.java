@@ -59,22 +59,21 @@ public class Adapter_reserva_admin extends RecyclerView.Adapter<Adapter_reserva_
         viewHolder.valoracion.setEnabled(false);
         viewHolder.valoracion.setRating(reserva.getValoracion());
 
-        //SI PERMITIMOS CLIC EN RESERVA. CAMBIAR PANTALLA RESERVA AMPLIADA PARA PODER BORRAR RESEÑA. Y METODO PARA BORRARLA--------------------------------------------
         // Manjear que al clicar una reserva se muestre esta ampliado
-        /*viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             /**
              * Redirige a la pantalla reserva_ampliado cuando se clica encima de una reserva, enviando los datos de esa reserva a la siguiente pantalla.
              * @param view La vista (Button) a la que se hizo clic.
-             *//*
+             */
             @Override
             public void onClick(View view) {
                 // Obtener el chef actual que fue clicado
                 Reserva currentReserva = data.get(viewHolder.getAdapterPosition());
 
                 // Utilizar el método gotoActivityWithReserva para abrir la DetailActivity y pasar el objeto Reserva
-                Utils.gotoActivityWithReserva(viewHolder.itemView.getContext(), Activity_reserva_ampliado.class, currentReserva);
+                Utils.gotoActivityWithReserva(viewHolder.itemView.getContext(), Activity_reserva_ampliado_admin.class, currentReserva);
             }
-        });*/
+        });
     }
     /**
      * Método para contar el total de elementos en el conjunto de datos
