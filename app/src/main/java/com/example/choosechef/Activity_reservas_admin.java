@@ -85,9 +85,8 @@ public class Activity_reservas_admin extends AppCompatActivity {
             contentSuccessful = false;
             return;
         }
-        //NECESITAMOS METODO NUEVO QUE RECUPERE TODAS LAS RESERVAS DE TODOS LOS USUARIOS-----------------------------------------------------------
         // Call HTTP client para recuperar la información del usuario
-        Call<List<Reserva>> call = mfastMethods.recuperar_reservas(token);
+        Call<List<Reserva>> call = mfastMethods.recuperar_reseñas_admin();
         call.enqueue(new Callback<List<Reserva>>() { // Ejecutar la llamada de manera asíncrona
             /**
              * Método invocado cuando se recibe una respuesta de la solicitud HTTP
