@@ -70,5 +70,14 @@
     <string name="valoracion_t">Valoración :</string>
     <string name="servicio">Servicio</string>
     <string name="tipo_de_servicio">tipo de servicio</string>
+    <string name="busca_un_usuario">Filtra por usuario</string>
+    <string name="busca_fecha">Filtra las reservas por año</string>
+    <string name="titulo_menu_admin">Menú administrador</string>
+    <string name="gestion_de_reseñas">Gestión de reseñas</string>
+    <string name="gestion_de_usuarios">Gestión de usuarios</string>
+    <string name="titulo_menu_chef">Menú chef</string>
+    <string name="gestion_de_perfil_chef">Gestión de servicio ofrecido</string>
+    <string name="gestion_de_reservas_chef">Gestión de reservas</string>
+    <string name="comentario_reserva">Reseña</string>
 
 </resources>

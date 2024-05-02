@@ -235,11 +235,11 @@ public class Activity_contenido extends AppCompatActivity {
             public void run() {
                 if (mTipoLogeado != null && !mTipoLogeado.isEmpty()) {
                     if (mTipoLogeado.equalsIgnoreCase("chef")) {
-                        Utils.gotoActivity(Activity_contenido.this, Activity_chef.class);
+                        Utils.gotoActivity(Activity_contenido.this, Activity_menu_chef.class);
                     } else if (mTipoLogeado.equalsIgnoreCase("client")) {
                         Utils.gotoActivity(Activity_contenido.this, Activity_user.class);
                     } else if (mTipoLogeado.equalsIgnoreCase("admin")) {
-                        Utils.gotoActivity(Activity_contenido.this, Activity_admin.class);
+                        Utils.gotoActivity(Activity_contenido.this, Activity_menu_admin.class);
                     } else {
                         Utils.showToast(Activity_contenido.this, "Tipo de usuario incorrecto");
                     }

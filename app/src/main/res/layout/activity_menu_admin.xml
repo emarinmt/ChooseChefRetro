@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fondo1">
+
+    <TextView
+        android:id="@+id/txt_titulo_menu_admin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/titulo_menu_admin"
+        android:textColor="@color/titulo"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toTopOf="@+id/imb_gestion_usuarios"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/btn_logout_admin"
+        tools:ignore="ImageContrastCheck"
+        android:layout_width="68dp"
+        android:layout_height="56dp"
+        android:background="@drawable/fondo_boton_redondo_logout"
+        android:contentDescription="@string/boton_modperfil"
+        android:onClick="logout"
+        android:tintMode="src_in"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.09"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.976"
+        app:srcCompat="@android:drawable/ic_lock_power_off"
+        app:tint="@color/white" />
+
+    <ImageButton
+        android:id="@+id/imb_gestion_usuarios"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="39dp"
+        android:layout_marginBottom="20dp"
+        android:background="#00FFFFFF"
+        android:onClick="gestion_usuarios"
+        app:layout_constraintBottom_toTopOf="@+id/imb_gestion_reseñas"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_titulo_menu_admin"
+        app:srcCompat="@drawable/fondo_boton"
+        tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
+
+    <ImageButton
+        android:id="@+id/imb_gestion_reseñas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="395dp"
+        android:background="#00FFFFFF"
+        android:onClick="gestion_reseñas"
+        app:layout_constraintBottom_toTopOf="@+id/btn_logout_admin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imb_gestion_usuarios"
+        app:srcCompat="@drawable/fondo_boton"
+        tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
+
+    <TextView
+        android:id="@+id/txt_lista_usuarios"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/gestion_de_usuarios"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imb_gestion_usuarios"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imb_gestion_usuarios" />
+
+    <TextView
+        android:id="@+id/txt_lista_reservas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/gestion_de_reseñas"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imb_gestion_reseñas"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imb_gestion_reseñas" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
