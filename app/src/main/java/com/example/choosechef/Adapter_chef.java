@@ -60,7 +60,6 @@ public class Adapter_chef extends RecyclerView.Adapter<Adapter_chef.ViewHolder> 
         viewHolder.valoracion.setRating(user.getValoracion());
         viewHolder.valoracion.setEnabled(false);
 
-        //falta imagen
 
         // Manjear que al clicar un chef se muestre este ampliado
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {

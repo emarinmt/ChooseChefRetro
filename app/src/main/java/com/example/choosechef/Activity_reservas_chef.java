@@ -24,9 +24,8 @@ import retrofit2.Retrofit;
 /**
  * Clase reservas chef
  * Gestiona las reservas del chef
- * Muestra una lista de las reseñas del usuario
+ * Muestra una lista de las reseñas del chef
  */
-
 public class Activity_reservas_chef extends AppCompatActivity {
     private boolean contentSuccessful = false; // Variable para rastrear el estado de la muestra del listado
     private final String TAG = Activity_reservas_chef.class.getSimpleName();
@@ -43,11 +42,11 @@ public class Activity_reservas_chef extends AppCompatActivity {
 
     //variable filtro reservas
     private EditText fecha_filtro;
+
     /**
      * Método onCreate para la configuración incial de la actividad
      * @param savedInstanceState estado de la instancia guardada, un objeto Bundle que contiene el estado previamente guardado de la actividad
      */
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -156,7 +155,7 @@ public class Activity_reservas_chef extends AppCompatActivity {
             }
         }
     }
-    /** REVISAR. SOLO FUNCIONA LA PRIMERA VEZ. NO SE ARREGLARLO
+    /**
      * Método para filtrar la lista de reservas localmente por fecha
      * @param year año a filtrar
      */
@@ -181,6 +180,7 @@ public class Activity_reservas_chef extends AppCompatActivity {
         // Actualizar el estado de contentSuccessful basado en si se encontraron reservas después del filtro
         contentSuccessful = !reservasList.isEmpty(); // Si la lista filtrada no está vacía, entonces el contenido fue exitoso
     }
+
     /**
      * Método para filtrar la lista de reservas localmente por fecha.
      * @param reservasList Lista actual de reservas
@@ -206,5 +206,4 @@ public class Activity_reservas_chef extends AppCompatActivity {
         }
         return filteredList;
     }
-
 }

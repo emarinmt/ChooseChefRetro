@@ -73,7 +73,6 @@ public class Activity_reservar extends AppCompatActivity {
         //Recoge el usuario cliente logeado
         recuperarDatosCliente();
 
-
         //Recoge la fecha introducida por el usuario para la reserva
         calendario.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
             //Se define el formato de dos digitos para el mes ( se suma uno,porque el calendario empieza en el 0 )
@@ -90,7 +89,6 @@ public class Activity_reservar extends AppCompatActivity {
      * Método para obtener el usuario chef
      * @param intent string usuario chef
      */
-
     public void obtenerIntentChef(Intent intent){
         // Verificar si el Intent contiene un extra con clave "string"
         if (intent != null && intent.hasExtra("string")) {
@@ -109,7 +107,6 @@ public class Activity_reservar extends AppCompatActivity {
     /**
      * Método para obtener el usuario cliente
      */
-
     public void recuperarDatosCliente(){
         // Compruebe el estado de la conexión de red
         if (!Utils.isNetworkAvailable(this)) {
@@ -124,7 +121,6 @@ public class Activity_reservar extends AppCompatActivity {
              * @param call llamada que generó la respuesta
              * @param response la respuesta recibida del servidor
              */
-
             public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
                 if (response.isSuccessful()) {
                     user_logeado = response.body(); // Recibe los datos del usuario
@@ -139,12 +135,12 @@ public class Activity_reservar extends AppCompatActivity {
                     }
                 }
             }
+
             /**
              *Método invocado cuando ocurre un error durante la ejecución de la llamada HTTP
              * @param call la llamada que generó el error
              * @param t la excepción que ocurrió
              */
-
             @Override
             public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
                 // Error en la llamada, muestra el mensaje de error y registra la excepción
@@ -203,7 +199,6 @@ public class Activity_reservar extends AppCompatActivity {
              * @param call la llamada que generó el error
              * @param t la excepción que ocurrió
              */
-
             @Override
             public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
                 // Error en la llamada, muestra el mensaje de error y registra la excepción

@@ -21,9 +21,9 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 /**
- * Clase reserva ampliado
- * Muestra todas las reservas del usuario logeado
- * Si la fecha de la reserva es igual o anterior a la fecha actual deja introducir una reseña ( valoración y comentario)
+ * Clase reserva ampliado administrador
+ * Muestra todas las reservas de la app
+ * Permite modificar o borrar una reseña
  */
 public class Activity_reserva_ampliado_admin extends AppCompatActivity {
     private boolean contentSuccessful = false; // Variable para rastrear el estado de la muestra de la reserva
@@ -82,22 +82,6 @@ public class Activity_reserva_ampliado_admin extends AppCompatActivity {
 
         valoracion.setEnabled(true);
         comentario.setEnabled(true);
-       // fechaPosterior();
-    }
-
-    /**
-     * Método para comprobar si la fecha es anterior o igual a hoy permite introducir la reseña ( valoraicón y comentario)
-     */
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public void fechaPosterior(){
-        //Si la fecha de la reserva es hoy o anterior se habilitan estos campos para escribir la reseña
-        if(Utils.esFechaHoyAnterior(reserva.getFecha())){
-            valoracion.setEnabled(true);
-            comentario.setEnabled(true);
-            Utils.showToast(Activity_reserva_ampliado_admin.this, "TRUE Introduce tu reseña!"+ reserva.getFecha());
-        }else{
-            Utils.showToast(Activity_reserva_ampliado_admin.this, "FALSE No puedes introducir la reseña todavia"+reserva.getFecha());
-        }
     }
 
     /**
@@ -125,7 +109,7 @@ public class Activity_reserva_ampliado_admin extends AppCompatActivity {
     }
 
     /**
-     * Método para modificar la reserva en el servidor ( añadir valoración y comentario)
+     * Método para modificar la reserva en el servidor ( modificar valoración y comentario)
      * @param view La vista (Button) a la que se hizo clic.
      */
     public void editarReserva(View view){
@@ -155,7 +139,7 @@ public class Activity_reserva_ampliado_admin extends AppCompatActivity {
             public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
                 if (response.isSuccessful()) {
                     modifySuccessful = true;
-                    // String responseBody = response.body();
+
                     Utils.showToastSecond(Activity_reserva_ampliado_admin.this, context,"Modificación correcta!");
                     Utils.gotoActivity(Activity_reserva_ampliado_admin.this, Activity_reservas_admin.class);
                 } else {

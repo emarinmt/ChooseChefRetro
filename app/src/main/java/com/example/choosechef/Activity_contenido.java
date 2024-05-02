@@ -30,9 +30,9 @@ import retrofit2.Retrofit;
  * Botón lupa permite ir a la pantalla de búsqueda donde seleccionar los criterios para filtrar la búsqueda de chefs
  * Botón modificación de perfil permite ir a la pantalla de modificación de perfil estandard para todos los usuarios
  * Botón ajustes, permite ir a diferentes pantallas en función del tipo de usuario
- *        usuario administrador, va a la pantalla administrador, para gestionar todos los usuarios de la app
- *        usuaio cliente, va a la pantalla usuario, para gestionar sus reservas e introducir reseñas
- *        usuario chef, va a la pantalla chef, para gestionar su perfil de chef y modificar el servicio que ofrece
+ *        usuario administrador,va a un menú administrador donde elige las opciones que puede hacer (gestionar los usuarios o las reservas)
+ *        usuario cliente, va a la pantalla usuario, para gestionar sus reservas e introducir reseñas
+ *        usuario chef, va a un menú de chef, donde elige las opciones que puede hacer (gestionar su perfil o ver sus reseravs)
  */
 public class Activity_contenido extends AppCompatActivity {
     private boolean contentSuccessful = false; // Variable para rastrear el estado de la muestra del listado
@@ -130,7 +130,6 @@ public class Activity_contenido extends AppCompatActivity {
         });
     }
 
-
     /**
      * Método para manejar el clic del botón de modificación de perfil.
      * Dirige al usuario a la pantalla de modificación de perfil
@@ -140,6 +139,7 @@ public class Activity_contenido extends AppCompatActivity {
         // Redirige al usuario a la pantalla de modificación de perfil
         Utils.gotoActivity(Activity_contenido.this, Activity_mod_perfil.class);
     }
+
     /**
      * Método para manejar el clic del botón lupa.
      * Dirige al usuario a la pantalla de búsqueda
@@ -248,7 +248,6 @@ public class Activity_contenido extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     /**

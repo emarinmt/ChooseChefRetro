@@ -24,7 +24,7 @@ import retrofit2.Retrofit;
 
 /**
  * Clase chef ampliado.
- * Muestra la información de un chef ( Nombre, ubicación, comida, servicio y descripción)
+ * Muestra la información de un chef ( Nombre, ubicación, comida, servicio, descripción y reseñas)
  * Botón reservar lleva a otra pantalla donde seleccionar la fecha de la reserva
  * Botón contacto muestra el teléfono del chef
  */
@@ -164,7 +164,7 @@ public class Activity_chef_ampliado extends AppCompatActivity {
             contentSuccessful = false;
             return;
         }
-        //NECESITAMOS METODO NUEVO QUE RECUPERE TODAS LAS RESERVAS DEL CHEF-----------------------------------------------------------
+
         // Call HTTP client para recuperar la información del usuario
         Call<List<Reserva>> call = mfastMethods.recuperar_reseñas_chef(user_chef);
         call.enqueue(new Callback<List<Reserva>>() { // Ejecutar la llamada de manera asíncrona

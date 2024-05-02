@@ -13,14 +13,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 /**
- * Clase adaptador reserva chef
- * Para gestionar el recycler view de reservas (pantalla usuario cliente)
+ * Clase adaptador reserva chef ampliado
+ * Para gestionar el recycler view de reservas (pantalla chef ampliado)
  */
-
 public class Adapter_reseña_chef_amp extends RecyclerView.Adapter<Adapter_reseña_chef_amp.ViewHolder> {
 
     private final LayoutInflater layoutInflater;
     private final List<Reserva> data;
+
     /**
      *Constructor de la clase Adapter_reserva
      * @param context contexto de la aplicación
@@ -30,6 +30,7 @@ public class Adapter_reseña_chef_amp extends RecyclerView.Adapter<Adapter_rese�
         this.layoutInflater = LayoutInflater.from(context);
         this.data = data;
     }
+
     /**
      *Crea y devuelve una nueva instancia de ViewHolder
      * @param viewGroup ViewGroup al cual se añadira la nueva vista después de que se haya enlazado a una posición del adaptador
@@ -42,6 +43,7 @@ public class Adapter_reseña_chef_amp extends RecyclerView.Adapter<Adapter_rese�
         View view = layoutInflater.inflate(R.layout.custom_view_card_reservas_admin,viewGroup,false);
         return new Adapter_reseña_chef_amp.ViewHolder(view);
     }
+
     /**
      *Actualiza el ViewHolder proporcionado para representar el contenido del elemento en la posición dada en el conjunto de datos
      * @param viewHolder El ViewHolder que se debe actualizar para representar el contenido del elemento en la posición dada en el conjunto de datos.
@@ -56,8 +58,8 @@ public class Adapter_reseña_chef_amp extends RecyclerView.Adapter<Adapter_rese�
         viewHolder.comentario_reseña.setText(reserva.getComentario());
         viewHolder.valoracion.setEnabled(false);
         viewHolder.valoracion.setRating(reserva.getValoracion());
-
     }
+
     /**
      * Método para contar el total de elementos en el conjunto de datos
      * @return devuelve el número total de elementos en el conjunto de datos
@@ -66,6 +68,7 @@ public class Adapter_reseña_chef_amp extends RecyclerView.Adapter<Adapter_rese�
     public int getItemCount() {
         return data.size();
     }
+
     /**
      * Clase interna estática que representa una vista de elemento en el RecyclerView.
      * Contiene referencias a las vistas individuales que componen el elemento de la lista.

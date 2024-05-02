@@ -21,7 +21,6 @@ import retrofit2.Retrofit;
 
 /**
  * Clase chef.
- * Gestiona las opciones propias del usuario chef.
  * Permite rellenar el perfil del chef, ubicación, tipo de comida, tipo de servicio y descripción.
  */
 public class Activity_chef extends AppCompatActivity {
@@ -73,7 +72,6 @@ public class Activity_chef extends AppCompatActivity {
 
         //Recupera datos del servidor para mostrarlos seleccionados en los spinners y la descripción
         recuperarDatos();
-
     }
 
     /**

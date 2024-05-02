@@ -77,6 +77,16 @@ public class Activity_login extends AppCompatActivity {
             return;
         }
 
+        // Realizar el hashing de la contraseña
+        String hashedPassword = PasswordUtils.hashPassword(queryPasswordString);
+
+        // Verificar si se pudo realizar el hashing de la contraseña correctamente
+        if (hashedPassword == null) {
+            // Si hubo un error en el hashing de la contraseña, muestra un mensaje de error y regresa
+            Utils.showToast(Activity_login.this, "Error al realizar el hashing de la contraseña");
+            return;
+        }
+
         // Llamamos al método que ejecuta la llamada al servidor enviando los datos
         loginUsuario(queryUserString,queryPasswordString);
     }

@@ -14,13 +14,14 @@ import java.util.List;
 
 /**
  * Clase adaptador reserva chef
- * Para gestionar el recycler view de reservas (pantalla usuario cliente)
+ * Para gestionar el recycler view de reservas (pantalla usuario chef)
  */
 
 public class Adapter_reserva_chef extends RecyclerView.Adapter<Adapter_reserva_chef.ViewHolder> {
 
     private final LayoutInflater layoutInflater;
     private final List<Reserva> data;
+
     /**
      *Constructor de la clase Adapter_reserva
      * @param context contexto de la aplicación
@@ -30,6 +31,7 @@ public class Adapter_reserva_chef extends RecyclerView.Adapter<Adapter_reserva_c
         this.layoutInflater = LayoutInflater.from(context);
         this.data = data;
     }
+
     /**
      *Crea y devuelve una nueva instancia de ViewHolder
      * @param viewGroup ViewGroup al cual se añadira la nueva vista después de que se haya enlazado a una posición del adaptador
@@ -42,6 +44,7 @@ public class Adapter_reserva_chef extends RecyclerView.Adapter<Adapter_reserva_c
         View view = layoutInflater.inflate(R.layout.custom_view_card_reservas_chef,viewGroup,false);
         return new Adapter_reserva_chef.ViewHolder(view);
     }
+
     /**
      *Actualiza el ViewHolder proporcionado para representar el contenido del elemento en la posición dada en el conjunto de datos
      * @param viewHolder El ViewHolder que se debe actualizar para representar el contenido del elemento en la posición dada en el conjunto de datos.
@@ -58,21 +61,6 @@ public class Adapter_reserva_chef extends RecyclerView.Adapter<Adapter_reserva_c
         viewHolder.valoracion.setEnabled(false);
         viewHolder.valoracion.setRating(reserva.getValoracion());
 
-        // Manjear que al clicar una reserva se muestre esta ampliado
-        /*viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            /**
-             * Redirige a la pantalla reserva_ampliado cuando se clica encima de una reserva, enviando los datos de esa reserva a la siguiente pantalla.
-             * @param view La vista (Button) a la que se hizo clic.
-             *//*
-            @Override
-            public void onClick(View view) {
-                // Obtener el chef actual que fue clicado
-                Reserva currentReserva = data.get(viewHolder.getAdapterPosition());
-
-                // Utilizar el método gotoActivityWithReserva para abrir la DetailActivity y pasar el objeto Reserva
-                Utils.gotoActivityWithReserva(viewHolder.itemView.getContext(), Activity_reserva_ampliado.class, currentReserva);
-            }
-        });*/
     }
     /**
      * Método para contar el total de elementos en el conjunto de datos

@@ -82,6 +82,16 @@ public class Activity_registro extends AppCompatActivity {
             return;
         }
 
+        // Realizar el hashing de la contraseña
+        String hashedPassword = PasswordUtils.hashPassword(queryPasswordString);
+
+        // Verificar si se pudo realizar el hashing de la contraseña correctamente
+        if (hashedPassword == null) {
+            // Si hubo un error en el hashing de la contraseña, muestra un mensaje de error y regresa
+            Utils.showToast(Activity_registro.this, "Error al realizar el hashing de la contraseña");
+            return;
+        }
+
         // Actualizamos los datos del usuario con los valores recogidos para enviarlos al servidor
         user.setId(0);
         user.setUsuario(queryUserString);
@@ -180,4 +190,3 @@ public class Activity_registro extends AppCompatActivity {
         return registrationSuccessful;
     }
 }
-

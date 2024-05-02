@@ -121,7 +121,6 @@ public class Activity_user_ampliado extends AppCompatActivity {
             // Si no se recibió información del usuario, la carga de contenido falló
             contentSuccessful = false;
         }
-
     }
 
     /**
@@ -190,6 +189,11 @@ public class Activity_user_ampliado extends AppCompatActivity {
         }
     }
 
+    /**
+     * Método para modificar los datos del usuario
+     * Llama al método para modificar los datos en el servidor
+     * @param user usuario a modificar
+     */
     public void modificarDatos(User user){
         Context context = this; // Obtener el contexto de la actividad (this)
         // call HTTP client para modificar los datos de usuario

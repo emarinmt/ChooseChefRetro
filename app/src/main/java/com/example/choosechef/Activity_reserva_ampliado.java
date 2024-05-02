@@ -73,8 +73,6 @@ public class Activity_reserva_ampliado  extends AppCompatActivity {
         //Recuperar datos de la reserva de la pantalla anterior
         obtenerIntent(intent);
 
-
-        Utils.showToast(Activity_reserva_ampliado.this, "FECHA."+ reserva.getFecha());
         fechaPosterior();
     }
 
@@ -111,7 +109,6 @@ public class Activity_reserva_ampliado  extends AppCompatActivity {
                 fecha_reserva.setText(reserva.getFecha());
                 comentario.setText(reserva.getComentario());
                 valoracion.setRating(reserva.getValoracion());
-                Utils.showToast(Activity_reserva_ampliado.this, "fecha!"+ reserva.getFecha());
             }
             contentSuccessful = false;
         }

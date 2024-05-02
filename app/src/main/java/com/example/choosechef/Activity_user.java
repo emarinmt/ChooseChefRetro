@@ -23,10 +23,8 @@ import retrofit2.Retrofit;
 
 /**
  * Clase usuario
- * Gestiona las opciones del usuario
  * Muestra una lista de las reseñas del usuario
  */
-
 public class Activity_user extends AppCompatActivity {
     private boolean contentSuccessful = false; // Variable para rastrear el estado de la muestra del listado
     private final String TAG = Activity_user.class.getSimpleName();
@@ -43,6 +41,7 @@ public class Activity_user extends AppCompatActivity {
 
     //variable filtro reservas
     private EditText fecha_filtro;
+
     /**
      * Método onCreate para la configuración incial de la actividad
      * @param savedInstanceState estado de la instancia guardada, un objeto Bundle que contiene el estado previamente guardado de la actividad
@@ -120,6 +119,7 @@ public class Activity_user extends AppCompatActivity {
             }
         });
     }
+
     /**
      * Método para hacer logout
      * Redirige al usuario a la pantalla de inicio
@@ -128,6 +128,7 @@ public class Activity_user extends AppCompatActivity {
     public void logout(View view){
         Utils.gotoActivity(Activity_user.this, MainActivity_inicio.class);
     }
+
     /**
      * Método para test
      * @return devuelve un boleano en función de si ha ido bien la muestra de reservas
@@ -155,8 +156,8 @@ public class Activity_user extends AppCompatActivity {
             }
         }
     }
-    /** REVISAR. SOLO FUNCIONA LA PRIMERA VEZ. NO SE ARREGLARLO
-     *
+
+    /**
      * Método para filtrar la lista de reservas localmente por fecha
      * @param year año a filtrar
      */
@@ -181,6 +182,7 @@ public class Activity_user extends AppCompatActivity {
         // Actualizar el estado de contentSuccessful basado en si se encontraron reservas después del filtro
         contentSuccessful = !reservasList.isEmpty(); // Si la lista filtrada no está vacía, entonces el contenido fue exitoso
     }
+
     /**
      * Método para filtrar la lista de reservas localmente por fecha.
      * @param reservasList Lista actual de reservas
@@ -206,5 +208,4 @@ public class Activity_user extends AppCompatActivity {
         }
         return filteredList;
     }
-
 }

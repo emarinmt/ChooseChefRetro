@@ -20,7 +20,6 @@ import retrofit2.Retrofit;
 
 /**
  * Clase administrador.
- * Gestiona las opciones del usuario administrador
  * Muestra una lista de todos los usuarios de la app
  */
 
@@ -188,10 +187,7 @@ public class Activity_admin extends AppCompatActivity {
                 filteredList.add(user);
             }
         }
-
         return filteredList;
     }
-
-
 }
 
