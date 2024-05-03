@@ -35,6 +35,7 @@ public class Activity_reservas_admin extends AppCompatActivity {
     RecyclerView recyclerView;
     Adapter_reserva_admin adapter;
     List<Reserva> reservasList = new ArrayList<>(); // Lista para almacenar las reservas
+    List<Reserva> originalReservasList = new ArrayList<>(); // Lista para almacenar las reservas
 
     // Variables para conectar con la API
     FastMethods mfastMethods;
@@ -100,6 +101,10 @@ public class Activity_reservas_admin extends AppCompatActivity {
                     reservasList.clear(); // Limpiar la lista actual
                     reservasList.addAll(response.body()); // Agregar todos los usuarios recuperados
 
+                    //Hacer una copia de la lista original sin filtrar
+                    originalReservasList.clear();
+                    originalReservasList.addAll(reservasList);
+
                     // Notificar al adaptador que los datos han cambiado
                     adapter.notifyDataSetChanged();
                 } else {
@@ -142,7 +147,6 @@ public class Activity_reservas_admin extends AppCompatActivity {
      * @param view La vista (Button) a la que se hizo clic.
      */
     public void buscar_reserva(View view){
-       // int fecha = fecha_filtro.getInputType();
         String fecha_str = String.valueOf(fecha_filtro.getText());
         if(fecha_str.isEmpty()){
             Utils.showToast(this, "Introduce un año para filtrar las reservas por año");
@@ -164,7 +168,7 @@ public class Activity_reservas_admin extends AppCompatActivity {
         int searchText = year; // Fecha a filtrar
 
         // Filtrar reservasList localmente con la fecha de búsqueda
-        List<Reserva> filteredList = filterReservas(reservasList, searchText);
+        List<Reserva> filteredList = filterReservas(originalReservasList, searchText);
 
         // Actualizar reservasList con la lista filtrada
         reservasList.clear();

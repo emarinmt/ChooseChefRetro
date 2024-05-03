@@ -73,7 +73,6 @@ public class Activity_reservar extends AppCompatActivity {
         //Recoge el usuario cliente logeado
         recuperarDatosCliente();
 
-
         //Recoge la fecha introducida por el usuario para la reserva
         calendario.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
             //Se define el formato de dos digitos para el mes ( se suma uno,porque el calendario empieza en el 0 )
