@@ -32,6 +32,7 @@ public class Activity_admin extends AppCompatActivity {
     RecyclerView recyclerView;
     Adapter_user adapter;
     List<User> userList = new ArrayList<>(); // Lista para almacenar los usuarios
+    List<User> originalUserList = new ArrayList<>(); // Lista original para almacenar los usuarios
 
     // Variables para conectar con la API
     FastMethods mfastMethods;
@@ -70,6 +71,7 @@ public class Activity_admin extends AppCompatActivity {
      */
     public void recuperarDatos(){
         userList.clear(); // Limpiar la lista actual
+        originalUserList.clear(); //Limpiar la lista original
         Context context = this; // Obtener el contexto de la actividad (this)
         // Compruebe el estado de la conexión de red
         if (!Utils.isNetworkAvailable(this)) {
@@ -91,6 +93,10 @@ public class Activity_admin extends AppCompatActivity {
                     contentSuccessful = true;
                     userList.clear(); // Limpiar la lista actual
                     userList.addAll(response.body()); // Agregar todos los usuarios recuperados
+                    //Hacer una copia de la lista original sin filtrar
+                    originalUserList.clear();
+                    originalUserList.addAll(userList);
+
                     // Notificar al adaptador que los datos han cambiado
                     adapter.notifyDataSetChanged();
                 } else {
@@ -151,7 +157,7 @@ public class Activity_admin extends AppCompatActivity {
         String searchText = username; // Texto de búsqueda (nombre de usuario a filtrar)
 
         // Filtrar userList localmente con el texto de búsqueda
-        List<User> filteredList = filterUsers(userList, searchText);
+        List<User> filteredList = filterUsers(originalUserList, searchText);
 
         // Actualizar userList con la lista filtrada
         userList.clear();

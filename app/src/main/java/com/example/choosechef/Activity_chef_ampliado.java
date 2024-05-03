@@ -42,7 +42,7 @@ public class Activity_chef_ampliado extends AppCompatActivity {
     private String user_chef;
     // Variables para mostrar las reservas
     RecyclerView recyclerView;
-    Adapter_reseña_chef_amp adapter;
+    Adapter_resena_chef_amp adapter;
     List<Reserva> reservasList = new ArrayList<>(); // Lista para almacenar las reservas
     // Variables para conectar con la API
     FastMethods mfastMethods;
@@ -80,7 +80,7 @@ public class Activity_chef_ampliado extends AppCompatActivity {
         // Configurar RecyclerView
         recyclerView = findViewById(R.id.rv_reseñas_chef_amp);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new Adapter_reseña_chef_amp(this, reservasList);
+        adapter = new Adapter_resena_chef_amp(this, reservasList);
         recyclerView.setAdapter(adapter);
         // Llamar al método recuperarDatos
         recuperarDatos();

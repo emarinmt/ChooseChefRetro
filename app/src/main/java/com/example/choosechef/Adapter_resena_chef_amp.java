@@ -17,7 +17,7 @@ import java.util.List;
  * Para gestionar el recycler view de reservas (pantalla usuario cliente)
  */
 
-public class Adapter_reseña_chef_amp extends RecyclerView.Adapter<Adapter_reseña_chef_amp.ViewHolder> {
+public class Adapter_resena_chef_amp extends RecyclerView.Adapter<Adapter_resena_chef_amp.ViewHolder> {
 
     private final LayoutInflater layoutInflater;
     private final List<Reserva> data;
@@ -26,7 +26,7 @@ public class Adapter_reseña_chef_amp extends RecyclerView.Adapter<Adapter_rese�
      * @param context contexto de la aplicación
      * @param data la lista de datos de tipo user que se utilizará para poblar el adaptador
      */
-    Adapter_reseña_chef_amp(Context context, List<Reserva> data){
+    Adapter_resena_chef_amp(Context context, List<Reserva> data){
         this.layoutInflater = LayoutInflater.from(context);
         this.data = data;
     }
@@ -38,9 +38,9 @@ public class Adapter_reseña_chef_amp extends RecyclerView.Adapter<Adapter_rese�
      */
     @NonNull
     @Override
-    public Adapter_reseña_chef_amp.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = layoutInflater.inflate(R.layout.custom_view_card_reservas_admin,viewGroup,false);
-        return new Adapter_reseña_chef_amp.ViewHolder(view);
+    public Adapter_resena_chef_amp.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        View view = layoutInflater.inflate(R.layout.custom_view_card_resenyas_chef_amp,viewGroup,false);
+        return new Adapter_resena_chef_amp.ViewHolder(view);
     }
     /**
      *Actualiza el ViewHolder proporcionado para representar el contenido del elemento en la posición dada en el conjunto de datos
@@ -48,12 +48,12 @@ public class Adapter_reseña_chef_amp extends RecyclerView.Adapter<Adapter_rese�
      * @param i La posición del elemento dentro del conjunto de datos del adaptador.
      */
     @Override
-    public void onBindViewHolder(@NonNull Adapter_reseña_chef_amp.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull Adapter_resena_chef_amp.ViewHolder viewHolder, int i) {
         Reserva reserva = data.get(i); //NUEVO
 
         // Establece los datos de la reserva en las vistas del ViewHolder
         viewHolder.nombre_usuario.setText(reserva.getUsuario_cliente());
-        viewHolder.comentario_reseña.setText(reserva.getComentario());
+        viewHolder.comentario_resenya.setText(reserva.getComentario());
         viewHolder.valoracion.setEnabled(false);
         viewHolder.valoracion.setRating(reserva.getValoracion());
 
@@ -71,7 +71,7 @@ public class Adapter_reseña_chef_amp extends RecyclerView.Adapter<Adapter_rese�
      * Contiene referencias a las vistas individuales que componen el elemento de la lista.
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView nombre_usuario, comentario_reseña;
+        TextView nombre_usuario, comentario_resenya;
         RatingBar valoracion;
         /**
          * Constructor de la clase ViewHolder
@@ -80,7 +80,7 @@ public class Adapter_reseña_chef_amp extends RecyclerView.Adapter<Adapter_rese�
         public ViewHolder(@NonNull View itemView){
             super(itemView);
             nombre_usuario = itemView.findViewById(R.id.nombre_usuario);
-            comentario_reseña = itemView.findViewById(R.id.comentario_reseña);
+            comentario_resenya = itemView.findViewById(R.id.comentario_resenya);
             valoracion = itemView.findViewById(R.id.rating_valoracion_reserva);
         }
     }
