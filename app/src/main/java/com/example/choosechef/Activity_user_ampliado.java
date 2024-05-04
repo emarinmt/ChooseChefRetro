@@ -286,6 +286,14 @@ public class Activity_user_ampliado extends AppCompatActivity {
     public void logout(View view){
         Utils.gotoActivity(Activity_user_ampliado.this, MainActivity_inicio.class);
     }
+    /**
+     * Método para retroceder de pantalla
+     * Redirige al usuario a la pantalla anterior
+     * @param view La vista (Button) a la que se hizo clic.
+     */
+    public void atras(View view){
+        Utils.gotoActivity(Activity_user_ampliado.this, Activity_admin.class);
+    }
 
     /**
      * Método para test

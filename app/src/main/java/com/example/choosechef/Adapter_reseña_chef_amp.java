@@ -40,7 +40,7 @@ public class Adapter_reseña_chef_amp extends RecyclerView.Adapter<Adapter_rese�
     @NonNull
     @Override
     public Adapter_reseña_chef_amp.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = layoutInflater.inflate(R.layout.custom_view_card_reservas_admin,viewGroup,false);
+        View view = layoutInflater.inflate(R.layout.custom_view_card_resenyas_chef_amp,viewGroup,false);
         return new Adapter_reseña_chef_amp.ViewHolder(view);
     }
 

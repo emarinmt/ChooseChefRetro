@@ -245,6 +245,14 @@ public class Activity_reservar extends AppCompatActivity {
         Utils.gotoActivity(Activity_reservar.this, MainActivity_inicio.class);
     }
     /**
+     * Método para retroceder de pantalla
+     * Redirige al usuario a la pantalla anterior
+     * @param view La vista (Button) a la que se hizo clic.
+     */
+    public void atras(View view){
+        Utils.gotoActivity(Activity_reservar.this, Activity_chef_ampliado.class);
+    }
+    /**
      * Método para test
      * @return devuelve un booleano en función de si ha ido bien la muestra de contenido.
      */

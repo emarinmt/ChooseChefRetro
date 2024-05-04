@@ -46,4 +46,13 @@ public class Activity_menu_admin extends AppCompatActivity {
     public void logout(View view){
         Utils.gotoActivity(Activity_menu_admin.this, MainActivity_inicio.class);
     }
+
+    /**
+     * Método para retroceder de pantalla
+     * Redirige al usuario a la pantalla anterior
+     * @param view La vista (Button) a la que se hizo clic.
+     */
+    public void atras(View view){
+        Utils.gotoActivity(Activity_menu_admin.this, Activity_contenido.class);
+    }
 }

@@ -114,6 +114,16 @@ public class Activity_chef_ampliado extends AppCompatActivity {
     }
 
     /**
+     * Método para retroceder de pantalla
+     * Redirige al usuario a la pantalla anterior
+     * @param view La vista (Button) a la que se hizo clic.
+     */
+    public void atras(View view){
+        Utils.gotoActivity(Activity_chef_ampliado.this, Activity_contenido.class);
+    }
+
+
+    /**
      * Método para recibir la información del usuario de la pantalla anterior
      * @param intent contiene la información del usuario de la pantalla anterior
      */
