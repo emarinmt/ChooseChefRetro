@@ -23,10 +23,10 @@ import retrofit2.Retrofit;
  * Clase chef.
  * Permite rellenar el perfil del chef, ubicación, tipo de comida, tipo de servicio y descripción.
  */
-public class Activity_chef extends AppCompatActivity {
+public class Activity_chef_servicio extends AppCompatActivity {
     private boolean modifySuccessful = false; // Variable para rastrear el estado de la modificación
     private boolean contentSuccessful = false; // Variable para rastrear el estado de la muestra del listado
-    private final String TAG = Activity_chef.class.getSimpleName();
+    private final String TAG = Activity_chef_servicio.class.getSimpleName();
     //Variables para los spinners, descripción y selecciones
     Spinner spinner_prov;
     Spinner spinner_comida;
@@ -50,7 +50,7 @@ public class Activity_chef extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Establece el diseño de la actividad.
-        setContentView(R.layout.activity_chef);
+        setContentView(R.layout.activity_chef_servicio);
 
         //Inicialización de variables
         spinner_prov = findViewById(R.id.spinner_provincias);
@@ -132,7 +132,7 @@ public class Activity_chef extends AppCompatActivity {
         Context context = this; // Obtener el contexto de la actividad (this)
         // Compruebe el estado de la conexión de red
         if (!Utils.isNetworkAvailable(this)) {
-            Utils.showToastSecond(Activity_chef.this, context,"No hay conexión a Internet");
+            Utils.showToastSecond(Activity_chef_servicio.this, context,"No hay conexión a Internet");
             contentSuccessful = false;
             return;
         }
@@ -156,7 +156,7 @@ public class Activity_chef extends AppCompatActivity {
                         descripcion.setText(user.getDescripcion());
                     } else {
                         // Obtención de datos incorrecta, muestra un mensaje de error
-                        Utils.showToastSecond(Activity_chef.this, context,"Obtención de datos incorrecta");
+                        Utils.showToastSecond(Activity_chef_servicio.this, context,"Obtención de datos incorrecta");
                     }
                 }
             }
@@ -171,7 +171,7 @@ public class Activity_chef extends AppCompatActivity {
                 contentSuccessful = false;
                 t.printStackTrace();
                 Log.e(TAG, "Error en la llamada:" + t.getMessage());
-                Utils.showToastSecond(Activity_chef.this, context,"Error en la llamada: " + t.getMessage());
+                Utils.showToastSecond(Activity_chef_servicio.this, context,"Error en la llamada: " + t.getMessage());
             }
         });
     }
@@ -209,7 +209,7 @@ public class Activity_chef extends AppCompatActivity {
 
             // Comprueba el estado de la conexión de red
             if (!Utils.isNetworkAvailable(this)) {
-                Utils.showToast(Activity_chef.this, "No hay conexión a Internet");
+                Utils.showToast(Activity_chef_servicio.this, "No hay conexión a Internet");
                 return;
             }
             //Actualiza los datos del usuario con los nuevos valores
@@ -232,10 +232,10 @@ public class Activity_chef extends AppCompatActivity {
                     if (response.isSuccessful()) {
                         modifySuccessful = true;
                         // String responseBody = response.body();
-                        Utils.showToastSecond(Activity_chef.this,context, "Modificación correcta!");
-                        Utils.gotoActivity(Activity_chef.this, Activity_contenido.class);
+                        Utils.showToastSecond(Activity_chef_servicio.this,context, "Modificación correcta!");
+                        Utils.gotoActivity(Activity_chef_servicio.this, Activity_chef_menu.class);
                     } else {
-                        Utils.showToastSecond(Activity_chef.this, context,"Error al modificar usuario");
+                        Utils.showToastSecond(Activity_chef_servicio.this, context,"Error al modificar usuario");
                     }
                 }
 
@@ -250,7 +250,7 @@ public class Activity_chef extends AppCompatActivity {
                     // Error en la llamada, muestra el mensaje de error y registra la excepción
                     t.printStackTrace();
                     Log.e(TAG, "Error en la llamada:" + t.getMessage());
-                    Utils.showToastSecond(Activity_chef.this, context,"Error en la llamada: " + t.getMessage());
+                    Utils.showToastSecond(Activity_chef_servicio.this, context,"Error en la llamada: " + t.getMessage());
                 }
             });
         }
@@ -262,7 +262,7 @@ public class Activity_chef extends AppCompatActivity {
      * @param view La vista (Button) a la que se hizo clic.
      */
     public void logout(View view){
-        Utils.gotoActivity(Activity_chef.this, MainActivity_inicio.class);
+        Utils.gotoActivity(Activity_chef_servicio.this, MainActivity_inicio.class);
     }
 
     /**

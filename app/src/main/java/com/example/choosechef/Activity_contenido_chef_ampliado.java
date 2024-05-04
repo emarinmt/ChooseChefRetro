@@ -28,9 +28,9 @@ import retrofit2.Retrofit;
  * Botón reservar lleva a otra pantalla donde seleccionar la fecha de la reserva
  * Botón contacto muestra el teléfono del chef
  */
-public class Activity_chef_ampliado extends AppCompatActivity {
+public class Activity_contenido_chef_ampliado extends AppCompatActivity {
     private boolean contentSuccessful = false; // Variable para rastrear el estado de la muestra del chef
-    private final String TAG = Activity_chef_ampliado.class.getSimpleName();
+    private final String TAG = Activity_contenido_chef_ampliado.class.getSimpleName();
     //Variables para el texto mostrado en pantalla
     private TextView nombreChefamp;
     private TextView tipoChefamp;
@@ -42,7 +42,7 @@ public class Activity_chef_ampliado extends AppCompatActivity {
     private String user_chef;
     // Variables para mostrar las reservas
     RecyclerView recyclerView;
-    Adapter_reseña_chef_amp adapter;
+    Adapter_resenya_chef_amp adapter;
     List<Reserva> reservasList = new ArrayList<>(); // Lista para almacenar las reservas
     // Variables para conectar con la API
     FastMethods mfastMethods;
@@ -57,7 +57,7 @@ public class Activity_chef_ampliado extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Establece el diseño de la actividad.
-        setContentView(R.layout.activity_chef_ampliado);
+        setContentView(R.layout.activity_contenido_chef_ampliado);
         contentSuccessful = false;
 
         // Inicialización de variables
@@ -80,7 +80,7 @@ public class Activity_chef_ampliado extends AppCompatActivity {
         // Configurar RecyclerView
         recyclerView = findViewById(R.id.rv_reseñas_chef_amp);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new Adapter_reseña_chef_amp(this, reservasList);
+        adapter = new Adapter_resenya_chef_amp(this, reservasList);
         recyclerView.setAdapter(adapter);
         // Llamar al método recuperarDatos
         recuperarDatos();
@@ -92,7 +92,7 @@ public class Activity_chef_ampliado extends AppCompatActivity {
      */
     public void reservar(View view){
         //va a la pantalla reservar donde vemos calendarios y crearemos la reserva ( envia el usuario chef de esta actividad)
-        Utils.gotoActivityWithString(Activity_chef_ampliado.this, Activity_reservar.class, user_chef);
+        Utils.gotoActivityWithString(Activity_contenido_chef_ampliado.this, Activity_contenido_reservar_chef.class, user_chef);
     }
 
     /**
@@ -110,7 +110,7 @@ public class Activity_chef_ampliado extends AppCompatActivity {
      * @param view La vista (Button) a la que se hizo clic.
      */
     public void logout(View view){
-        Utils.gotoActivity(Activity_chef_ampliado.this, MainActivity_inicio.class);
+        Utils.gotoActivity(Activity_contenido_chef_ampliado.this, MainActivity_inicio.class);
     }
 
     /**
@@ -119,7 +119,7 @@ public class Activity_chef_ampliado extends AppCompatActivity {
      * @param view La vista (Button) a la que se hizo clic.
      */
     public void atras(View view){
-        Utils.gotoActivity(Activity_chef_ampliado.this, Activity_contenido.class);
+        Utils.gotoActivity(Activity_contenido_chef_ampliado.this, Activity_contenido.class);
     }
 
 
@@ -170,7 +170,7 @@ public class Activity_chef_ampliado extends AppCompatActivity {
         Context context = this; // Obtener el contexto de la actividad (this)
         // Compruebe el estado de la conexión de red
         if (!Utils.isNetworkAvailable(this)) {
-            Utils.showToastSecond(Activity_chef_ampliado.this, context,"No hay conexión a Internet");
+            Utils.showToastSecond(Activity_contenido_chef_ampliado.this, context,"No hay conexión a Internet");
             contentSuccessful = false;
             return;
         }
@@ -193,7 +193,7 @@ public class Activity_chef_ampliado extends AppCompatActivity {
                     // Notificar al adaptador que los datos han cambiado
                     adapter.notifyDataSetChanged();
                 } else {
-                    Utils.showToastSecond(Activity_chef_ampliado.this, context,"No se encontraron reservas");
+                    Utils.showToastSecond(Activity_contenido_chef_ampliado.this, context,"No se encontraron reservas");
                 }
             }
             /**
@@ -207,7 +207,7 @@ public class Activity_chef_ampliado extends AppCompatActivity {
                 contentSuccessful = false;
                 t.printStackTrace();
                 Log.e(TAG, "Error en la llamada:" + t.getMessage());
-                Utils.showToastSecond(Activity_chef_ampliado.this, context,"Error en la llamada: " + t.getMessage());
+                Utils.showToastSecond(Activity_contenido_chef_ampliado.this, context,"Error en la llamada: " + t.getMessage());
             }
         });
     }

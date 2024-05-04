@@ -22,19 +22,19 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 /**
- * Clase reservas administrador
+ * Clase lista de reservas administrador
  * Muestra una lista de las reservas de todos los usuarios
+ * Permite filtrar por año de la reserva o entrar a la reserva y modificarla o borrarla
  */
-public class Activity_reservas_admin extends AppCompatActivity {
+public class Activity_admin_lista_reservas extends AppCompatActivity {
     private boolean contentSuccessful = false; // Variable para rastrear el estado de la muestra del listado
-    private final String TAG = Activity_reservas_admin.class.getSimpleName();
+    private final String TAG = Activity_admin_lista_reservas.class.getSimpleName();
 
     // Variables para mostrar las reservas
     RecyclerView recyclerView;
     Adapter_reserva_admin adapter;
     List<Reserva> reservasList = new ArrayList<>(); // Lista para almacenar las reservas
     List<Reserva> originalReservasList = new ArrayList<>(); // Lista para almacenar las reservas
-
 
     // Variables para conectar con la API
     FastMethods mfastMethods;
@@ -52,13 +52,14 @@ public class Activity_reservas_admin extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Establece el diseño de la actividad.
-        setContentView(R.layout.activity_reservas_chef);
+        setContentView(R.layout.activity_admin_lista_reservas);
 
         //inicializar variables
         fecha_filtro = findViewById(R.id.edt_fecha_filtro);
 
         retro=FastClient.getClient();
         mfastMethods = retro.create(FastMethods.class);
+
         // Obtener el token de SharedPreferences
         SharedPreferences sharedPreferences = getSharedPreferences("MiPreferencia", Context.MODE_PRIVATE);
         token = sharedPreferences.getString("token", "");
@@ -81,12 +82,12 @@ public class Activity_reservas_admin extends AppCompatActivity {
         Context context = this; // Obtener el contexto de la actividad (this)
         // Compruebe el estado de la conexión de red
         if (!Utils.isNetworkAvailable(this)) {
-            Utils.showToastSecond(Activity_reservas_admin.this, context,"No hay conexión a Internet");
+            Utils.showToastSecond(Activity_admin_lista_reservas.this, context,"No hay conexión a Internet");
             contentSuccessful = false;
             return;
         }
-        // Call HTTP client para recuperar la información del usuario
-        Call<List<Reserva>> call = mfastMethods.recuperar_reseñas_admin();
+        // Call HTTP client para recuperar las reservas de todos los usuarios
+        Call<List<Reserva>> call = mfastMethods.recuperar_reservas_admin();
         call.enqueue(new Callback<List<Reserva>>() { // Ejecutar la llamada de manera asíncrona
             /**
              * Método invocado cuando se recibe una respuesta de la solicitud HTTP
@@ -107,7 +108,7 @@ public class Activity_reservas_admin extends AppCompatActivity {
                     // Notificar al adaptador que los datos han cambiado
                     adapter.notifyDataSetChanged();
                 } else {
-                    Utils.showToastSecond(Activity_reservas_admin.this, context,"No se encontraron reservas");
+                    Utils.showToastSecond(Activity_admin_lista_reservas.this, context,"No se encontraron reservas");
                 }
             }
             /**
@@ -121,7 +122,7 @@ public class Activity_reservas_admin extends AppCompatActivity {
                 contentSuccessful = false;
                 t.printStackTrace();
                 Log.e(TAG, "Error en la llamada:" + t.getMessage());
-                Utils.showToastSecond(Activity_reservas_admin.this, context,"Error en la llamada: " + t.getMessage());
+                Utils.showToastSecond(Activity_admin_lista_reservas.this, context,"Error en la llamada: " + t.getMessage());
             }
         });
     }
@@ -132,7 +133,7 @@ public class Activity_reservas_admin extends AppCompatActivity {
      * @param view La vista (Button) a la que se hizo clic.
      */
     public void logout(View view){
-        Utils.gotoActivity(Activity_reservas_admin.this, MainActivity_inicio.class);
+        Utils.gotoActivity(Activity_admin_lista_reservas.this, MainActivity_inicio.class);
     }
     /**
      * Método para retroceder de pantalla
@@ -140,7 +141,7 @@ public class Activity_reservas_admin extends AppCompatActivity {
      * @param view La vista (Button) a la que se hizo clic.
      */
     public void atras(View view){
-        Utils.gotoActivity(Activity_reservas_admin.this, Activity_menu_admin.class);
+        Utils.gotoActivity(Activity_admin_lista_reservas.this, Activity_admin_menu.class);
     }
 
     /**
@@ -174,23 +175,24 @@ public class Activity_reservas_admin extends AppCompatActivity {
      * Método para filtrar la lista de reservas localmente por fecha
      * @param year año a filtrar
      */
+    @SuppressLint("NotifyDataSetChanged")
     public void buscar(int year) {
-        int searchText = year; // Fecha a filtrar
 
         // Filtrar reservasList localmente con la fecha de búsqueda
-        List<Reserva> filteredList = filterReservas(originalReservasList, searchText);
+        List<Reserva> filteredList = filterReservas(originalReservasList, year);
 
         // Actualizar reservasList con la lista filtrada
         reservasList.clear();
         reservasList.addAll(filteredList);
 
         // Notificar al adaptador que los datos han cambiado en el hilo principal
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                adapter.notifyDataSetChanged(); // Notificar al adaptador que los datos han cambiado
-            }
+        runOnUiThread(() -> {
+            adapter.notifyDataSetChanged(); // Notificar al adaptador que los datos han cambiado
         });
+
+        if(reservasList.isEmpty()){
+            Utils.showToast(this, "No se encontraron reservas para esa fecha");
+        }
 
         // Actualizar el estado de contentSuccessful basado en si se encontraron reservas después del filtro
         contentSuccessful = !reservasList.isEmpty(); // Si la lista filtrada no está vacía, entonces el contenido fue exitoso

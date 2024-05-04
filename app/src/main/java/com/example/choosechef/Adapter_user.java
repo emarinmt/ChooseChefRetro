@@ -38,7 +38,7 @@ public class Adapter_user extends RecyclerView.Adapter<Adapter_user.ViewHolder> 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = layoutInflater.inflate(R.layout.custom_view_card_users,viewGroup,false);
+        View view = layoutInflater.inflate(R.layout.custom_view_card_users_admin,viewGroup,false);
         return new ViewHolder(view);
     }
 
@@ -65,7 +65,7 @@ public class Adapter_user extends RecyclerView.Adapter<Adapter_user.ViewHolder> 
                 User currentUser = data.get(viewHolder.getAdapterPosition());
 
                 // Utilizar el método gotoActivityWithUser para abrir la DetailActivity y pasar el objeto User
-                Utils.gotoActivityWithUser(viewHolder.itemView.getContext(), Activity_user_ampliado.class, currentUser);
+                Utils.gotoActivityWithUser(viewHolder.itemView.getContext(), Activity_admin_usuario_ampliado.class, currentUser);
             }
         });
     }

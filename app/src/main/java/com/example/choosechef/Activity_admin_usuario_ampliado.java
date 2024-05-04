@@ -17,15 +17,15 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 /**
- * Clase usuario ampliado
- * Actividad ara gestionar la información del usuario ampliada,
+ * Clase usuario ampliado administrador
+ * Actividad para gestionar la información del usuario ampliada,
  * a esta pantalla acedera el administrador para ver, modificar o borrar toda la info de los usuarios
  */
-public class Activity_user_ampliado extends AppCompatActivity {
+public class Activity_admin_usuario_ampliado extends AppCompatActivity {
     private boolean contentSuccessful = false; // Variable para rastrear el estado de la muestra del usuario
     private boolean modifySuccessful = false; // Variable para rastrear el estado de la modificación
     private boolean deleteSuccessful = false; // Variable para rastrear el estado del borrado
-    private final String TAG = Activity_user_ampliado.class.getSimpleName();
+    private final String TAG = Activity_admin_usuario_ampliado.class.getSimpleName();
     //Variables para mostrar la información de los usuarios
     private EditText usuario;
     private EditText nombreUsuario;
@@ -38,6 +38,7 @@ public class Activity_user_ampliado extends AppCompatActivity {
     private EditText tipoComidaUsuario;
     private EditText tipoServicioUsuario;
     private EditText valoracionUsuario;
+
     //Variable para recibir información de la pantalla anterior
     public Intent intent;
     // Variables para conectar con la API
@@ -57,7 +58,7 @@ public class Activity_user_ampliado extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //Establece el diseño de la actividad
-        setContentView(R.layout.activity_user_ampliado);
+        setContentView(R.layout.activity_admin_usuario_ampliado);
         contentSuccessful = false;
 
         // Inicialización de variables
@@ -85,7 +86,6 @@ public class Activity_user_ampliado extends AppCompatActivity {
         camposHabilitados = false;
 
         habilitarCampos(false);
-
     }
 
     /**
@@ -168,7 +168,7 @@ public class Activity_user_ampliado extends AppCompatActivity {
 
             // Comprueba el estado de la conexión de red
             if (!Utils.isNetworkAvailable(this)) {
-                Utils.showToast(Activity_user_ampliado.this, "No hay conexión a Internet");
+                Utils.showToast(Activity_admin_usuario_ampliado.this, "No hay conexión a Internet");
                 return;
             }
             //Actualizar los datos del usuario con los nuevos valores
@@ -209,10 +209,10 @@ public class Activity_user_ampliado extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     modifySuccessful = true;
                     // String responseBody = response.body();
-                    Utils.showToastSecond(Activity_user_ampliado.this,context, "Modificación correcta!");
-                    Utils.gotoActivity(Activity_user_ampliado.this, Activity_admin.class);
+                    Utils.showToastSecond(Activity_admin_usuario_ampliado.this,context, "Modificación correcta!");
+                    Utils.gotoActivity(Activity_admin_usuario_ampliado.this, Activity_admin_lista_usuarios.class);
                 } else {
-                    Utils.showToastSecond(Activity_user_ampliado.this,context, "Error al modificar usuario");
+                    Utils.showToastSecond(Activity_admin_usuario_ampliado.this,context, "Error al modificar usuario");
                 }
             }
 
@@ -226,7 +226,7 @@ public class Activity_user_ampliado extends AppCompatActivity {
                 // Error en la llamada, muestra el mensaje de error y registra la excepción
                 t.printStackTrace();
                 Log.e(TAG, "Error en la llamada:" + t.getMessage());
-                Utils.showToastSecond(Activity_user_ampliado.this, context,"Error en la llamada: " + t.getMessage());
+                Utils.showToastSecond(Activity_admin_usuario_ampliado.this, context,"Error en la llamada: " + t.getMessage());
             }
         });
     }
@@ -252,11 +252,11 @@ public class Activity_user_ampliado extends AppCompatActivity {
                         deleteSuccessful = true;
                         Log.d(TAG, "Eliminación exitosa");
                         // String responseBody = response.body();
-                        Utils.showToastSecond(Activity_user_ampliado.this, context,"Eliminación correcta!");
-                        Utils.gotoActivity(Activity_user_ampliado.this, Activity_admin.class);
+                        Utils.showToastSecond(Activity_admin_usuario_ampliado.this, context,"Eliminación correcta!");
+                        Utils.gotoActivity(Activity_admin_usuario_ampliado.this, Activity_admin_lista_usuarios.class);
                     } else {
                         Log.d(TAG, "Eliminación no exitosa");
-                        Utils.showToastSecond(Activity_user_ampliado.this, context,"Error al eliminar usuario");
+                        Utils.showToastSecond(Activity_admin_usuario_ampliado.this, context,"Error al eliminar usuario");
                     }
                 }
                 /**
@@ -269,11 +269,11 @@ public class Activity_user_ampliado extends AppCompatActivity {
                     // Error en la llamada, muestra el mensaje de error y registra la excepción
                     t.printStackTrace();
                     Log.e(TAG, "Error en la llamada:" + t.getMessage());
-                    Utils.showToastSecond(Activity_user_ampliado.this, context,"Error en la llamada: " + t.getMessage());
+                    Utils.showToastSecond(Activity_admin_usuario_ampliado.this, context,"Error en la llamada: " + t.getMessage());
                 }
             });
         } else {
-            Utils.showToastSecond(Activity_user_ampliado.this, context,"Error el usuario esta vacío" + usuario_mod);
+            Utils.showToastSecond(Activity_admin_usuario_ampliado.this, context,"Error el usuario esta vacío" + usuario_mod);
         }
 
     }
@@ -284,7 +284,7 @@ public class Activity_user_ampliado extends AppCompatActivity {
      * @param view La vista (Button) a la que se hizo clic.
      */
     public void logout(View view){
-        Utils.gotoActivity(Activity_user_ampliado.this, MainActivity_inicio.class);
+        Utils.gotoActivity(Activity_admin_usuario_ampliado.this, MainActivity_inicio.class);
     }
     /**
      * Método para retroceder de pantalla
@@ -292,7 +292,7 @@ public class Activity_user_ampliado extends AppCompatActivity {
      * @param view La vista (Button) a la que se hizo clic.
      */
     public void atras(View view){
-        Utils.gotoActivity(Activity_user_ampliado.this, Activity_admin.class);
+        Utils.gotoActivity(Activity_admin_usuario_ampliado.this, Activity_admin_lista_usuarios.class);
     }
 
     /**
@@ -324,6 +324,4 @@ public class Activity_user_ampliado extends AppCompatActivity {
     public String getDescUsuario() {
         return descripUsuario.getText().toString(); // Obtener el texto del EditText Descripcion
     }
-
-
 }

@@ -10,30 +10,36 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
 /**
- * Clase reserva ampliado
- * Muestra todas las reservas del usuario logeado
- * Si la fecha de la reserva es igual o anterior a la fecha actual deja introducir una reseña ( valoración y comentario)
+ * Clase reserva ampliado administrador
+ * Muestra todas las reservas de la app
+ * Permite modificar o borrar una reseña
  */
-public class Activity_reserva_ampliado  extends AppCompatActivity {
+public class Activity_admin_reserva_ampliado extends AppCompatActivity {
     private boolean contentSuccessful = false; // Variable para rastrear el estado de la muestra de la reserva
     private boolean modifySuccessful = false; // Variable para rastrear el estado de la modificacion de la reserva
-    private final String TAG = Activity_reserva_ampliado.class.getSimpleName();
+    private boolean deleteSuccessful = false; // Variable para rastrear el estado del borrado
+    private final String TAG = Activity_admin_reserva_ampliado.class.getSimpleName();
     //Variables para mostrar la información de la reserva
     private TextView nombre_chef;
+    private TextView nombre_usuario;
     private TextView fecha_reserva;
     private EditText comentario;
     RatingBar valoracion;
+
     //Variable para recibir información de la reserva de la pantalla anterior
     public Intent intent;
+
     //Variables para conectar con la API
     FastMethods mfastMethods;
     Retrofit retro;
@@ -49,7 +55,7 @@ public class Activity_reserva_ampliado  extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //Establece el diseño de la actividad
-        setContentView(R.layout.activity_reserva_ampliado);
+        setContentView(R.layout.activity_admin_reserva_ampliado);
         contentSuccessful = false;
         modifySuccessful = false;
 
@@ -58,6 +64,7 @@ public class Activity_reserva_ampliado  extends AppCompatActivity {
         // Reserva reserva = new Reserva();
 
         //Inicialización de variables
+        nombre_usuario = findViewById(R.id.nombre_usuario_reserva);
         nombre_chef = findViewById(R.id.nombre_chef_reserva);
         fecha_reserva = findViewById(R.id.fecha_reserva);
         comentario = findViewById(R.id.comentario);
@@ -73,22 +80,8 @@ public class Activity_reserva_ampliado  extends AppCompatActivity {
         //Recuperar datos de la reserva de la pantalla anterior
         obtenerIntent(intent);
 
-        fechaPosterior();
-    }
-
-    /**
-     * Método para comprobar si la fecha es anterior o igual a hoy permite introducir la reseña ( valoraicón y comentario)
-     */
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public void fechaPosterior(){
-        //Si la fecha de la reserva es hoy o anterior se habilitan estos campos para escribir la reseña
-        if(Utils.esFechaHoyAnterior(reserva.getFecha())){
-            valoracion.setEnabled(true);
-            comentario.setEnabled(true);
-            Utils.showToast(Activity_reserva_ampliado.this, "TRUE Introduce tu reseña!"+ reserva.getFecha());
-        }else{
-            Utils.showToast(Activity_reserva_ampliado.this, "FALSE No puedes introducir la reseña todavia"+reserva.getFecha());
-        }
+        valoracion.setEnabled(true);
+        comentario.setEnabled(true);
     }
 
     /**
@@ -105,6 +98,7 @@ public class Activity_reserva_ampliado  extends AppCompatActivity {
 
             // Usar el objeto User en esta actividad
             if (reserva != null) {
+                nombre_usuario.setText(reserva.getUsuario_cliente());
                 nombre_chef.setText(reserva.getUsuario_chef());
                 fecha_reserva.setText(reserva.getFecha());
                 comentario.setText(reserva.getComentario());
@@ -115,10 +109,10 @@ public class Activity_reserva_ampliado  extends AppCompatActivity {
     }
 
     /**
-     * Método para modificar la reseña en el servidor ( añadir valoración y comentario)
+     * Método para modificar la reserva en el servidor ( modificar valoración y comentario)
      * @param view La vista (Button) a la que se hizo clic.
      */
-    public void confirmarComentario(View view){
+    public void editarReserva(View view){
         Context context = this; // Obtener el contexto de la actividad (this)
         //Recogemos los datos añadidos
         float valoracionInput = valoracion.getRating();
@@ -126,14 +120,14 @@ public class Activity_reserva_ampliado  extends AppCompatActivity {
 
         // Comprueba el estado de la conexión de red
         if (!Utils.isNetworkAvailable(this)) {
-            Utils.showToast(Activity_reserva_ampliado.this, "No hay conexión a Internet");
+            Utils.showToast(Activity_admin_reserva_ampliado.this, "No hay conexión a Internet");
             return;
         }
         //Actualiza los datos de la reserva con los nuevos datos
         reserva.setValoracion(valoracionInput);
         reserva.setComentario(comentarioInput);
 
-        // call HTTP client para modificar los datos de usuario
+        // call HTTP client para modificar los datos de la reserva
         Call<String> call = mfastMethods.modificar_reserva(reserva.getId(),reserva);
         call.enqueue(new Callback<String>() { // Ejecutar la llamada de manera asíncrona
             /**
@@ -145,11 +139,11 @@ public class Activity_reserva_ampliado  extends AppCompatActivity {
             public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
                 if (response.isSuccessful()) {
                     modifySuccessful = true;
-                    // String responseBody = response.body();
-                    Utils.showToastSecond(Activity_reserva_ampliado.this, context,"Modificación correcta!");
-                    Utils.gotoActivity(Activity_reserva_ampliado.this, Activity_user.class);
+
+                    Utils.showToastSecond(Activity_admin_reserva_ampliado.this, context,"Modificación correcta!");
+                    Utils.gotoActivity(Activity_admin_reserva_ampliado.this, Activity_admin_lista_reservas.class);
                 } else {
-                    Utils.showToastSecond(Activity_reserva_ampliado.this, context,"Error al modificar la reseña");
+                    Utils.showToastSecond(Activity_admin_reserva_ampliado.this, context,"Error al modificar la reseña");
                 }
             }
 
@@ -163,9 +157,54 @@ public class Activity_reserva_ampliado  extends AppCompatActivity {
                 // Error en la llamada, muestra el mensaje de error y registra la excepción
                 t.printStackTrace();
                 Log.e(TAG, "Error en la llamada:" + t.getMessage());
-                Utils.showToastSecond(Activity_reserva_ampliado.this, context,"Error en la llamada: " + t.getMessage());
+                Utils.showToastSecond(Activity_admin_reserva_ampliado.this, context,"Error en la llamada: " + t.getMessage());
             }
         });
+    }
+
+    /**
+     * Método para borrar la reserva en el servidor
+     * @param view La vista (Button) a la que se hizo clic.
+     */
+    public void borrarReserva(View view) {
+        Context context = this; // Obtener el contexto de la actividad (this)
+        if (reserva.getId() != 0) {
+            // call HTTP client para borrar al usuario
+            Call<String> call = mfastMethods.borrar_reserva(reserva.getId());
+
+            call.enqueue(new Callback<String>() { // Ejecutar la llamada de manera asíncrona
+                /**
+                 * Método invocado cuando se recibe una respuesta de la solicitud HTTP
+                 * @param call     llamada que generó la respuesta
+                 * @param response la respuesta recibida del servidor
+                 */
+                @Override
+                public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
+                    if (response.isSuccessful()) {
+                        deleteSuccessful = true;
+                        Log.d(TAG, "Eliminación exitosa");
+                        Utils.showToastSecond(Activity_admin_reserva_ampliado.this, context, "Eliminación correcta!");
+                        Utils.gotoActivity(Activity_admin_reserva_ampliado.this, Activity_admin_lista_reservas.class);
+                    } else {
+                        Utils.showToastSecond(Activity_admin_reserva_ampliado.this, context, "Error al eliminar la reseña");
+                    }
+                }
+                /**
+                 * Método invocado cuando ocurre un error durante la ejecución de la llamada HTTP
+                 * @param call la llamada que generó el error
+                 * @param t    la excepción que ocurrió
+                 */
+                @Override
+                public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
+                    // Error en la llamada, muestra el mensaje de error y registra la excepción
+                    t.printStackTrace();
+                    Log.e(TAG, "Error en la llamada:" + t.getMessage());
+                    Utils.showToastSecond(Activity_admin_reserva_ampliado.this, context, "Error en la llamada: " + t.getMessage());
+                }
+            });
+        } else {
+            Utils.showToastSecond(Activity_admin_reserva_ampliado.this, context,"Error la reserva esta vacía");
+        }
     }
 
     /**
@@ -174,7 +213,15 @@ public class Activity_reserva_ampliado  extends AppCompatActivity {
      * @param view La vista (Button) a la que se hizo clic.
      */
     public void logout(View view){
-        Utils.gotoActivity(Activity_reserva_ampliado.this, MainActivity_inicio.class);
+        Utils.gotoActivity(Activity_admin_reserva_ampliado.this, MainActivity_inicio.class);
+    }
+    /**
+     * Método para retroceder de pantalla
+     * Redirige al usuario a la pantalla anterior
+     * @param view La vista (Button) a la que se hizo clic.
+     */
+    public void atras(View view){
+        Utils.gotoActivity(Activity_admin_reserva_ampliado.this, Activity_admin_lista_reservas.class);
     }
 
     /**
@@ -191,7 +238,13 @@ public class Activity_reserva_ampliado  extends AppCompatActivity {
     public boolean isModifySuccessful() {
         return modifySuccessful;
     }
-
+    /**
+     * Método para test
+     * @return devuelve un booleano en funcion de si ha ido bien la eliminación de reserva
+     */
+    public boolean isDeleteSuccessful() {
+        return deleteSuccessful;
+    }
     /**
      * Método para test
      * @return devuelve el contenido del comentario de una reserva

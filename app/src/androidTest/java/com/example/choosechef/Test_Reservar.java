@@ -32,7 +32,7 @@ public class Test_Reservar {
 
     @Rule
     public IntentsTestRule<Activity_login> activityRule = new IntentsTestRule<>(Activity_login.class);
-    private Activity_reservar reservar;
+    private Activity_contenido_reservar_chef reservar;
     private Context context;
     private static final String PREFS_NAME = "MiPreferencia"; // Nombre del archivo de preferencias
     private static final String DAYS_TO_ADD_KEY = "daysToAdd"; // Clave para daysToAdd en SharedPreferences
@@ -52,9 +52,9 @@ public class Test_Reservar {
         // Botón reservar
         onView(withId(R.id.ibtn_reservar)).perform(click());
         // Verificar que la actividad reservar se inicia correctamente
-        intended(hasComponent(Activity_reservar.class.getName()));
+        intended(hasComponent(Activity_contenido_reservar_chef.class.getName()));
         // Obtener la instancia de Activity_reservar
-        reservar = ((Activity_reservar) UtilsTests.getActivityInstance(Activity_reservar.class));
+        reservar = ((Activity_contenido_reservar_chef) UtilsTests.getActivityInstance(Activity_contenido_reservar_chef.class));
     }
 
     // Reserva incorrecta (fecha ya reservada)

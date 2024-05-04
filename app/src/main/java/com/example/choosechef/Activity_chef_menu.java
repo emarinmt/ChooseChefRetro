@@ -6,10 +6,10 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 
 /**
- * Clase para gestionar el menú del administrador
- * Ofrece dos posibilidades, gestionar usuarios o reservas
+ * Clase para gestionar las opciones de menu del chef
+ * Ofrece dos posibilidades, gestionar su perfil o ver sus reservas
  */
-public class Activity_menu_admin extends AppCompatActivity {
+public class Activity_chef_menu extends AppCompatActivity {
 
     /**
      * Método onCreate para la configuración incial de la actividad
@@ -19,40 +19,38 @@ public class Activity_menu_admin extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Establece el diseño de la actividad.
-        setContentView(R.layout.activity_menu_admin);
+        setContentView(R.layout.activity_chef_menu);
     }
 
     /**
-     * Método para ir a la pantalla de gestión de usuarios
+     * Método para ir a la pantalla de gestión del perfil del chef
      * @param view La vista (Button) a la que se hizo clic.
      */
-    public void gestion_usuarios(View view) {
-        Utils.gotoActivity(Activity_menu_admin.this, Activity_admin.class);
+    public void gestion_perfil_chef(View view) {
+        Utils.gotoActivity(Activity_chef_menu.this, Activity_chef_servicio.class);
     }
 
     /**
-     * Método para ir a la pantalla de gestión de reseñas
+     * Método para ir a la pantalla de gestión de reservas
      * @param view La vista (Button) a la que se hizo clic.
      */
-    public void gestion_reseñas(View view) {
-        Utils.gotoActivity(Activity_menu_admin.this, Activity_reservas_admin.class);
+    public void gestion_reservas(View view) {
+        Utils.gotoActivity(Activity_chef_menu.this, Activity_chef_lista_reservas.class);
     }
-
     /**
      * Método para hacer logout
      * Redirige al usuario a la pantalla de inicio
      * @param view La vista (Button) a la que se hizo clic.
      */
     public void logout(View view){
-        Utils.gotoActivity(Activity_menu_admin.this, MainActivity_inicio.class);
+        Utils.gotoActivity(Activity_chef_menu.this, MainActivity_inicio.class);
     }
-
     /**
      * Método para retroceder de pantalla
      * Redirige al usuario a la pantalla anterior
      * @param view La vista (Button) a la que se hizo clic.
      */
     public void atras(View view){
-        Utils.gotoActivity(Activity_menu_admin.this, Activity_contenido.class);
+        Utils.gotoActivity(Activity_chef_menu.this, Activity_contenido.class);
     }
 }

@@ -19,13 +19,13 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 /**
- * Clase administrador.
+ * Clase administrador lista de usuarios
  * Muestra una lista de todos los usuarios de la app
  */
 
-public class Activity_admin extends AppCompatActivity {
+public class Activity_admin_lista_usuarios extends AppCompatActivity {
     private boolean contentSuccessful = false; // Variable para rastrear el estado de la muestra del listado
-    private final String TAG = Activity_admin.class.getSimpleName();
+    private final String TAG = Activity_admin_lista_usuarios.class.getSimpleName();
 
     // Variables para mostrar los chefs
     RecyclerView recyclerView;
@@ -47,7 +47,7 @@ public class Activity_admin extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Establece el diseño de la actividad.
-        setContentView(R.layout.activity_admin);
+        setContentView(R.layout.activity_admin_lista_usuarios);
 
         //Inicializar variables
         nombre_usuario_filtro = findViewById(R.id.edt_buscar_usuario);
@@ -73,11 +73,11 @@ public class Activity_admin extends AppCompatActivity {
         Context context = this; // Obtener el contexto de la actividad (this)
         // Compruebe el estado de la conexión de red
         if (!Utils.isNetworkAvailable(this)) {
-            Utils.showToastSecond(Activity_admin.this, context, "No hay conexión a Internet");
+            Utils.showToastSecond(Activity_admin_lista_usuarios.this, context, "No hay conexión a Internet");
             contentSuccessful = false;
             return;
         }
-        // Call HTTP client para recuperar la información del usuario
+        // Call HTTP client para recuperar la información de los usuarios
         Call<List<User>> call = mfastMethods.recuperar_todos_usuarios();
         call.enqueue(new Callback<List<User>>() { // Ejecutar la llamada de manera asíncrona
             /**
@@ -99,7 +99,7 @@ public class Activity_admin extends AppCompatActivity {
                     // Notificar al adaptador que los datos han cambiado
                     adapter.notifyDataSetChanged();
                 } else {
-                    Utils.showToastSecond(Activity_admin.this, context,"No se encontraron usuarios");
+                    Utils.showToastSecond(Activity_admin_lista_usuarios.this, context,"No se encontraron usuarios");
                 }
             }
             /**
@@ -113,7 +113,7 @@ public class Activity_admin extends AppCompatActivity {
                 contentSuccessful = false;
                 t.printStackTrace();
                 Log.e(TAG, "Error en la llamada:" + t.getMessage());
-                Utils.showToastSecond(Activity_admin.this, context,"Error en la llamada: " + t.getMessage());
+                Utils.showToastSecond(Activity_admin_lista_usuarios.this, context,"Error en la llamada: " + t.getMessage());
             }
         });
     }
@@ -124,7 +124,7 @@ public class Activity_admin extends AppCompatActivity {
      * @param view La vista (Button) a la que se hizo clic.
      */
     public void logout(View view){
-        Utils.gotoActivity(Activity_admin.this, MainActivity_inicio.class);
+        Utils.gotoActivity(Activity_admin_lista_usuarios.this, MainActivity_inicio.class);
     }
     /**
      * Método para retroceder de pantalla
@@ -132,7 +132,7 @@ public class Activity_admin extends AppCompatActivity {
      * @param view La vista (Button) a la que se hizo clic.
      */
     public void atras(View view){
-        Utils.gotoActivity(Activity_admin.this, Activity_menu_admin.class);
+        Utils.gotoActivity(Activity_admin_lista_usuarios.this, Activity_admin_menu.class);
     }
 
     /**
@@ -160,23 +160,24 @@ public class Activity_admin extends AppCompatActivity {
      * Método para filtrar la lista de usuarios localmente por el nombre de usuario.
      * @param username a filtrar
      */
+    @SuppressLint("NotifyDataSetChanged")
     public void buscar(String username) {
-        String searchText = username; // Texto de búsqueda (nombre de usuario a filtrar)
 
         // Filtrar userList localmente con el texto de búsqueda
-        List<User> filteredList = filterUsers(originalUserList, searchText);
+        List<User> filteredList = filterUsers(originalUserList, username);
 
         // Actualizar userList con la lista filtrada
         userList.clear();
         userList.addAll(filteredList);
 
         // Actualizar el adaptador en el hilo principal utilizando runOnUiThread()
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                adapter.notifyDataSetChanged(); // Notificar al adaptador que los datos han cambiado
-            }
+        runOnUiThread(() -> {
+            adapter.notifyDataSetChanged(); // Notificar al adaptador que los datos han cambiado
         });
+
+        if(userList.isEmpty()){
+            Utils.showToast(this, "No se encontraron usuarios con ese nombre");
+        }
 
         // Actualizar el estado de contentSuccessful basado en si se encontraron usuarios después del filtro
         contentSuccessful = !userList.isEmpty(); // Si la lista filtrada no está vacía, entonces el contenido fue exitoso

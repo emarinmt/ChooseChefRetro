@@ -25,8 +25,8 @@ import retrofit2.Retrofit;
  * Muestra un calendario donde el usuario escoge una fecha para reservar
  * Llama al servidor para crear la reserva, el servidor comprueba si ese dia esta disponible y si es así crea la reserva
  */
-public class Activity_reservar extends AppCompatActivity {
-    private final String TAG = Activity_reservar.class.getSimpleName();
+public class Activity_contenido_reservar_chef extends AppCompatActivity {
+    private final String TAG = Activity_contenido_reservar_chef.class.getSimpleName();
     private boolean contentSuccessful = false; // Variable para rastrear el estado de la muestra del usuario
     private boolean reservaSuccessful = false; // Variable para rastrear el estado de la modificación
     //Variable para el calendario
@@ -51,7 +51,7 @@ public class Activity_reservar extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Establece el diseño de la actividad.
-        setContentView(R.layout.activity_reservar);
+        setContentView(R.layout.activity_contenido_reservar_chef);
         Log.d(TAG, "Activity_reservar onCreate()");
         contentSuccessful = false;
         //Inicializa variable
@@ -81,7 +81,7 @@ public class Activity_reservar extends AppCompatActivity {
             fechaStr = year + "-" + monthStr +"-"+ dayOfMonth;
             Log.d(TAG, "Fecha seleccionada: " + fechaStr);
             //mostramos la fecha escogida
-            Utils.showToast(Activity_reservar.this, fechaStr);
+            Utils.showToast(Activity_contenido_reservar_chef.this, fechaStr);
         });
     }
 
@@ -110,7 +110,7 @@ public class Activity_reservar extends AppCompatActivity {
     public void recuperarDatosCliente(){
         // Compruebe el estado de la conexión de red
         if (!Utils.isNetworkAvailable(this)) {
-            Utils.showToast(Activity_reservar.this, "No hay conexión a Internet");
+            Utils.showToast(Activity_contenido_reservar_chef.this, "No hay conexión a Internet");
             return;
         }
         // Call HTTP client para recuperar la información del usuario
@@ -131,7 +131,7 @@ public class Activity_reservar extends AppCompatActivity {
                     } else {
                         Log.d(TAG, "Error: Respuesta del servidor no exitosa, código " + response.code());
                         // Obtención de datos incorrecta, muestra un mensaje de error
-                        Utils.showToast(Activity_reservar.this, "Obtención de datos incorrecta");
+                        Utils.showToast(Activity_contenido_reservar_chef.this, "Obtención de datos incorrecta");
                     }
                 }
             }
@@ -146,7 +146,7 @@ public class Activity_reservar extends AppCompatActivity {
                 // Error en la llamada, muestra el mensaje de error y registra la excepción
                 t.printStackTrace();
                 Log.e(TAG, "Error en la llamada:" + t.getMessage());
-                Utils.showToast(Activity_reservar.this, "Error en la llamada: " + t.getMessage());
+                Utils.showToast(Activity_contenido_reservar_chef.this, "Error en la llamada: " + t.getMessage());
             }
         });
     }
@@ -184,13 +184,13 @@ public class Activity_reservar extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     reservaSuccessful = true;
                     // String responseBody = response.body();
-                    Utils.showToastSecond(Activity_reservar.this, context,"Reserva correcta!");
+                    Utils.showToastSecond(Activity_contenido_reservar_chef.this, context,"Reserva correcta!");
                     Log.d(TAG, "Reserva creada correctamente");
                     //volvemos a pantalla anterior
-                    Utils.gotoActivity(Activity_reservar.this, Activity_chef_ampliado.class);
+                    Utils.gotoActivity(Activity_contenido_reservar_chef.this, Activity_contenido_chef_ampliado.class);
                 } else {
                     reservaSuccessful = false;
-                    Utils.showToastSecond(Activity_reservar.this, context,"Error al crear la reserva");
+                    Utils.showToastSecond(Activity_contenido_reservar_chef.this, context,"Error al crear la reserva");
                 }
             }
 
@@ -205,7 +205,7 @@ public class Activity_reservar extends AppCompatActivity {
                 //reservaSuccessful = false;
                 t.printStackTrace();
                 Log.e(TAG, "Error en la llamada:" + t.getMessage());
-                Utils.showToastSecond(Activity_reservar.this, context,"Error en la llamada: " + t.getMessage());
+                Utils.showToastSecond(Activity_contenido_reservar_chef.this, context,"Error en la llamada: " + t.getMessage());
             }
         });
     }
@@ -220,18 +220,18 @@ public class Activity_reservar extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     private boolean validarFecha(String fechaStr, Context context) {
         if (fechaStr == null || fechaStr.isEmpty()) {
-            Utils.showToastSecond(Activity_reservar.this, context, "Selecciona una fecha antes de reservar");
+            Utils.showToastSecond(Activity_contenido_reservar_chef.this, context, "Selecciona una fecha antes de reservar");
             return false;
         }
         try {
             if (Utils.esFechaHoyAnterior(fechaStr)) {
-                Utils.showToastSecond(Activity_reservar.this, context, "No puedes reservar en fechas pasadas");
+                Utils.showToastSecond(Activity_contenido_reservar_chef.this, context, "No puedes reservar en fechas pasadas");
                 return false;
             } else {
                 return true; // La fecha es válida
             }
         } catch (DateTimeParseException e) {
-            Utils.showToastSecond(Activity_reservar.this, context, "Formato de fecha inválido");
+            Utils.showToastSecond(Activity_contenido_reservar_chef.this, context, "Formato de fecha inválido");
             return false;
         }
     }
@@ -242,7 +242,7 @@ public class Activity_reservar extends AppCompatActivity {
      * @param view La vista (Button) a la que se hizo clic.
      */
     public void logout(View view){
-        Utils.gotoActivity(Activity_reservar.this, MainActivity_inicio.class);
+        Utils.gotoActivity(Activity_contenido_reservar_chef.this, MainActivity_inicio.class);
     }
     /**
      * Método para retroceder de pantalla
@@ -250,7 +250,7 @@ public class Activity_reservar extends AppCompatActivity {
      * @param view La vista (Button) a la que se hizo clic.
      */
     public void atras(View view){
-        Utils.gotoActivity(Activity_reservar.this, Activity_chef_ampliado.class);
+        Utils.gotoActivity(Activity_contenido_reservar_chef.this, Activity_contenido.class);
     }
     /**
      * Método para test
