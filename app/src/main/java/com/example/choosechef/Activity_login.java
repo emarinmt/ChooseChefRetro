@@ -32,6 +32,7 @@ public class Activity_login extends AppCompatActivity {
     // Variables para conectar con la API
     Retrofit retro;
     private SharedPreferences sharedPreferences; // Para almacenar el token
+
     /**
      * Método onCreate para la configuración incial de la actividad
      * @param savedInstanceState estado de la instancia guardada, un objeto Bundle que contiene el estado previamente guardado de la actividad
@@ -169,4 +170,5 @@ public class Activity_login extends AppCompatActivity {
     public boolean isLoginSuccessful() {
         return loginSuccessful;
     }
+
 }

@@ -24,7 +24,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class FastClient {
-    private static Retrofit retrofit;
+    public static Retrofit retrofit;
     // URL base de la API a la que realizaremos las solicitudes.
     private static final String BASE_URL = "https://choose-chef.vercel.app/";
     // Agrega una referencia al contexto para poder acceder a SharedPreferences
@@ -70,8 +70,13 @@ public class FastClient {
             httpClient.certificatePinner(certificatePinner);
 
             // Configurar OkHttpClient para que use el certificado
-            httpClient.sslSocketFactory(getSSLConfig(mContext).getSocketFactory());
-
+            SSLContext sslContext = getSSLConfig(mContext);
+            if (sslContext != null) {
+                httpClient.sslSocketFactory(sslContext.getSocketFactory());
+            } else {
+                // Manejar la situación de un SSLContext nulo, por ejemplo, lanzar una excepción o registrar un mensaje de error.
+                Log.e("FastClient", "SSLContext is null");
+            }
             // Construcción de la instancia de Retrofit
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
@@ -83,7 +88,7 @@ public class FastClient {
     }
 
     // Método para obtener el SSLContext con el certificado
-    private static SSLContext getSSLConfig(Context context) {
+    public static SSLContext getSSLConfig(Context context) {
         try {
             CertificateFactory cf = CertificateFactory.getInstance("X.509");
             InputStream cert = context.getResources().openRawResource(R.raw.vercel_cer);
@@ -106,4 +111,5 @@ public class FastClient {
             return null;
         }
     }
+
 }

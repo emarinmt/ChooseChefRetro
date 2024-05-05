@@ -17,6 +17,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+
 /**
  * Para realizar los tests referentes al login de usuarios
  */
@@ -31,10 +32,12 @@ public class Test_Login {
 
     @Before
     public void setUp() {
-        FastClient.initialize(ApplicationProvider.getApplicationContext());
         context = ApplicationProvider.getApplicationContext();
+        FastClient.initialize(context);
         login = activityRule.getActivity();
     }
+
+
 
     // Usuario existente y contrasena correcta, login correcto
     @Test
