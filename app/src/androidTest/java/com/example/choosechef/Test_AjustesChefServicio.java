@@ -28,7 +28,7 @@ import static org.junit.Assert.assertTrue;
  * CORRESPONDERIA A LA CLASE ACTIVITY_CHEF
  */
 @RunWith(AndroidJUnit4.class)
-public class Test_AjustesChef {
+public class Test_AjustesChefServicio {
 
     @Rule
     public IntentsTestRule<Activity_login> activityRule = new IntentsTestRule<>(Activity_login.class);
@@ -46,7 +46,9 @@ public class Test_AjustesChef {
         UtilsTests.espera(10000);
         onView(withId(R.id.btn_ajustes)).perform(click());
         UtilsTests.espera(10000);
-        // Verificar que se abre Activity_chef después de clicar en ajustes
+        //Clicar opción Gestión servicio ofrecido del menú
+        onView(withId(R.id.imb_gestion_perfil_chef)).perform(click());
+        // Verificar que se abre Activity_chef después de clicar
         intended(hasComponent(Activity_chef.class.getName()));
         // Obtener la instancia de Activity_chef
         actChef = ((Activity_chef)UtilsTests.getActivityInstance(Activity_chef.class));
