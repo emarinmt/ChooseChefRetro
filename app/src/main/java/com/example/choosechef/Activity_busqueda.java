@@ -60,6 +60,10 @@ public class Activity_busqueda extends AppCompatActivity {
         recuperarProvincias();
 
     }
+
+    /**
+     * Método para consultar al servidor, todas las provincias que tengan Chef
+     */
     public void recuperarProvincias(){
         Context context = this; // Obtener el contexto de la actividad (this)
         // Compruebe el estado de la conexión de red

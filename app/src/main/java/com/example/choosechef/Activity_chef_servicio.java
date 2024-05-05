@@ -20,7 +20,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 /**
- * Clase chef.
+ * Clase chef servicio
  * Permite rellenar el perfil del chef, ubicación, tipo de comida, tipo de servicio y descripción.
  */
 public class Activity_chef_servicio extends AppCompatActivity {
@@ -223,7 +223,6 @@ public class Activity_chef_servicio extends AppCompatActivity {
             call.enqueue(new Callback<String>() { // Ejecutar la llamada de manera asíncrona
                 /**
                  * Método invocado cuando se recibe una respuesta de la solicitud HTTP
-                 *
                  * @param call     llamada que generó la respuesta
                  * @param response la respuesta recibida del servidor
                  */
@@ -241,7 +240,6 @@ public class Activity_chef_servicio extends AppCompatActivity {
 
                 /**
                  * Método invocado cuando ocurre un error durante la ejecución de la llamada HTTP
-                 *
                  * @param call la llamada que generó el error
                  * @param t    la excepción que ocurrió
                  */

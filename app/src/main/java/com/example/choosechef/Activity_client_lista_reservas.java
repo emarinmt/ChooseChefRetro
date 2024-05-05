@@ -23,7 +23,7 @@ import retrofit2.Retrofit;
 
 /**
  * Clase cliente lista de reservas
- * Muestra una lista de las reseñas del usuario
+ * Muestra una lista de las reseñas del usuario cliente
  */
 public class Activity_client_lista_reservas extends AppCompatActivity {
     private boolean contentSuccessful = false; // Variable para rastrear el estado de la muestra del listado
