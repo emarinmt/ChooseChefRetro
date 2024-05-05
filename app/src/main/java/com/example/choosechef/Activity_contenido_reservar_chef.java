@@ -185,12 +185,14 @@ public class Activity_contenido_reservar_chef extends AppCompatActivity {
                     reservaSuccessful = true;
                     // String responseBody = response.body();
                     Utils.showToastSecond(Activity_contenido_reservar_chef.this, context,"Reserva correcta!");
+                    Utils.showToast(Activity_contenido_reservar_chef.this, "Reserva correcta!");
                     Log.d(TAG, "Reserva creada correctamente");
                     //volvemos a pantalla anterior
-                    Utils.gotoActivity(Activity_contenido_reservar_chef.this, Activity_contenido_chef_ampliado.class);
+                    Utils.gotoActivity(Activity_contenido_reservar_chef.this, Activity_contenido.class);
                 } else {
                     reservaSuccessful = false;
                     Utils.showToastSecond(Activity_contenido_reservar_chef.this, context,"Error al crear la reserva");
+                    Utils.showToast(Activity_contenido_reservar_chef.this, "Error al crear la reserva");
                 }
             }
 
@@ -276,12 +278,6 @@ public class Activity_contenido_reservar_chef extends AppCompatActivity {
         this.fechaStr = fecha;
     }
 
-    /*
-    PARA MAS ADELANTE, NECESITARIAMOS UN MÉTODO QUE NOS DEVUELVA LAS RESERVAS DE ESE CHEF
-    PARA PASAR TEST CON FECHA OCUPADA O LIBRE Y PARA QUE LUEGO LAS GESTIONE EL ADMIN
-    private void obtenerFechasOcupadasDelChef(String chefUsuario) {
-    }
-    */
 
 }
 
