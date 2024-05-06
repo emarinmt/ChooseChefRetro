@@ -21,10 +21,8 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-
 /**
  * Para realizar los tests referentes a la modificación de servicios del chef
- * CORRESPONDERIA A LA CLASE ACTIVITY_CHEF
  */
 @RunWith(AndroidJUnit4.class)
 public class Test_AjustesChefReservas {
@@ -47,8 +45,8 @@ public class Test_AjustesChefReservas {
         UtilsTests.espera(10000);
         //Clicar opción gestión reservas del menú
         onView(withId(R.id.imb_gestion_reservas)).perform(click());
-        // Verificar que se abre Activity_chef después de clicar
-        intended(hasComponent(Activity_chef_servicio.class.getName()));
+        // Verificar que se abre Activity_chef_lista_reservas después de clicar
+        intended(hasComponent(Activity_chef_lista_reservas.class.getName()));
         // Obtener la instancia de Activity_chef
         actChef = ((Activity_chef_lista_reservas)UtilsTests.getActivityInstance(Activity_chef_lista_reservas.class));
     }
@@ -83,7 +81,7 @@ public class Test_AjustesChefReservas {
     public void testRecuperarReservasFiltrados() {
         UtilsTests.espera(20000);
         //actChef.buscar(2023);
-        onView(withId(R.id.edt_fecha_filtro)).perform(replaceText("2023"));
+        onView(withId(R.id.edt_fecha_filtro)).perform(replaceText("2024"));
         onView(withId(R.id.btn_lupa3)).perform(click());
         UtilsTests.espera(20000);
         // Verificar que contentSuccessful es true

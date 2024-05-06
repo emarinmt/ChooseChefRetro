@@ -21,11 +21,8 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-
-
 /**
  * Para realizar los tests referentes a la modificación de servicios del chef
- * CORRESPONDERIA A LA CLASE ACTIVITY_CHEF
  */
 @RunWith(AndroidJUnit4.class)
 public class Test_AjustesChefServicio {
