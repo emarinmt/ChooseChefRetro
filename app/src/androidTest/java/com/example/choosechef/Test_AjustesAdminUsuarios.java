@@ -27,7 +27,7 @@ import static org.junit.Assert.assertTrue;
  * CORRESPONDERIA A LA CLASE ACTIVITY_ADMIN
  */
 @RunWith(AndroidJUnit4.class)
-public class Test_AjustesAdmin {
+public class Test_AjustesAdminUsuarios {
 
     @Rule
     public IntentsTestRule<Activity_login> activityRule = new IntentsTestRule<>(Activity_login.class);
@@ -45,7 +45,9 @@ public class Test_AjustesAdmin {
         UtilsTests.espera(10000);
         onView(withId(R.id.btn_ajustes)).perform(click());
         UtilsTests.espera(10000);
-        // Verificar que se abre Activity_admin_lista_usuarios después de clicar en ajustes
+        //Clicar opción Gestión usuarios ofrecido del menú
+        onView(withId(R.id.imb_gestion_usuarios)).perform(click());
+        // Verificar que se abre Activity_admin_lista_usuarios después de clicar
         intended(hasComponent(Activity_admin_lista_usuarios.class.getName()));
         // Obtener la instancia de Activity_admin_lista_usuarios
         actAdmin = ((Activity_admin_lista_usuarios) UtilsTests.getActivityInstance(Activity_admin_lista_usuarios.class));
@@ -107,12 +109,13 @@ public class Test_AjustesAdmin {
         assertTrue(actAdmin.isContentSuccessful());
     }
 
-    // PROBANDO FILTRO  (PARA SIGUIENTE TEA IMPLEMENTAR BOTON)
     // Recuperación de lista de usuarios correcta con filtro
     @Test
     public void testRecuperarUsersFiltrados() {
         UtilsTests.espera(20000);
-        actAdmin.buscar("test");
+        //actAdmin.buscar("test");
+        onView(withId(R.id.edt_buscar_usuario)).perform(replaceText("test"));
+        onView(withId(R.id.btn_lupa2)).perform(click());
         UtilsTests.espera(20000);
         // Verificar que contentSuccessful es true
         assertTrue(actAdmin.isContentSuccessful());

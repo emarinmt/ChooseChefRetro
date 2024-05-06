@@ -13,6 +13,7 @@ import org.junit.runner.RunWith;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
@@ -60,7 +61,7 @@ public class Test_AjustesClient {
         assertTrue(actClient.isContentSuccessful());
     }
 
-    // Recuperación de reservas incorrecta (hay conexión)
+    // Recuperación de reservas incorrecta (no hay conexión)
     @Test
     public void testRecuperarReservaWhenNoNetwork() {
         // Simular no tener conexión de red (configurando el estado de red en falso)
@@ -73,12 +74,13 @@ public class Test_AjustesClient {
         Utils.setNetworkAvailable(true);
     }
 
-    // FILTRO  (PARA SIGUIENTE TEA IMPLEMENTAR BOTON)
     // Recuperación de lista de reservas correcta con filtro
     @Test
     public void testRecuperarReservasFiltrados() {
         UtilsTests.espera(20000);
-        actClient.buscar(2023);
+        //actClient.buscar(2023);
+        onView(withId(R.id.edt_fecha_filtro)).perform(replaceText("2023"));
+        onView(withId(R.id.btn_lupa3)).perform(click());
         UtilsTests.espera(20000);
         // Verificar que contentSuccessful es true
         assertTrue(actClient.isContentSuccessful());

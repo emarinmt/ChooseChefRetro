@@ -17,6 +17,7 @@ import org.junit.runner.RunWith;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 
+import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.action.ViewActions.clearText;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
@@ -34,7 +35,7 @@ import static org.junit.Assert.assertTrue;
  * CORRESPONDERIA A LA CLASE ACTIVITY_USER_AMPLIADO
  */
 @RunWith(AndroidJUnit4.class)
-public class Test_AdminAmpliado {
+public class Test_AdminUsusariosAmpliado {
 // PROBANDO PARA HACER EL TEST DE ELIMINAR, NO ACABADA
     @Rule
     public IntentsTestRule<Activity_login> activityRule = new IntentsTestRule<>(Activity_login.class);
@@ -53,19 +54,13 @@ public class Test_AdminAmpliado {
         UtilsTests.espera(10000);
         onView(withId(R.id.btn_ajustes)).perform(click());
         UtilsTests.espera(10000);
-        // Verificar que se abre Activity_admin_lista_usuarios después de clicar en ajustes
+        //Clicar opción Gestión usuarios ofrecido del menú
+        onView(withId(R.id.imb_gestion_usuarios)).perform(click());
+        // Verificar que se abre Activity_admin_lista_usuarios después de clicar
         intended(hasComponent(Activity_admin_lista_usuarios.class.getName()));
         // Obtener la instancia de Activity_admin_lista_usuarios
         actAdmin = ((Activity_admin_lista_usuarios) UtilsTests.getActivityInstance(Activity_admin_lista_usuarios.class));
         initialSize = actAdmin.userList.size();
-        /* Buscar y hacer clic en un usuario específico en la lista
-        Clicaremos en aquellos usuarios cucyo nombre empiezan por test
-        ya que son los creados en los test y no hay problema en eliminarlos
-        NO SE PUEDE IMPLEMENTAR DEBIDO AL EMULADOR, NO PERMITE ANIMACIONES, POR LO TANTO
-        NO PODEMOS HACER SCROLL. SI EL NOMBRE ESTA EN LA PANTALLA SI SE CLICA
-        //String nombreUsuario = "4"; // Nombre del usuario deseado (parcial)
-        //clickOnItemWithText(nombreUsuario);
-         */
 
     }
 
@@ -139,7 +134,9 @@ public class Test_AdminAmpliado {
     @Test
     public void testDeleteUserValid() {
         // Filtramos los usuarios
-        actAdmin.buscar("test");
+        //actAdmin.buscar("test");
+        onView(withId(R.id.edt_buscar_usuario)).perform(replaceText("test"));
+        onView(withId(R.id.btn_lupa2)).perform(click());
         UtilsTests.espera(10000);
         // Hacer clic en el SEGUNDO elemento de la lista (HAY UN ERROR CON EL PRIMERO, NO EXISTE)
         // El usuario Test Repetido lo usa Laura para sus tests, cambiara el nombre

@@ -30,7 +30,7 @@ import androidx.test.espresso.contrib.RecyclerViewActions;
  * CORRESPONDERIA A LA CLASE ACTIVITY_RESERVA_AMPLIADO (VALORAR RESERVAS)
  */
 @RunWith(AndroidJUnit4.class)
-public class Test_ClientAmpliado {
+public class Test_AjustesClientAmpliado {
     @Rule
     public IntentsTestRule<Activity_login> activityRule = new IntentsTestRule<>(Activity_login.class);
     private Activity_client_reserva_ampliado clientAmpliado;

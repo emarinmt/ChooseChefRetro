@@ -13,11 +13,11 @@ import org.junit.runner.RunWith;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -45,7 +45,7 @@ public class Test_AjustesChefReservas {
         UtilsTests.espera(10000);
         onView(withId(R.id.btn_ajustes)).perform(click());
         UtilsTests.espera(10000);
-        //Clicar opción Gestión servicio ofrecido del menú
+        //Clicar opción gestión reservas del menú
         onView(withId(R.id.imb_gestion_reservas)).perform(click());
         // Verificar que se abre Activity_chef después de clicar
         intended(hasComponent(Activity_chef_servicio.class.getName()));
@@ -53,36 +53,21 @@ public class Test_AjustesChefReservas {
         actChef = ((Activity_chef_lista_reservas)UtilsTests.getActivityInstance(Activity_chef_lista_reservas.class));
     }
 
-    // Modificación opciones chef correcta
+    // Recuperación de reservas  correcta (hay conexión)
     @Test
-    public void testOptionsChefsSuccess() {
-        // Definir criterios de modificación
-        String provincia = "Barcelona";
-        String comida = "Italiana";
-        String servicio = "Chef a domicilio";
-
-        // Seleccionar un valor en el Spinner de provincias
-        onView(withId(R.id.spinner_provincias)).perform(click()); // Abrir el Spinner
-        onView(withText("Barcelona")).perform(click()); // Seleccionar un valor específico
-
-        // Seleccionar un valor en el Spinner de tipo de comida
-        onView(withId(R.id.spinner_tipo_comida)).perform(click()); // Abrir el Spinner
-        onView(withText("Italiana")).perform(click()); // Seleccionar un valor específico
-
-        // Seleccionar un valor en el Spinner de servicios
-        onView(withId(R.id.spinner_servicios)).perform(click()); // Abrir el Spinner
-        onView(withText("Chef a domicilio")).perform(click()); // Seleccionar un valor específico
-
-        onView(withId(R.id.ibtn_confirmar)).perform(click());
+    public void testRecuperarReservaWithNetwork() {
+        // Simular tener conexión de red (configurando el estado de red en true)
+        Utils.setNetworkAvailable(true);
         UtilsTests.espera(10000);
-
-        // Verificar si la modificación fue exitosa
-        //assertTrue(actChef.isModifySuccessful());
+        actChef.recuperarDatos();
+        UtilsTests.espera(10000);
+        // Verificar que contentSuccessful es true
+        assertTrue(actChef.isContentSuccessful());
     }
 
-    // Recuperación de datos de chef incorrecta (no hay conexión)
+    // Recuperación de reservas incorrecta (no hay conexión)
     @Test
-    public void testRecuperarChefsWhenNoNetwork() {
+    public void testRecuperarReservaWhenNoNetwork() {
         // Simular no tener conexión de red (configurando el estado de red en falso)
         Utils.setNetworkAvailable(false);
         UtilsTests.espera(10000);
@@ -92,5 +77,18 @@ public class Test_AjustesChefReservas {
         assertFalse(actChef.isContentSuccessful());
         Utils.setNetworkAvailable(true);
     }
+
+    // Recuperación de lista de reservas correcta con filtro
+    @Test
+    public void testRecuperarReservasFiltrados() {
+        UtilsTests.espera(20000);
+        //actChef.buscar(2023);
+        onView(withId(R.id.edt_fecha_filtro)).perform(replaceText("2023"));
+        onView(withId(R.id.btn_lupa3)).perform(click());
+        UtilsTests.espera(20000);
+        // Verificar que contentSuccessful es true
+        assertTrue(actChef.isContentSuccessful());
+    }
+
 
 }
