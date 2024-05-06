@@ -21,9 +21,9 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 /**
- * Clase reserva ampliado
- * Muestra todas las reservas del usuario logeado
- * Si la fecha de la reserva es igual o anterior a la fecha actual deja introducir una reseña ( valoración y comentario)
+ * Clase reserva ampliado administrador
+ * Muestra todas las reservas de la app
+ * Permite modificar o borrar una reseña
  */
 public class Activity_admin_reserva_ampliado extends AppCompatActivity {
     private boolean contentSuccessful = false; // Variable para rastrear el estado de la muestra de la reserva
@@ -82,22 +82,6 @@ public class Activity_admin_reserva_ampliado extends AppCompatActivity {
 
         valoracion.setEnabled(true);
         comentario.setEnabled(true);
-       // fechaPosterior();
-    }
-
-    /**
-     * Método para comprobar si la fecha es anterior o igual a hoy permite introducir la reseña ( valoraicón y comentario)
-     */
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public void fechaPosterior(){
-        //Si la fecha de la reserva es hoy o anterior se habilitan estos campos para escribir la reseña
-        if(Utils.esFechaHoyAnterior(reserva.getFecha())){
-            valoracion.setEnabled(true);
-            comentario.setEnabled(true);
-            Utils.showToast(Activity_admin_reserva_ampliado.this, "TRUE Introduce tu reseña!"+ reserva.getFecha());
-        }else{
-            Utils.showToast(Activity_admin_reserva_ampliado.this, "FALSE No puedes introducir la reseña todavia"+reserva.getFecha());
-        }
     }
 
     /**
@@ -125,7 +109,7 @@ public class Activity_admin_reserva_ampliado extends AppCompatActivity {
     }
 
     /**
-     * Método para modificar la reserva en el servidor ( añadir valoración y comentario)
+     * Método para modificar la reserva en el servidor ( modificar valoración y comentario)
      * @param view La vista (Button) a la que se hizo clic.
      */
     public void editarReserva(View view){
@@ -143,7 +127,7 @@ public class Activity_admin_reserva_ampliado extends AppCompatActivity {
         reserva.setValoracion(valoracionInput);
         reserva.setComentario(comentarioInput);
 
-        // call HTTP client para modificar los datos de usuario
+        // call HTTP client para modificar los datos de la reserva
         Call<String> call = mfastMethods.modificar_reserva(reserva.getId(),reserva);
         call.enqueue(new Callback<String>() { // Ejecutar la llamada de manera asíncrona
             /**
@@ -155,7 +139,7 @@ public class Activity_admin_reserva_ampliado extends AppCompatActivity {
             public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
                 if (response.isSuccessful()) {
                     modifySuccessful = true;
-                    // String responseBody = response.body();
+
                     Utils.showToastSecond(Activity_admin_reserva_ampliado.this, context,"Modificación correcta!");
                     Utils.gotoActivity(Activity_admin_reserva_ampliado.this, Activity_admin_lista_reservas.class);
                 } else {
@@ -231,6 +215,14 @@ public class Activity_admin_reserva_ampliado extends AppCompatActivity {
     public void logout(View view){
         Utils.gotoActivity(Activity_admin_reserva_ampliado.this, MainActivity_inicio.class);
     }
+    /**
+     * Método para retroceder de pantalla
+     * Redirige al usuario a la pantalla anterior
+     * @param view La vista (Button) a la que se hizo clic.
+     */
+    public void atras(View view){
+        Utils.gotoActivity(Activity_admin_reserva_ampliado.this, Activity_admin_lista_reservas.class);
+    }
 
     /**
      * Método para test
@@ -248,7 +240,7 @@ public class Activity_admin_reserva_ampliado extends AppCompatActivity {
     }
     /**
      * Método para test
-     * @return devuelve un booleano en funcion de si ha ido bien la eliminación de usuario
+     * @return devuelve un booleano en funcion de si ha ido bien la eliminación de reserva
      */
     public boolean isDeleteSuccessful() {
         return deleteSuccessful;

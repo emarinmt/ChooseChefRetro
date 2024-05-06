@@ -22,7 +22,7 @@ public class Adapter_chef_contenido extends RecyclerView.Adapter<Adapter_chef_co
     private final List<User> data;
 
     /**
-     *Constructor de la clase Adapter_chef_contenido
+     *Constructor de la clase Adapter_chef
      * @param context contexto de la aplicación
      * @param data la lista de datos de tipo user que se utilizará para poblar el adaptador
      */
@@ -60,7 +60,6 @@ public class Adapter_chef_contenido extends RecyclerView.Adapter<Adapter_chef_co
         viewHolder.valoracion.setRating(user.getValoracion());
         viewHolder.valoracion.setEnabled(false);
 
-        //falta imagen
 
         // Manjear que al clicar un chef se muestre este ampliado
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {

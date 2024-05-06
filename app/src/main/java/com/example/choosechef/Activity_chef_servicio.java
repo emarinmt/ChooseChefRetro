@@ -20,8 +20,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 /**
- * Clase chef.
- * Gestiona las opciones propias del usuario chef.
+ * Clase chef servicio
  * Permite rellenar el perfil del chef, ubicación, tipo de comida, tipo de servicio y descripción.
  */
 public class Activity_chef_servicio extends AppCompatActivity {
@@ -73,7 +72,6 @@ public class Activity_chef_servicio extends AppCompatActivity {
 
         //Recupera datos del servidor para mostrarlos seleccionados en los spinners y la descripción
         recuperarDatos();
-
     }
 
     /**
@@ -82,6 +80,7 @@ public class Activity_chef_servicio extends AppCompatActivity {
     private void configurarSpinnerProvincia() {
         ArrayList<String> provinciasList = new ArrayList<>();
         provinciasList.add("Barcelona");
+        provinciasList.add("Baleares");
         provinciasList.add("Lleida");
         provinciasList.add("Tarragona");
         provinciasList.add("Madrid");
@@ -98,13 +97,15 @@ public class Activity_chef_servicio extends AppCompatActivity {
      */
     private void configurarSpinnerComida() {
         ArrayList<String> comidaList = new ArrayList<>();
-        comidaList.add("Italiana");
-        comidaList.add("Tailandesa");
-        comidaList.add("Japonesa");
-        comidaList.add("Mediterránea");
-        comidaList.add("Asiática");
         comidaList.add("Africana");
+        comidaList.add("Asiática");
+        comidaList.add("Barbacoa");
         comidaList.add("Coreana");
+        comidaList.add("Italiana");
+        comidaList.add("Japonesa");
+        comidaList.add("Mediterranea");
+        comidaList.add("Mexicana");
+        comidaList.add("Tailandesa");
 
         ArrayAdapter<String> adapterComida = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, comidaList);
         adapterComida.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -115,9 +116,9 @@ public class Activity_chef_servicio extends AppCompatActivity {
      */
     private void configurarSpinnerServicio() {
         ArrayList<String> servicioList = new ArrayList<>();
-        servicioList.add("Cátering a domicilio");
+        servicioList.add("Catering a domicilio");
         servicioList.add("Chef a domicilio");
-        servicioList.add("Cátering para evento");
+        servicioList.add("Catering para evento");
 
         ArrayAdapter<String> adapterServicio = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, servicioList);
         adapterServicio.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -222,7 +223,6 @@ public class Activity_chef_servicio extends AppCompatActivity {
             call.enqueue(new Callback<String>() { // Ejecutar la llamada de manera asíncrona
                 /**
                  * Método invocado cuando se recibe una respuesta de la solicitud HTTP
-                 *
                  * @param call     llamada que generó la respuesta
                  * @param response la respuesta recibida del servidor
                  */
@@ -232,7 +232,7 @@ public class Activity_chef_servicio extends AppCompatActivity {
                         modifySuccessful = true;
                         // String responseBody = response.body();
                         Utils.showToastSecond(Activity_chef_servicio.this,context, "Modificación correcta!");
-                        Utils.gotoActivity(Activity_chef_servicio.this, Activity_contenido.class);
+                        Utils.gotoActivity(Activity_chef_servicio.this, Activity_chef_menu.class);
                     } else {
                         Utils.showToastSecond(Activity_chef_servicio.this, context,"Error al modificar usuario");
                     }
@@ -240,7 +240,6 @@ public class Activity_chef_servicio extends AppCompatActivity {
 
                 /**
                  * Método invocado cuando ocurre un error durante la ejecución de la llamada HTTP
-                 *
                  * @param call la llamada que generó el error
                  * @param t    la excepción que ocurrió
                  */

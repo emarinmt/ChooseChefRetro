@@ -17,8 +17,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 /**
- * Clase usuario ampliado
- * Actividad ara gestionar la información del usuario ampliada,
+ * Clase usuario ampliado administrador
+ * Actividad para gestionar la información del usuario ampliada,
  * a esta pantalla acedera el administrador para ver, modificar o borrar toda la info de los usuarios
  */
 public class Activity_admin_usuario_ampliado extends AppCompatActivity {
@@ -38,6 +38,7 @@ public class Activity_admin_usuario_ampliado extends AppCompatActivity {
     private EditText tipoComidaUsuario;
     private EditText tipoServicioUsuario;
     private EditText valoracionUsuario;
+
     //Variable para recibir información de la pantalla anterior
     public Intent intent;
     // Variables para conectar con la API
@@ -85,7 +86,6 @@ public class Activity_admin_usuario_ampliado extends AppCompatActivity {
         camposHabilitados = false;
 
         habilitarCampos(false);
-
     }
 
     /**
@@ -121,7 +121,6 @@ public class Activity_admin_usuario_ampliado extends AppCompatActivity {
             // Si no se recibió información del usuario, la carga de contenido falló
             contentSuccessful = false;
         }
-
     }
 
     /**
@@ -190,6 +189,11 @@ public class Activity_admin_usuario_ampliado extends AppCompatActivity {
         }
     }
 
+    /**
+     * Método para modificar los datos del usuario
+     * Llama al método para modificar los datos en el servidor
+     * @param user usuario a modificar
+     */
     public void modificarDatos(User user){
         Context context = this; // Obtener el contexto de la actividad (this)
         // call HTTP client para modificar los datos de usuario
@@ -282,6 +286,14 @@ public class Activity_admin_usuario_ampliado extends AppCompatActivity {
     public void logout(View view){
         Utils.gotoActivity(Activity_admin_usuario_ampliado.this, MainActivity_inicio.class);
     }
+    /**
+     * Método para retroceder de pantalla
+     * Redirige al usuario a la pantalla anterior
+     * @param view La vista (Button) a la que se hizo clic.
+     */
+    public void atras(View view){
+        Utils.gotoActivity(Activity_admin_usuario_ampliado.this, Activity_admin_lista_usuarios.class);
+    }
 
     /**
      * Método para test
@@ -312,6 +324,4 @@ public class Activity_admin_usuario_ampliado extends AppCompatActivity {
     public String getDescUsuario() {
         return descripUsuario.getText().toString(); // Obtener el texto del EditText Descripcion
     }
-
-
 }

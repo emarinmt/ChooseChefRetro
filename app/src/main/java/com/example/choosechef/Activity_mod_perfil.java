@@ -23,7 +23,6 @@ import retrofit2.Retrofit;
  * Modificada para utilizar el token y
  * la clase User como obtención de datos para modificar y enviar al servidor
  */
-
 public class Activity_mod_perfil extends AppCompatActivity {
     private boolean modifySuccessful = false; // Variable para rastrear el estado de la modificación
     private final String TAG = Activity_mod_perfil.class.getSimpleName();
@@ -204,20 +203,6 @@ public class Activity_mod_perfil extends AppCompatActivity {
             return false;
         }
         return true;
-
-        /*
-        * CREO QUE NO ES NECESARIO
-        * Preparado para futura utilización, de momento no se comprueba que venga texto
-        * Comprueba si el campo dirección tiene texto
-        * if ((networkInfo != null) && (queryAdressString.length() != 0)) {
-        * }
-        * Comprueba si el campo teléfono tiene texto
-        * if ((networkInfo != null) && (queryPhoneString.length() != 0)) {
-        * }
-        * Comprueba si el check está activo
-        * if ((networkInfo != null) && (mChangePass.isChecked())) {
-        *}
-        */
     }
 
     /**

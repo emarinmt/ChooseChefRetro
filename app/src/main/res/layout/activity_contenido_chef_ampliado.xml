@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/fondo1"
-    tools:context=".Activity_contenido_chef_ampliado" >
+    android:background="@drawable/fondo1">
 
     <TextView
         android:id="@+id/edt_telefono_chef"
@@ -20,7 +19,7 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.625"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ibtn_contacto" />
 
@@ -134,7 +133,7 @@
         android:onClick="reservar"
         app:layout_constraintBottom_toTopOf="@+id/ibtn_contacto"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.746"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/descripcion_ampliado"
         app:layout_constraintVertical_bias="0.55"
@@ -152,7 +151,7 @@
         android:onClick="contactar"
         app:layout_constraintBottom_toTopOf="@+id/edt_telefono_chef"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.745"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ibtn_reservar"
         app:srcCompat="@drawable/boton_contactar"
@@ -171,6 +170,24 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@android:drawable/ic_lock_power_off"
+        app:tint="@color/white"
+        tools:ignore="ImageContrastCheck" />
+
+    <ImageButton
+        android:id="@+id/btn_atras"
+        android:layout_width="68dp"
+        android:layout_height="56dp"
+        android:background="@drawable/fondo_boton_redondo"
+        android:contentDescription="@string/boton_modperfil"
+        android:onClick="atras"
+        android:tintMode="src_in"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.069"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.865"
+        app:srcCompat="@android:drawable/ic_menu_revert"
         app:tint="@color/white"
         tools:ignore="ImageContrastCheck" />
 

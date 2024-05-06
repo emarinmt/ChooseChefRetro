@@ -19,8 +19,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 /**
- * Clase administrador.
- * Gestiona las opciones del usuario administrador
+ * Clase administrador lista de usuarios
  * Muestra una lista de todos los usuarios de la app
  */
 
@@ -32,7 +31,7 @@ public class Activity_admin_lista_usuarios extends AppCompatActivity {
     RecyclerView recyclerView;
     Adapter_user adapter;
     List<User> userList = new ArrayList<>(); // Lista para almacenar los usuarios
-    List<User> originalUserList = new ArrayList<>(); // Lista original para almacenar los usuarios
+    List<User> originalUserList = new ArrayList<>(); // Lista para almacenar los usuarios originales sin filtrar
 
     // Variables para conectar con la API
     FastMethods mfastMethods;
@@ -71,7 +70,6 @@ public class Activity_admin_lista_usuarios extends AppCompatActivity {
      */
     public void recuperarDatos(){
         userList.clear(); // Limpiar la lista actual
-        originalUserList.clear(); //Limpiar la lista original
         Context context = this; // Obtener el contexto de la actividad (this)
         // Compruebe el estado de la conexión de red
         if (!Utils.isNetworkAvailable(this)) {
@@ -79,7 +77,7 @@ public class Activity_admin_lista_usuarios extends AppCompatActivity {
             contentSuccessful = false;
             return;
         }
-        // Call HTTP client para recuperar la información del usuario
+        // Call HTTP client para recuperar la información de los usuarios
         Call<List<User>> call = mfastMethods.recuperar_todos_usuarios();
         call.enqueue(new Callback<List<User>>() { // Ejecutar la llamada de manera asíncrona
             /**
@@ -93,7 +91,8 @@ public class Activity_admin_lista_usuarios extends AppCompatActivity {
                     contentSuccessful = true;
                     userList.clear(); // Limpiar la lista actual
                     userList.addAll(response.body()); // Agregar todos los usuarios recuperados
-                    //Hacer una copia de la lista original sin filtrar
+
+                    //Hacer una copia de la lista original
                     originalUserList.clear();
                     originalUserList.addAll(userList);
 
@@ -127,6 +126,14 @@ public class Activity_admin_lista_usuarios extends AppCompatActivity {
     public void logout(View view){
         Utils.gotoActivity(Activity_admin_lista_usuarios.this, MainActivity_inicio.class);
     }
+    /**
+     * Método para retroceder de pantalla
+     * Redirige al usuario a la pantalla anterior
+     * @param view La vista (Button) a la que se hizo clic.
+     */
+    public void atras(View view){
+        Utils.gotoActivity(Activity_admin_lista_usuarios.this, Activity_admin_menu.class);
+    }
 
     /**
      * Método para test
@@ -153,23 +160,24 @@ public class Activity_admin_lista_usuarios extends AppCompatActivity {
      * Método para filtrar la lista de usuarios localmente por el nombre de usuario.
      * @param username a filtrar
      */
+    @SuppressLint("NotifyDataSetChanged")
     public void buscar(String username) {
-        String searchText = username; // Texto de búsqueda (nombre de usuario a filtrar)
 
         // Filtrar userList localmente con el texto de búsqueda
-        List<User> filteredList = filterUsers(originalUserList, searchText);
+        List<User> filteredList = filterUsers(originalUserList, username);
 
         // Actualizar userList con la lista filtrada
         userList.clear();
         userList.addAll(filteredList);
 
         // Actualizar el adaptador en el hilo principal utilizando runOnUiThread()
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                adapter.notifyDataSetChanged(); // Notificar al adaptador que los datos han cambiado
-            }
+        runOnUiThread(() -> {
+            adapter.notifyDataSetChanged(); // Notificar al adaptador que los datos han cambiado
         });
+
+        if(userList.isEmpty()){
+            Utils.showToast(this, "No se encontraron usuarios con ese nombre");
+        }
 
         // Actualizar el estado de contentSuccessful basado en si se encontraron usuarios después del filtro
         contentSuccessful = !userList.isEmpty(); // Si la lista filtrada no está vacía, entonces el contenido fue exitoso
@@ -194,10 +202,7 @@ public class Activity_admin_lista_usuarios extends AppCompatActivity {
                 filteredList.add(user);
             }
         }
-
         return filteredList;
     }
-
-
 }
 

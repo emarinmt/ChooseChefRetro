@@ -52,7 +52,7 @@ public class Activity_contenido_reservar_chef extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         // Establece el diseño de la actividad.
         setContentView(R.layout.activity_contenido_reservar_chef);
-        Log.d(TAG, "Activity_contenido_reservar_chef onCreate()");
+        Log.d(TAG, "Activity_reservar onCreate()");
         contentSuccessful = false;
         //Inicializa variable
         calendario = findViewById(R.id.calendarView_reserva);
@@ -89,7 +89,6 @@ public class Activity_contenido_reservar_chef extends AppCompatActivity {
      * Método para obtener el usuario chef
      * @param intent string usuario chef
      */
-
     public void obtenerIntentChef(Intent intent){
         // Verificar si el Intent contiene un extra con clave "string"
         if (intent != null && intent.hasExtra("string")) {
@@ -108,7 +107,6 @@ public class Activity_contenido_reservar_chef extends AppCompatActivity {
     /**
      * Método para obtener el usuario cliente
      */
-
     public void recuperarDatosCliente(){
         // Compruebe el estado de la conexión de red
         if (!Utils.isNetworkAvailable(this)) {
@@ -123,7 +121,6 @@ public class Activity_contenido_reservar_chef extends AppCompatActivity {
              * @param call llamada que generó la respuesta
              * @param response la respuesta recibida del servidor
              */
-
             public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
                 if (response.isSuccessful()) {
                     user_logeado = response.body(); // Recibe los datos del usuario
@@ -138,12 +135,12 @@ public class Activity_contenido_reservar_chef extends AppCompatActivity {
                     }
                 }
             }
+
             /**
              *Método invocado cuando ocurre un error durante la ejecución de la llamada HTTP
              * @param call la llamada que generó el error
              * @param t la excepción que ocurrió
              */
-
             @Override
             public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
                 // Error en la llamada, muestra el mensaje de error y registra la excepción
@@ -188,12 +185,14 @@ public class Activity_contenido_reservar_chef extends AppCompatActivity {
                     reservaSuccessful = true;
                     // String responseBody = response.body();
                     Utils.showToastSecond(Activity_contenido_reservar_chef.this, context,"Reserva correcta!");
+                    Utils.showToast(Activity_contenido_reservar_chef.this, "Reserva correcta!");
                     Log.d(TAG, "Reserva creada correctamente");
                     //volvemos a pantalla anterior
-                    Utils.gotoActivity(Activity_contenido_reservar_chef.this, Activity_contenido_chef_ampliado.class);
+                    Utils.gotoActivity(Activity_contenido_reservar_chef.this, Activity_contenido.class);
                 } else {
                     reservaSuccessful = false;
                     Utils.showToastSecond(Activity_contenido_reservar_chef.this, context,"Error al crear la reserva");
+                    Utils.showToast(Activity_contenido_reservar_chef.this, "Error al crear la reserva");
                 }
             }
 
@@ -202,7 +201,6 @@ public class Activity_contenido_reservar_chef extends AppCompatActivity {
              * @param call la llamada que generó el error
              * @param t la excepción que ocurrió
              */
-
             @Override
             public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
                 // Error en la llamada, muestra el mensaje de error y registra la excepción
@@ -249,6 +247,14 @@ public class Activity_contenido_reservar_chef extends AppCompatActivity {
         Utils.gotoActivity(Activity_contenido_reservar_chef.this, MainActivity_inicio.class);
     }
     /**
+     * Método para retroceder de pantalla
+     * Redirige al usuario a la pantalla anterior
+     * @param view La vista (Button) a la que se hizo clic.
+     */
+    public void atras(View view){
+        Utils.gotoActivity(Activity_contenido_reservar_chef.this, Activity_contenido.class);
+    }
+    /**
      * Método para test
      * @return devuelve un booleano en función de si ha ido bien la muestra de contenido.
      */
@@ -272,12 +278,6 @@ public class Activity_contenido_reservar_chef extends AppCompatActivity {
         this.fechaStr = fecha;
     }
 
-    /*
-    PARA MAS ADELANTE, NECESITARIAMOS UN MÉTODO QUE NOS DEVUELVA LAS RESERVAS DE ESE CHEF
-    PARA PASAR TEST CON FECHA OCUPADA O LIBRE Y PARA QUE LUEGO LAS GESTIONE EL ADMIN
-    private void obtenerFechasOcupadasDelChef(String chefUsuario) {
-    }
-    */
 
 }
 

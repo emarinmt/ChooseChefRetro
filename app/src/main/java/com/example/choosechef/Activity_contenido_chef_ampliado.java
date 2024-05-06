@@ -24,7 +24,7 @@ import retrofit2.Retrofit;
 
 /**
  * Clase chef ampliado.
- * Muestra la información de un chef ( Nombre, ubicación, comida, servicio y descripción)
+ * Muestra la información de un chef ( Nombre, ubicación, comida, servicio, descripción y reseñas)
  * Botón reservar lleva a otra pantalla donde seleccionar la fecha de la reserva
  * Botón contacto muestra el teléfono del chef
  */
@@ -114,6 +114,16 @@ public class Activity_contenido_chef_ampliado extends AppCompatActivity {
     }
 
     /**
+     * Método para retroceder de pantalla
+     * Redirige al usuario a la pantalla anterior
+     * @param view La vista (Button) a la que se hizo clic.
+     */
+    public void atras(View view){
+        Utils.gotoActivity(Activity_contenido_chef_ampliado.this, Activity_contenido.class);
+    }
+
+
+    /**
      * Método para recibir la información del usuario de la pantalla anterior
      * @param intent contiene la información del usuario de la pantalla anterior
      */
@@ -125,7 +135,7 @@ public class Activity_contenido_chef_ampliado extends AppCompatActivity {
             // Usar el objeto User en esta actividad
             if (user != null) {
                 contentSuccessful = true;
-                Log.d("Activity_contenido_chef_ampliado", "contentSuccessful: " + contentSuccessful);
+                Log.d("Activity_chef_ampliado", "contentSuccessful: " + contentSuccessful);
                 //Mostrar información en pantalla
                 nombreChefamp.setText(user.getNombre());
                 tipoChefamp.setText(user.getComida());
@@ -164,7 +174,7 @@ public class Activity_contenido_chef_ampliado extends AppCompatActivity {
             contentSuccessful = false;
             return;
         }
-        //NECESITAMOS METODO NUEVO QUE RECUPERE TODAS LAS RESERVAS DEL CHEF-----------------------------------------------------------
+
         // Call HTTP client para recuperar la información del usuario
         Call<List<Reserva>> call = mfastMethods.recuperar_reseñas_chef(user_chef);
         call.enqueue(new Callback<List<Reserva>>() { // Ejecutar la llamada de manera asíncrona

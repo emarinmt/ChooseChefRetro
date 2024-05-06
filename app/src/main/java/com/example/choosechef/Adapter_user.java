@@ -14,7 +14,6 @@ import java.util.List;
  * Clase adaptador user.
  * Para gestionar el recycler view de usuarios (pantalla administrador)
  */
-
 public class Adapter_user extends RecyclerView.Adapter<Adapter_user.ViewHolder> {
 
     private final LayoutInflater layoutInflater;
@@ -29,6 +28,7 @@ public class Adapter_user extends RecyclerView.Adapter<Adapter_user.ViewHolder> 
         this.layoutInflater = LayoutInflater.from(context);
         this.data = data;
     }
+
     /**
      *Crea y devuelve una nueva instancia de ViewHolder
      * @param viewGroup ViewGroup al cual se añadira la nueva vista después de que se haya enlazado a una posición del adaptador
@@ -41,6 +41,7 @@ public class Adapter_user extends RecyclerView.Adapter<Adapter_user.ViewHolder> 
         View view = layoutInflater.inflate(R.layout.custom_view_card_users_admin,viewGroup,false);
         return new ViewHolder(view);
     }
+
     /**
      *Actualiza el ViewHolder proporcionado para representar el contenido del elemento en la posición dada en el conjunto de datos
      * @param viewHolder El ViewHolder que se debe actualizar para representar el contenido del elemento en la posición dada en el conjunto de datos.
@@ -68,6 +69,7 @@ public class Adapter_user extends RecyclerView.Adapter<Adapter_user.ViewHolder> 
             }
         });
     }
+
     /**
      * Método para contar el total de elementos en el conjunto de datos
      * @return devuelve el número total de elementos en el conjunto de datos

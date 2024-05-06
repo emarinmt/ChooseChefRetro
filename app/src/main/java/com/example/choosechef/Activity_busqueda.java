@@ -60,6 +60,10 @@ public class Activity_busqueda extends AppCompatActivity {
         recuperarProvincias();
 
     }
+
+    /**
+     * Método para consultar al servidor, todas las provincias que tengan Chef
+     */
     public void recuperarProvincias(){
         Context context = this; // Obtener el contexto de la actividad (this)
         // Compruebe el estado de la conexión de red
@@ -123,13 +127,15 @@ public class Activity_busqueda extends AppCompatActivity {
      */
     private void configurarSpinnerComida() {
         ArrayList<String> comidaList = new ArrayList<>();
-        comidaList.add("Italiana");
-        comidaList.add("Tailandesa");
-        comidaList.add("Japonesa");
-        comidaList.add("Mediterránea");
-        comidaList.add("Asiática");
         comidaList.add("Africana");
+        comidaList.add("Asiática");
+        comidaList.add("Barbacoa");
         comidaList.add("Coreana");
+        comidaList.add("Italiana");
+        comidaList.add("Japonesa");
+        comidaList.add("Mediterranea");
+        comidaList.add("Mexicana");
+        comidaList.add("Tailandesa");
 
         ArrayAdapter<String> adapterComida = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, comidaList);
         adapterComida.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -141,9 +147,9 @@ public class Activity_busqueda extends AppCompatActivity {
      */
     private void configurarSpinnerServicio() {
         ArrayList<String> servicioList = new ArrayList<>();
-        servicioList.add("Cátering a domicilio");
+        servicioList.add("Catering a domicilio");
         servicioList.add("Chef a domicilio");
-        servicioList.add("Cátering para evento");
+        servicioList.add("Catering para evento");
 
         ArrayAdapter<String> adapterServicio = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, servicioList);
         adapterServicio.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

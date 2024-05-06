@@ -35,10 +35,9 @@
 
     <ImageButton
         android:id="@+id/btn_logout_user"
-        tools:ignore="ImageContrastCheck"
         android:layout_width="68dp"
         android:layout_height="56dp"
-        android:layout_marginBottom="76dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/fondo_boton_redondo_logout"
         android:contentDescription="@string/boton_modperfil"
         android:onClick="logout"
@@ -48,6 +47,25 @@
         app:layout_constraintHorizontal_bias="0.046"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@android:drawable/ic_lock_power_off"
-        app:tint="@color/white" />
+        app:tint="@color/white"
+        tools:ignore="ImageContrastCheck" />
+
+    <ImageButton
+        android:id="@+id/btn_atras"
+        android:layout_width="68dp"
+        android:layout_height="56dp"
+        android:background="@drawable/fondo_boton_redondo"
+        android:contentDescription="@string/boton_modperfil"
+        android:onClick="atras"
+        android:tintMode="src_in"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.046"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.871"
+        app:srcCompat="@android:drawable/ic_menu_revert"
+        app:tint="@color/white"
+        tools:ignore="ImageContrastCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

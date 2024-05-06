@@ -19,7 +19,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 /**
- * Clase reserva ampliado
+ * Clase reserva ampliado de cliente
  * Muestra todas las reservas del usuario logeado
  * Si la fecha de la reserva es igual o anterior a la fecha actual deja introducir una reseña ( valoración y comentario)
  */
@@ -73,8 +73,6 @@ public class Activity_client_reserva_ampliado extends AppCompatActivity {
         //Recuperar datos de la reserva de la pantalla anterior
         obtenerIntent(intent);
 
-
-        Utils.showToast(Activity_client_reserva_ampliado.this, "FECHA."+ reserva.getFecha());
         fechaPosterior();
     }
 
@@ -111,7 +109,6 @@ public class Activity_client_reserva_ampliado extends AppCompatActivity {
                 fecha_reserva.setText(reserva.getFecha());
                 comentario.setText(reserva.getComentario());
                 valoracion.setRating(reserva.getValoracion());
-                Utils.showToast(Activity_client_reserva_ampliado.this, "fecha!"+ reserva.getFecha());
             }
             contentSuccessful = false;
         }
@@ -178,6 +175,15 @@ public class Activity_client_reserva_ampliado extends AppCompatActivity {
      */
     public void logout(View view){
         Utils.gotoActivity(Activity_client_reserva_ampliado.this, MainActivity_inicio.class);
+    }
+
+    /**
+     * Método para retroceder de pantalla
+     * Redirige al usuario a la pantalla anterior
+     * @param view La vista (Button) a la que se hizo clic.
+     */
+    public void atras(View view){
+        Utils.gotoActivity(Activity_client_reserva_ampliado.this, Activity_client_lista_reservas.class);
     }
 
     /**

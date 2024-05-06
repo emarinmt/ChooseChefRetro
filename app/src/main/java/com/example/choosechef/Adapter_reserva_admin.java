@@ -13,16 +13,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 /**
- * Clase adaptador reserva chef
- * Para gestionar el recycler view de reservas (pantalla usuario cliente)
+ * Clase adaptador reserva administrador
+ * Para gestionar el recycler view de reservas (pantalla administrador)
  */
 
 public class Adapter_reserva_admin extends RecyclerView.Adapter<Adapter_reserva_admin.ViewHolder> {
 
     private final LayoutInflater layoutInflater;
     private final List<Reserva> data;
+
     /**
-     *Constructor de la clase Adapter_reserva_client
+     *Constructor de la clase Adapter_reserva
      * @param context contexto de la aplicación
      * @param data la lista de datos de tipo user que se utilizará para poblar el adaptador
      */
@@ -30,6 +31,7 @@ public class Adapter_reserva_admin extends RecyclerView.Adapter<Adapter_reserva_
         this.layoutInflater = LayoutInflater.from(context);
         this.data = data;
     }
+
     /**
      *Crea y devuelve una nueva instancia de ViewHolder
      * @param viewGroup ViewGroup al cual se añadira la nueva vista después de que se haya enlazado a una posición del adaptador
@@ -42,6 +44,7 @@ public class Adapter_reserva_admin extends RecyclerView.Adapter<Adapter_reserva_
         View view = layoutInflater.inflate(R.layout.custom_view_card_reservas_admin,viewGroup,false);
         return new Adapter_reserva_admin.ViewHolder(view);
     }
+
     /**
      *Actualiza el ViewHolder proporcionado para representar el contenido del elemento en la posición dada en el conjunto de datos
      * @param viewHolder El ViewHolder que se debe actualizar para representar el contenido del elemento en la posición dada en el conjunto de datos.
@@ -75,6 +78,7 @@ public class Adapter_reserva_admin extends RecyclerView.Adapter<Adapter_reserva_
             }
         });
     }
+
     /**
      * Método para contar el total de elementos en el conjunto de datos
      * @return devuelve el número total de elementos en el conjunto de datos
@@ -83,6 +87,7 @@ public class Adapter_reserva_admin extends RecyclerView.Adapter<Adapter_reserva_
     public int getItemCount() {
         return data.size();
     }
+
     /**
      * Clase interna estática que representa una vista de elemento en el RecyclerView.
      * Contiene referencias a las vistas individuales que componen el elemento de la lista.

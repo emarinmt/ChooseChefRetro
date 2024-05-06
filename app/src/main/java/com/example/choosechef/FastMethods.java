@@ -138,7 +138,7 @@ public interface FastMethods {
      * @return devuelve una lista con las reservas del usuario
      */
     @GET("reserva/listar/todas/")
-    Call<List<Reserva>>recuperar_reseñas_admin();
+    Call<List<Reserva>>recuperar_reservas_admin();
 
     /**
      * Método desarrollado por EVA,

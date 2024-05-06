@@ -190,4 +190,3 @@ public class Activity_registro extends AppCompatActivity {
         return registrationSuccessful;
     }
 }
-

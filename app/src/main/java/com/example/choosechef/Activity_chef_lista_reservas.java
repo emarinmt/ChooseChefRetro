@@ -23,10 +23,9 @@ import retrofit2.Retrofit;
 
 /**
  * Clase reservas chef
- * Gestiona las reservas del chef
- * Muestra una lista de las reseñas del usuario
+ * Muestra una lista de las reseñas del chef
+ * Permite filtrarlas por año
  */
-
 public class Activity_chef_lista_reservas extends AppCompatActivity {
     private boolean contentSuccessful = false; // Variable para rastrear el estado de la muestra del listado
     private final String TAG = Activity_chef_lista_reservas.class.getSimpleName();
@@ -35,7 +34,7 @@ public class Activity_chef_lista_reservas extends AppCompatActivity {
     RecyclerView recyclerView;
     Adapter_reserva_chef adapter;
     List<Reserva> reservasList = new ArrayList<>(); // Lista para almacenar las reservas
-    List<Reserva> originalReservasList = new ArrayList<>(); // Lista para almacenar las reservas original
+    List<Reserva> originalReservasList = new ArrayList<>(); // Lista para almacenar las reservas originales
 
     // Variables para conectar con la API
     FastMethods mfastMethods;
@@ -44,11 +43,11 @@ public class Activity_chef_lista_reservas extends AppCompatActivity {
 
     //variable filtro reservas
     private EditText fecha_filtro;
+
     /**
      * Método onCreate para la configuración incial de la actividad
      * @param savedInstanceState estado de la instancia guardada, un objeto Bundle que contiene el estado previamente guardado de la actividad
      */
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,7 +75,7 @@ public class Activity_chef_lista_reservas extends AppCompatActivity {
 
     /**
      * Método para recuperar datos del servidor
-     * LLama al servidor y recupera la lista de reserva del usuario logeado
+     * LLama al servidor y recupera la lista de reservas del usuario logeado
      */
     public void recuperarDatos(){
         Context context = this; // Obtener el contexto de la actividad (this)
@@ -86,7 +85,7 @@ public class Activity_chef_lista_reservas extends AppCompatActivity {
             contentSuccessful = false;
             return;
         }
-        // Call HTTP client para recuperar la información del usuario
+        // Call HTTP client para recuperar las reservas del usuario
         Call<List<Reserva>> call = mfastMethods.recuperar_reservas(token);
         call.enqueue(new Callback<List<Reserva>>() { // Ejecutar la llamada de manera asíncrona
             /**
@@ -126,6 +125,7 @@ public class Activity_chef_lista_reservas extends AppCompatActivity {
             }
         });
     }
+
     /**
      * Método para hacer logout
      * Redirige al usuario a la pantalla de inicio
@@ -134,6 +134,16 @@ public class Activity_chef_lista_reservas extends AppCompatActivity {
     public void logout(View view){
         Utils.gotoActivity(Activity_chef_lista_reservas.this, MainActivity_inicio.class);
     }
+
+    /**
+     * Método para retroceder de pantalla
+     * Redirige al usuario a la pantalla anterior
+     * @param view La vista (Button) a la que se hizo clic.
+     */
+    public void atras(View view){
+        Utils.gotoActivity(Activity_chef_lista_reservas.this, Activity_chef_menu.class);
+    }
+
     /**
      * Método para test
      * @return devuelve un boleano en función de si ha ido bien la muestra de reservas
@@ -147,6 +157,7 @@ public class Activity_chef_lista_reservas extends AppCompatActivity {
      * @param view La vista (Button) a la que se hizo clic.
      */
     public void buscar_reserva(View view){
+       // int fecha = fecha_filtro.getInputType();
         String fecha_str = String.valueOf(fecha_filtro.getText());
         if(fecha_str.isEmpty()){
             Utils.showToast(this, "Introduce un año para filtrar las reservas por año");
@@ -160,31 +171,29 @@ public class Activity_chef_lista_reservas extends AppCompatActivity {
             }
         }
     }
-    /** REVISAR. SOLO FUNCIONA LA PRIMERA VEZ. NO SE ARREGLARLO
+    /**
      * Método para filtrar la lista de reservas localmente por fecha
      * @param year año a filtrar
      */
+    @SuppressLint("NotifyDataSetChanged")
     public void buscar(int year) {
-        int searchText = year; // Fecha a filtrar
 
         // Filtrar reservasList localmente con la fecha de búsqueda
-        List<Reserva> filteredList = filterReservas(originalReservasList, searchText);
+        List<Reserva> filteredList = filterReservas(originalReservasList, year);
 
         // Actualizar reservasList con la lista filtrada
         reservasList.clear();
         reservasList.addAll(filteredList);
 
         // Notificar al adaptador que los datos han cambiado en el hilo principal
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                adapter.notifyDataSetChanged(); // Notificar al adaptador que los datos han cambiado
-            }
+        runOnUiThread(() -> {
+            adapter.notifyDataSetChanged(); // Notificar al adaptador que los datos han cambiado
         });
 
         // Actualizar el estado de contentSuccessful basado en si se encontraron reservas después del filtro
         contentSuccessful = !reservasList.isEmpty(); // Si la lista filtrada no está vacía, entonces el contenido fue exitoso
     }
+
     /**
      * Método para filtrar la lista de reservas localmente por fecha.
      * @param reservasList Lista actual de reservas
@@ -210,5 +219,4 @@ public class Activity_chef_lista_reservas extends AppCompatActivity {
         }
         return filteredList;
     }
-
 }
