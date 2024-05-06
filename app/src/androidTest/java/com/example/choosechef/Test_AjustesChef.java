@@ -33,7 +33,7 @@ public class Test_AjustesChef {
     @Rule
     public IntentsTestRule<Activity_login> activityRule = new IntentsTestRule<>(Activity_login.class);
     private Context context;
-    private Activity_chef actChef;
+    private Activity_chef_servicio actChef;
 
     @Before
     public void setUp() {
@@ -48,10 +48,10 @@ public class Test_AjustesChef {
         UtilsTests.espera(10000);
         //Clicar opción Gestión servicio ofrecido del menú
         onView(withId(R.id.imb_gestion_perfil_chef)).perform(click());
-        // Verificar que se abre Activity_chef después de clicar
-        intended(hasComponent(Activity_chef.class.getName()));
-        // Obtener la instancia de Activity_chef
-        actChef = ((Activity_chef)UtilsTests.getActivityInstance(Activity_chef.class));
+        // Verificar que se abre Activity_chef_servicio después de clicar
+        intended(hasComponent(Activity_chef_servicio.class.getName()));
+        // Obtener la instancia de Activity_chef_servicio
+        actChef = ((Activity_chef_servicio)UtilsTests.getActivityInstance(Activity_chef_servicio.class));
     }
 
     // Modificación opciones chef correcta

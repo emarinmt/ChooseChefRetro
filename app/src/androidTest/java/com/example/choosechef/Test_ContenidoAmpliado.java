@@ -31,7 +31,7 @@ public class Test_ContenidoAmpliado {
 
     @Rule
     public IntentsTestRule<Activity_login> activityRule = new IntentsTestRule<>(Activity_login.class);
-    private Activity_chef_ampliado contenidoAmpliado;
+    private Activity_contenido_chef_ampliado contenidoAmpliado;
     private Context context;
     @Before
     public void setUp() {
@@ -48,9 +48,9 @@ public class Test_ContenidoAmpliado {
         onView(withId(R.id.rv_chefs))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         // Verificar que la actividad chef_ampliado se inicia correctamente
-        intended(hasComponent(Activity_chef_ampliado.class.getName()));
-        // Obtener la instancia de Activity_chef_ampliado
-        contenidoAmpliado = ((Activity_chef_ampliado) UtilsTests.getActivityInstance(Activity_chef_ampliado.class));
+        intended(hasComponent(Activity_contenido_chef_ampliado.class.getName()));
+        // Obtener la instancia de Activity_contenido_chef_ampliado
+        contenidoAmpliado = ((Activity_contenido_chef_ampliado) UtilsTests.getActivityInstance(Activity_contenido_chef_ampliado.class));
     }
 
     // Ampliación de chef correcta

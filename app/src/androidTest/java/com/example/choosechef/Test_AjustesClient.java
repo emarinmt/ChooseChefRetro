@@ -29,7 +29,7 @@ public class Test_AjustesClient {
     @Rule
     public IntentsTestRule<Activity_login> activityRule = new IntentsTestRule<>(Activity_login.class);
     private Context context;
-    private Activity_user actClient;
+    private Activity_client_lista_reservas actClient;
 
     @Before
     public void setUp() {
@@ -42,10 +42,10 @@ public class Test_AjustesClient {
         UtilsTests.espera(10000);
         onView(withId(R.id.btn_ajustes)).perform(click());
         UtilsTests.espera(10000);
-        // Verificar que se abre Activity_user después de clicar en ajustes
-        intended(hasComponent(Activity_user.class.getName()));
-        // Obtener la instancia de Activity_user
-        actClient = ((Activity_user) UtilsTests.getActivityInstance(Activity_user.class));
+        // Verificar que se abre Activity_client_lista_reservas después de clicar en ajustes
+        intended(hasComponent(Activity_client_lista_reservas.class.getName()));
+        // Obtener la instancia de Activity_client_lista_reservas
+        actClient = ((Activity_client_lista_reservas) UtilsTests.getActivityInstance(Activity_client_lista_reservas.class));
     }
 
     // Recuperación de reservas  correcta (hay conexión)

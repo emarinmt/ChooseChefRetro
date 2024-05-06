@@ -24,9 +24,9 @@ import retrofit2.Retrofit;
  * Muestra una lista de todos los usuarios de la app
  */
 
-public class Activity_admin extends AppCompatActivity {
+public class Activity_admin_lista_usuarios extends AppCompatActivity {
     private boolean contentSuccessful = false; // Variable para rastrear el estado de la muestra del listado
-    private final String TAG = Activity_admin.class.getSimpleName();
+    private final String TAG = Activity_admin_lista_usuarios.class.getSimpleName();
 
     // Variables para mostrar los chefs
     RecyclerView recyclerView;
@@ -48,7 +48,7 @@ public class Activity_admin extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Establece el diseño de la actividad.
-        setContentView(R.layout.activity_admin);
+        setContentView(R.layout.activity_admin_lista_usuarios);
 
         //Inicializar variables
         nombre_usuario_filtro = findViewById(R.id.edt_buscar_usuario);
@@ -75,7 +75,7 @@ public class Activity_admin extends AppCompatActivity {
         Context context = this; // Obtener el contexto de la actividad (this)
         // Compruebe el estado de la conexión de red
         if (!Utils.isNetworkAvailable(this)) {
-            Utils.showToastSecond(Activity_admin.this, context, "No hay conexión a Internet");
+            Utils.showToastSecond(Activity_admin_lista_usuarios.this, context, "No hay conexión a Internet");
             contentSuccessful = false;
             return;
         }
@@ -100,7 +100,7 @@ public class Activity_admin extends AppCompatActivity {
                     // Notificar al adaptador que los datos han cambiado
                     adapter.notifyDataSetChanged();
                 } else {
-                    Utils.showToastSecond(Activity_admin.this, context,"No se encontraron usuarios");
+                    Utils.showToastSecond(Activity_admin_lista_usuarios.this, context,"No se encontraron usuarios");
                 }
             }
             /**
@@ -114,7 +114,7 @@ public class Activity_admin extends AppCompatActivity {
                 contentSuccessful = false;
                 t.printStackTrace();
                 Log.e(TAG, "Error en la llamada:" + t.getMessage());
-                Utils.showToastSecond(Activity_admin.this, context,"Error en la llamada: " + t.getMessage());
+                Utils.showToastSecond(Activity_admin_lista_usuarios.this, context,"Error en la llamada: " + t.getMessage());
             }
         });
     }
@@ -125,7 +125,7 @@ public class Activity_admin extends AppCompatActivity {
      * @param view La vista (Button) a la que se hizo clic.
      */
     public void logout(View view){
-        Utils.gotoActivity(Activity_admin.this, MainActivity_inicio.class);
+        Utils.gotoActivity(Activity_admin_lista_usuarios.this, MainActivity_inicio.class);
     }
 
     /**

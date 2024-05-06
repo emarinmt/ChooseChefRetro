@@ -45,8 +45,8 @@ public class Test_AjustesTipo {
         UtilsTests.espera(10000);
         onView(withId(R.id.btn_ajustes)).perform(click());
         UtilsTests.espera(10000);
-        // Verificar que se abre Activity_admin después de clicar en ajustes
-        intended(hasComponent(Activity_admin.class.getName()));
+        // Verificar que se abre Activity_admin_lista_usuarios después de clicar en ajustes
+        intended(hasComponent(Activity_admin_lista_usuarios.class.getName()));
     }
 
     // Redirección ajustes chef correcta
@@ -59,8 +59,8 @@ public class Test_AjustesTipo {
         UtilsTests.espera(10000);
         onView(withId(R.id.btn_ajustes)).perform(click());
         UtilsTests.espera(10000);
-        // Verificar que se abre Activity_chef después de clicar en ajustes
-        intended(hasComponent(Activity_chef.class.getName()));
+        // Verificar que se abre Activity_chef_servicio después de clicar en ajustes
+        intended(hasComponent(Activity_chef_servicio.class.getName()));
     }
 
     // Redirección ajustes client correcta
@@ -73,8 +73,8 @@ public class Test_AjustesTipo {
         UtilsTests.espera(10000);
         onView(withId(R.id.btn_ajustes)).perform(click());
         UtilsTests.espera(10000);
-        // Verificar que se abre Activity_user después de clicar en ajustes
-        intended(hasComponent(Activity_user.class.getName()));
+        // Verificar que se abre Activity_client_lista_reservas después de clicar en ajustes
+        intended(hasComponent(Activity_client_lista_reservas.class.getName()));
     }
 
 }

@@ -27,15 +27,15 @@ import retrofit2.Retrofit;
  * Muestra una lista de las reseñas del usuario
  */
 
-public class Activity_user extends AppCompatActivity {
+public class Activity_admin_lista_reservas extends AppCompatActivity {
     private boolean contentSuccessful = false; // Variable para rastrear el estado de la muestra del listado
-    private final String TAG = Activity_user.class.getSimpleName();
+    private final String TAG = Activity_admin_lista_reservas.class.getSimpleName();
 
     // Variables para mostrar las reservas
     RecyclerView recyclerView;
-    Adapter_reserva adapter;
+    Adapter_reserva_admin adapter;
     List<Reserva> reservasList = new ArrayList<>(); // Lista para almacenar las reservas
-    List<Reserva> originalReservasList = new ArrayList<>(); // Lista para almacenar las reservas original
+    List<Reserva> originalReservasList = new ArrayList<>(); // Lista para almacenar las reservas
 
     // Variables para conectar con la API
     FastMethods mfastMethods;
@@ -48,11 +48,12 @@ public class Activity_user extends AppCompatActivity {
      * Método onCreate para la configuración incial de la actividad
      * @param savedInstanceState estado de la instancia guardada, un objeto Bundle que contiene el estado previamente guardado de la actividad
      */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Establece el diseño de la actividad.
-        setContentView(R.layout.activity_user);
+        setContentView(R.layout.activity_chef_lista_reservas);
 
         //inicializar variables
         fecha_filtro = findViewById(R.id.edt_fecha_filtro);
@@ -64,9 +65,9 @@ public class Activity_user extends AppCompatActivity {
         token = sharedPreferences.getString("token", "");
 
         // Configurar RecyclerView
-        recyclerView = findViewById(R.id.rv_reservas);
+        recyclerView = findViewById(R.id.rv_reservas_chef);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new Adapter_reserva(this, reservasList);
+        adapter = new Adapter_reserva_admin(this, reservasList);
         recyclerView.setAdapter(adapter);
 
         // Llamar al método recuperarDatos
@@ -81,12 +82,12 @@ public class Activity_user extends AppCompatActivity {
         Context context = this; // Obtener el contexto de la actividad (this)
         // Compruebe el estado de la conexión de red
         if (!Utils.isNetworkAvailable(this)) {
-            Utils.showToastSecond(Activity_user.this, context,"No hay conexión a Internet");
+            Utils.showToastSecond(Activity_admin_lista_reservas.this, context,"No hay conexión a Internet");
             contentSuccessful = false;
             return;
         }
         // Call HTTP client para recuperar la información del usuario
-        Call<List<Reserva>> call = mfastMethods.recuperar_reservas(token);
+        Call<List<Reserva>> call = mfastMethods.recuperar_reseñas_admin();
         call.enqueue(new Callback<List<Reserva>>() { // Ejecutar la llamada de manera asíncrona
             /**
              * Método invocado cuando se recibe una respuesta de la solicitud HTTP
@@ -107,7 +108,7 @@ public class Activity_user extends AppCompatActivity {
                     // Notificar al adaptador que los datos han cambiado
                     adapter.notifyDataSetChanged();
                 } else {
-                    Utils.showToastSecond(Activity_user.this, context,"No se encontraron reservas");
+                    Utils.showToastSecond(Activity_admin_lista_reservas.this, context,"No se encontraron reservas");
                 }
             }
             /**
@@ -121,7 +122,7 @@ public class Activity_user extends AppCompatActivity {
                 contentSuccessful = false;
                 t.printStackTrace();
                 Log.e(TAG, "Error en la llamada:" + t.getMessage());
-                Utils.showToastSecond(Activity_user.this, context,"Error en la llamada: " + t.getMessage());
+                Utils.showToastSecond(Activity_admin_lista_reservas.this, context,"Error en la llamada: " + t.getMessage());
             }
         });
     }
@@ -131,7 +132,7 @@ public class Activity_user extends AppCompatActivity {
      * @param view La vista (Button) a la que se hizo clic.
      */
     public void logout(View view){
-        Utils.gotoActivity(Activity_user.this, MainActivity_inicio.class);
+        Utils.gotoActivity(Activity_admin_lista_reservas.this, MainActivity_inicio.class);
     }
     /**
      * Método para test
@@ -146,7 +147,6 @@ public class Activity_user extends AppCompatActivity {
      * @param view La vista (Button) a la que se hizo clic.
      */
     public void buscar_reserva(View view){
-       // int fecha = fecha_filtro.getInputType();
         String fecha_str = String.valueOf(fecha_filtro.getText());
         if(fecha_str.isEmpty()){
             Utils.showToast(this, "Introduce un año para filtrar las reservas por año");
@@ -161,7 +161,6 @@ public class Activity_user extends AppCompatActivity {
         }
     }
     /** REVISAR. SOLO FUNCIONA LA PRIMERA VEZ. NO SE ARREGLARLO
-     *
      * Método para filtrar la lista de reservas localmente por fecha
      * @param year año a filtrar
      */

@@ -14,16 +14,16 @@ import java.util.List;
  * Para gestionar el recycler view de reservas (pantalla usuario cliente)
  */
 
-public class Adapter_reserva extends RecyclerView.Adapter<Adapter_reserva.ViewHolder> {
+public class Adapter_reserva_client extends RecyclerView.Adapter<Adapter_reserva_client.ViewHolder> {
 
     private final LayoutInflater layoutInflater;
     private final List<Reserva> data;
     /**
-     *Constructor de la clase Adapter_reserva
+     *Constructor de la clase Adapter_reserva_client
      * @param context contexto de la aplicación
      * @param data la lista de datos de tipo user que se utilizará para poblar el adaptador
      */
-    Adapter_reserva(Context context, List<Reserva> data){
+    Adapter_reserva_client(Context context, List<Reserva> data){
         this.layoutInflater = LayoutInflater.from(context);
         this.data = data;
     }
@@ -35,9 +35,9 @@ public class Adapter_reserva extends RecyclerView.Adapter<Adapter_reserva.ViewHo
      */
     @NonNull
     @Override
-    public Adapter_reserva.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = layoutInflater.inflate(R.layout.custom_view_card_reservas,viewGroup,false);
-        return new Adapter_reserva.ViewHolder(view);
+    public Adapter_reserva_client.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        View view = layoutInflater.inflate(R.layout.custom_view_card_reservas_client,viewGroup,false);
+        return new Adapter_reserva_client.ViewHolder(view);
     }
     /**
      *Actualiza el ViewHolder proporcionado para representar el contenido del elemento en la posición dada en el conjunto de datos
@@ -45,7 +45,7 @@ public class Adapter_reserva extends RecyclerView.Adapter<Adapter_reserva.ViewHo
      * @param i La posición del elemento dentro del conjunto de datos del adaptador.
      */
     @Override
-    public void onBindViewHolder(@NonNull Adapter_reserva.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull Adapter_reserva_client.ViewHolder viewHolder, int i) {
         Reserva reserva = data.get(i); //NUEVO
         // Establece los datos de la reserva en las vistas del ViewHolder
 
@@ -64,7 +64,7 @@ public class Adapter_reserva extends RecyclerView.Adapter<Adapter_reserva.ViewHo
                 Reserva currentReserva = data.get(viewHolder.getAdapterPosition());
 
                 // Utilizar el método gotoActivityWithReserva para abrir la DetailActivity y pasar el objeto Reserva
-                Utils.gotoActivityWithReserva(viewHolder.itemView.getContext(), Activity_reserva_ampliado.class, currentReserva);
+                Utils.gotoActivityWithReserva(viewHolder.itemView.getContext(), Activity_client_reserva_ampliado.class, currentReserva);
             }
         });
     }

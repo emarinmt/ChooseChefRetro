@@ -32,7 +32,7 @@ public class Test_AjustesAdmin {
     @Rule
     public IntentsTestRule<Activity_login> activityRule = new IntentsTestRule<>(Activity_login.class);
     private Context context;
-    private Activity_admin actAdmin;
+    private Activity_admin_lista_usuarios actAdmin;
 
     @Before
     public void setUp() {
@@ -45,10 +45,10 @@ public class Test_AjustesAdmin {
         UtilsTests.espera(10000);
         onView(withId(R.id.btn_ajustes)).perform(click());
         UtilsTests.espera(10000);
-        // Verificar que se abre Activity_admin después de clicar en ajustes
-        intended(hasComponent(Activity_admin.class.getName()));
-        // Obtener la instancia de Activity_admin
-        actAdmin = ((Activity_admin) UtilsTests.getActivityInstance(Activity_admin.class));
+        // Verificar que se abre Activity_admin_lista_usuarios después de clicar en ajustes
+        intended(hasComponent(Activity_admin_lista_usuarios.class.getName()));
+        // Obtener la instancia de Activity_admin_lista_usuarios
+        actAdmin = ((Activity_admin_lista_usuarios) UtilsTests.getActivityInstance(Activity_admin_lista_usuarios.class));
     }
 
     // Recuperación de lista de usuarios correcta (hay conexión)

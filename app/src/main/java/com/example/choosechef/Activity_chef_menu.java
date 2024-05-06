@@ -8,14 +8,14 @@ import androidx.appcompat.app.AppCompatActivity;
 /**
  * Clase para gestionar las opciones de menu del chef
  */
-public class Activity_menu_chef extends AppCompatActivity {
+public class Activity_chef_menu extends AppCompatActivity {
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Establece el diseño de la actividad.
-        setContentView(R.layout.activity_menu_chef);
+        setContentView(R.layout.activity_chef_menu);
 
     }
     /**
@@ -23,7 +23,7 @@ public class Activity_menu_chef extends AppCompatActivity {
      * @param view La vista (Button) a la que se hizo clic.
      */
     public void gestion_perfil_chef(View view) {
-        Utils.gotoActivity(Activity_menu_chef.this, Activity_chef.class);
+        Utils.gotoActivity(Activity_chef_menu.this, Activity_chef_servicio.class);
     }
 
     /**
@@ -31,7 +31,7 @@ public class Activity_menu_chef extends AppCompatActivity {
      * @param view La vista (Button) a la que se hizo clic.
      */
     public void gestion_reservas(View view) {
-        Utils.gotoActivity(Activity_menu_chef.this, Activity_reservas_chef.class);
+        Utils.gotoActivity(Activity_chef_menu.this, Activity_chef_lista_reservas.class);
     }
     /**
      * Método para hacer logout
@@ -39,6 +39,6 @@ public class Activity_menu_chef extends AppCompatActivity {
      * @param view La vista (Button) a la que se hizo clic.
      */
     public void logout(View view){
-        Utils.gotoActivity(Activity_menu_chef.this, MainActivity_inicio.class);
+        Utils.gotoActivity(Activity_chef_menu.this, MainActivity_inicio.class);
     }
 }

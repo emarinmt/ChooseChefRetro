@@ -39,8 +39,8 @@ public class Test_AdminAmpliado {
     @Rule
     public IntentsTestRule<Activity_login> activityRule = new IntentsTestRule<>(Activity_login.class);
     private Context context;
-    private Activity_admin actAdmin;
-    private Activity_user_ampliado actAdminAmpl;
+    private Activity_admin_lista_usuarios actAdmin;
+    private Activity_admin_usuario_ampliado actAdminAmpl;
     int initialSize;
     @Before
     public void setUp() {
@@ -53,10 +53,10 @@ public class Test_AdminAmpliado {
         UtilsTests.espera(10000);
         onView(withId(R.id.btn_ajustes)).perform(click());
         UtilsTests.espera(10000);
-        // Verificar que se abre Activity_admin después de clicar en ajustes
-        intended(hasComponent(Activity_admin.class.getName()));
-        // Obtener la instancia de Activity_admin
-        actAdmin = ((Activity_admin) UtilsTests.getActivityInstance(Activity_admin.class));
+        // Verificar que se abre Activity_admin_lista_usuarios después de clicar en ajustes
+        intended(hasComponent(Activity_admin_lista_usuarios.class.getName()));
+        // Obtener la instancia de Activity_admin_lista_usuarios
+        actAdmin = ((Activity_admin_lista_usuarios) UtilsTests.getActivityInstance(Activity_admin_lista_usuarios.class));
         initialSize = actAdmin.userList.size();
         /* Buscar y hacer clic en un usuario específico en la lista
         Clicaremos en aquellos usuarios cucyo nombre empiezan por test
@@ -76,9 +76,9 @@ public class Test_AdminAmpliado {
         onView(withId(R.id.rv_users))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         // Verificar que la actividad user_ampliado se inicia correctamente
-        intended(hasComponent(Activity_user_ampliado.class.getName()));
-        // Obtener la instancia de Activity_user_ampliado
-        actAdminAmpl = ((Activity_user_ampliado) UtilsTests.getActivityInstance(Activity_user_ampliado.class));
+        intended(hasComponent(Activity_admin_usuario_ampliado.class.getName()));
+        // Obtener la instancia de Activity_admin_usuario_ampliado
+        actAdminAmpl = ((Activity_admin_usuario_ampliado) UtilsTests.getActivityInstance(Activity_admin_usuario_ampliado.class));
         // Verificar que contentSuccessful es true
         UtilsTests.espera(10000);
         assertTrue(actAdminAmpl.isContentSuccessful());
@@ -90,9 +90,9 @@ public class Test_AdminAmpliado {
         onView(withId(R.id.rv_users))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         // Verificar que la actividad user_ampliado se inicia correctamente
-        intended(hasComponent(Activity_user_ampliado.class.getName()));
-        // Obtener la instancia de Activity_user_ampliado
-        actAdminAmpl = ((Activity_user_ampliado) UtilsTests.getActivityInstance(Activity_user_ampliado.class));
+        intended(hasComponent(Activity_admin_usuario_ampliado.class.getName()));
+        // Obtener la instancia de Activity_admin_usuario_ampliado
+        actAdminAmpl = ((Activity_admin_usuario_ampliado) UtilsTests.getActivityInstance(Activity_admin_usuario_ampliado.class));
         // Simular un Intent inválido (null o sin el extra "user")
         Intent invalidIntent = null;
         // Llamar manualmente obtenerIntent() y pasar el Intent inválido
@@ -109,9 +109,9 @@ public class Test_AdminAmpliado {
         onView(withId(R.id.rv_users))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         // Verificar que la actividad user_ampliado se inicia correctamente
-        intended(hasComponent(Activity_user_ampliado.class.getName()));
-        // Obtener la instancia de Activity_user_ampliado
-        actAdminAmpl = ((Activity_user_ampliado) UtilsTests.getActivityInstance(Activity_user_ampliado.class));
+        intended(hasComponent(Activity_admin_usuario_ampliado.class.getName()));
+        // Obtener la instancia de Activity_admin_usuario_ampliado
+        actAdminAmpl = ((Activity_admin_usuario_ampliado) UtilsTests.getActivityInstance(Activity_admin_usuario_ampliado.class));
         UtilsTests.espera(10000);
         // Realizamos el clic en el botón de editar
         onView(withId(R.id.ibtn_edit)).perform(click());
@@ -146,8 +146,8 @@ public class Test_AdminAmpliado {
         onView(withId(R.id.rv_users))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(1, click()));
         UtilsTests.espera(10000);
-        // Obtener la instancia de Activity_user_ampliado
-        actAdminAmpl = ((Activity_user_ampliado) UtilsTests.getActivityInstance(Activity_user_ampliado.class));
+        // Obtener la instancia de Activity_admin_usuario_ampliado
+        actAdminAmpl = ((Activity_admin_usuario_ampliado) UtilsTests.getActivityInstance(Activity_admin_usuario_ampliado.class));
         onView(withId(R.id.ibtn_delete)).perform(click());
         UtilsTests.espera(20000);
         // Verificar que deleteSuccessful es true

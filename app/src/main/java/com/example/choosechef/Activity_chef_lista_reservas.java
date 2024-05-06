@@ -27,9 +27,9 @@ import retrofit2.Retrofit;
  * Muestra una lista de las reseñas del usuario
  */
 
-public class Activity_reservas_chef extends AppCompatActivity {
+public class Activity_chef_lista_reservas extends AppCompatActivity {
     private boolean contentSuccessful = false; // Variable para rastrear el estado de la muestra del listado
-    private final String TAG = Activity_reservas_chef.class.getSimpleName();
+    private final String TAG = Activity_chef_lista_reservas.class.getSimpleName();
 
     // Variables para mostrar las reservas
     RecyclerView recyclerView;
@@ -53,7 +53,7 @@ public class Activity_reservas_chef extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Establece el diseño de la actividad.
-        setContentView(R.layout.activity_reservas_chef);
+        setContentView(R.layout.activity_chef_lista_reservas);
 
         //inicializar variables
         fecha_filtro = findViewById(R.id.edt_fecha_filtro);
@@ -82,7 +82,7 @@ public class Activity_reservas_chef extends AppCompatActivity {
         Context context = this; // Obtener el contexto de la actividad (this)
         // Compruebe el estado de la conexión de red
         if (!Utils.isNetworkAvailable(this)) {
-            Utils.showToastSecond(Activity_reservas_chef.this, context,"No hay conexión a Internet");
+            Utils.showToastSecond(Activity_chef_lista_reservas.this, context,"No hay conexión a Internet");
             contentSuccessful = false;
             return;
         }
@@ -108,7 +108,7 @@ public class Activity_reservas_chef extends AppCompatActivity {
                     // Notificar al adaptador que los datos han cambiado
                     adapter.notifyDataSetChanged();
                 } else {
-                    Utils.showToastSecond(Activity_reservas_chef.this, context,"No se encontraron reservas");
+                    Utils.showToastSecond(Activity_chef_lista_reservas.this, context,"No se encontraron reservas");
                 }
             }
             /**
@@ -122,7 +122,7 @@ public class Activity_reservas_chef extends AppCompatActivity {
                 contentSuccessful = false;
                 t.printStackTrace();
                 Log.e(TAG, "Error en la llamada:" + t.getMessage());
-                Utils.showToastSecond(Activity_reservas_chef.this, context,"Error en la llamada: " + t.getMessage());
+                Utils.showToastSecond(Activity_chef_lista_reservas.this, context,"Error en la llamada: " + t.getMessage());
             }
         });
     }
@@ -132,7 +132,7 @@ public class Activity_reservas_chef extends AppCompatActivity {
      * @param view La vista (Button) a la que se hizo clic.
      */
     public void logout(View view){
-        Utils.gotoActivity(Activity_reservas_chef.this, MainActivity_inicio.class);
+        Utils.gotoActivity(Activity_chef_lista_reservas.this, MainActivity_inicio.class);
     }
     /**
      * Método para test

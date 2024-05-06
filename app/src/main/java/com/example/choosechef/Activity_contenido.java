@@ -41,7 +41,7 @@ public class Activity_contenido extends AppCompatActivity {
 
     // Variables para mostrar los chefs
     RecyclerView recyclerView;
-    Adapter_chef adapter;
+    Adapter_chef_contenido adapter;
     List<User> userList = new ArrayList<>(); // Lista para almacenar los chefs
 
     // Variables para conectar con la API
@@ -63,7 +63,7 @@ public class Activity_contenido extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Establece el diseño de la actividad.
-        setContentView(R.layout.activity_content);
+        setContentView(R.layout.activity_contenido);
 
         retro=FastClient.getClient();
         mfastMethods = retro.create(FastMethods.class);
@@ -71,7 +71,7 @@ public class Activity_contenido extends AppCompatActivity {
         // Configurar RecyclerView
         recyclerView = findViewById(R.id.rv_chefs);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new Adapter_chef(this, userList);
+        adapter = new Adapter_chef_contenido(this, userList);
         recyclerView.setAdapter(adapter);
 
         // Obtener el token de SharedPreferences
@@ -235,11 +235,11 @@ public class Activity_contenido extends AppCompatActivity {
             public void run() {
                 if (mTipoLogeado != null && !mTipoLogeado.isEmpty()) {
                     if (mTipoLogeado.equalsIgnoreCase("chef")) {
-                        Utils.gotoActivity(Activity_contenido.this, Activity_menu_chef.class);
+                        Utils.gotoActivity(Activity_contenido.this, Activity_chef_menu.class);
                     } else if (mTipoLogeado.equalsIgnoreCase("client")) {
-                        Utils.gotoActivity(Activity_contenido.this, Activity_user.class);
+                        Utils.gotoActivity(Activity_contenido.this, Activity_client_lista_reservas.class);
                     } else if (mTipoLogeado.equalsIgnoreCase("admin")) {
-                        Utils.gotoActivity(Activity_contenido.this, Activity_menu_admin.class);
+                        Utils.gotoActivity(Activity_contenido.this, Activity_admin_menu.class);
                     } else {
                         Utils.showToast(Activity_contenido.this, "Tipo de usuario incorrecto");
                     }

@@ -33,8 +33,8 @@ import androidx.test.espresso.contrib.RecyclerViewActions;
 public class Test_ClientAmpliado {
     @Rule
     public IntentsTestRule<Activity_login> activityRule = new IntentsTestRule<>(Activity_login.class);
-    private Activity_reserva_ampliado clientAmpliado;
-    private Activity_user actUser;
+    private Activity_client_reserva_ampliado clientAmpliado;
+    private Activity_client_lista_reservas actUser;
     private Context context;
     @Before
     public void setUp() {
@@ -47,10 +47,10 @@ public class Test_ClientAmpliado {
         UtilsTests.espera(10000);
         onView(withId(R.id.btn_ajustes)).perform(click());
         UtilsTests.espera(10000);
-        // Verificar que se abre Activity_user después de clicar en ajustes
-        intended(hasComponent(Activity_user.class.getName()));
-        // Obtener la instancia de Activity_user
-        actUser = ((Activity_user) UtilsTests.getActivityInstance(Activity_user.class));
+        // Verificar que se abre Activity_client_lista_reservas después de clicar en ajustes
+        intended(hasComponent(Activity_client_lista_reservas.class.getName()));
+        // Obtener la instancia de Activity_client_lista_reservas
+        actUser = ((Activity_client_lista_reservas) UtilsTests.getActivityInstance(Activity_client_lista_reservas.class));
     }
 
     // Ampliación de reserva incorrecta (fecha posterior)
@@ -60,9 +60,9 @@ public class Test_ClientAmpliado {
         onView(withId(R.id.rv_reservas))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         // Verificar que la actividad reservar_ampliado se inicia correctamente
-        intended(hasComponent(Activity_reserva_ampliado.class.getName()));
-        // Obtener la instancia de Activity_reserva_ampliado
-        clientAmpliado = ((Activity_reserva_ampliado) UtilsTests.getActivityInstance(Activity_reserva_ampliado.class));
+        intended(hasComponent(Activity_client_reserva_ampliado.class.getName()));
+        // Obtener la instancia de Activity_client_reserva_ampliado
+        clientAmpliado = ((Activity_client_reserva_ampliado) UtilsTests.getActivityInstance(Activity_client_reserva_ampliado.class));
         UtilsTests.espera(10000);
         assertFalse(clientAmpliado.isContentSuccessful());
     }
@@ -74,9 +74,9 @@ public class Test_ClientAmpliado {
         onView(withId(R.id.rv_reservas))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         // Verificar que la actividad reservar_ampliado se inicia correctamente
-        intended(hasComponent(Activity_reserva_ampliado.class.getName()));
-        // Obtener la instancia de Activity_reserva_ampliado
-        clientAmpliado = ((Activity_reserva_ampliado) UtilsTests.getActivityInstance(Activity_reserva_ampliado.class));
+        intended(hasComponent(Activity_client_reserva_ampliado.class.getName()));
+        // Obtener la instancia de Activity_client_reserva_ampliado
+        clientAmpliado = ((Activity_client_reserva_ampliado) UtilsTests.getActivityInstance(Activity_client_reserva_ampliado.class));
         // Simular un Intent inválido
         Intent invalidIntent = null;
         // Llamar manualmente obtenerIntent() y pasar el Intent inválido
@@ -96,8 +96,8 @@ public class Test_ClientAmpliado {
         onView(withId(R.id.rv_reservas))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         UtilsTests.espera(10000);
-        // Obtener la instancia de Activity_reserva_ampliado
-        clientAmpliado = ((Activity_reserva_ampliado) UtilsTests.getActivityInstance(Activity_reserva_ampliado.class));
+        // Obtener la instancia de Activity_client_reserva_ampliado
+        clientAmpliado = ((Activity_client_reserva_ampliado) UtilsTests.getActivityInstance(Activity_client_reserva_ampliado.class));
         //onView(withId(R.id.comentario)).perform(replaceText("probando"));
 
         // Obtener texto actual del campo comentario (para no cambiarlo)

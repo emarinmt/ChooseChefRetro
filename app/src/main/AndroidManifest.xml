@@ -67,7 +67,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activity_chef_ampliado"
+            android:name=".Activity_contenido_chef_ampliado"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -75,7 +75,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activity_chef"
+            android:name=".Activity_chef_servicio"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -83,7 +83,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activity_menu_chef"
+            android:name=".Activity_chef_menu"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -91,7 +91,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activity_admin"
+            android:name=".Activity_admin_lista_usuarios"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -99,7 +99,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activity_menu_admin"
+            android:name=".Activity_admin_menu"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -107,7 +107,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activity_user"
+            android:name=".Activity_client_lista_reservas"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -115,7 +115,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activity_user_ampliado"
+            android:name=".Activity_admin_usuario_ampliado"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -123,7 +123,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activity_reservar"
+            android:name=".Activity_contenido_reservar_chef"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -131,7 +131,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activity_reserva_ampliado"
+            android:name=".Activity_client_reserva_ampliado"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -139,7 +139,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activity_reserva_ampliado_admin"
+            android:name=".Activity_admin_reserva_ampliado"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -147,7 +147,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activity_reservas_chef"
+            android:name=".Activity_chef_lista_reservas"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -155,14 +155,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activity_reservas_admin"
+            android:name=".Activity_admin_lista_reservas"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-</application>
+    </application>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 </manifest>

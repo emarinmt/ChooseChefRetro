@@ -22,7 +22,7 @@ public class Adapter_reserva_chef extends RecyclerView.Adapter<Adapter_reserva_c
     private final LayoutInflater layoutInflater;
     private final List<Reserva> data;
     /**
-     *Constructor de la clase Adapter_reserva
+     *Constructor de la clase Adapter_reserva_client
      * @param context contexto de la aplicación
      * @param data la lista de datos de tipo user que se utilizará para poblar el adaptador
      */
@@ -70,7 +70,7 @@ public class Adapter_reserva_chef extends RecyclerView.Adapter<Adapter_reserva_c
                 Reserva currentReserva = data.get(viewHolder.getAdapterPosition());
 
                 // Utilizar el método gotoActivityWithReserva para abrir la DetailActivity y pasar el objeto Reserva
-                Utils.gotoActivityWithReserva(viewHolder.itemView.getContext(), Activity_reserva_ampliado.class, currentReserva);
+                Utils.gotoActivityWithReserva(viewHolder.itemView.getContext(), Activity_client_reserva_ampliado.class, currentReserva);
             }
         });*/
     }

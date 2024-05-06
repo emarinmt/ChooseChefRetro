@@ -16,17 +16,17 @@ import java.util.List;
  * Clase adaptador chef.
  * Para gestionar el recycler view de chefs (pantalla contenido)
  */
-public class Adapter_chef extends RecyclerView.Adapter<Adapter_chef.ViewHolder> {
+public class Adapter_chef_contenido extends RecyclerView.Adapter<Adapter_chef_contenido.ViewHolder> {
 
     private final LayoutInflater layoutInflater;
     private final List<User> data;
 
     /**
-     *Constructor de la clase Adapter_chef
+     *Constructor de la clase Adapter_chef_contenido
      * @param context contexto de la aplicación
      * @param data la lista de datos de tipo user que se utilizará para poblar el adaptador
      */
-    Adapter_chef(Context context, List<User> data){
+    Adapter_chef_contenido(Context context, List<User> data){
         this.layoutInflater = LayoutInflater.from(context);
         this.data = data;
     }
@@ -40,7 +40,7 @@ public class Adapter_chef extends RecyclerView.Adapter<Adapter_chef.ViewHolder> 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = layoutInflater.inflate(R.layout.custom_view_card_chefs,viewGroup,false);
+        View view = layoutInflater.inflate(R.layout.custom_view_card_chefs_contenido,viewGroup,false);
         return new ViewHolder(view);
     }
 
@@ -74,7 +74,7 @@ public class Adapter_chef extends RecyclerView.Adapter<Adapter_chef.ViewHolder> 
                 User currentChef = data.get(viewHolder.getAdapterPosition());
 
                 // Utilizar el método gotoActivityWithUser para abrir la DetailActivity y pasar el objeto User
-                Utils.gotoActivityWithUser(viewHolder.itemView.getContext(), Activity_chef_ampliado.class, currentChef);
+                Utils.gotoActivityWithUser(viewHolder.itemView.getContext(), Activity_contenido_chef_ampliado.class, currentChef);
             }
         });
     }

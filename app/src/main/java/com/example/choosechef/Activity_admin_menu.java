@@ -5,14 +5,14 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class Activity_menu_admin extends AppCompatActivity {
+public class Activity_admin_menu extends AppCompatActivity {
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Establece el diseño de la actividad.
-        setContentView(R.layout.activity_menu_admin);
+        setContentView(R.layout.activity_admin_menu);
 
     }
     /**
@@ -20,7 +20,7 @@ public class Activity_menu_admin extends AppCompatActivity {
      * @param view La vista (Button) a la que se hizo clic.
      */
     public void gestion_usuarios(View view) {
-        Utils.gotoActivity(Activity_menu_admin.this, Activity_admin.class);
+        Utils.gotoActivity(Activity_admin_menu.this, Activity_admin_lista_usuarios.class);
     }
 
     /**
@@ -28,7 +28,7 @@ public class Activity_menu_admin extends AppCompatActivity {
      * @param view La vista (Button) a la que se hizo clic.
      */
     public void gestion_reseñas(View view) {
-        Utils.gotoActivity(Activity_menu_admin.this, Activity_reservas_admin.class);
+        Utils.gotoActivity(Activity_admin_menu.this, Activity_admin_lista_reservas.class);
     }
     /**
      * Método para hacer logout
@@ -36,6 +36,6 @@ public class Activity_menu_admin extends AppCompatActivity {
      * @param view La vista (Button) a la que se hizo clic.
      */
     public void logout(View view){
-        Utils.gotoActivity(Activity_menu_admin.this, MainActivity_inicio.class);
+        Utils.gotoActivity(Activity_admin_menu.this, MainActivity_inicio.class);
     }
 }

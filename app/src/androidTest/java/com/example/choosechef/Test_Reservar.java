@@ -32,7 +32,7 @@ public class Test_Reservar {
 
     @Rule
     public IntentsTestRule<Activity_login> activityRule = new IntentsTestRule<>(Activity_login.class);
-    private Activity_reservar reservar;
+    private Activity_contenido_reservar_chef reservar;
     private Context context;
     private static final String PREFS_NAME = "MiPreferencia"; // Nombre del archivo de preferencias
     private static final String DAYS_TO_ADD_KEY = "daysToAdd"; // Clave para daysToAdd en SharedPreferences
@@ -52,9 +52,9 @@ public class Test_Reservar {
         // Botón reservar
         onView(withId(R.id.ibtn_reservar)).perform(click());
         // Verificar que la actividad reservar se inicia correctamente
-        intended(hasComponent(Activity_reservar.class.getName()));
-        // Obtener la instancia de Activity_reservar
-        reservar = ((Activity_reservar) UtilsTests.getActivityInstance(Activity_reservar.class));
+        intended(hasComponent(Activity_contenido_reservar_chef.class.getName()));
+        // Obtener la instancia de Activity_contenido_reservar_chef
+        reservar = ((Activity_contenido_reservar_chef) UtilsTests.getActivityInstance(Activity_contenido_reservar_chef.class));
     }
 
     // Reserva incorrecta (fecha ya reservada)
@@ -62,7 +62,7 @@ public class Test_Reservar {
     public void testReservaInvalidOcupada() {
         // Obtener una fecha posterior libre
         String fechaDeseada = obtenerFechaDeseada();
-        // Establecer la fecha deseada en Activity_reservar mediante el método setFechaStr()
+        // Establecer la fecha deseada en Activity_contenido_reservar_chef mediante el método setFechaStr()
         reservar.setFechaStr(fechaDeseada);
         UtilsTests.espera(10000);
         // Confirma la selección haciendo clic en el botón de confirmar reserva
@@ -85,7 +85,7 @@ public class Test_Reservar {
     public void testReservaInValidDate() {
         // Establecemos una fecha anterior a la actual
         String fechaDeseada = "2023-05-23";
-        // Establecer la fecha deseada en Activity_reservar mediante el método setFechaStr()
+        // Establecer la fecha deseada en Activity_contenido_reservar_chef mediante el método setFechaStr()
         reservar.setFechaStr(fechaDeseada);
         UtilsTests.espera(10000);
         // Confirma la selección haciendo clic en el botón de confirmar reserva
@@ -102,7 +102,7 @@ public class Test_Reservar {
     public void testReservaValid() {
         // Obtener una fecha posterior libre
         String fechaDeseada = obtenerFechaDeseada();
-        // Establecer la fecha deseada en Activity_reservar mediante el método setFechaStr()
+        // Establecer la fecha deseada en Activity_contenido_reservar_chef mediante el método setFechaStr()
         reservar.setFechaStr(fechaDeseada);
         UtilsTests.espera(10000);
         // Confirma la selección haciendo clic en el botón de confirmar reserva
