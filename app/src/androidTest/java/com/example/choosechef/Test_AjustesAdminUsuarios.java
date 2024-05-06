@@ -1,5 +1,7 @@
 package com.example.choosechef;
 import android.content.Context;
+import android.util.Log;
+
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.intent.rule.IntentsTestRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -24,7 +26,6 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * Para realizar los tests referentes a la lista de todos los usuarios
- * CORRESPONDERIA A LA CLASE ACTIVITY_ADMIN
  */
 @RunWith(AndroidJUnit4.class)
 public class Test_AjustesAdminUsuarios {
@@ -83,7 +84,9 @@ public class Test_AjustesAdminUsuarios {
     // Recuperación de lista de usuarios correcta, añadiendo un usuario para comprobar que se modifica la lista
     @Test
     public void testRecuperarChefsSuccess() {
+        UtilsTests.espera(20000);;
         int initialSize = actAdmin.userList.size();// Número de usuarios antes del registro, para poder comparar
+        Log.d("TestLogs", "Tamaño inicial de userList: " + initialSize);
         onView(withId(R.id.btn_logout_user)).perform(click()); // Logout
         // Registro, simulando la entrada de datos
         onView(withId(R.id.ibtn_registro)).perform(click());
@@ -92,13 +95,16 @@ public class Test_AjustesAdminUsuarios {
         onView(withId(R.id.edt_contrasena_registro)).perform(replaceText("test"));
         onView(withId(R.id.edt_contrasena2_registro)).perform(replaceText("test"));
         onView(withId(R.id.ibtn_registrarse_registro)).perform(click());
-        UtilsTests.espera(10000);;
+        UtilsTests.espera(10000);
         // Iniciar sesión como admin
         onView(withId(R.id.edt_usuario_login)).perform(typeText("admin"));
         onView(withId(R.id.edt_contra_login)).perform(typeText("admin"), closeSoftKeyboard());
         onView(withId(R.id.ibtn_entrar_login)).perform(click());
         UtilsTests.espera(10000);
         onView(withId(R.id.btn_ajustes)).perform(click());
+        UtilsTests.espera(10000);
+        //Clicar opción Gestión usuarios ofrecido del menú
+        onView(withId(R.id.imb_gestion_usuarios)).perform(click());
         actAdmin.recuperarDatos();
         UtilsTests.espera(10000);
         int finalSize = actAdmin.userList.size(); // Número de usuarios después del registro

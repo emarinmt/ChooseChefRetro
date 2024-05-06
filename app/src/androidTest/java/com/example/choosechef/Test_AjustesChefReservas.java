@@ -81,7 +81,7 @@ public class Test_AjustesChefReservas {
     public void testRecuperarReservasFiltrados() {
         UtilsTests.espera(20000);
         //actChef.buscar(2023);
-        onView(withId(R.id.edt_fecha_filtro)).perform(replaceText("2024"));
+        onView(withId(R.id.edt_fecha_filtro)).perform(replaceText("2023"));
         onView(withId(R.id.btn_lupa3)).perform(click());
         UtilsTests.espera(20000);
         // Verificar que contentSuccessful es true

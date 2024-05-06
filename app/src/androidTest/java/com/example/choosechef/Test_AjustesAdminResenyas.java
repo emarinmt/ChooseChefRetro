@@ -23,7 +23,6 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * Para realizar los tests referentes a la lista de todos los usuarios
- * CORRESPONDERIA A LA CLASE ACTIVITY_ADMIN
  */
 @RunWith(AndroidJUnit4.class)
 public class Test_AjustesAdminResenyas {
@@ -48,7 +47,7 @@ public class Test_AjustesAdminResenyas {
         onView(withId(R.id.imb_gestion_resenyas)).perform(click());
         // Verificar que se abre Activity_admin_lista_reservas después de clicar
         intended(hasComponent(Activity_admin_lista_reservas.class.getName()));
-        // Obtener la instancia de Activity_admin_lista_usuarios
+        // Obtener la instancia de Activity_admin_lista_reservas
         actAdmin = ((Activity_admin_lista_reservas) UtilsTests.getActivityInstance(Activity_admin_lista_reservas.class));
     }
     // Recuperación de reservas  correcta (hay conexión)

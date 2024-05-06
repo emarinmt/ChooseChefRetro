@@ -29,14 +29,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-
 /**
  * Para realizar los tests referentes a la modificación de datos de usuarios por parte del admin
- * CORRESPONDERIA A LA CLASE ACTIVITY_USER_AMPLIADO
  */
 @RunWith(AndroidJUnit4.class)
 public class Test_AdminUsusariosAmpliado {
-// PROBANDO PARA HACER EL TEST DE ELIMINAR, NO ACABADA
+
     @Rule
     public IntentsTestRule<Activity_login> activityRule = new IntentsTestRule<>(Activity_login.class);
     private Context context;
@@ -67,6 +65,7 @@ public class Test_AdminUsusariosAmpliado {
     // Ampliación de usuario correcta
     @Test
     public void testAmpliarUserValid() {
+        UtilsTests.espera(10000);
         // Hacer clic en el primer elemento de la lista (suponiendo que hay al menos un usuario en la lista)
         onView(withId(R.id.rv_users))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
@@ -81,6 +80,7 @@ public class Test_AdminUsusariosAmpliado {
     // Ampliación de usuario incorrecta, simulamos un intent erroneo
     @Test
     public void testAmpliarUserInvalid() {
+        UtilsTests.espera(10000);
         // Hacer clic en el primer elemento de la lista (suponiendo que hay al menos un usuario en la lista)
         onView(withId(R.id.rv_users))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
@@ -100,9 +100,10 @@ public class Test_AdminUsusariosAmpliado {
     // Modificación datos usuario correcta
     @Test
     public void testModifyUserValid() {
+        UtilsTests.espera(10000);
         // Hacer clic en el primer elemento de la lista (suponiendo que hay al menos un usuario en la lista)
         onView(withId(R.id.rv_users))
-                .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+                .perform(RecyclerViewActions.actionOnItemAtPosition(1, click()));
         // Verificar que la actividad user_ampliado se inicia correctamente
         intended(hasComponent(Activity_admin_usuario_ampliado.class.getName()));
         // Obtener la instancia de Activity_admin_usuario_ampliado
@@ -133,15 +134,17 @@ public class Test_AdminUsusariosAmpliado {
     // "test" y así poder eliminarlos sin problema
     @Test
     public void testDeleteUserValid() {
+        UtilsTests.espera(20000);;
+        int initialSize = actAdmin.userList.size();// Número de usuarios antes del registro, para poder comparar
         // Filtramos los usuarios
         //actAdmin.buscar("test");
         onView(withId(R.id.edt_buscar_usuario)).perform(replaceText("test"));
-        onView(withId(R.id.btn_lupa2)).perform(click());
         UtilsTests.espera(10000);
-        // Hacer clic en el SEGUNDO elemento de la lista (HAY UN ERROR CON EL PRIMERO, NO EXISTE)
-        // El usuario Test Repetido lo usa Laura para sus tests, cambiara el nombre
+        onView(withId(R.id.btn_lupa2)).perform(click());
+        UtilsTests.espera(20000);
+        // Hacer clic en el prier elemento de la lista
         onView(withId(R.id.rv_users))
-                .perform(RecyclerViewActions.actionOnItemAtPosition(1, click()));
+                .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         UtilsTests.espera(10000);
         // Obtener la instancia de Activity_admin_usuario_ampliado
         actAdminAmpl = ((Activity_admin_usuario_ampliado) UtilsTests.getActivityInstance(Activity_admin_usuario_ampliado.class));
