@@ -28,7 +28,7 @@ import static org.junit.Assert.assertTrue;
  * CORRESPONDERIA A LA CLASE ACTIVITY_CHEF
  */
 @RunWith(AndroidJUnit4.class)
-public class Test_AjustesChefServicio {
+public class Test_AjustesChef {
 
     @Rule
     public IntentsTestRule<Activity_login> activityRule = new IntentsTestRule<>(Activity_login.class);
