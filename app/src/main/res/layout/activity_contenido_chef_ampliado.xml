@@ -189,10 +189,10 @@
         app:layout_constraintVertical_bias="0.865"
         app:srcCompat="@android:drawable/ic_menu_revert"
         app:tint="@color/white"
-        tools:ignore="ImageContrastCheck" />
+        tools:ignore="ImageContrastCheck,DuplicateSpeakableTextCheck" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_reseñas_chef_amp"
+        android:id="@+id/rv_resenyas_chef_amp"
         android:layout_width="412dp"
         android:layout_height="328dp"
         android:layout_marginTop="10dp"

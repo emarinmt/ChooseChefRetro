@@ -131,7 +131,7 @@ public interface FastMethods {
      * @return devuelve una lista con las reservas del usuario
      */
     @GET("reserva/listar/chef/{usuario}")
-    Call<List<Reserva>>recuperar_reseñas_chef(@Path("usuario") String usuario);
+    Call<List<Reserva>>recuperar_resenyas_chef(@Path("usuario") String usuario);
     /**
      * Método desarrollado por EVA,
      * Para listar las reservas de un usuario

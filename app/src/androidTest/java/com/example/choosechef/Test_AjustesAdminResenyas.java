@@ -45,7 +45,7 @@ public class Test_AjustesAdminResenyas {
         onView(withId(R.id.btn_ajustes)).perform(click());
         UtilsTests.espera(10000);
         //Clicar opción Gestión reseñas ofrecido del menú
-        onView(withId(R.id.imb_gestion_reseñas)).perform(click());
+        onView(withId(R.id.imb_gestion_resenyas)).perform(click());
         // Verificar que se abre Activity_admin_lista_reservas después de clicar
         intended(hasComponent(Activity_admin_lista_reservas.class.getName()));
         // Obtener la instancia de Activity_admin_lista_usuarios

@@ -59,14 +59,14 @@
                 android:text="@string/fecha_reserva"
                 android:textColor="@color/gris"
                 android:textSize="18sp"
-                app:layout_constraintBottom_toTopOf="@+id/comentario_reseña"
+                app:layout_constraintBottom_toTopOf="@+id/comentario_resenya"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/nombre_usuario" />
 
             <TextView
-                android:id="@+id/comentario_reseña"
+                android:id="@+id/comentario_resenya"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -89,7 +89,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.496"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/comentario_reseña" />
+                app:layout_constraintTop_toBottomOf="@+id/comentario_resenya" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -19,7 +19,7 @@
         app:layout_constraintEnd_toStartOf="@+id/edt_usuario"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="TextSizeCheck" />
+        tools:ignore="TextSizeCheck,VisualLintBounds,TextContrastCheck" />
 
     <EditText
         android:id="@+id/edt_usuario"
@@ -416,7 +416,7 @@
         app:layout_constraintTop_toBottomOf="@+id/edt_valoracion_usuario"
         app:srcCompat="@android:drawable/ic_lock_power_off"
         app:tint="@color/white"
-        tools:ignore="ImageContrastCheck" />
+        tools:ignore="ImageContrastCheck,DuplicateSpeakableTextCheck" />
 
     <ImageButton
         android:id="@+id/btn_atras"

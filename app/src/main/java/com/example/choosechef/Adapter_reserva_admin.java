@@ -58,7 +58,7 @@ public class Adapter_reserva_admin extends RecyclerView.Adapter<Adapter_reserva_
         viewHolder.nombre_chef.setText(reserva.getUsuario_chef());
         viewHolder.nombre_usuario.setText(reserva.getUsuario_cliente());
         viewHolder.fecha_reserva.setText(reserva.getFecha());
-        viewHolder.comentario_reseña.setText(reserva.getComentario());
+        viewHolder.comentario_resenya.setText(reserva.getComentario());
         viewHolder.valoracion.setEnabled(false);
         viewHolder.valoracion.setRating(reserva.getValoracion());
 
@@ -93,7 +93,7 @@ public class Adapter_reserva_admin extends RecyclerView.Adapter<Adapter_reserva_
      * Contiene referencias a las vistas individuales que componen el elemento de la lista.
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView nombre_chef, nombre_usuario, fecha_reserva, comentario_reseña;
+        TextView nombre_chef, nombre_usuario, fecha_reserva, comentario_resenya;
         RatingBar valoracion;
         /**
          * Constructor de la clase ViewHolder
@@ -104,7 +104,7 @@ public class Adapter_reserva_admin extends RecyclerView.Adapter<Adapter_reserva_
             nombre_chef = itemView.findViewById(R.id.nombre_chef);
             nombre_usuario = itemView.findViewById(R.id.nombre_usuario);
             fecha_reserva = itemView.findViewById(R.id.fecha_reserva);
-            comentario_reseña = itemView.findViewById(R.id.comentario_reseña);
+            comentario_resenya = itemView.findViewById(R.id.comentario_resenya);
             valoracion = itemView.findViewById(R.id.rating_valoracion_reserva);
         }
     }

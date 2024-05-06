@@ -34,7 +34,7 @@ public class Activity_admin_menu extends AppCompatActivity {
      * Método para ir a la pantalla de gestión de reseñas
      * @param view La vista (Button) a la que se hizo clic.
      */
-    public void gestion_reseñas(View view) {
+    public void gestion_resenyas(View view) {
         Utils.gotoActivity(Activity_admin_menu.this, Activity_admin_lista_reservas.class);
     }
 

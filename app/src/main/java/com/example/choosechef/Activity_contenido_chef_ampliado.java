@@ -78,7 +78,7 @@ public class Activity_contenido_chef_ampliado extends AppCompatActivity {
         retro=FastClient.getClient();
         mfastMethods = retro.create(FastMethods.class);
         // Configurar RecyclerView
-        recyclerView = findViewById(R.id.rv_reseñas_chef_amp);
+        recyclerView = findViewById(R.id.rv_resenyas_chef_amp);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new Adapter_resenya_chef_amp(this, reservasList);
         recyclerView.setAdapter(adapter);
@@ -176,7 +176,7 @@ public class Activity_contenido_chef_ampliado extends AppCompatActivity {
         }
 
         // Call HTTP client para recuperar la información del usuario
-        Call<List<Reserva>> call = mfastMethods.recuperar_reseñas_chef(user_chef);
+        Call<List<Reserva>> call = mfastMethods.recuperar_resenyas_chef(user_chef);
         call.enqueue(new Callback<List<Reserva>>() { // Ejecutar la llamada de manera asíncrona
             /**
              * Método invocado cuando se recibe una respuesta de la solicitud HTTP
